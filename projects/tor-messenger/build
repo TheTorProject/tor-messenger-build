@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+tar xf [% c('input_files_by_name/instantbird') %]
+cd instantbird/extensions
+tar xf ../../[% c('input_files_by_name/ctypes-otr') %]
+mv ctypes-otr* 'ctypes-otr@tormessenger'
+cd ../..
+mv instantbird tor-messenger-[% c("version") %]
+[% SET src_dir=project _ '-' _ c('version');
+   c('tar', {
+        tar_src => [src_dir],
+        tar_args => '-czf ' _ dest_dir _ '/' _ c('var/dest_filename'),
+        }) %]

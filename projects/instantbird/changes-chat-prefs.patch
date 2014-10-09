@@ -1,0 +1,30 @@
+# HG changeset patch
+# User Sukhbir Singh <sukhbir@torproject.org>
+# Date 1412010563 14400
+# Node ID 4336ced3d9c4a28358e024667f9de99f2c05964c
+# Parent  2b6f0a6859958c9b57b3975001ee7aac257d9ae8
+Changes to chat-prefs.js
+
+diff -r 2b6f0a685995 -r 4336ced3d9c4 chat/chat-prefs.js
+--- a/chat/chat-prefs.js        Mon Sep 22 15:25:27 2014 -0700
++++ b/chat/chat-prefs.js        Mon Sep 29 13:09:23 2014 -0400
+@@ -100,6 +100,16 @@
+ #endif
+ 
+ pref("purple.logging.format", "json");
+-pref("purple.logging.log_chats", true);
+-pref("purple.logging.log_ims", true);
+-pref("purple.logging.log_system", true);
++pref("purple.logging.log_chats", false);
++pref("purple.logging.log_ims", false);
++pref("purple.logging.log_system", false);
++
++// Network settings
++// Use a manual proxy configuration.
++pref("network.proxy.type", 1);
++// Configure Instantbird to use the SOCKS5 proxy.
++pref("network.proxy.socks", "127.0.0.1");
++pref("network.proxy.socks_port", 9150);
++pref("network.proxy.socks_version", 5);
++// Set DNS proxying through SOCKS5.
++pref("network.proxy.socks_remote_dns", true);

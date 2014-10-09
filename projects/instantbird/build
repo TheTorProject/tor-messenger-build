@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+rootdir=$(pwd)
+tar xvf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]
+mkdir moz
+cd moz
+tar xvf ../[% c('input_files_by_name/mozilla-src') %]
+mv mozilla-* ../[% project %]-[% c('version') %]/mozilla
+cd ../[% project %]-[% c('version') %]
+patch -p1 < ../changes-chat-prefs.patch
+patch -p1 < ../prepare-messages-for-displaying.patch
+cp ../mozconfig .mozconfig
+./mozilla/mach build
+./mozilla/mach package
+mv obj-*/dist/*.tar.bz2 [% dest_dir _ '/' _ c('var/dest_filename') ]

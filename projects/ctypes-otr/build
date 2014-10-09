@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+tar xf [% project %]-[% c('version') %].tar.gz
+mv [% c('input_files_by_name/libotr') %] [% project %]-[% c('version') %]/chrome/content/libotr.so
+[% SET src_dir=project _ '-' _ c('version');
+   c('tar', {
+        tar_src => [src_dir],
+        tar_args => '-czf ' _ dest_dir _ '/' _ c('var/dest_filename'),
+        }) %]

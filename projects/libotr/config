@@ -1,0 +1,9 @@
+version: 4.0.0
+var:
+  dest_filename: 'libotr-[% c("version") %]-[% c("arch") %].so'
+input_files:
+  - filename: 'libotr-[% c("version") %].tar.gz'
+    URL: 'https://otr.cypherpunks.ca/libotr-[% c("version") %].tar.gz'
+    file_gpg_id: 1
+    sig_ext: asc
+    gpg_keyring: libotr.gpg

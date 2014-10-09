@@ -1,0 +1,13 @@
+version: '[% c("abbrev") %]'
+git_url: https://github.com/mozilla/releases-comm-central
+git_hash: master
+var:
+  dest_filename: "[% project %]-[% c('version') %]-[% c('arch') %].tar.bz2"
+input_files:
+  - filename: "[% pc('mozilla', 'var/src_filename') %]"
+    name: mozilla-src
+    project: mozilla
+    pkg_type: src
+  - filename: changes-chat-prefs.patch
+  - filename: prepare-messages-for-displaying.patch
+  - filename: mozconfig

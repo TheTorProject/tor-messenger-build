@@ -1,0 +1,9 @@
+version: '[% c("abbrev") %]'
+git_url: https://github.com/mozilla/gecko-dev
+git_hash: c4c00dbea8c410b82113c42f42e43971e4aa5d6c
+src: |
+  #!/bin/sh
+  set -e
+  mv -f mozilla-[% c('version') %].tar.gz [% dest_dir _ '/' _ c('var/src_filename') %]
+var:
+  src_filename: "mozilla-[% c('version') %]-src.tar.gz"
