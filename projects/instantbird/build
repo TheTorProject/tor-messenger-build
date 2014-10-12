@@ -9,6 +9,7 @@ mv mozilla-* ../[% project %]-[% c('version') %]/mozilla
 cd ../[% project %]-[% c('version') %]
 patch -p1 < ../changes-chat-prefs.patch
 patch -p1 < ../prepare-messages-for-displaying.patch
+patch -p1 < ../Send-raw-msgs-through-the-conversation-service.patch
 cp ../mozconfig .mozconfig
 ./mozilla/mach build
 ./mozilla/mach package

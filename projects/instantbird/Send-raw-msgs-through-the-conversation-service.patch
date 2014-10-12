@@ -1,0 +1,33 @@
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1413057966 25200
+#      Sat Oct 11 13:06:06 2014 -0700
+# Node ID 7647c0a6d75b97678d048d2a07f01f5e6b7d4346
+# Parent  b8497b2decd436a972daa74b3e6707d8bed835ae
+Send raw msgs through the conversation service
+
+diff --git a/chat/components/src/imCommands.js b/chat/components/src/imCommands.js
+--- a/chat/components/src/imCommands.js
++++ b/chat/components/src/imCommands.js
+@@ -29,17 +29,20 @@ CommandsService.prototype = {
+     });
+ 
+     this.registerCommand({
+       name: "raw",
+       get helpString() _("rawHelpString"),
+       usageContext: Ci.imICommand.CMD_CONTEXT_ALL,
+       priority: Ci.imICommand.CMD_PRIORITY_DEFAULT,
+       run: function(aMsg, aConv) {
+-        aConv.sendMsg(aMsg);
++        let conv = Services.conversations.getUIConversation(aConv);
++        if (!conv)
++          return false;
++        conv.sendMsg(aMsg);
+         return true;
+       }
+     });
+ 
+     this.registerCommand({
+       // Reference the command service so we can use the internal properties
+       // directly.
+       cmdSrv: this,
