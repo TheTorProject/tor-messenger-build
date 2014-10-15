@@ -1,7 +1,7 @@
 version: '[% c("abbrev") %]'
 git_url: https://github.com/mozilla/releases-comm-central
 git_hash: master
-filename: "[% project %]-[% c('version') %]-[% c('arch') %].tar.bz2"
+filename: "[% project %]-[% c('version') %]-[% c('var/osname') %].tar.bz2"
 input_files:
   - name: mozilla-src
     project: mozilla

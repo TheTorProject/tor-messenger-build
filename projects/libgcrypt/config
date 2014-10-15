@@ -1,4 +1,4 @@
-filename: '[% project %]-[% c("version") %]-[% c("arch") %].tar.gz'
+filename: '[% project %]-[% c("version") %]-[% c("var/osname") %].tar.gz'
 version: 1.6.2
 input_files:
   - URL: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.6.2.tar.bz2
