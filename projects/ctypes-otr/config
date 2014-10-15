@@ -6,3 +6,6 @@ input_files:
   - name: libotr
     project: libotr
     pkg_type: build
+  - name: libgcrypt
+    project: libgcrypt
+    pkg_type: build

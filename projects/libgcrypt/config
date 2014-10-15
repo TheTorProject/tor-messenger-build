@@ -1,0 +1,7 @@
+filename: '[% project %]-[% c("version") %]-[% c("arch") %].tar.gz'
+version: 1.6.2
+input_files:
+  - URL: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.6.2.tar.bz2
+    sig_ext: sig
+    file_gpg_id: 1
+    gpg_keyring: libgcrypt.gpg

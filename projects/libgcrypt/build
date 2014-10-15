@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+tar xf [% project %]-[% c('version') %].tar.bz2
+cd [% project %]-[% c('version') %]
+./configure
+make -j4
+mkdir -p ../dist/[% project %]
+cp -a src/.libs/*.so* ../dist/[% project %]
+cd ../dist
+[% c('tar', {
+        tar_src => [ project ],
+        tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
+        }) %]
