@@ -1,5 +1,5 @@
 version: 0
-filename: 'tor-messenger-[% c("version") %].tar.gz'
+filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %].tar.gz'
 input_files:
   - name: instantbird
     project: instantbird
