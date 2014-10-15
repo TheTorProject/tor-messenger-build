@@ -13,4 +13,4 @@ patch -p1 < ../Send-raw-msgs-through-the-conversation-service.patch
 cp ../mozconfig .mozconfig
 ./mozilla/mach build
 ./mozilla/mach package
-mv obj-*/dist/*.tar.bz2 [% dest_dir _ '/' _ c('var/dest_filename') ]
+mv obj-*/dist/*.tar.bz2 [% dest_dir _ '/' _ c('filename') ]

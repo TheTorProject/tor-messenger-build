@@ -1,6 +1,5 @@
 version: 4.0.0
-var:
-  dest_filename: 'libotr-[% c("version") %]-[% c("arch") %].so'
+filename: 'libotr-[% c("version") %]-[% c("arch") %].so'
 input_files:
   - filename: 'libotr-[% c("version") %].tar.gz'
     URL: 'https://otr.cypherpunks.ca/libotr-[% c("version") %].tar.gz'

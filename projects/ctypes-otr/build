@@ -5,5 +5,5 @@ mv [% c('input_files_by_name/libotr') %] [% project %]-[% c('version') %]/chrome
 [% SET src_dir=project _ '-' _ c('version');
    c('tar', {
         tar_src => [src_dir],
-        tar_args => '-czf ' _ dest_dir _ '/' _ c('var/dest_filename'),
+        tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
         }) %]

@@ -1,10 +1,8 @@
 version: '[% c("abbrev") %]'
 git_url: https://github.com/arlolra/ctypes-otr
 git_hash: master
-var:
-  dest_filename: 'ctypes-otr-[% c("version") %]-[% c("arch") %].tar.gz'
+filename: 'ctypes-otr-[% c("version") %]-[% c("arch") %].tar.gz'
 input_files:
-  - filename: "[% pc('libotr', 'var/dest_filename') %]"
-    name: libotr
+  - name: libotr
     project: libotr
     pkg_type: build

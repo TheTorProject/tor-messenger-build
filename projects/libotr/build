@@ -4,4 +4,4 @@ tar xf libotr-[% c('version') %].tar.gz
 cd libotr-[% c('version') %]
 ./configure
 make
-mv src/.libs/libotr.so.5.0.0 [% dest_dir %]/[% c('var/dest_filename') %]
+mv src/.libs/libotr.so.5.0.0 [% dest_dir %]/[% c('filename') %]
