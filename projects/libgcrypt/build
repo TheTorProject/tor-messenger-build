@@ -1,5 +1,11 @@
 #!/bin/sh
 set -e
+rootdir=$(pwd)
+mkdir /tmp/dist
+cd /tmp/dist
+tar xf $rootdir/[% c('input_files_by_name/libgpg-error') %]
+export PATH="/tmp/dist/libgpg-error/bin:$PATH"
+cd $rootdir
 tar xf [% project %]-[% c('version') %].tar.bz2
 cd [% project %]-[% c('version') %]
 ./configure
