@@ -1,0 +1,3 @@
+#!/bin/sh
+set -e
+cp -p [% c('input_files_by_name/torbrowser') %] [% dest_dir %]/[% c('filename') %]

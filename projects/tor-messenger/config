@@ -7,3 +7,9 @@ input_files:
   - project: ctypes-otr
     name: ctypes-otr
     pkg_type: build
+  - project: tor-launcher
+    name: tor-launcher
+    pkg_type: build
+  - project: tor-browser
+    name: tor-browser
+    pkg_type: build
