@@ -1,0 +1,38 @@
+filename: '[% c("origin_project") %]-[% c("var/osname") %]'
+remote_docker: 1
+docker_save_image: 'tor-messenger:[% c("filename") %]'
+pkg_type: build
+
+distributions:
+  - lsb_release:
+      id: Ubuntu
+    docker_image: 'ubuntu:[% c("lsb_release/codename") %]'
+  - lsb_release:
+      id: Debian
+    docker_image: 'debian:[% c("lsb_release/codename") %]'
+  - lsb_release:
+      id: Fedora
+    docker_image: 'fedora:[% c("lsb_release/release") %]'
+
+pre: |
+  #!/bin/sh
+  set -e
+  [% IF c('lsb_release/id') == 'Ubuntu' %]apt-get update[% END %]
+  [%
+     deps = [];
+     IF pc(c('origin_project'), 'var/deps');
+       CALL deps.import(pc(c('origin_project'), 'var/deps'));
+     END;
+     IF pc(c('origin_project'), 'var/arch_deps');
+       CALL deps.import(pc(c('origin_project'), 'var/arch_deps'));
+     END;
+     IF deps.size;
+       FOREACH pkg IN deps;
+         SET p = tmpl(pkg);
+         IF p;
+           GET c('install_package', { pkg_name => p });
+           GET "\n";
+         END;
+       END;
+     END;
+  -%]

@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+echo 1 > [% dest_dir %]/[% c('filename') %]
+echo Creating [% dest_dir %]/[% c('filename') %]
