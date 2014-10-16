@@ -9,3 +9,5 @@ input_files:
   - name: libgcrypt
     project: libgcrypt
     pkg_type: build
+  - name: libgpg-error
+    project: libgpg-error

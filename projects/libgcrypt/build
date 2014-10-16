@@ -6,13 +6,14 @@ cd /tmp/dist
 tar xf $rootdir/[% c('input_files_by_name/libgpg-error') %]
 export PATH="/tmp/dist/libgpg-error/bin:$PATH"
 cd $rootdir
+distdir=/tmp/dist/[% project %]
+mkdir -p $distdir
 tar xf [% project %]-[% c('version') %].tar.bz2
 cd [% project %]-[% c('version') %]
-./configure
+./configure --prefix=$distdir
 make -j4
-mkdir -p ../dist/[% project %]
-cp -a src/.libs/*.so* ../dist/[% project %]
-cd ../dist
+make prefix=$distdir install
+cd /tmp/dist
 [% c('tar', {
         tar_src => [ project ],
         tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),

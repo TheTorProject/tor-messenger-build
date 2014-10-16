@@ -1,8 +1,18 @@
 version: 4.0.0
-filename: 'libotr-[% c("version") %]-[% c("var/osname") %].so'
+filename: 'libotr-[% c("version") %]-[% c("var/osname") %].tar.gz'
+remote_docker: 1
+var:
+  deps:
+    - build-essential
+    - file
 input_files:
   - filename: 'libotr-[% c("version") %].tar.gz'
     URL: 'https://otr.cypherpunks.ca/libotr-[% c("version") %].tar.gz'
     file_gpg_id: 1
     sig_ext: asc
     gpg_keyring: libotr.gpg
+  - project: libgcrypt
+    name: libgcrypt
+  - project: libgpg-error
+    name: libgpg-error
+  - var/images/ubuntu_lucid

@@ -1,7 +1,21 @@
 #!/bin/sh
 set -e
+rootdir=$(pwd)
+mkdir /tmp/dist
+cd /tmp/dist
+tar xf $rootdir/[% c('input_files_by_name/libgpg-error') %]
+export PATH="/tmp/dist/libgpg-error/bin:$PATH"
+tar xf $rootdir/[% c('input_files_by_name/libgcrypt') %]
+export PATH="/tmp/dist/libgcrypt/bin:$PATH"
+cd $rootdir
+distdir=/tmp/dist/[% project %]
 tar xf libotr-[% c('version') %].tar.gz
 cd libotr-[% c('version') %]
-./configure
-make
-mv src/.libs/libotr.so.5.0.0 [% dest_dir %]/[% c('filename') %]
+./configure --prefix=$distdir
+make -j4
+make prefix=$distdir install
+cd /tmp/dist
+[% c('tar', {
+        tar_src => [ project ],
+        tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
+        }) %]
