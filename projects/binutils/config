@@ -1,0 +1,17 @@
+version: 2.24
+filename: '[% project %]-[% c("version") %]-[% c("var/build_osname") %].tar.gz'
+remote_docker: 1
+lsb_release:
+  id: Ubuntu
+  release: 10.04
+  codename: lucid
+var:
+  deps:
+    - build-essential
+    - bison
+input_files:
+  - URL: https://ftp.gnu.org/gnu/binutils/binutils-[% c("version") %].tar.bz2
+    sig_ext: sig
+    file_gpg_id: 1
+    gpg_keyring: binutils.gpg
+  - var/images/ubuntu_lucid
