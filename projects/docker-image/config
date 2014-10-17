@@ -1,4 +1,4 @@
-filename: '[% c("origin_project") %]-[% c("var/osname") %]'
+filename: '[% sha256(c("pre")).substr(0, 12) %]'
 remote_docker: 1
 docker_save_image: 'tor-messenger:[% c("filename") %]'
 pkg_type: build
@@ -21,6 +21,7 @@ lsb_release:
 
 pre: |
   #!/bin/sh
+  # [% c('docker_image') %]
   set -e
   [% IF c('lsb_release/id') == 'Ubuntu' %]
   apt-get update -y
@@ -29,10 +30,10 @@ pre: |
   [%
      deps = [];
      IF pc(c('origin_project'), 'var/deps');
-       CALL deps.import(pc(c('origin_project'), 'var/deps'));
+       CALL deps.import(pc(c('origin_project'), 'var/deps').sort);
      END;
      IF pc(c('origin_project'), 'var/arch_deps');
-       CALL deps.import(pc(c('origin_project'), 'var/arch_deps'));
+       CALL deps.import(pc(c('origin_project'), 'var/arch_deps').sort);
      END;
      IF deps.size;
        FOREACH pkg IN deps;
