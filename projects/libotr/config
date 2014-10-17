@@ -1,6 +1,10 @@
 version: 4.0.0
 filename: 'libotr-[% c("version") %]-[% c("var/osname") %].tar.gz'
 remote_docker: 1
+lsb_release:
+  id: Ubuntu
+  release: 10.04
+  codename: lucid
 var:
   deps:
     - build-essential
@@ -15,4 +19,4 @@ input_files:
     name: libgcrypt
   - project: libgpg-error
     name: libgpg-error
-  - var/images/ubuntu_lucid
+  - project: docker-image

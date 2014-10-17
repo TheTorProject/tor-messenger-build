@@ -14,6 +14,11 @@ distributions:
       id: Fedora
     docker_image: 'fedora:[% c("lsb_release/release") %]'
 
+lsb_release:
+  id: '[% pc(c("origin_project", { no_distro => 1 }), "lsb_release/id", { no_distro => 1 }) %]'
+  release: '[% pc(c("origin_project", { no_distro => 1 }), "lsb_release/release", { no_distro => 1 }) %]'
+  codename: '[% pc(c("origin_project", { no_distro => 1 }), "lsb_release/codename", { no_distro => 1 }) %]'
+
 pre: |
   #!/bin/sh
   set -e

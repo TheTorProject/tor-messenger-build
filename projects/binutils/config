@@ -14,4 +14,4 @@ input_files:
     sig_ext: sig
     file_gpg_id: 1
     gpg_keyring: binutils.gpg
-  - var/images/ubuntu_lucid
+  - project: docker-image

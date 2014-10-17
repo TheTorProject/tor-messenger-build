@@ -1,6 +1,10 @@
 filename: '[% project %]-[% c("version") %]-[% c("var/osname") %].tar.gz'
 version: 1.6.2
 remote_docker: 1
+lsb_release:
+  id: Ubuntu
+  release: 10.04
+  codename: lucid
 var:
   deps:
     - build-essential
@@ -12,4 +16,4 @@ input_files:
   - project: libgpg-error
     name: libgpg-error
     pkg_type: build
-  - var/images/ubuntu_lucid
+  - project: docker-image

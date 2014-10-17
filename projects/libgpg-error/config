@@ -1,6 +1,10 @@
 filename: '[% project %]-[% c("version") %]-[% c("var/osname") %].tar.gz'
 version: 1.16
 remote_docker: 1
+lsb_release:
+  id: Ubuntu
+  release: 10.04
+  codename: lucid
 var:
   deps:
     - build-essential
@@ -9,4 +13,4 @@ input_files:
     sig_ext: sig
     file_gpg_id: 1
     gpg_keyring: libgcrypt.gpg
-  - var/images/ubuntu_lucid
+  - project: docker-image
