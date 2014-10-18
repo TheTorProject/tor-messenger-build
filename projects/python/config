@@ -18,4 +18,4 @@ input_files:
     gpg_keyring: python.gpg
     sig_ext: asc
     file_gpg_id: 1
-  - var/images/ubuntu_lucid
+  - project: docker-image
