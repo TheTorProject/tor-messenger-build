@@ -1,0 +1,3 @@
+[submodule "rbm"]
+	path = rbm
+	url = https://github.com/boklm/rbm
