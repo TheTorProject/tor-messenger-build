@@ -1,5 +1,5 @@
 version: 4.0.0
-filename: 'libotr-[% c("version") %]-[% c("var/osname") %].tar.gz'
+filename: 'libotr-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 remote_docker: 1
 lsb_release:
   id: Ubuntu

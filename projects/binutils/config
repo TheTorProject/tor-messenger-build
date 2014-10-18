@@ -1,5 +1,5 @@
 version: 2.24
-filename: '[% project %]-[% c("version") %]-[% c("var/build_osname") %].tar.gz'
+filename: '[% project %]-[% c("version") %]-[% c("var/build_osname") %]-[% c("var/build_id") %].tar.gz'
 remote_docker: 1
 lsb_release:
   id: Ubuntu
