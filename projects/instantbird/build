@@ -1,7 +1,22 @@
 #!/bin/sh
 set -e
 rootdir=$(pwd)
-tar xvf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]
+export SHELL=/bin/sh
+export HOME=$rootdir
+mkdir /tmp/dist
+cd /tmp/dist
+tar xf $rootdir/[% c('input_files_by_name/python') %]
+export PATH="/tmp/dist/python/bin:$PATH"
+python $rootdir/get-pip.py
+tar xf $rootdir/[% c('input_files_by_name/binutils') %]
+export PATH="/tmp/dist/binutils/bin:$PATH"
+tar xf $rootdir/[% c('input_files_by_name/gcc') %]
+export PATH="/tmp/dist/gcc/bin:$PATH"
+mkdir -p /tmp/dist/yasm/bin
+ln -s /usr/bin/yasm-1 /tmp/dist/yasm/bin/yasm
+export PATH="/tmp/dist/yasm/bin:$PATH"
+cd $rootdir
+tar xf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]
 mkdir moz
 cd moz
 tar xvf ../[% c('input_files_by_name/mozilla-src') %]
@@ -13,4 +28,4 @@ patch -p1 < ../Send-raw-msgs-through-the-conversation-service.patch
 cp ../mozconfig .mozconfig
 ./mozilla/mach build
 ./mozilla/mach package
-mv obj-*/dist/*.tar.bz2 [% dest_dir _ '/' _ c('filename') ]
+mv obj-*/dist/*.tar.bz2 [% dest_dir _ '/' _ c('filename') %]
