@@ -12,6 +12,7 @@ tar xf $rootdir/[% c('input_files_by_name/binutils') %]
 export PATH="/tmp/dist/binutils/bin:$PATH"
 tar xf $rootdir/[% c('input_files_by_name/gcc') %]
 export PATH="/tmp/dist/gcc/bin:$PATH"
+export LD_LIBRARY_PATH=/tmp/dist/gcc/lib64
 mkdir -p /tmp/dist/yasm/bin
 ln -s /usr/bin/yasm-1 /tmp/dist/yasm/bin/yasm
 export PATH="/tmp/dist/yasm/bin:$PATH"
