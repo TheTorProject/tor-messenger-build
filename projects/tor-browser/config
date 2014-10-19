@@ -3,7 +3,7 @@ filename: 'tor-browser-[% c("version") %]-[% c("var/osname") %].tar.xz'
 
 input_files:
  - filename: "tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
-   URL: "https://people.torproject.org/~mikeperry/builds/4.0/tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
+   URL: "https://dist.torproject.org/torbrowser/[% c('version') %]/tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
    name: torbrowser
    sha256sum: 6ba0834020b4443681965ed57235609a96b44d219ed6ada2be65670d38772177
 
