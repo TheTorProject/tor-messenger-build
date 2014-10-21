@@ -1,6 +1,6 @@
 filename: '[% sha256(c("pre")).substr(0, 12) %]'
 remote_docker: 1
-docker_save_image: 'tor-messenger:[% c("filename") %]'
+docker_save_image: 'tor-messenger_[% GET ENV.RBM_BUILDNAME ? ENV.RBM_BUILDNAME : ENV.USER ? ENV.USER : c("uid") %]:[% c("filename") %]'
 pkg_type: build
 
 distributions:
