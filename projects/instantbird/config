@@ -33,7 +33,10 @@ input_files:
   - name: mozilla-src
     project: mozilla
     pkg_type: src
-  - filename: changes-chat-prefs.patch
+  - filename: preferences.patch
+  - filename: irc.patch
+  - filename: xmpp.patch
+  - filename: facebook.patch
   - filename: prepare-messages-for-displaying.patch
   - filename: Send-raw-msgs-through-the-conversation-service.patch
   - filename: mozconfig
