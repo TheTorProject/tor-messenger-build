@@ -75,7 +75,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +// Disable SSLv3 by setting the minimum supported protocol to TLS 1.0.
 +pref("security.tls.version.min", 1);
 +// Disable geolocation
-+pref("geo.enabled", false),
++pref("geo.enabled", false);
 +// Empty the user agent
 +pref("general.useragent.extra.instantbird", "");
 +
