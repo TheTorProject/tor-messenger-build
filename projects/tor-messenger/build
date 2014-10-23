@@ -20,5 +20,5 @@ mv instantbird tor-messenger-[% c("version") %]
 [% SET src_dir=project _ '-' _ c('version');
    c('tar', {
         tar_src => [src_dir],
-        tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
+        tar_args => '-cJf ' _ dest_dir _ '/' _ c('filename'),
         }) %]
