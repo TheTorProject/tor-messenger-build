@@ -37,6 +37,7 @@ input_files:
   - filename: irc.patch
   - filename: xmpp.patch
   - filename: facebook.patch
+  - filename: accountcreation.patch
   - filename: prepare-messages-for-displaying.patch
   - filename: Send-raw-msgs-through-the-conversation-service.patch
   - filename: mozconfig
