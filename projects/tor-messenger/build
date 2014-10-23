@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 tar xf [% c('input_files_by_name/instantbird') %]
+tar xf [% c('input_files_by_name/gcc') %]
+mkdir -p instantbird/lib
+cp -L gcc/lib64/libstdc++.so.6 instantbird/lib/
 cd instantbird/extensions
 tar xf ../../[% c('input_files_by_name/ctypes-otr') %]
 mv ctypes-otr* 'ctypes-otr@tormessenger'

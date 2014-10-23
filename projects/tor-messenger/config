@@ -13,3 +13,5 @@ input_files:
   - project: tor-browser
     name: tor-browser
     pkg_type: build
+  - project: gcc
+    name: gcc
