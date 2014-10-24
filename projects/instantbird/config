@@ -40,6 +40,8 @@ input_files:
   - filename: accountcreation.patch
   - filename: prepare-messages-for-displaying.patch
   - filename: Send-raw-msgs-through-the-conversation-service.patch
+  - filename: null.patch
+  - filename: purple-tests.patch
   - filename: mozconfig
   - name: python
     project: python

@@ -1,0 +1,21 @@
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1414176284 25200
+#      Fri Oct 24 11:44:44 2014 -0700
+# Node ID 77ce49687f31b9634c2c32f76777a17d85e23b72
+# Parent  358de61ab92e106fe0ffd877aa71371ceae0b87f
+Remove purple testing
+
+diff --git a/im/test/xpcshell.ini b/im/test/xpcshell.ini
+--- a/im/test/xpcshell.ini
++++ b/im/test/xpcshell.ini
+@@ -1,9 +1,8 @@
+ ; This Source Code Form is subject to the terms of the Mozilla Public
+ ; License, v. 2.0. If a copy of the MPL was not distributed with this
+ ; file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ 
+ [include:chat/modules/test/xpcshell.ini]
+ [include:chat/components/src/test/xpcshell.ini]
+ [include:chat/protocols/irc/test/xpcshell.ini]
+ [include:chat/protocols/yahoo/test/xpcshell.ini]
+-[include:extensions/purple/purplexpcom/src/test/xpcshell.ini]
