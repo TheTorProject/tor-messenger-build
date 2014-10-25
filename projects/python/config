@@ -1,5 +1,5 @@
 version: 2.7.8
-filename: 'python-[% c("arch") %]-[% c("lsb_release/id") %]-[% c("lsb_release/codename") %]-[% c("var/build_id") %].tar.gz'
+filename: 'python-[% c("lsb_release/id") %]-[% c("lsb_release/codename") %]-[% c("var/build_id") %].tar.gz'
 lsb_release:
   id: Ubuntu
   release: 10.04

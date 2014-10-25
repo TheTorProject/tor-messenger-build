@@ -9,6 +9,11 @@ var:
   deps:
     - build-essential
     - file
+targets:
+  linux-i686:
+    var:
+      arch_deps:
+        - libc6-dev-i386
 input_files:
   - filename: 'libotr-[% c("version") %].tar.gz'
     URL: 'https://otr.cypherpunks.ca/libotr-[% c("version") %].tar.gz'

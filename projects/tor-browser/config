@@ -5,7 +5,11 @@ input_files:
  - filename: "tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
    URL: "https://dist.torproject.org/torbrowser/[% c('version') %]/tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
    name: torbrowser
-   sha256sum: a90e1c2520064bcdd9f3f78d8a9bb0c7b01170ee28846bb0132b9d87c9c46099
+   targets:
+     linux-x86_64:
+       sha256sum: a90e1c2520064bcdd9f3f78d8a9bb0c7b01170ee28846bb0132b9d87c9c46099
+     linux-i686:
+       sha256sum: b2fad95b8f20f09ce2ad9bb638e66b7790e91ce8ca14faea56a5ab0495504c22
 
 targets:
   linux-x86_64:

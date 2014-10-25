@@ -4,7 +4,7 @@ distdir="/tmp/dist/[% project %]"
 mkdir -p "$distdir"
 tar xf [% project %]-[% c('version') %].tar.bz2
 cd [% project %]-[% c('version') %]
-./configure --prefix="$distdir"
+./configure --prefix="$distdir" [% c("var/configure_opt") %]
 make -j4
 make prefix="$distdir" install
 cd /tmp/dist

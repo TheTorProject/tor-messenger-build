@@ -3,19 +3,22 @@ set -e
 rootdir=$(pwd)
 export SHELL=/bin/sh
 export HOME=$rootdir
-mkdir /tmp/dist
+[% pc('gcc', 'var/setup_gcc', { gcc_tarfile => c('input_files_by_name/gcc') }) %]
+mkdir -p /tmp/dist
 cd /tmp/dist
 tar xf $rootdir/[% c('input_files_by_name/python') %]
 export PATH="/tmp/dist/python/bin:$PATH"
 python $rootdir/get-pip.py
 tar xf $rootdir/[% c('input_files_by_name/binutils') %]
 export PATH="/tmp/dist/binutils/bin:$PATH"
-tar xf $rootdir/[% c('input_files_by_name/gcc') %]
-export PATH="/tmp/dist/gcc/bin:$PATH"
-export LD_LIBRARY_PATH=/tmp/dist/gcc/lib64
 # LD_BIND_NOW needed to avoid this error:
 # undefined symbol: _ZNSt14error_categoryD2Ev
 export LD_BIND_NOW=1
+[% IF c("var/osname") == "linux-i686" -%]
+export LDFLAGS=-m32
+export CFLAGS=-m32
+export CC='gcc -m32'
+[% END -%]
 mkdir -p /tmp/dist/yasm/bin
 ln -s /usr/bin/yasm-1 /tmp/dist/yasm/bin/yasm
 export PATH="/tmp/dist/yasm/bin:$PATH"
@@ -23,14 +26,14 @@ cd $rootdir
 tar xf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]
 mkdir moz
 cd moz
-tar xvf ../[% c('input_files_by_name/mozilla-src') %]
+tar xf ../[% c('input_files_by_name/mozilla-src') %]
 mv mozilla-* ../[% project %]-[% c('version') %]/mozilla
 cd ../[% project %]-[% c('version') %]
 for patch in $(ls -1 ../*.patch | sort)
 do
   patch -p1 < $patch
 done
-cp ../mozconfig .mozconfig
-./mozilla/mach build
+cp ../[% c('input_files_by_name/mozconfig') %] .mozconfig
+./mozilla/mach build || ./mozilla/mach/build
 ./mozilla/mach package
 mv obj-*/dist/*.tar.bz2 [% dest_dir _ '/' _ c('filename') %]

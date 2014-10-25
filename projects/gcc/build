@@ -3,7 +3,8 @@ set -e
 distdir=/tmp/dist/[% project %]
 tar xf [% project %]-[% c("version") %].tar.bz2
 cd [% project %]-[% c("version") %]
-./configure --prefix=$distdir --disable-multilib --enable-languages=c,c++
+./configure --prefix=$distdir --enable-multilib --enable-languages=c,c++ \
+            --with-arch_32=i686
 make -j4
 make install
 cd /tmp/dist

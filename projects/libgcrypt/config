@@ -8,6 +8,11 @@ lsb_release:
 var:
   deps:
     - build-essential
+targets:
+  linux-i686:
+    var:
+      arch_deps:
+        - libc6-dev-i386
 input_files:
   - URL: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.6.2.tar.bz2
     sig_ext: sig

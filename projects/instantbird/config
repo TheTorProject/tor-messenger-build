@@ -29,6 +29,14 @@ var:
     - libgstreamer-plugins-base0.10-dev
     - libpulse-dev
     - ccache
+targets:
+  linux-i686:
+    var:
+      arch_deps:
+        - libc6-dev-i386
+        - ia32-libs
+        - lib32z1-dev
+        - lib32asound2-dev
 input_files:
   - name: mozilla-src
     project: mozilla
@@ -42,7 +50,8 @@ input_files:
   - filename: Send-raw-msgs-through-the-conversation-service.patch
   - filename: null.patch
   - filename: purple-tests.patch
-  - filename: mozconfig
+  - filename: 'mozconfig-[% c("var/osname") %]'
+    name: mozconfig
   - name: python
     project: python
   - URL: https://bootstrap.pypa.io/get-pip.py

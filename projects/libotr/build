@@ -11,7 +11,7 @@ cd $rootdir
 distdir=/tmp/dist/[% project %]
 tar xf libotr-[% c('version') %].tar.gz
 cd libotr-[% c('version') %]
-./configure --prefix=$distdir
+./configure --prefix=$distdir [% c("var/configure_opt") %]
 make -j4
 make prefix=$distdir install
 cd /tmp/dist
