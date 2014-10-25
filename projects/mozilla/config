@@ -1,6 +1,6 @@
 version: '[% c("abbrev") %]'
 git_url: https://github.com/mozilla/gecko-dev
-git_hash: c4c00dbea8c410b82113c42f42e43971e4aa5d6c
+git_hash: master
 src: |
   #!/bin/sh
   set -e
