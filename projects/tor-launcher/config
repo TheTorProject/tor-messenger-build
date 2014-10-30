@@ -3,4 +3,4 @@ git_url: https://git.torproject.org/tor-launcher.git
 git_hash: '[% c("version") %]'
 gpg_keyring: mikeperry.gpg
 tag_gpg_id: 1
-filename: "[% project %]-[% c('version') %]-src.tar.gz"
+filename: "[% project %]-[% c('version') %].xpi"
