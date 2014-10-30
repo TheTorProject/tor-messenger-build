@@ -1,0 +1,12 @@
+diff -ru tor-launcher/components/tl-process.js tor-launcher.n/components/tl-process.js
+--- tor-launcher/components/tl-process.js	2014-10-11 01:18:10.000000000 +0200
++++ tor-launcher.n/components/tl-process.js	2014-09-30 13:41:39.000000000 +0200
+@@ -694,7 +694,7 @@
+           {
+             // For Thunderbird and Instantbird, paths are relative to this extension's folder.
+             topDir = Cc["@mozilla.org/file/directory_service;1"]
+-                       .getService(Ci.nsIProperties).get("ProfD", Ci.nsIFile);
++                       .getService(Ci.nsIProperties).get("CurProcD", Ci.nsIFile);
+             topDir.append("extensions");
+             topDir.append(this.kTorLauncherExtPath);
+           }
