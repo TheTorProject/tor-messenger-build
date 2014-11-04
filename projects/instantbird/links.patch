@@ -1,0 +1,22 @@
+# HG changeset patch
+# User Sukhbir Singh <sukhbir@torproject.org>
+# Date 1415125946 -19800
+#      Wed Nov 05 00:02:26 2014 +0530
+# Node ID fe384d60035532dd4b81248a345525359ea2f98f
+# Parent  947732f86131ec2882340344ba0c29cc9943de48
+Remove formatting for URLs in chat window
+
+diff --git a/chat/modules/imContentSink.jsm b/chat/modules/imContentSink.jsm
+--- a/chat/modules/imContentSink.jsm
++++ b/chat/modules/imContentSink.jsm
+@@ -58,10 +58,6 @@
+   attrs: { },
+ 
+   tags: {
+-    'a': {
+-      'title': true,
+-      'href': kAllowedURLs
+-    },
+     'br': true,
+     'p': true
+   },
