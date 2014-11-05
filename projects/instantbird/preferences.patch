@@ -95,3 +95,9 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +// Disable caching
 +pref("browser.cache.disk.enable", false);
 +pref("browser.cache.offline.enable", false);
++// Disable text formatting (remove the tags)
++pref("messenger.options.filterMode", 0);
++
++// Navigator
++// Disable "Take Picture" functionality that accesses the webcam
++pref("media.navigator.video.enabled", false);
