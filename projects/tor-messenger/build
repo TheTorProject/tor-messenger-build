@@ -2,6 +2,8 @@
 set -e
 tar xf [% c('input_files_by_name/instantbird') %]
 tar xf [% c('input_files_by_name/gcc') %]
+chmod 755 start-tor-messenger
+mv start-tor-messenger instantbird/
 mkdir -p instantbird/lib
 cp -L gcc/lib64/libstdc++.so.6 instantbird/lib/
 cd instantbird/extensions
