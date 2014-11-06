@@ -181,7 +181,7 @@ if [ -L "$myname" ]; then
 		myname="`readlink -f "$myname" 2>/dev/null`"
 		if [ "$?" -ne 0 ]; then
 			# Ugh.
-			complain "start-tor-browser cannot be run using a symlink on this operating system."
+			complain "start-tor-messenger cannot be run using a symlink on this operating system."
 		fi
 	fi
 fi
