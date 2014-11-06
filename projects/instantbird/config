@@ -43,6 +43,7 @@ input_files:
     pkg_type: src
   - filename: preferences.patch
   - filename: irc.patch
+  - filename: slashme.patch
   - filename: xmpp.patch
   - filename: facebook.patch
   - filename: accountcreation.patch

@@ -1,0 +1,44 @@
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1415252765 28800
+#      Wed Nov 05 21:46:05 2014 -0800
+# Node ID 17ce33f549af16468fc96d2eb5292a148505479e
+# Parent  49fc79e39b9c292d182a46aa800135bd65b6c38f
+Slash me hack
+
+ * Temporarily work around this leak until a cleaner solution is found.
+
+diff --git a/chat/protocols/irc/ircCommands.jsm b/chat/protocols/irc/ircCommands.jsm
+--- a/chat/protocols/irc/ircCommands.jsm
++++ b/chat/protocols/irc/ircCommands.jsm
+@@ -72,26 +72,20 @@ function setMode(aNickname, aConv, aMode
+                   [aConv.name, (aAdd ? "+" : "-") + aMode, aNick]));
+ }
+ 
+ function actionCommand(aMsg, aConv) {
+   // Don't try to send an empty action.
+   if (!aMsg || !aMsg.trim().length)
+     return false;
+ 
+-  let conv = getConv(aConv);
+-  let account = getAccount(aConv);
+-  if (!ctcpCommand(aConv, aConv.name, "ACTION", aMsg)) {
+-    conv.writeMessage(account._currentServerName, _("error.sendMessageFailed"),
+-                      {error: true, system: true});
+-    return true;
+-  }
+-
+-  // Show the action on our conversation.
+-  conv.writeMessage(account._nickname, "/me " + aMsg, {outgoing: true});
++  let conv = Services.conversations.getUIConversation(aConv);
++  if (!conv)
++    return false;
++  conv.sendMsg("/me " + aMsg);
+   return true;
+ }
+ 
+ // This will open the conversation, and send and display the text.
+ // aReturnedConv is optional and returns the resulting conversation.
+ function privateMessage(aConv, aMsg, aNickname, aReturnedConv) {
+   if (!aMsg.length)
+     return false;
