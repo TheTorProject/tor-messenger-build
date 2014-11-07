@@ -34,6 +34,6 @@ do
   patch -p1 < $patch
 done
 cp ../[% c('input_files_by_name/mozconfig') %] .mozconfig
-./mozilla/mach build || ./mozilla/mach/build
+./mozilla/mach build || ./mozilla/mach build
 ./mozilla/mach package
 mv obj-*/dist/*.tar.bz2 [% dest_dir _ '/' _ c('filename') %]
