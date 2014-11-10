@@ -86,6 +86,8 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +pref("messenger.status.awayWhenIdle", false);
 +pref("messenger.status.defaultIdleAwayMessage", "");
 +pref("messenger.status.reportIdle", false);
++// Do not play sounds on messaging events
++pref("messenger.options.playSounds.message", false);
 +
 +// Chat
 +// Do not show any quit message
