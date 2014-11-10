@@ -1,0 +1,30 @@
+# HG changeset patch
+# User Sukhbir Singh <sukhbir@torproject.org>
+# Date 1415618519 18000
+# Node ID 6193b9d64e63818366e61126625727543fb81d3f
+# Parent  09d259c6155857eda3d4488c68a4a9d8d851138f
+Disable the account picture dialog
+
+diff --git a/im/content/blist.xul b/im/content/blist.xul
+--- a/im/content/blist.xul
++++ b/im/content/blist.xul
+@@ -109,18 +109,17 @@
+     </menupopup>
+   </popupset>
+ 
+   <toolbox id="mainToolbox">
+     <toolbar id="statusArea">
+       <stack id="statusImageStack">
+         <!-- The box around the user icon is a workaround for bug 955673. -->
+         <box id="userIconHolder">
+-          <image id="userIcon" role="button" popup="changeUserIconPanel"
+-                 aria-label="&userIcon.label;" tooltiptext="&userIcon.label;"/>
++          <image id="userIcon" role="button"/>
+         </box>
+         <panel id="changeUserIconPanel"
+                type="arrow" align="center"
+                onpopupshowing="buddyList.updateUserIconPanelItems();"
+                onpopuphiding="buddyList.stopWebcamStream();">
+           <deck id="userIconPanel">
+             <vbox class="userIconPanelMenu">
+               <stack id="userIconPanelStack" flex="1">
