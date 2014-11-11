@@ -1,15 +1,19 @@
 # HG changeset patch
 # User Sukhbir Singh <sukhbir@torproject.org>
-# Date 1413963006 -19800
-#      Wed Oct 22 13:00:06 2014 +0530
-# Node ID 1d142c56cdf63cb3b0bcab81607c72c4b8a04599
-# Parent  ce691e5400583295a0cc0d0d43a3382a2f95940f
-Set default Instantbird preferences with enhanced security settings
+# Date 1415700119 18000
+# Node ID 998152b2cc44f677facde77d33cb1fb1af090794
+# Parent  2cc53848b79924aa91e77c961d4682a9cd57bd53
+Update the security configuration preferences
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
-@@ -8,8 +8,6 @@
+@@ -3,18 +3,16 @@
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ pref("toolkit.defaultChromeURI", "chrome://instantbird/content/blist.xul");
+ pref("toolkit.singletonWindowType", "Messenger:blist");
+ #ifdef XP_MACOSX
  pref("browser.hiddenWindowChromeURL", "chrome://instantbird/content/hiddenWindow.xul");
  #endif
  
@@ -18,7 +22,36 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  #ifdef XP_UNIX
  #ifndef XP_MACOSX
  #define UNIX_BUT_NOT_MAC
-@@ -244,11 +242,6 @@
+ #endif
+ #endif
+ 
+ pref("general.smoothScroll", false);
+ #ifdef UNIX_BUT_NOT_MAC
+@@ -197,17 +195,17 @@ pref("browser.search.defaultenginename",
+ // disable logging for the search service by default
+ pref("browser.search.log", false);
+ 
+ // Ordering of Search Engines in the Engine list.
+ pref("browser.search.order.1",                "chrome://instantbird/locale/region.properties");
+ pref("browser.search.order.2",                "chrome://instantbird/locale/region.properties");
+ 
+ // send ping to the server to update
+-pref("browser.search.update", true);
++pref("browser.search.update", false);
+ 
+ // disable logging for the search service update system by default
+ pref("browser.search.update.log", false);
+ 
+ // Check whether we need to perform engine updates every 6 hours
+ pref("browser.search.updateinterval", 6);
+ 
+ /* Extension manager */
+@@ -239,21 +237,16 @@ pref("extensions.webservice.discoverURL"
+ 
+ pref("extensions.getMoreExtensionsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/extensions/");
+ pref("extensions.getMoreThemesURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/themes/");
+ pref("extensions.getMorePluginsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/plugins/");
+ pref("extensions.getMoreMessageStylesURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/messagestyles/");
  pref("extensions.getMoreEmoticonsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/emoticons/");
  pref("extensions.getMoreProtocolsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/protocols/");
  
@@ -30,7 +63,17 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  // don't load links inside Instantbird
  pref("network.protocol-handler.expose-all", false);
  // Although we allow these to be exposed internally, there are various places
-@@ -302,14 +295,61 @@
+ // (e.g. message pane) where we may divert them out to external applications.
+ pref("network.protocol-handler.expose.about", true);
+ pref("network.protocol-handler.expose.http", true);
+ pref("network.protocol-handler.expose.https", true);
+ 
+@@ -297,19 +290,74 @@ pref("browser.tabs.tabClipWidth", 140);
+ 
+ // Where to show tab close buttons:
+ // 0  on active tab only
+ // 1  on all tabs until tabClipWidth is reached, then active tab only
+ // 2  no close buttons at all
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
