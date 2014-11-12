@@ -14,3 +14,6 @@ submodule-update:
 fetch:
 	$(rbm) fetch
 
+clean-old: submodule-update
+	./tools/clean-old
+
