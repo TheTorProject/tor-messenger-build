@@ -103,7 +103,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +pref("network.proxy.type", 1);
 +// Configure Instantbird to use the SOCKS5 proxy
 +pref("network.proxy.socks", "127.0.0.1");
-+pref("network.proxy.socks_port", 9150);
++pref("network.proxy.socks_port", 9152);
 +pref("network.proxy.socks_version", 5);
 +// Set DNS proxying through SOCKS5
 +pref("network.proxy.socks_remote_dns", true);
