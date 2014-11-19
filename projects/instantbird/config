@@ -24,12 +24,23 @@ var:
     - mesa-common-dev
     - libdbus-1-dev
     - libdbus-glib-1-dev
-    - yasm-1
     - libasound2-dev
     - libgstreamer-plugins-base0.10-dev
     - libpulse-dev
     - ccache
 targets:
+  windows-i686:
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
+    var:
+      arch_deps:
+        - yasm
+  linux-x86_64:
+    var:
+      arch_deps:
+        - yasm-1
   linux-i686:
     var:
       arch_deps:
@@ -37,6 +48,7 @@ targets:
         - ia32-libs
         - lib32z1-dev
         - lib32asound2-dev
+        - yasm-1
 input_files:
   - name: mozilla-src
     project: mozilla
@@ -50,14 +62,19 @@ input_files:
   - filename: links.patch
   - filename: picture.patch
   - filename: prepare-messages-for-displaying.patch
+  - filename: fix-mingw-build.mozpatch
+    enable: '[% c("var/windows") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python
     project: python
+    enable: '[% c("var/linux") %]'
   - URL: https://bootstrap.pypa.io/get-pip.py
     sha256sum: d43dc33a5670d69dd14a9be1f2b2fa27ebf124ec1b212a47425331040f742a9b
+    enable: '[% c("var/linux") %]'
   - name: binutils
     project: binutils
-  - name: gcc
-    project: gcc
+    enable: '[% c("var/linux") %]'
+  - name: '[% c("var/compiler") %]'
+    project: '[% c("var/compiler") %]'
   - project: docker-image

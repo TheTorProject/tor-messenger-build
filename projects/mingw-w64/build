@@ -1,0 +1,63 @@
+#!/bin/sh
+set -e
+rootdir=$(pwd)
+distdir=/tmp/dist/[% project %]
+
+mkdir /tmp/dist
+cd /tmp/dist
+tar xf $rootdir/[% c('input_files_by_name/binutils') %]
+mv binutils $distdir
+export PATH="$distdir/bin:$PATH"
+cd $rootdir
+
+
+tar xf [% project %]-[% c("version") %].tar.gz
+mkdir -p builddir/mingw-w64/mingw-w64-headers32
+cd builddir/mingw-w64/mingw-w64-headers32
+$rootdir/[% project %]-[% c("version") %]/mingw-w64-headers/configure \
+                --prefix=$distdir/i686-w64-mingw32 --host=i686-w64-mingw32 \
+                --enable-sdk=all --enable-secure-api --enable-idl
+make install
+
+cd $rootdir
+mkdir gcc
+cd gcc
+tar xjf $rootdir/gcc-[% c("var/gcc_version") %].tar.bz2
+# We don't want to link against msvcrt.dll due to bug 9084.
+i686-w64-mingw32-g++ -dumpspecs > $distdir/msvcr100.spec
+sed 's/msvcrt/msvcr100/' -i $distdir/msvcr100.spec
+# Linking libgcc against msvcrt is hard-coded...
+sed 's/msvcrt/msvcr100/' -i gcc-[% c("var/gcc_version") %]/gcc/config/i386/t-mingw-w32
+# LDFLAGS_FOR_TARGET does not work for some reason. Thus, we take
+# CFLAGS_FOR_TARGET.
+export CFLAGS_FOR_TARGET="-specs=$distdir/msvcr100.spec -Wl,--nxcompat -Wl,--dynamicbase"
+gcc-[% c("var/gcc_version") %]/configure --prefix=$distdir --target=i686-w64-mingw32 --disable-multilib --enable-languages=c,c++
+make -j4 all-gcc
+make install-gcc
+
+mkdir -p $rootdir/builddir/mingw-w64/mingw-w64-crt32
+cd $rootdir/builddir/mingw-w64/mingw-w64-crt32
+$rootdir/[% project %]-[% c("version") %]/mingw-w64-crt/configure \
+                 --host=i686-w64-mingw32 --prefix=$distdir/i686-w64-mingw32
+make -j4
+make install
+
+mkdir -p $rootdir/builddir/mingw-w64/widl32
+cd $rootdir/builddir/mingw-w64/widl32
+$rootdir/[% project %]-[% c("version") %]/mingw-w64-tools/widl/configure \
+                 --prefix=$distdir --target=i686-w64-mingw32
+make -j4
+make install
+
+cd $rootdir/gcc
+make -j4
+make install
+mkdir -p $distdir/gcclibs
+cp i686-w64-mingw32/libssp/.libs/libssp-0.dll $distdir/gcclibs
+cp i686-w64-mingw32/libgcc/shlib/libgcc_s_sjlj-1.dll $distdir/gcclibs
+
+cd /tmp/dist
+[% c('tar', {
+        tar_src => [ project ],
+        tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
+        }) %]

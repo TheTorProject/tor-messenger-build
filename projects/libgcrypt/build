@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 rootdir=$(pwd)
-mkdir /tmp/dist
+[% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
+mkdir -p /tmp/dist
 cd /tmp/dist
 tar xf $rootdir/[% c('input_files_by_name/libgpg-error') %]
 export PATH="/tmp/dist/libgpg-error/bin:$PATH"

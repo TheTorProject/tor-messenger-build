@@ -2,6 +2,7 @@
 set -e
 distdir="/tmp/dist/[% project %]"
 mkdir -p "$distdir"
+[% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
 tar xf [% project %]-[% c('version') %].tar.bz2
 cd [% project %]-[% c('version') %]
 ./configure --prefix="$distdir" [% c("var/configure_opt") %]

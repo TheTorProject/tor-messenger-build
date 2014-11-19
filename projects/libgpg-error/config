@@ -9,6 +9,14 @@ var:
   deps:
     - build-essential
 targets:
+  windows-i686:
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
+    var:
+      arch_deps:
+        - gettext
   linux-i686:
     var:
       arch_deps:
@@ -18,4 +26,6 @@ input_files:
     sig_ext: sig
     file_gpg_id: 1
     gpg_keyring: libgcrypt.gpg
+  - name: '[% c("var/compiler") %]'
+    project: '[% c("var/compiler") %]'
   - project: docker-image

@@ -9,9 +9,24 @@ var:
   deps:
     - build-essential
     - bison
+  configure_opt: '--disable-multilib --enable-gold'
+
+targets:
+  windows-i686:
+    var:
+      configure_opt: '--target=i686-w64-mingw32 --disable-multilib'
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
+
 input_files:
   - URL: https://ftp.gnu.org/gnu/binutils/binutils-[% c("version") %].tar.bz2
     sig_ext: sig
     file_gpg_id: 1
     gpg_keyring: binutils.gpg
   - project: docker-image
+  - filename: enable-reloc-section-ld.patch
+    enable: '[% c("var/windows") %]'
+  - filename: peXXigen.patch
+    enable: '[% c("var/windows") %]'

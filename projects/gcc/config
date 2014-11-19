@@ -10,9 +10,9 @@ var:
     - build-essential
     - libmpc-dev
     - libc6-dev-i386
-  setup_gcc: |
+  setup: |
     mkdir -p /tmp/dist
-    tar -C /tmp/dist -xf [% c("gcc_tarfile") %]
+    tar -C /tmp/dist -xf [% c("compiler_tarfile") %]
     export PATH="/tmp/dist/gcc/bin:$PATH"
     [% IF c("var/osname") == "linux-i686" -%]
     export LD_LIBRARY_PATH=/tmp/dist/gcc/lib32

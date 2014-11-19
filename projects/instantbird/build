@@ -3,14 +3,16 @@ set -e
 rootdir=$(pwd)
 export SHELL=/bin/sh
 export HOME=$rootdir
-[% pc('gcc', 'var/setup_gcc', { gcc_tarfile => c('input_files_by_name/gcc') }) %]
+[% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
 mkdir -p /tmp/dist
 cd /tmp/dist
+[% IF c("var/linux") -%]
 tar xf $rootdir/[% c('input_files_by_name/python') %]
 export PATH="/tmp/dist/python/bin:$PATH"
 python $rootdir/get-pip.py
 tar xf $rootdir/[% c('input_files_by_name/binutils') %]
 export PATH="/tmp/dist/binutils/bin:$PATH"
+[% END -%]
 # LD_BIND_NOW needed to avoid this error:
 # undefined symbol: _ZNSt14error_categoryD2Ev
 export LD_BIND_NOW=1
@@ -19,9 +21,11 @@ export LDFLAGS=-m32
 export CFLAGS=-m32
 export CC='gcc -m32'
 [% END -%]
+[% IF c("var/linux") -%]
 mkdir -p /tmp/dist/yasm/bin
 ln -s /usr/bin/yasm-1 /tmp/dist/yasm/bin/yasm
 export PATH="/tmp/dist/yasm/bin:$PATH"
+[% END -%]
 cd $rootdir
 tar xf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]
 mkdir moz
@@ -33,6 +37,12 @@ for patch in $(ls -1 ../*.patch | sort)
 do
   patch -p1 < $patch
 done
+cd mozilla
+for patch in $(ls -1 $rootdir/*.mozpatch | sort)
+do
+  patch -p1 < $patch
+done
+cd ..
 cp ../[% c('input_files_by_name/mozconfig') %] .mozconfig
 ./mozilla/mach build || ./mozilla/mach build
 ./mozilla/mach package

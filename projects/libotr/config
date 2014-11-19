@@ -8,8 +8,17 @@ lsb_release:
 var:
   deps:
     - build-essential
+    - libmpc2
     - file
 targets:
+  windows-i686:
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
+    var:
+      arch_deps:
+        - gettext
   linux-i686:
     var:
       arch_deps:
@@ -24,4 +33,6 @@ input_files:
     name: libgcrypt
   - project: libgpg-error
     name: libgpg-error
+  - name: '[% c("var/compiler") %]'
+    project: '[% c("var/compiler") %]'
   - project: docker-image

@@ -3,7 +3,15 @@ set -e
 distdir=/tmp/dist/binutils
 tar xf [% project %]-[% c("version") %].tar.bz2
 cd [% project %]-[% c("version") %]
-./configure --prefix=$distdir --disable-multilib --enable-gold
+[% IF c('var/windows') -%]
+# XXX: This is needed due to bug 10102.
+sed 's/= extern_rt_rel_d;/= extern_rt_rel_d;\n  memset (extern_rt_rel_d, 0, PE_IDATA5_SIZE);/' -i ld/pe-dll.c
+# Needed for the hardening...
+patch -p1 < ../enable-reloc-section-ld.patch
+# Zeroing timestamps in PE headers reliably, see bug 12753.
+patch -p1 < ../peXXigen.patch
+[% END -%]
+./configure --prefix=$distdir [% c('var/configure_opt') %]
 make -j4
 make install
 cd /tmp/dist

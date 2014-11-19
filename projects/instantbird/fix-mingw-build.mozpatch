@@ -1,0 +1,39 @@
+diff --git a/dom/media/gmp/GMPChild.cpp b/dom/media/gmp/GMPChild.cpp
+index 560ab8c2dae5..bd9718ef9582 100644
+--- a/dom/media/gmp/GMPChild.cpp
++++ b/dom/media/gmp/GMPChild.cpp
+@@ -356,7 +356,7 @@ GMPChild::PreLoadLibraries(const std::string& aPluginPath)
+   infoFile->GetPath(path);
+ 
+   std::ifstream stream;
+-  stream.open(path.get());
++  stream.open(NS_ConvertUTF16toUTF8(path).get());
+   if (!stream.good()) {
+     NS_WARNING("Failure opening info file for required DLLs");
+     return false;
+diff --git a/dom/media/gmp/rlz/base/memory/scoped_ptr.h b/dom/media/gmp/rlz/base/memory/scoped_ptr.h
+index 47204742c0a3..c837e04b34f6 100644
+--- a/dom/media/gmp/rlz/base/memory/scoped_ptr.h
++++ b/dom/media/gmp/rlz/base/memory/scoped_ptr.h
+@@ -18,7 +18,7 @@ public:
+   scoped_array(T* t) : nsAutoArrayPtr<T>(t) {}
+   void reset(T* t) {
+     scoped_array<T> other(t);
+-    operator=(other);
++    this->operator=(other);
+   }
+ };
+ 
+diff --git a/dom/media/gmp/rlz/win/lib/machine_id_win.cc b/dom/media/gmp/rlz/win/lib/machine_id_win.cc
+index 668910e5cd8c..fb5454274ec4 100644
+--- a/dom/media/gmp/rlz/win/lib/machine_id_win.cc
++++ b/dom/media/gmp/rlz/win/lib/machine_id_win.cc
+@@ -3,7 +3,7 @@
+ // found in the COPYING file.
+ 
+ #include <windows.h>
+-#include <Sddl.h>  // For ConvertSidToStringSidW.
++#include <sddl.h>  // For ConvertSidToStringSidW.
+ #include <string>
+ 
+ #include "base/memory/scoped_ptr.h"
