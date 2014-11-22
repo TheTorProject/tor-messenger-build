@@ -38,10 +38,13 @@ do
   patch -p1 < $patch
 done
 cd mozilla
-for patch in $(ls -1 $rootdir/*.mozpatch | sort)
-do
-  patch -p1 < $patch
-done
+if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
+then
+    for patch in $(ls -1 $rootdir/*.mozpatch | sort)
+    do
+        patch -p1 < $patch
+    done
+fi
 cd ..
 cp ../[% c('input_files_by_name/mozconfig') %] .mozconfig
 ./mozilla/mach build || ./mozilla/mach build
