@@ -63,6 +63,8 @@ input_files:
   - filename: picture.patch
   - filename: branding.patch
   - filename: prepare-messages-for-displaying.patch
+  - filename: fix-mingw-build.nsprpatch
+    enable: '[% c("var/windows") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python

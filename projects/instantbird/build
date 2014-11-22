@@ -46,6 +46,13 @@ then
     done
 fi
 cd ..
+
+[% IF c("var/windows") %]
+cd mozilla/nsprpub
+patch -p1 < $rootdir/fix-mingw-build.nsprpatch
+cd ../..
+[% END %]
+
 cp ../[% c('input_files_by_name/mozconfig') %] .mozconfig
 ./mozilla/mach build || ./mozilla/mach build
 ./mozilla/mach package
