@@ -1,0 +1,39 @@
+# HG changeset patch
+# User Sukhbir Singh <sukhbir@torproject.org>
+# Date 1416650722 18000
+# Node ID 9d3cc50f1b5c0679d3397154f6c7c329aaf15cf5
+# Parent  84423e51b0535ccd21aff64f10176f3e8c05b7c3
+Update the branding
+
+diff --git a/im/branding/nightly/locales/en-US/brand.dtd b/im/branding/nightly/locales/en-US/brand.dtd
+--- a/im/branding/nightly/locales/en-US/brand.dtd
++++ b/im/branding/nightly/locales/en-US/brand.dtd
+@@ -1,10 +1,10 @@
+ <!-- This Source Code Form is subject to the terms of the Mozilla Public
+    - License, v. 2.0. If a copy of the MPL was not distributed with this
+    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+ 
+ <!-- nightly branding -->
+ 
+-<!ENTITY  brandShortName        "Instantbird">
+-<!ENTITY  brandFullName         "Instantbird - Nightly">
+-<!ENTITY  brandMotto            "'Cause geeks can also do magic!">
+-<!ENTITY  vendorShortName       "Instantbird">
++<!ENTITY  brandShortName        "Tor Messenger">
++<!ENTITY  brandFullName         "Tor Messenger - Alpha">
++<!ENTITY  brandMotto            "Talk over the onion!">
++<!ENTITY  vendorShortName       "Tor Messenger">
+diff --git a/im/branding/nightly/locales/en-US/brand.properties b/im/branding/nightly/locales/en-US/brand.properties
+--- a/im/branding/nightly/locales/en-US/brand.properties
++++ b/im/branding/nightly/locales/en-US/brand.properties
+@@ -1,7 +1,7 @@
+ # This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ 
+-brandShortName=Instantbird
+-brandFullName=Instantbird - Nightly
+-vendorShortName=Instantbird
++brandShortName=Tor Messenger
++brandFullName=Tor Messenger - Alpha
++vendorShortName=Tor Messenger
