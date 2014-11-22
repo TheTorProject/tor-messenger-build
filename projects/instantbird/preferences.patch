@@ -1,8 +1,8 @@
 # HG changeset patch
 # User Sukhbir Singh <sukhbir@torproject.org>
-# Date 1415700119 18000
-# Node ID 998152b2cc44f677facde77d33cb1fb1af090794
-# Parent  2cc53848b79924aa91e77c961d4682a9cd57bd53
+# Date 1416649788 18000
+# Node ID 84423e51b0535ccd21aff64f10176f3e8c05b7c3
+# Parent  ae1c9811a808a4c642d97bf9202cb7bfb866f6b1
 Update the security configuration preferences
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
@@ -27,7 +27,32 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  pref("general.smoothScroll", false);
  #ifdef UNIX_BUT_NOT_MAC
-@@ -197,17 +195,17 @@ pref("browser.search.defaultenginename",
+@@ -112,24 +110,16 @@ pref("browser.preferences.animateFadeIn"
+ pref("browser.zoom.full", true);
+ pref("conversation.zoomLevel", "1.0");
+ 
+ pref("accessibility.typeaheadfind", false);
+ pref("accessibility.typeaheadfind.timeout", 5000);
+ pref("accessibility.typeaheadfind.linksonly", false);
+ pref("accessibility.typeaheadfind.flashBar", 1);
+ 
+-// Whether or not app updates are enabled
+-pref("app.update.enabled", true);
+-
+-// This preference turns on app.update.mode and allows automatic download and
+-// install to take place. We use a separate boolean toggle for this to make
+-// the UI easier to construct.
+-pref("app.update.auto", true);
+-
+ // Defines how the Application Update Service notifies the user about updates:
+ //
+ // AUM Set to:        Minor Releases:     Major Releases:
+ // 0                  download no prompt  download no prompt
+ // 1                  download no prompt  download no prompt if no incompatibilities
+ // 2                  download no prompt  prompt
+ //
+ // See chart in nsUpdateService.js.in for more details
+@@ -197,17 +187,17 @@ pref("browser.search.defaultenginename",
  // disable logging for the search service by default
  pref("browser.search.log", false);
  
@@ -46,7 +71,28 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  pref("browser.search.updateinterval", 6);
  
  /* Extension manager */
-@@ -239,21 +237,16 @@ pref("extensions.webservice.discoverURL"
+@@ -217,20 +207,18 @@ pref("xpinstall.dialog.progress.chrome",
+ pref("xpinstall.dialog.progress.type.skin", "Extension:Manager");
+ pref("xpinstall.dialog.progress.type.chrome", "Extension:Manager");
+ pref("extensions.dss.enabled", false);
+ pref("extensions.dss.switchPending", false);
+ pref("extensions.ignoreMTimeChanges", false);
+ pref("extensions.logging.enabled", false);
+ pref("general.skins.selectedSkin", "classic/1.0");
+ 
+-pref("extensions.update.enabled", true);
+ pref("extensions.update.interval", 86400);
+ pref("extensions.update.url", "https://addons.instantbird.org/services/update.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&maxAppVersion=%ITEM_MAXAPPVERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&appOS=%APP_OS%&appABI=%APP_ABI%&locale=%APP_LOCALE%");
+-pref("extensions.update.autoUpdateDefault", true);
+ 
+ // Preferences for the Get Add-ons pane
+ pref("extensions.getAddons.cache.enabled", false);
+ pref("extensions.getAddons.browseAddons", "https://addons.instantbird.org/%LOCALE%/%APP%");
+ pref("extensions.getAddons.maxResults", 5);
+ pref("extensions.getAddons.recommended.browseURL", "https://addons.instantbird.org/%LOCALE%/%APP%/recommended");
+ pref("extensions.getAddons.recommended.url", "https://services.instantbird.org/%LOCALE%/%APP%/api/%API_VERSION%/list/featured/all/10/%OS%/%VERSION%");
+ pref("extensions.getAddons.search.browseURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/search?q=%TERMS%");
+@@ -239,21 +227,16 @@ pref("extensions.webservice.discoverURL"
  
  pref("extensions.getMoreExtensionsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/extensions/");
  pref("extensions.getMoreThemesURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/themes/");
@@ -68,7 +114,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  pref("network.protocol-handler.expose.http", true);
  pref("network.protocol-handler.expose.https", true);
  
-@@ -297,19 +290,74 @@ pref("browser.tabs.tabClipWidth", 140);
+@@ -297,19 +280,86 @@ pref("browser.tabs.tabClipWidth", 140);
  
  // Where to show tab close buttons:
  // 0  on active tab only
@@ -146,3 +192,15 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +// Media
 +// Disable "Take Picture" functionality that accesses the webcam
 +pref("media.navigator.video.enabled", false);
++
++// Enable cert pinning
++// 2. Strict. Pinning is always enforced
++pref("security.cert_pinning.enforcement_level", 2);
++
++// Updates
++// Do not auto-update Instantbird
++pref("app.update.enabled", false):
++pref("app.update.auto", false);
++// Do not auto-update extensions
++pref("extensions.update.enabled", false);
++pref("extensions.update.autoUpdateDefault", false);
