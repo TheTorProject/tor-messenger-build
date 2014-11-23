@@ -8,6 +8,7 @@ lsb_release:
 var:
   deps:
     - build-essential
+    - libmpc2
 targets:
   windows-i686:
     lsb_release:
