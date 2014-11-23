@@ -3,6 +3,6 @@ set -e
 tar xvf [% project %]-[% c('version') %].tar.gz
 cd [% project %]-[% c('version') %]
 patch -d src -p1 < ../topdir.patch
-patch -d src -p1 < ../controlport.patch
+patch -p1 < ../controlport.patch
 make package
 mv pkg/*.xpi [% dest_dir _ '/' _ c('filename') %]
