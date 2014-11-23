@@ -1,4 +1,4 @@
-filename: '[% project %]-[% c("version") %]-[% c("var/osname") %].tar.gz'
+filename: '[% project %]-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 version: 1.16
 remote_docker: 1
 lsb_release:
