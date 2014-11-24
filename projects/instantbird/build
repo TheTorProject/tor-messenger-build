@@ -37,6 +37,8 @@ for patch in $(ls -1 ../*.patch | sort)
 do
   patch -p1 < $patch
 done
+cat ../spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
+cat ../ccc-jabber-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
 cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
 then
