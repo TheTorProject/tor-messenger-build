@@ -11,6 +11,24 @@ index 048ef94facc1..71d1a3409c79 100644
  # For Windows build the uninstaller during the application build since the
  # uninstaller is included with the application for mar file generation.
  libs::
+diff --git a/im/installer/Makefile.in b/im/installer/Makefile.in
+index 2a7af7daf20f..6e3855d87f4d 100644
+--- a/im/installer/Makefile.in
++++ b/im/installer/Makefile.in
+@@ -50,9 +50,13 @@ DEFINES += -DJAREXT=
+ 
+ ifdef MOZ_ANGLE_RENDERER
+ DEFINES += -DMOZ_ANGLE_RENDERER=$(MOZ_ANGLE_RENDERER)
++ifdef MOZ_D3DCOMPILER_VISTA_DLL
+ DEFINES += -DMOZ_D3DCOMPILER_VISTA_DLL=$(MOZ_D3DCOMPILER_VISTA_DLL)
++endif
++ifdef MOZ_D3DCOMPILER_XP_DLL
+ DEFINES += -DMOZ_D3DCOMPILER_XP_DLL=$(MOZ_D3DCOMPILER_XP_DLL)
+ endif
++endif
+ 
+ ifdef MOZ_UPDATER
+ DEFINES += -DMOZ_UPDATER=1
 diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
 index 12397ff741fc..27d581f53c97 100644
 --- a/im/installer/package-manifest.in
