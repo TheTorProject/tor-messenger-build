@@ -3,16 +3,12 @@ filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/buil
 input_files:
   - name: instantbird
     project: instantbird
-    pkg_type: build
   - project: ctypes-otr
     name: ctypes-otr
-    pkg_type: build
   - project: tor-launcher
     name: tor-launcher
-    pkg_type: build
   - project: tor-browser
     name: tor-browser
-    pkg_type: build
   - project: gcc
     name: gcc
     enable: '[% c("var/linux") %]'

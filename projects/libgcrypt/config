@@ -29,7 +29,6 @@ input_files:
     gpg_keyring: libgcrypt.gpg
   - project: libgpg-error
     name: libgpg-error
-    pkg_type: build
   - name: '[% c("var/compiler") %]'
     project: '[% c("var/compiler") %]'
   - project: docker-image

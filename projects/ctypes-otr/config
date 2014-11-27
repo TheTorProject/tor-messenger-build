@@ -5,9 +5,7 @@ filename: 'ctypes-otr-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_i
 input_files:
   - name: libotr
     project: libotr
-    pkg_type: build
   - name: libgcrypt
     project: libgcrypt
-    pkg_type: build
   - name: libgpg-error
     project: libgpg-error
