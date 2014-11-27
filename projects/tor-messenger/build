@@ -1,11 +1,15 @@
 #!/bin/sh
 set -e
 tar xf [% c('input_files_by_name/instantbird') %]
+
+[% IF c("var/linux") %]
 tar xf [% c('input_files_by_name/gcc') %]
 chmod 755 start-tor-messenger
 mv start-tor-messenger instantbird/
 mkdir -p instantbird/lib
 cp -L gcc/lib64/libstdc++.so.6 instantbird/lib/
+[% END %]
+
 cd instantbird/extensions
 tar xf ../../[% c('input_files_by_name/ctypes-otr') %]
 mv ctypes-otr* 'ctypes-otr@tormessenger'

@@ -15,4 +15,5 @@ input_files:
     pkg_type: build
   - project: gcc
     name: gcc
+    enable: '[% c("var/linux") %]'
   - filename: start-tor-messenger
