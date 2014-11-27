@@ -2,11 +2,11 @@
 set -e
 tar xf [% project %]-[% c('version') %].tar.gz
 tar xf [% c('input_files_by_name/libotr') %]
-mv libotr/lib/*.so* [% project %]-[% c('version') %]/chrome/content/
+mv libotr/[% c('var/lib_glob') %] [% project %]-[% c('version') %]/chrome/content/
 tar xf [% c('input_files_by_name/libgcrypt') %]
-mv libgcrypt/lib/*.so* [% project %]-[% c('version') %]/chrome/content/
+mv libgcrypt/[% c('var/lib_glob') %] [% project %]-[% c('version') %]/chrome/content/
 tar xf [% c('input_files_by_name/libgpg-error') %]
-mv libgpg-error/lib/*.so* [% project %]-[% c('version') %]/chrome/content/
+mv libgpg-error/[% c('var/lib_glob') %] [% project %]-[% c('version') %]/chrome/content/
 [% SET src_dir=project _ '-' _ c('version');
    c('tar', {
         tar_src => [src_dir],
