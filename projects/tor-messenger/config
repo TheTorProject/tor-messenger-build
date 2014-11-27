@@ -1,3 +1,4 @@
+# vim: filetype=yaml
 version: 0
 filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.xz'
 input_files:

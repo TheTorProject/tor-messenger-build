@@ -1,3 +1,4 @@
+# vim: filetype=yaml
 version: '[% c("abbrev") %]'
 git_url: https://github.com/arlolra/ctypes-otr
 git_hash: master
