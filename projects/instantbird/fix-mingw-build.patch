@@ -30,7 +30,7 @@ index 2a7af7daf20f..6e3855d87f4d 100644
  ifdef MOZ_UPDATER
  DEFINES += -DMOZ_UPDATER=1
 diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
-index 12397ff741fc..27d581f53c97 100644
+index 0376e05c74a5..70c1a6ada34c 100644
 --- a/im/installer/package-manifest.in
 +++ b/im/installer/package-manifest.in
 @@ -52,7 +52,7 @@
@@ -59,22 +59,6 @@ index 12397ff741fc..27d581f53c97 100644
  
  ; Modules
  @RESPATH@/modules/*
-@@ -585,6 +588,7 @@
- @RESPATH@/components/pippki.xpt
- 
- ; For process sandboxing
-+#if defined(MOZ_SANDBOX)
- #if defined(XP_WIN)
- @BINPATH@/@DLL_PREFIX@sandboxbroker@DLL_SUFFIX@
- #elif defined(XP_LINUX)
-@@ -592,6 +596,7 @@
- @BINPATH@/@DLL_PREFIX@mozsandbox@DLL_SUFFIX@
- #endif
- #endif
-+#endif
- 
- ; for Solaris SPARC
- #ifdef SOLARIS
 diff --git a/im/moz.build b/im/moz.build
 index 0778269ffe22..528fb6e371e6 100644
 --- a/im/moz.build
