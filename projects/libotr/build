@@ -13,7 +13,7 @@ distdir=/tmp/dist/[% project %]
 tar xf libotr-[% c('version') %].tar.gz
 cd libotr-[% c('version') %]
 ./configure --prefix=$distdir [% c("var/configure_opt") %]
-make -j4
+make -j4 [% IF c("var/windows") %]LDFLAGS='-no-undefined -lssp'[% END %]
 make prefix=$distdir install
 cd /tmp/dist
 [% c('tar', {
