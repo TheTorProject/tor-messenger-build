@@ -1,9 +1,9 @@
 # HG changeset patch
 # User Arlo Breault <arlolra@gmail.com>
-# Date 1411421387 25200
-#      Mon Sep 22 14:29:47 2014 -0700
-# Node ID fbe43529c92d26a1c7674fc964ae5e1aadc9ac2f
-# Parent  2b6f0a6859958c9b57b3975001ee7aac257d9ae8
+# Date 1417058407 28800
+#      Wed Nov 26 19:20:07 2014 -0800
+# Node ID 0108590a22b0943081fe0f26375834da2f84b0b6
+# Parent  e4c698528d69e8d4e2116bbf2e28f91fd5b5f972
 Prepare messages for displaying
 
  * Adds a converse method to prepareForSending.
@@ -56,7 +56,7 @@ diff --git a/chat/components/public/prplIConversation.idl b/chat/components/publ
   * This is the XPCOM purple conversation component, a proxy for PurpleConversation.
   */
  
-@@ -47,16 +48,19 @@ interface prplIConversation: nsISupports
+@@ -47,16 +48,21 @@ interface prplIConversation: nsISupports
    void sendMsg(in AUTF8String aMsg);
  
    /* Preprocess messages before they are sent (eg. split long messages).
@@ -65,7 +65,9 @@ diff --git a/chat/components/public/prplIConversation.idl b/chat/components/publ
                           [optional] out unsigned long aMsgCount,
                           [retval, array, size_is(aMsgCount)] out wstring aMsgs);
  
-+  /* Postprocess messages before they are displayed (eg. escaping). */
++  /* Postprocess messages before they are displayed (eg. escaping). The
++     implementation can set aMsg.displayMessage, otherwise the originalMessage
++     is used. */
 +  void prepareForDisplaying(in imIMessage aMsg);
 +
    /* Send information about the current typing state to the server.
@@ -79,7 +81,7 @@ diff --git a/chat/components/public/prplIConversation.idl b/chat/components/publ
 diff --git a/chat/components/src/imConversations.js b/chat/components/src/imConversations.js
 --- a/chat/components/src/imConversations.js
 +++ b/chat/components/src/imConversations.js
-@@ -399,16 +399,17 @@ UIConversation.prototype = {
+@@ -403,16 +403,17 @@ UIConversation.prototype = {
      this._observers = this._observers.filter(function(o) o !== aObserver);
    },
    notifyObservers: function(aSubject, aTopic, aData) {
@@ -97,7 +99,7 @@ diff --git a/chat/components/src/imConversations.js b/chat/components/src/imConv
          if (!this.isChat || aSubject.containsNick)
            ++this._unreadTargetedMessageCount;
        }
-@@ -426,16 +427,20 @@ UIConversation.prototype = {
+@@ -430,16 +431,21 @@ UIConversation.prototype = {
        if (aSubject.incoming && !aSubject.system &&
            (!this.isChat || aSubject.containsNick)) {
          this.notifyObservers(aSubject, "new-directed-incoming-message", aData);
@@ -106,8 +108,9 @@ diff --git a/chat/components/src/imConversations.js b/chat/components/src/imConv
      }
    },
  
-+  // Called above when the conversation service itself is set as the
-+  // conversation for a message. This is case for some system messages.
++  // Used above when notifying of new-texts originating in the
++  // UIConversation. The happens when this.systemMessage() is called. The
++  // conversation for the message is set as the UIConversation. 
 +  prepareForDisplaying: function(aMsg) {},
 +
    // prplIConvIM
@@ -142,7 +145,7 @@ diff --git a/chat/modules/jsProtoHelper.jsm b/chat/modules/jsProtoHelper.jsm
 diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
 --- a/chat/protocols/irc/irc.js
 +++ b/chat/protocols/irc/irc.js
-@@ -129,16 +129,20 @@ const GenericIRCConversation = {
+@@ -126,16 +126,20 @@ const GenericIRCConversation = {
    getMaxMessageLength: function() {
      // Build the shortest possible message that could be sent to other users.
      let baseMessage = ":" + this._account._nickname + this._account.prefix +
@@ -163,13 +166,13 @@ diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
  
      // Attempt to smartly split a string into multiple lines (based on the
      // maximum number of characters the message can contain).
-@@ -278,24 +282,16 @@ ircChannel.prototype = {
+@@ -274,24 +278,16 @@ ircChannel.prototype = {
    _receivedInitialMode: false,
    // For IRC you're not in a channel until the JOIN command is received, open
    // all channels (initially) as left.
    _left: true,
-   // True until successfully joined for the first time.
-   _firstJoin: false,
+   // True while we are rejoining a channel previously parted by the user.
+   _rejoined: false,
    banMasks: [],
  
 -  // Overwrite the writeMessage function to apply CTCP formatting before
@@ -188,7 +191,7 @@ diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
      // Otherwise, fall back to the default part message, if it exists.
      let msg = aMessage || this._account.getString("partmsg");
      if (msg)
-@@ -599,24 +595,16 @@ function ircConversation(aAccount, aName
+@@ -595,24 +591,16 @@ function ircConversation(aAccount, aName
    // Always request the info as it may be out of date.
    this._waitingForNick = true;
    this.requestBuddyInfo(aName);
@@ -238,7 +241,7 @@ diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
   *          owner     -> founder
   */
  const kRoles = ["outcast", "visitor", "participant", "member", "moderator",
-@@ -255,16 +260,22 @@ const XMPPConversationPrototype = {
+@@ -255,16 +260,23 @@ const XMPPConversationPrototype = {
        who = this._account._connection._jid.jid;
      if (!who)
        who = this._account.name;
@@ -247,7 +250,8 @@ diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
      delete this._typingState;
    },
  
-+  /* Perform entity escaping before displaying the message. */
++  /* Perform entity escaping before displaying the message. We assume incoming
++     messages have already been escaped, and will otherwise be filtered. */
 +  prepareForDisplaying: function(aMsg) {
 +    if (aMsg.outgoing && !aMsg.system)
 +      aMsg.displayMessage = TXTToHTML(aMsg.displayMessage);
@@ -261,7 +265,7 @@ diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
      if (aStanza.attributes["type"] == "error") {
        aMsg = _("conversation.error.notDelivered", aMsg);
        flags.system = true;
-@@ -889,19 +900,17 @@ const XMPPAccountPrototype = {
+@@ -889,19 +901,17 @@ const XMPPAccountPrototype = {
        // Prefer HTML (in <html><body>) and use plain text (<body>) as fallback.
        let htmlBody = aStanza.getElement(["html", "body"]);
        if (htmlBody)

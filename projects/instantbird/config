@@ -56,14 +56,15 @@ input_files:
     project: mozilla
     pkg_type: src
   - filename: preferences.patch
-  - filename: irc.patch
+  - filename: prepare-messages-for-displaying.patch
+  - filename: test-transformation-api.patch
   - filename: slashme.patch
+  - filename: irc.patch
   - filename: xmpp.patch
   - filename: facebook.patch
   - filename: accountcreation.patch
   - filename: links.patch
   - filename: picture.patch
-  - filename: prepare-messages-for-displaying.patch
   - filename: spi-cacert.der
   - filename: ccc-jabber-cacert.der
   - filename: fix-mingw-build.nsprpatch
