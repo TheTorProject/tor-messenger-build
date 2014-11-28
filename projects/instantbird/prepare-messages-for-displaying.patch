@@ -1,9 +1,9 @@
 # HG changeset patch
 # User Arlo Breault <arlolra@gmail.com>
-# Date 1417058407 28800
-#      Wed Nov 26 19:20:07 2014 -0800
-# Node ID 0108590a22b0943081fe0f26375834da2f84b0b6
-# Parent  e4c698528d69e8d4e2116bbf2e28f91fd5b5f972
+# Date 1417196598 28800
+#      Fri Nov 28 09:43:18 2014 -0800
+# Node ID ddcfdad3c07c6304ce3de53f38ba0adec98ea53a
+# Parent  523fa3fa1fd619423f7267fdd2b3b215bcb93d1b
 Prepare messages for displaying
 
  * Adds a converse method to prepareForSending.
@@ -44,7 +44,7 @@ diff --git a/chat/components/public/prplIConversation.idl b/chat/components/publ
  #include "nsISimpleEnumerator.idl"
  #include "nsIObserver.idl"
  
- interface imIAccountBuddy;
+ interface prplIAccountBuddy;
  interface imIAccount;
  interface imIOutgoingMessage;
 +interface imIMessage;
