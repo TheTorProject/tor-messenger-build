@@ -1,0 +1,68 @@
+Tor Messenger Build
+===================
+
+Installing build dependencies
+-----------------------------
+
+To build Tor Messenger, you need a Linux distribution that has support
+for Docker (such as Debian jessy, Ubuntu 14.04, Fedora 20, etc ...).
+The Docker package is usually named docker.io or docker-io.
+
+You user account should have access to the docker command without using
+sudo, so it should be in the docker group. The docker daemon should
+also be running.
+
+You also need a few perl modules installed:
+- YAML::XS
+- File::Basename
+- Getopt::Long
+- Template
+- IO::Handle
+- IO::CaptureOutput
+- File::Temp
+- File::Slurp
+- File::Path
+- String::ShellQuote
+- Sort::Versions
+- Digest::SHA
+- Data::UUID
+- Data::Dump
+
+If you are running Debian or Ubuntu, you can install them with:
+
+# apt-get install libyaml-libyaml-perl libtemplate-perl \
+                  libio-handle-util-perl libio-all-perl \
+                  libio-captureoutput-perl libfile-slurp-perl \
+                  libstring-shellquote-perl libsort-versions-perl \
+                  libdigest-sha-perl libdata-uuid-perl libdata-dump-perl
+
+
+Starting a build
+----------------
+
+To start a build, simply run "make all" in the directory to build all
+currently supported architectures.
+
+If you want to build only one architecture, you can run something like
+"make tor-messenger-linux-x86_64".
+
+The resulting builds are stored in the out/tor-messenger directory.
+
+
+Updating git sources
+--------------------
+
+You can run "make fetch" to fetch the latest sources from git for all
+components included in Tor Messenger.
+
+
+Cleaning obsolete files and containers images
+---------------------------------------------
+
+To clean obsolete files and containers images, you can run "make clean-old".
+
+This command will remove any intermediate build files and containers
+that are no longer used in the current builds. Because it needs to
+compute the filename of all current files, this command takes a lot of
+time to run.
+
