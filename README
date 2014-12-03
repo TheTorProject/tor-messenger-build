@@ -8,7 +8,7 @@ To build Tor Messenger, you need a Linux distribution that has support
 for Docker (such as Debian jessy, Ubuntu 14.04, Fedora 20, etc ...).
 The Docker package is usually named docker.io or docker-io.
 
-You user account should have access to the docker command without using
+Your user account should have access to the docker command without using
 sudo, so it should be in the docker group. The docker daemon should
 also be running.
 
