@@ -67,6 +67,7 @@ input_files:
   - filename: accountcreation.patch
   - filename: links.patch
   - filename: picture.patch
+  - filename: trafficinfo.patch
   - filename: fix-mingw-build.nsprpatch
     enable: '[% c("var/windows") %]'
   - filename: fix-mingw-build.patch

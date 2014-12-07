@@ -1,0 +1,25 @@
+diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
+index 5fa5b82..46447ff 100644
+--- a/im/content/accountWizard.xul
++++ b/im/content/accountWizard.xul
+@@ -39,6 +39,8 @@
+         <description class="top-proto-description" value="&accountProtocolShowMore.description;"/>
+       </richlistitem>
+     </richlistbox>
++    <separator class="thin"/>
++    <description>&accountProtocolInfo.label3;</description>
+   </wizardpage>
+ 
+   <wizardpage id="accountprotocol" pageid="accountprotocol" next="accountusername"
+diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
+index 43d0f19..5492985 100644
+--- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
++++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
+@@ -6,6 +6,7 @@
+ 
+ <!ENTITY accountProtocolTitle.label   "Protocol">
+ <!ENTITY accountProtocolInfo.label2   "Please choose the protocol of your IM account.">
++<!ENTITY accountProtocolInfo.label3   "All traffic will be routed over the Tor network.">
+ <!ENTITY accountProtocolGetMore.label "Get more…">
+ <!ENTITY accountProtocolShowMore.label  "Show all protocols">
+ <!ENTITY accountProtocolShowMore.description  "Choose from the full list of protocols">
