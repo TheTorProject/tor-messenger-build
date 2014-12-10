@@ -1,15 +1,14 @@
-# HG changeset patch
-# User Sukhbir Singh <sukhbir@torproject.org>
-# Date 1413961999 -19800
-#      Wed Oct 22 12:43:19 2014 +0530
-# Node ID bdb1f40bcd898f205de1f67b6947a9c77bbea651
-# Parent  ce8c62cb7b7c24bb68fc5d16eba25b3f43c30786
-Ensure TLS/SSL is used by default for IRC accounts
-
 diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
+index e5be455..533be08 100644
 --- a/chat/protocols/irc/irc.js
 +++ b/chat/protocols/irc/irc.js
-@@ -1808,8 +1808,8 @@
+@@ -1833,13 +1833,13 @@ ircProtocol.prototype = {
+ 
+   usernameSplits: [
+     {get label() _("options.server"), separator: "@",
+-     defaultValue: "chat.freenode.net", reverse: true}
++     defaultValue: "irc.oftc.net", reverse: true}
+   ],
  
    options: {
      // TODO Default to IRC over SSL.
