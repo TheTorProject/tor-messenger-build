@@ -8,9 +8,9 @@ input_files:
    name: torbrowser
    targets:
      linux-x86_64:
-       sha256sum: 53f97d10d5cd17695e84a5eba52fa099f6151e21d409a58feee83327cf33e3b3
+       sha256sum: b01e1248baba84c70cf6443c52876af5ed301bc830e9fb7a2bb93283ddbc2b0a
      linux-i686:
-       sha256sum: 83a2de8e638f5e4dcda84ce7b664f46394669ee45157f85127ed4f9d4050be8c
+       sha256sum: 3e4f9d08c4b194cbe9efd879e25c1581c6f58b6bd034ce037aae479edb9ab0b3
 
 targets:
   linux-x86_64:
