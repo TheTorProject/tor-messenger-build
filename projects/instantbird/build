@@ -38,6 +38,7 @@ do
   patch -p1 < $patch
 done
 cat ../spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
+cp ../cert_override.txt im/app/profile
 cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
 then

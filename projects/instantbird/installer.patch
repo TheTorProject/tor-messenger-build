@@ -1,0 +1,41 @@
+diff --git a/im/app/profile/Makefile.in b/im/app/profile/Makefile.in
+index 6de1a3d..ee71ede 100644
+--- a/im/app/profile/Makefile.in
++++ b/im/app/profile/Makefile.in
+@@ -14,7 +14,8 @@ include $(topsrcdir)/config/rules.mk
+ 
+ FILES := \
+ 	mimeTypes.rdf \
+-    localstore.rdf \
++	localstore.rdf \
++	cert_override.txt \
+ 	$(NULL)
+ 
+ libs:: $(FILES)
+diff --git a/im/installer/Makefile.in b/im/installer/Makefile.in
+index 396d5f8..deca57e 100644
+--- a/im/installer/Makefile.in
++++ b/im/installer/Makefile.in
+@@ -109,7 +109,9 @@ MOZ_PKG_MAC_ICON=branding/disk.icns
+ MOZ_PKG_MAC_EXTRA=--symlink "/Applications:/ "
+ endif
+ 
+-NON_OMNIJAR_FILES =
++NON_OMNIJAR_FILES = \
++	defaults/profile/cert_override.txt \
++	$(NULL)
+ 
+ ifndef LIBXUL_SDK
+ INSTALL_SDK = 1
+diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
+index bda87fa..dfdd2d1 100644
+--- a/im/installer/package-manifest.in
++++ b/im/installer/package-manifest.in
+@@ -156,6 +156,7 @@
+ @RESPATH@/defaults/profile/localstore.rdf
+ @RESPATH@/defaults/profile/prefs.js
+ @RESPATH@/defaults/profile/mimeTypes.rdf
++@RESPATH@/defaults/profile/cert_override.txt
+ 
+ #ifdef XP_MACOSX
+ @RESPATH@/components/ibDockBadge.js
