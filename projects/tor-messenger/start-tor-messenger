@@ -210,14 +210,14 @@ else
 fi
 
 SYSARCHITECTURE=$(getconf LONG_BIT)
-TORARCHITECTURE=$(expr "$(file instantbird)" : '.*ELF \([[:digit:]]*\)')
+TORARCHITECTURE=$(expr "$(file Messenger/instantbird)" : '.*ELF \([[:digit:]]*\)')
 
 if [ $SYSARCHITECTURE -ne $TORARCHITECTURE ]; then
    complain "Wrong architecture? 32-bit vs. 64-bit."
    exit 1
 fi
 
-LD_LIBRARY_PATH="${HOME}/lib/:${HOME}/extensions/tor-launcher@torproject.org/TorBrowser/Tor:${HOME}/extensions/ctypes-otr@tormessenger/chrome/content"
+LD_LIBRARY_PATH="${HOME}/Messenger/lib/:${HOME}/Messenger/extensions/tor-launcher@torproject.org/TorBrowser/Tor:${HOME}/Messenger/extensions/ctypes-otr@tormessenger/chrome/content"
 export LD_LIBRARY_PATH
 
 function setControlPortPasswd() {
@@ -299,7 +299,7 @@ cd "${HOME}"
 # !!! Dash above comment! Now we pass command-line arguments we got (except --debug) to Firefox.
 # !!! Use at your own risk!
 # Adding --class for fixing bug 11102.
-TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird "${@}"
+TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./Messenger/instantbird "${@}"
 exitcode="$?"
 if [ "$exitcode" -ne 0 ]; then
 	complain "Tor Messenger exited abnormally.  Exit code: $exitcode"
