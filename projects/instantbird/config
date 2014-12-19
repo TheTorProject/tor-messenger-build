@@ -63,6 +63,7 @@ input_files:
   - filename: slashme.patch
   - filename: irc.patch
   - filename: xmpp.patch
+  - filename: xmpp-resource.patch
   - filename: facebook.patch
   - filename: accountcreation.patch
   - filename: links.patch
