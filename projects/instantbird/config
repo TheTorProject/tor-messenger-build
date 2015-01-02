@@ -82,7 +82,7 @@ input_files:
     project: python
     enable: '[% c("var/linux") %]'
   - URL: https://bootstrap.pypa.io/get-pip.py
-    sha256sum: d43dc33a5670d69dd14a9be1f2b2fa27ebf124ec1b212a47425331040f742a9b
+    sha256sum: 3a96e070032aa850ca154844c2be89bbe72cc58040453aac3efdab7b4c4c7144
     enable: '[% c("var/linux") %]'
   - name: binutils
     project: binutils
