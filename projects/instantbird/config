@@ -58,8 +58,6 @@ input_files:
     pkg_type: src
   - filename: spi-cacert.der
   - filename: preferences.patch
-  - filename: prepare-messages-for-displaying.patch
-  - filename: test-transformation-api.patch
   - filename: slashme.patch
   - filename: irc.patch
   - filename: xmpp.patch
