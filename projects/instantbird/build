@@ -9,7 +9,6 @@ cd /tmp/dist
 [% IF c("var/linux") -%]
 tar xf $rootdir/[% c('input_files_by_name/python') %]
 export PATH="/tmp/dist/python/bin:$PATH"
-python $rootdir/get-pip.py
 tar xf $rootdir/[% c('input_files_by_name/binutils') %]
 export PATH="/tmp/dist/binutils/bin:$PATH"
 [% END -%]
