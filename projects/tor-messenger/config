@@ -1,5 +1,5 @@
 # vim: filetype=yaml
-version: 0
+version: 0.0.4
 filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.xz'
 input_files:
   - name: instantbird
