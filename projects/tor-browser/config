@@ -1,5 +1,5 @@
 # vim: filetype=yaml
-version: 4.0.2
+version: 4.0.3
 filename: 'tor-browser-[% c("version") %]-[% c("var/osname") %].tar.xz'
 
 input_files:
@@ -8,9 +8,9 @@ input_files:
    name: torbrowser
    targets:
      linux-x86_64:
-       sha256sum: b01e1248baba84c70cf6443c52876af5ed301bc830e9fb7a2bb93283ddbc2b0a
+       sha256sum: 85ac7e80d47e2996b63ef25510fc2a0e4811b215b86e666d4ce59fb211645274
      linux-i686:
-       sha256sum: 3e4f9d08c4b194cbe9efd879e25c1581c6f58b6bd034ce037aae479edb9ab0b3
+       sha256sum: 0a4291023123075459529c5013f10167d039c35341d6861779ec2590e043e71d
 
 targets:
   linux-x86_64:
