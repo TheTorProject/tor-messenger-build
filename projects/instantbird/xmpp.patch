@@ -1,20 +1,13 @@
-# HG changeset patch
-# User Sukhbir Singh <sukhbir@torproject.org>
-# Date 1413962112 -19800
-#      Wed Oct 22 12:45:12 2014 +0530
-# Node ID 1172d3f8ed1dd3d7d6f892f4d123b109499e24d3
-# Parent  bdb1f40bcd898f205de1f67b6947a9c77bbea651
-Ensure TLS/SSL is used by default for XMPP accounts
-
 diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
+index b05c77e..f8c829f 100644
 --- a/chat/protocols/xmpp/xmpp.js
 +++ b/chat/protocols/xmpp/xmpp.js
-@@ -39,7 +39,7 @@
-         // "old_ssl" and "none" are also supported, but not exposed in the UI.
-         // Any unknown value will fallback to the opportunistic_tls behavior.
+@@ -41,7 +41,7 @@ XMPPProtocol.prototype = {
        },
--      default: "opportunistic_tls"
-+      default: "require_tls"
+       default: "require_tls"
      },
-     server: {get label() _("options.connectServer"), default: ""},
+-    server: {get label() _("options.connectServer"), default: ""},
++    server: {get label() _("options.connectServer"), default: "jabber.ccc.de"},
      port: {get label() _("options.connectPort"), default: 5222}
+   },
+   get chatHasTopic() true,
