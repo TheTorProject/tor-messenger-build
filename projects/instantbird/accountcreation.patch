@@ -14,7 +14,7 @@ diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/l
  # available protocols can be found at
  #     https://wiki.instantbird.org/Protocol_Identifiers
 -topProtocol.list=prpl-gtalk,prpl-facebook,prpl-twitter,prpl-aim,prpl-msn,prpl-yahoo
-+topProtocol.list=prpl-irc,prpl-jabber,prpl-gtalk,prpl-facebook,prpl-twitter
++topProtocol.list=prpl-irc,prpl-jabber,prpl-gtalk,prpl-facebook
  
  # LOCALIZATION NOTE
  # These are the descriptions of the top protocols specified above.
