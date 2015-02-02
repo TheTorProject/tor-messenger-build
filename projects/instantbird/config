@@ -62,6 +62,7 @@ input_files:
   - filename: irc.patch
   - filename: xmpp.patch
   - filename: xmpp-resource.patch
+  - filename: gtalk-resource.patch
   - filename: accountcreation.patch
   - filename: links.patch
   - filename: picture.patch

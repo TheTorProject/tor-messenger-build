@@ -1,0 +1,13 @@
+diff --git a/chat/protocols/gtalk/gtalk.js b/chat/protocols/gtalk/gtalk.js
+index 56c6c72..1e1ead5 100644
+--- a/chat/protocols/gtalk/gtalk.js
++++ b/chat/protocols/gtalk/gtalk.js
+@@ -93,7 +93,7 @@ GTalkProtocol.prototype = {
+   getAccount: function(aImAccount) new GTalkAccount(this, aImAccount),
+   options: {
+     resource: {get label() _("options.resource"),
+-               get default() XMPPDefaultResource}
++               default: ""}
+   },
+   get chatHasTopic() true,
+   classID: Components.ID("{38a224c1-6748-49a9-8ab2-efc362b1000d}")
