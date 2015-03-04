@@ -114,7 +114,7 @@ complain () {
 }
 
 if [ "`id -u`" -eq 0 ]; then
-	complain "The Tor Messenger should not be run as root.  Exiting."
+	complain "Tor Messenger should not be run as root.  Exiting."
 	exit 1
 fi
 
