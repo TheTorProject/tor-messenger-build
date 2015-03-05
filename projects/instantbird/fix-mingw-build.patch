@@ -1,16 +1,3 @@
-diff --git a/im/Makefile.in b/im/Makefile.in
-index 048ef94facc1..71d1a3409c79 100644
---- a/im/Makefile.in
-+++ b/im/Makefile.in
-@@ -12,7 +12,7 @@ include $(topsrcdir)/config/config.mk
- 
- include $(topsrcdir)/config/rules.mk
- 
--ifeq ($(OS_ARCH),WINNT)
-+ifdef MAKENSISU
- # For Windows build the uninstaller during the application build since the
- # uninstaller is included with the application for mar file generation.
- libs::
 diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
 index 0376e05c74a5..70c1a6ada34c 100644
 --- a/im/installer/package-manifest.in
@@ -41,15 +28,3 @@ index 0376e05c74a5..70c1a6ada34c 100644
  
  ; Modules
  @RESPATH@/modules/*
-diff --git a/im/moz.build b/im/moz.build
-index 0778269ffe22..528fb6e371e6 100644
---- a/im/moz.build
-+++ b/im/moz.build
-@@ -16,6 +16,6 @@ DIRS += [
- # app is always last as it packages up the built files on mac.
- DIRS += ['app']
- 
--if CONFIG['OS_ARCH'] == 'WINNT':
-+if CONFIG['MAKENSISU']:
-     DIRS += ['installer/windows']
- 
