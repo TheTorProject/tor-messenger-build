@@ -1,8 +1,14 @@
 #!/bin/sh
 set -e
 
-mkdir -p bundle/Messenger/
+mkdir bundle
+[% IF c("var/windows") -%]
+unzip -d bundle [% c('input_files_by_name/instantbird') %]
+mv bundle/instantbird bundle/Messenger
+[% ELSE -%]
+mkdir bundle/Messenger
 tar xf [% c('input_files_by_name/instantbird') %] -C bundle/Messenger --strip 1
+[% END -%]
 
 [% IF c("var/linux") %]
 tar xf [% c('input_files_by_name/gcc') %]
@@ -18,7 +24,12 @@ mv ctypes-otr* 'ctypes-otr@tormessenger'
 mkdir tor-launcher@torproject.org
 unzip -q ../../../[% c('input_files_by_name/tor-launcher') %] -d tor-launcher@torproject.org
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
+[% IF ("var/windows") -%]
+7z x ../../../[% c('input_files_by_name/tor-browser') %]
+mv \$_OUTDIR tor-browser_en-US
+[% ELSE -%]
 tar xf ../../../[% c('input_files_by_name/tor-browser') %]
+[% END -%]
 sed -i 's/^SocksPort .*/SocksPort 9152/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort 9153/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 mv tor-browser_en-US/Browser/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor

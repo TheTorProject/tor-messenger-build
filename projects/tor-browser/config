@@ -1,6 +1,6 @@
 # vim: filetype=yaml
 version: 4.0.4
-filename: 'tor-browser-[% c("version") %]-[% c("var/osname") %].tar.xz'
+filename: 'tor-browser-[% c("version") %]-[% c("var/osname") %].[% c("var/extension") %]'
 
 input_files:
  - URL: "[% c('var/base_url') %]/tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
@@ -14,6 +14,9 @@ input_files:
        windows-i686:
            URL: "[% c('var/base_url') %]/torbrowser-install-[% c('version') %]_en-US.exe"
 
+var:
+  extension: 'tar.xz'
+
 targets:
   linux-x86_64:
     var:
@@ -21,3 +24,6 @@ targets:
   linux-i686:
     var:
        tb_osname: linux32
+  windows-i686:
+    var:
+       extension: 'exe'
