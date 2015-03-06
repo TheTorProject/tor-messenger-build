@@ -3,12 +3,16 @@ version: 4.0.4
 filename: 'tor-browser-[% c("version") %]-[% c("var/osname") %].tar.xz'
 
 input_files:
- - filename: "tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
-   URL: "https://dist.torproject.org/torbrowser/[% c('version') %]/tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
+ - URL: "[% c('var/base_url') %]/tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
    name: torbrowser
    file_gpg_id: 1
    sig_ext: asc
    gpg_keyring: tor-browser.gpg
+   var:
+       base_url: "https://dist.torproject.org/torbrowser/[% c('version') %]"
+   targets:
+       windows-i686:
+           URL: "[% c('var/base_url') %]/torbrowser-install-[% c('version') %]_en-US.exe"
 
 targets:
   linux-x86_64:
