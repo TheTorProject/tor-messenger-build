@@ -68,7 +68,6 @@ input_files:
   - filename: theme-extension-update.patch
   - filename: installer.patch
   - filename: cert_override.txt
-    enable: '[% c("var/windows") %]'
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
