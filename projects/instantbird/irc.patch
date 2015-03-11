@@ -1,8 +1,8 @@
 diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
-index d0c5c3f..450e105 100644
+index c581e2d..cf0d085 100644
 --- a/chat/protocols/irc/irc.js
 +++ b/chat/protocols/irc/irc.js
-@@ -1914,7 +1914,7 @@ ircProtocol.prototype = {
+@@ -1916,7 +1916,7 @@ ircProtocol.prototype = {
  
    usernameSplits: [
      {get label() _("options.server"), separator: "@",
