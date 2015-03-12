@@ -24,7 +24,7 @@ mv ctypes-otr* 'ctypes-otr@tormessenger'
 mkdir tor-launcher@torproject.org
 unzip -q ../../../[% c('input_files_by_name/tor-launcher') %] -d tor-launcher@torproject.org
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
-[% IF ("var/windows") -%]
+[% IF c("var/windows") -%]
 7z x ../../../[% c('input_files_by_name/tor-browser') %]
 mv \$_OUTDIR tor-browser_en-US
 [% ELSE -%]
