@@ -14,3 +14,13 @@ input_files:
     name: gcc
     enable: '[% c("var/linux") %]'
   - filename: start-tor-messenger
+  - project: docker-image
+
+remote_docker: 1
+lsb_release:
+    id: Ubuntu
+    release: 12.04
+    codename: precise
+var:
+    deps:
+        - p7zip-full

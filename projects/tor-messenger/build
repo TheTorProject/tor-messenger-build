@@ -3,7 +3,7 @@ set -e
 
 mkdir bundle
 [% IF c("var/windows") -%]
-unzip -d bundle [% c('input_files_by_name/instantbird') %]
+7z x -y -obundle [% c('input_files_by_name/instantbird') %]
 mv bundle/instantbird bundle/Messenger
 [% ELSE -%]
 mkdir bundle/Messenger
@@ -22,7 +22,7 @@ cd bundle/Messenger/extensions
 tar xf ../../../[% c('input_files_by_name/ctypes-otr') %]
 mv ctypes-otr* 'ctypes-otr@tormessenger'
 mkdir tor-launcher@torproject.org
-unzip -q ../../../[% c('input_files_by_name/tor-launcher') %] -d tor-launcher@torproject.org
+7z x -y -otor-launcher@torproject.org ../../../[% c('input_files_by_name/tor-launcher') %]
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
 [% IF c("var/windows") -%]
 7z x ../../../[% c('input_files_by_name/tor-browser') %]
