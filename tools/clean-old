@@ -6,6 +6,7 @@ use FindBin;
 
 my $rbm = "$FindBin::Bin/../rbm/rbm";
 my $projects_dir = "$FindBin::Bin/../projects";
+my $product_target = 'tor-messenger';
 my @targets = qw(linux-x86_64 linux-i686 windows-i686 osx-x86_64);
 my @sig_ext = qw(.sig .gpg .asc);
 my $docker_image_prefix = docker_image_prefix();
@@ -19,12 +20,14 @@ sub clean_project_build_files {
     my %keep_files;
     foreach my $target (@targets) {
         my ($out, $err, $success) = capture_exec($rbm,
-            'showconf', $project, 'filename', "--target=$target");
+            'showconf', $project, 'filename', "--target=$product_target",
+            "--target=$target");
         return unless $success;
         chomp $out;
         $keep_files{$out} = 1;
         ($out, $err, $success) = capture_exec($rbm,
-            'showconf', $project, 'var/input_files_list', "--target=$target");
+            'showconf', $project, 'var/input_files_list',
+            "--target=$product_target", "--target=$target");
         next unless $success;
         my @input_files = split("\n", $out);
         foreach my $input_file (@input_files) {
@@ -84,12 +87,12 @@ sub clean_docker_images {
         next unless -f "$project/config";
         foreach my $target (@targets) {
             my ($out, $err, $success) = capture_exec($rbm, 'showconf', $project,
-                'remote_docker', "--target=$target");
+                'remote_docker', "--target=$product_target", "--target=$target");
             next unless $success;
             chomp $out;
             next unless $out;
             ($out, $err, $success) = capture_exec($rbm, 'showconf', $project,
-                'docker_image', "--target=$target");
+                'docker_image', "--target=$product_target", "--target=$target");
             next unless $success;
             chomp $out;
             my (undef, $image_file) = split(':', $out);
