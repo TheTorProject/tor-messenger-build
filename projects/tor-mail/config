@@ -1,0 +1,25 @@
+# vim: filetype=yaml
+version: 0.0.1
+filename: 'tor-mail-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.xz'
+input_files:
+  - project: thunderbird
+    name: thunderbird
+  - project: torbirdy
+    name: torbirdy
+  - project: tor-launcher
+    name: tor-launcher
+  - project: tor-browser
+    name: tor-browser
+  - filename: start-tor-mail
+  - filename: user.js
+  - project: docker-image
+
+remote_docker: 1
+lsb_release:
+    id: Ubuntu
+    release: 12.04
+    codename: precise
+var:
+    deps:
+        - bzip2
+        - p7zip-full
