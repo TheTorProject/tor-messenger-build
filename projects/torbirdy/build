@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+tar xvf [% project %]-[% c('version') %].tar.gz
+cd [% project %]-[% c('version') %]
+make make-xpi
+cd ..
+mv -f torbirdy-[% c("version") %].xpi [% dest_dir _ '/' _ c('filename') %]
