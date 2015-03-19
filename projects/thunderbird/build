@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+mv [% c('input_files_by_name/thunderbird') %] [% c('var/src_filename') %]
+grep [% c('var/moz_osname') %]/en-US/[% c('var/src_filename') %] sha512sums-[% c("version") %] | \
+    perl -pe 's/[% c('var/moz_osname') %]\/en-US\/[% c('var/src_filename') %]$/[% c('var/src_filename') %]/' | \
+    sha512sum -c
+cp -p [% c('var/src_filename') %] [% dest_dir %]/[% c('filename') %]
