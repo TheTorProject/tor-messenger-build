@@ -28,8 +28,8 @@ mv \$_OUTDIR tor-browser_en-US
 [% ELSE -%]
 tar xf ../../../[% c('input_files_by_name/tor-browser') %]
 [% END -%]
-sed -i 's/^SocksPort .*/SocksPort 9152/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
-sed -i 's/^ControlPort .*/ControlPort 9153/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 mv tor-browser_en-US/Browser/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
 mv tor-browser_en-US/Browser/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor
 rm -Rf tor-browser_en-US
