@@ -17,17 +17,19 @@ mkdir bundle/Mail/defaults/profile/
 mv user.js bundle/Mail/defaults/profile/
 
 cd bundle/Mail/extensions
-mkdir torbirdy
-7z x -y -otorbirdy $rootdir/[% c('input_files_by_name/torbirdy') %]
+mkdir castironthunderbirdclub@torproject.org
+7z x -y -o castironthunderbirdclub@torproject.org $rootdir/[% c('input_files_by_name/torbirdy') %]
 mkdir tor-launcher@torproject.org
-7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
+7z x -y -o tor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
+
 [% IF c("var/windows") -%]
 7z x ../../../[% c('input_files_by_name/tor-browser') %]
 mv \$_OUTDIR tor-browser_en-US
 [% ELSE -%]
 tar xf ../../../[% c('input_files_by_name/tor-browser') %]
 [% END -%]
+
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 mv tor-browser_en-US/Browser/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
