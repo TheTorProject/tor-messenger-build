@@ -5,5 +5,9 @@ cd [% project %]-[% c('version') %]
 [% IF c("var/tor_control_port") -%]
 patch -p1 < ../controlport.patch
 [% END -%]
+[% IF c("var/tor-mail") -%]
+cp ../torbirdy.png src/chrome/skin/tbb-logo.png
+patch -p1 < ../torbirdy-logo.patch
+[% END -%]
 make package
 mv pkg/*.xpi [% dest_dir _ '/' _ c('filename') %]

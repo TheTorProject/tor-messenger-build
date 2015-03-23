@@ -1,0 +1,13 @@
+diff --git a/src/chrome/skin/network-settings.css b/src/chrome/skin/network-settings.css
+index 331ae42..3331854 100644
+--- a/src/chrome/skin/network-settings.css
++++ b/src/chrome/skin/network-settings.css
+@@ -90,7 +90,7 @@ button.firstAnswer {
+ .tbb-logo {
+   list-style-image: url("chrome://torlauncher/skin/tbb-logo.png");
+   width: 115px;
+-  height: 80px;
++  height: 94px;
+   margin-right: 20px;
+ }
+ 
