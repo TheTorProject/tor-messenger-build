@@ -6,7 +6,6 @@ gpg_keyring: mikeperry.gpg
 tag_gpg_id: 1
 filename: "[% project %]-[% c('version') %]-[% c('var/build_id') %].xpi"
 input_files:
-  - filename: topdir.patch
   - filename: controlport.patch
     content: '[% INCLUDE controlport.patch.tmpl -%]'
     refresh_input: 1
