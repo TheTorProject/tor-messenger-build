@@ -8,6 +8,7 @@ filename: "[% project %]-[% c('version') %]-[% c('var/build_id') %].xpi"
 input_files:
   - filename: torbirdy.png
   - filename: torbirdy-logo.patch
+  - filename: topdir.patch
   - filename: controlport.patch
     content: '[% INCLUDE controlport.patch.tmpl -%]'
     refresh_input: 1
