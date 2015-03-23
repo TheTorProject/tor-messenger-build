@@ -18,9 +18,9 @@ mv user.js bundle/Mail/defaults/profile/
 
 cd bundle/Mail/extensions
 mkdir castironthunderbirdclub@torproject.org
-7z x -y -o castironthunderbirdclub@torproject.org $rootdir/[% c('input_files_by_name/torbirdy') %]
+7z x -y -ocastironthunderbirdclub@torproject.org $rootdir/[% c('input_files_by_name/torbirdy') %]
 mkdir tor-launcher@torproject.org
-7z x -y -o tor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
+7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
 
 [% IF c("var/windows") -%]
