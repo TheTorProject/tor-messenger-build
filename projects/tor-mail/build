@@ -11,6 +11,7 @@ mkdir bundle/Mail
 tar xf [% c('input_files_by_name/thunderbird') %] -C bundle/Mail --strip 1
 [% END -%]
 
+chmod 755 start-tor-mail
 mv start-tor-mail bundle/
 
 mkdir bundle/Mail/defaults/profile/
