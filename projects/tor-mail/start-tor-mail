@@ -5,6 +5,7 @@
 # GNU/Linux does not really require something like RelativeLink.c
 # However, we do want to have the same look and feel with similar features.
 #
+# To run in offline (skip Tor Launcher) mode, simply pass --offline
 # To run in debug mode simply pass --debug
 #
 # Copyright 2014 The Tor Project.  See LICENSE for licensing information.
@@ -119,15 +120,23 @@ if [ "`id -u`" -eq 0 ]; then
 fi
 
 debug=0
-usage_message="usage: $0 [--debug]"
+usage_message="usage: $0 [--offline | --debug]"
 # !!! We may have more than one argument, changed -eq to -ge in if & elif clauses below
-if [ "$#" -ge 1 -a \( "x$1" = "x--debug" -o "x$1" = "x-debug" \) ]; then
-	debug=1
-	shift # pop the debug argument
-	printf "\nDebug enabled.\n\n"
-elif [ "$#" -ge 1 -a \( "x$1" = "x--help" -o "x$1" = "x-help" \) ]; then
-	echo "$usage_message"
-	exit 0
+if [ "$#" -ge 1 ]; then
+    if [ "x$1" = "x--offline" -o "x$1" = "x-offline" ]; then
+        TOR_SKIP_LAUNCH=1
+        export TOR_SKIP_LAUNCH
+        printf "\nOffline mode enabled. Tor will not be started.\n\n"
+    fi
+    if [ "x$1" = "x--debug" -o "x$1" = "x-debug" ]; then
+        debug=1
+        shift # pop the debug argument
+        printf "\nDebug enabled.\n\n"
+    fi
+    if [ "x$1" = "x--help" -o "x$1" = "x-help" ]; then
+        echo "$usage_message"
+        exit 0
+    fi
 fi
 
 # If the user hasn't requested 'debug mode', close whichever of stdout
