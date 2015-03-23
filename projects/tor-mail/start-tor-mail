@@ -126,6 +126,7 @@ if [ "$#" -ge 1 ]; then
     if [ "x$1" = "x--offline" -o "x$1" = "x-offline" ]; then
         TOR_SKIP_LAUNCH=1
         export TOR_SKIP_LAUNCH
+        shift
         printf "\nOffline mode enabled. Tor will not be started.\n\n"
     fi
     if [ "x$1" = "x--debug" -o "x$1" = "x-debug" ]; then
