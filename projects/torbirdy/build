@@ -2,6 +2,7 @@
 set -e
 tar xvf [% project %]-[% c('version') %].tar.gz
 cd [% project %]-[% c('version') %]
+patch -p1 < ../tormailbundle.patch
 make make-xpi
 cd ..
 mv -f torbirdy-[% c("version") %].xpi [% dest_dir _ '/' _ c('filename') %]

@@ -3,3 +3,5 @@ filename: 'torbirdy-[% c("version") %].xpi'
 version: 0.1.4
 git_hash: 4cdded42ca5c6f900c893a8b3d27c50ce6854eac
 git_url: https://git.torproject.org/torbirdy.git
+input_files:
+    - filename: tormailbundle.patch
