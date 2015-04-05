@@ -2,15 +2,6 @@ diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
 index 0376e05c74a5..70c1a6ada34c 100644
 --- a/im/installer/package-manifest.in
 +++ b/im/installer/package-manifest.in
-@@ -52,7 +52,7 @@
- @RESPATH@/searchplugins/*
- @RESPATH@/dictionaries/*
- @RESPATH@/hyphenation/*
--#ifdef XP_WIN32
-+#ifdef MAKENSISU
- @BINPATH@/uninstall/helper.exe
- #endif
- #ifdef MOZ_UPDATER
 @@ -123,6 +123,8 @@
  #endif
  
