@@ -1,5 +1,5 @@
 # vim: filetype=yaml
-version: 4.0.6
+version: 4.0.8
 filename: 'tor-browser-[% c("version") %]-[% c("var/osname") %].[% c("var/extension") %]'
 
 input_files:
