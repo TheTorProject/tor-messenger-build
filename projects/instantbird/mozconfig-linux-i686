@@ -20,3 +20,5 @@ ac_add_options --disable-debug
 
 ac_add_options --with-l10n-base=..
 ac_add_options --host=i686-linux-gnu
+
+ac_add_options --with-branding=im/branding/messenger

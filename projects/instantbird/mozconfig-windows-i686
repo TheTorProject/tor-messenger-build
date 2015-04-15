@@ -27,3 +27,4 @@ ac_add_options --disable-webrtc
 ac_add_options --disable-tests
 ac_add_options --disable-signmar
 
+ac_add_options --with-branding=im/branding/messenger
