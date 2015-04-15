@@ -32,15 +32,17 @@ cd moz
 tar xf ../[% c('input_files_by_name/mozilla-src') %]
 mv mozilla-* ../[% project %]-[% c('version') %]/mozilla
 cd ../[% project %]-[% c('version') %]
+
+mkdir im/branding/messenger
+cp -R im/branding/nightly/* im/branding/messenger/
+
+cd mozilla
 for patch in $(ls -1 ../*.patch | sort)
 do
   patch -p1 < $patch
 done
 cat ../spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
 cp ../cert_override.txt im/app/profile
-mkdir im/branding/messenger
-cp -R im/branding/nightly/* im/branding/messenger/
-cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
 then
     for patch in $(ls -1 $rootdir/*.mozpatch | sort)
