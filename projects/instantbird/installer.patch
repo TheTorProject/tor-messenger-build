@@ -11,10 +11,10 @@ index 4f48e97..4e02fdf 100644
  
  libs:: $(FILES)
 diff --git a/im/installer/Makefile.in b/im/installer/Makefile.in
-index 396d5f8..deca57e 100644
+index 0234b21..5d20e62 100644
 --- a/im/installer/Makefile.in
 +++ b/im/installer/Makefile.in
-@@ -109,7 +109,9 @@ MOZ_PKG_MAC_ICON=branding/disk.icns
+@@ -113,7 +113,9 @@ MOZ_PKG_MAC_ICON=branding/disk.icns
  MOZ_PKG_MAC_EXTRA=--symlink "/Applications:/ "
  endif
  
@@ -26,10 +26,10 @@ index 396d5f8..deca57e 100644
  ifndef LIBXUL_SDK
  INSTALL_SDK = 1
 diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
-index a40698e..74abdca 100644
+index edf01b1..78db5e4 100644
 --- a/im/installer/package-manifest.in
 +++ b/im/installer/package-manifest.in
-@@ -156,6 +156,7 @@
+@@ -155,6 +155,7 @@
  @RESPATH@/defaults/profile/localstore.rdf
  @RESPATH@/defaults/profile/prefs.js
  @RESPATH@/defaults/profile/mimeTypes.rdf
