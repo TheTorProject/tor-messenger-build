@@ -8,7 +8,10 @@ patch -p1 < ../controlport.patch
 [% END -%]
 [% IF c("var/tor-mail") -%]
 cp ../torbirdy.png src/chrome/skin/tbb-logo.png
-patch -p1 < ../torbirdy-logo.patch
 [% END -%]
+[% IF c("var/tor-messenger") -%]
+cp ../messenger.png src/chrome/skin/tbb-logo.png
+[% END -%]
+patch -p1 < ../logo.patch
 make package
 mv pkg/*.xpi [% dest_dir _ '/' _ c('filename') %]
