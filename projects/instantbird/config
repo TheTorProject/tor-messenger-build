@@ -69,6 +69,7 @@ input_files:
   - filename: installer.patch
   - filename: cert_override.txt
   - filename: branding/name.patch
+  - filename: branding/icon.png
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'

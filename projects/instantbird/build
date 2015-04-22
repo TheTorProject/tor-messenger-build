@@ -40,8 +40,13 @@ for patch in $(ls -1 ../*.patch | sort)
 do
   patch -p1 < $patch
 done
+for patch in $(ls -1 ../branding/*.patch | sort)
+do
+  patch -p1 < $patch
+done
 cat ../spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
 cp ../cert_override.txt im/app/profile
+cp ../branding/icon.png im/branding/messenger/default16.png
 cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
 then
