@@ -12,7 +12,7 @@ var:
   archive_suffix: tar.bz2
   deps:
     - build-essential
-    - libmpc2
+    - libmpc-dev
     - autotools-dev
     - autoconf2.13
     - python
@@ -34,8 +34,8 @@ targets:
   windows-i686:
     lsb_release:
       id: Ubuntu
-      release: 12.04
-      codename: precise
+      release: 14.10
+      codename: utopic
     var:
       archive_suffix: zip
       arch_deps:

@@ -9,14 +9,14 @@ lsb_release:
 var:
   deps:
     - build-essential
-    - libmpc2
+    - libmpc-dev
     - file
 targets:
   windows-i686:
     lsb_release:
       id: Ubuntu
-      release: 12.04
-      codename: precise
+      release: 14.10
+      codename: utopic
     var:
       arch_deps:
         - gettext
