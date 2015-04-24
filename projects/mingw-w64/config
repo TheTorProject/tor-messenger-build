@@ -7,8 +7,8 @@ version: '[% c("abbrev") %]'
 remote_docker: 1
 lsb_release:
   id: Ubuntu
-  release: 12.04
-  codename: precise
+  release: 14.10
+  codename: utopic
 var:
   gcc_version: 4.9.1
   deps:

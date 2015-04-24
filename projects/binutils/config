@@ -18,8 +18,8 @@ targets:
       configure_opt: '--target=i686-w64-mingw32 --disable-multilib'
     lsb_release:
       id: Ubuntu
-      release: 12.04
-      codename: precise
+      release: 14.10
+      codename: utopic
 
 input_files:
   - URL: https://ftp.gnu.org/gnu/binutils/binutils-[% c("version") %].tar.bz2
