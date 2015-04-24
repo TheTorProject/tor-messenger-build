@@ -9,9 +9,3 @@ src: |
 steps:
   src:
     filename: "mozilla-[% c('version') %]-src.tar.gz"
-
-targets:
-    windows-i686:
-        # master does not currently build with mingw-w64, so we are
-        # staying with an older commit until the problem is fixed.
-        git_hash: efd5e9084a29e91c05b1fd9b26a56f424b73ac50
