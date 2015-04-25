@@ -1,0 +1,21 @@
+diff --git a/chat/protocols/irc/ircCTCP.jsm b/chat/protocols/irc/ircCTCP.jsm
+index 5722479..642fad3 100644
+--- a/chat/protocols/irc/ircCTCP.jsm
++++ b/chat/protocols/irc/ircCTCP.jsm
+@@ -195,7 +195,7 @@ var ctcpBase = {
+       if (aMessage.command == "PRIVMSG") {
+         // TIME
+         // Received a TIME request, send a human readable response.
+-        let now = (new Date()).toString();
++        let now = (new Date()).toUTCString();
+         this.LOG("Received TIME request from " + aMessage.origin +
+                  ". Sending TIME response: \"" + now + "\".");
+         this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now);
+@@ -230,6 +230,7 @@ var ctcpBase = {
+         this.sendCTCPMessage(aMessage.origin, true, "VERSION", version);
+       }
+       else if (aMessage.command == "NOTICE" && aMessage.ctcp.param.length) {
++
+         // VERSION #:#:#
+         // Received VERSION response, display to the user.
+         let response = _("ctcp.version", aMessage.origin,
