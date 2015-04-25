@@ -69,6 +69,7 @@ input_files:
   - filename: installer.patch
   - filename: cert_override.txt
   - filename: ctcp-time.patch
+  - filename: ctcp-ping.patch
   - filename: branding/name.patch
   - filename: branding/default.png
   - filename: branding/default16.png

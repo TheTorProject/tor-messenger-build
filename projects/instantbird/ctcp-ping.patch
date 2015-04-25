@@ -1,0 +1,25 @@
+diff --git a/chat/protocols/irc/ircCTCP.jsm b/chat/protocols/irc/ircCTCP.jsm
+index 5722479..4c2d5bf 100644
+--- a/chat/protocols/irc/ircCTCP.jsm
++++ b/chat/protocols/irc/ircCTCP.jsm
+@@ -167,19 +167,7 @@ var ctcpBase = {
+     },
+ 
+     // Used to measure the delay of the IRC network between clients.
+-    "PING": function(aMessage) {
+-      // PING timestamp
+-      if (aMessage.command == "PRIVMSG") {
+-        // Received PING request, send PING response.
+-        this.LOG("Received PING request from " + aMessage.origin +
+-                 ". Sending PING response: \"" + aMessage.ctcp.param + "\".");
+-        this.sendCTCPMessage(aMessage.origin, true, "PING",
+-                             aMessage.ctcp.param);
+-        return true;
+-      }
+-      else
+-        return this.handlePingReply(aMessage.origin, aMessage.ctcp.param);
+-    },
++    // "PING": function(aMessage) {
+ 
+     // These are commented out since CLIENTINFO automatically returns the
+     // supported CTCP parameters and this is not supported.
