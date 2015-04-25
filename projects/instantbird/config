@@ -62,9 +62,9 @@ input_files:
   - filename: xmpp.patch
   - filename: gtalk-resource.patch
   - filename: accountcreation.patch
-  - filename: links.patch
-  - filename: picture.patch
-  - filename: trafficinfo.patch
+  - filename: disable-links.patch
+  - filename: account-picture.patch
+  - filename: show-traffic-tor.patch
   - filename: theme-extension-update.patch
   - filename: installer.patch
   - filename: cert_override.txt
