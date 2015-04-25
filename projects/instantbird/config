@@ -61,7 +61,7 @@ input_files:
   - filename: irc.patch
   - filename: xmpp.patch
   - filename: gtalk-resource.patch
-  - filename: accountcreation.patch
+  - filename: top-protocols.patch
   - filename: disable-links.patch
   - filename: account-picture.patch
   - filename: show-traffic-tor.patch
