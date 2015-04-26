@@ -37,7 +37,12 @@ mv tor-browser_en-US/Browser/TorBrowser/Data/Tor tor-launcher@torproject.org/Tor
 rm -Rf tor-browser_en-US
 cd ../../../
 mv bundle tor-messenger
+[% IF c('var/windows') -%]
+makensis tor-messenger.nsi
+mv tor-messenger-install.exe [% dest_dir _ '/' _ c('filename') %]
+[% ELSE -%]
 [% c('tar', {
         tar_src => [ 'tor-messenger' ],
         tar_args => '-cJf ' _ dest_dir _ '/' _ c('filename'),
         }) %]
+[% END -%]

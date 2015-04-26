@@ -1,6 +1,6 @@
 # vim: filetype=yaml
 version: 0.0.5
-filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.xz'
+filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].[% c("var/filename_ext") %]'
 input_files:
   - name: instantbird
     project: instantbird
@@ -14,6 +14,10 @@ input_files:
     name: gcc
     enable: '[% c("var/linux") %]'
   - filename: start-tor-messenger
+  - filename: tor-messenger.nsi
+    enable: '[% c("var/windows") %]'
+  - filename: tor-messenger.ico
+    enable: '[% c("var/windows") %]'
   - project: docker-image
 
 remote_docker: 1
@@ -22,6 +26,17 @@ lsb_release:
     release: 12.04
     codename: precise
 var:
+    filename_ext: 'tar.xz'
     deps:
         - p7zip-full
         - bzip2
+targets:
+  windows-i686:
+    lsb_release:
+      id: Ubuntu
+      release: 14.10
+      codename: utopic
+    var:
+      filename_ext: 'exe'
+      arch_deps:
+        - nsis
