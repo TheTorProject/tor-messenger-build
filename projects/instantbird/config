@@ -77,8 +77,6 @@ input_files:
   - filename: branding/default48.png
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
-  - filename: fix-versionhelpers.h-include.mozpatch
-    enable: '[% c("var/windows") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python
