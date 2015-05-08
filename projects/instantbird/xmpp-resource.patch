@@ -1,0 +1,13 @@
+diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
+index f99a238..a35f99a 100644
+--- a/chat/protocols/xmpp/xmpp.js
++++ b/chat/protocols/xmpp/xmpp.js
+@@ -34,7 +34,7 @@ XMPPProtocol.prototype = {
+ 
+   options: {
+     resource: {get label() _("options.resource"),
+-               get default() XMPPDefaultResource},
++               default: "Instantbird"},
+     priority: {get label() _("options.priority"), default: 0},
+     connection_security: {
+       get label() _("options.connectionSecurity"),

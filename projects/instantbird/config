@@ -70,6 +70,7 @@ input_files:
   - filename: ctcp-time.patch
   - filename: ctcp-ping.patch
   - filename: xmpp-onion.patch
+  - filename: xmpp-resource.patch
   - filename: version.patch
   - filename: branding/name.patch
   - filename: branding/default.png
