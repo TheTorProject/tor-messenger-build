@@ -59,7 +59,6 @@ input_files:
   - filename: spi-cacert.der
   - filename: preferences.patch
   - filename: irc.patch
-  - filename: xmpp.patch
   - filename: gtalk-resource.patch
   - filename: top-protocols.patch
   - filename: disable-links.patch
@@ -70,6 +69,7 @@ input_files:
   - filename: cert_override.txt
   - filename: ctcp-time.patch
   - filename: ctcp-ping.patch
+  - filename: xmpp-onion.patch
   - filename: version.patch
   - filename: branding/name.patch
   - filename: branding/default.png
