@@ -1,7 +1,7 @@
 # vim: filetype=yaml
 version: '[% c("abbrev") %]'
-git_url: https://github.com/mozilla/releases-comm-central
-git_hash: master
+hg_url: https://hg.mozilla.org/releases/comm-beta/
+hg_hash: THUNDERBIRD_38_0b4_RELEASE
 filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %].[% c('var/archive_suffix') %]"
 remote_docker: 1
 lsb_release:
