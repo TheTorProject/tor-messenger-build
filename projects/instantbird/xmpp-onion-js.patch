@@ -1,15 +1,5 @@
-From 6bd2fc6cbc618e8fcd38411854da2527556e0114 Mon Sep 17 00:00:00 2001
-From: Sukhbir Singh <sukhbir@torproject.org>
-Date: Fri, 8 May 2015 10:19:31 -0400
-Subject: [PATCH] Use onion addresses for known XMPP servers (#13855)
-
----
- im/content/accountWizard.js  | 35 ++++++++++++++++++++++++++++++++++-
- im/content/accountWizard.xul |  5 +++--
- 2 files changed, 37 insertions(+), 3 deletions(-)
-
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index 707f1c7..e763165 100644
+index 707f1c7..2ca929a 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
 @@ -7,6 +7,14 @@ Cu.import("resource:///modules/imServices.jsm");
@@ -36,9 +26,9 @@ index 707f1c7..e763165 100644
 +    if (this.proto.id == "prpl-jabber") {
 +      // If the value of the domain is one for which there exists a
 +      // hidden service, replace the address with the onion address.
-+      let jabberDomain = document.getElementById("username-split-0");
-+      if (jabberDomain.value in kServerOnions) {
-+        this.onionAddress = kServerOnions[jabberDomain.value];
++      this.jabberDomain = document.getElementById("username-split-0");
++      if (this.jabberDomain.value in kServerOnions) {
++        this.onionAddress = kServerOnions[this.jabberDomain.value];
 +      }
 +      else {
 +        this.onionAddress = "";
@@ -79,29 +69,17 @@ index 707f1c7..e763165 100644
  
      let proxyVisible = this.proto.usePurpleProxy;
      if (proxyVisible) {
-diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index 5fa5b82..89f88fe 100644
---- a/im/content/accountWizard.xul
-+++ b/im/content/accountWizard.xul
-@@ -59,7 +59,8 @@
-               label="&accountUsernameTitle.label;"
-               onpageshow="accountWizard.showUsernamePage();"
-               onpagehide="accountWizard.hideUsernamePage();"
--              onpagerewound="return accountWizard.rewindFromUsernamePage();">
-+              onpagerewound="return accountWizard.rewindFromUsernamePage();"
-+              onpageadvanced="return accountWizard.insertOnionAddress();">
-     <description id="usernameInfo"/>
-     <separator/>
-     <vbox id="userNameBox"/>
-@@ -98,7 +99,7 @@
-     <checkbox id="newMailNotification"
-               label="&accountAdvanced.newMailNotification.label;" hidden="true"/>
+@@ -407,6 +440,13 @@ var accountWizard = {
+       let label = bundle.getFormattedString("accountColon", [opt.opt.label]);
+       rows.appendChild(this.createSummaryRow(label, opt.value));
+     }
++
++    if (this.onionAddress) {
++      let onionLabel = document.getElementById("topProtocolsBundle");
++      let onion = document.getElementById("onionAddress");
++      onion.value = onionLabel.getFormattedString("onionAddress.label",
++                                  [this.jabberDomain.value, this.onionAddress]);
++    }
+   },
  
--    <groupbox id="protoSpecificGroupbox" class="collapsable" closed="true"
-+    <groupbox id="protoSpecificGroupbox" class="collapsable" closed="false"
-               onkeypress="accountWizard.onGroupboxKeypress(event)">
-       <caption id="protoSpecificCaption"
-                onclick="accountWizard.toggleGroupbox('protoSpecificGroupbox')"/>
--- 
-2.1.4
-
+   createAccount: function aw_createAccount() {
