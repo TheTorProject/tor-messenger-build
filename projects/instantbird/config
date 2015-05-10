@@ -69,9 +69,11 @@ input_files:
   - filename: cert_override.txt
   - filename: ctcp-time.patch
   - filename: ctcp-ping.patch
-  - filename: xmpp-onion.patch
-  - filename: xmpp-resource.patch
   - filename: xmpp-domain.patch
+  - filename: xmpp-resource.patch
+  - filename: xmpp-onion-js.patch
+  - filename: xmpp-onion-xul.patch
+  - filename: xmpp-onion-locale.patch
   - filename: xmpp-username-split.patch
   - filename: version.patch
   - filename: branding/name.patch
