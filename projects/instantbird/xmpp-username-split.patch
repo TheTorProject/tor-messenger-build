@@ -1,0 +1,16 @@
+diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
+--- a/chat/protocols/xmpp/xmpp.js
++++ b/chat/protocols/xmpp/xmpp.js
+@@ -26,6 +26,12 @@
+   get name() "XMPP",
+   get iconBaseURI() "chrome://prpl-jabber/skin/",
+   getAccount: function(aImAccount) new XMPPAccount(this, aImAccount),
++
++  usernameSplits: [
++    {get label() _("options.domain"), separator: "@",
++     defaultValue: "jabber.org", reverse: true}
++  ],
++
+   options: {
+     resource: {get label() _("options.resource"),
+                get default() XMPPDefaultResource},
