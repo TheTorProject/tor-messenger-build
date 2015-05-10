@@ -71,6 +71,7 @@ input_files:
   - filename: ctcp-ping.patch
   - filename: xmpp-onion.patch
   - filename: xmpp-resource.patch
+  - filename: xmpp-domain.patch
   - filename: xmpp-username-split.patch
   - filename: version.patch
   - filename: branding/name.patch

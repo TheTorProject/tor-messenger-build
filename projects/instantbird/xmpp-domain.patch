@@ -1,0 +1,11 @@
+diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.properties
+--- a/chat/locales/en-US/xmpp.properties
++++ b/chat/locales/en-US/xmpp.properties
+@@ -79,6 +79,7 @@
+ options.connectionSecurity.allowUnencryptedAuth=Allow sending the password unencrypted
+ options.connectServer=Server
+ options.connectPort=Port
++options.domain=Domain
+ 
+ # LOCALIZATION NOTE (*.protocolName)
+ #  This name is used whenever the name of the protocol is shown.
