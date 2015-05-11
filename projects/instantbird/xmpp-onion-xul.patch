@@ -1,5 +1,5 @@
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index 5fa5b82..d9ce335 100644
+index 5fa5b82..89f88fe 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -59,7 +59,8 @@
@@ -21,11 +21,3 @@ index 5fa5b82..d9ce335 100644
                onkeypress="accountWizard.onGroupboxKeypress(event)">
        <caption id="protoSpecificCaption"
                 onclick="accountWizard.toggleGroupbox('protoSpecificGroupbox')"/>
-@@ -137,6 +138,7 @@
-       </columns>
-       <rows id="summaryRows"/>
-     </grid>
-+    <description id="onionAddress" />
-     <separator/>
-     <checkbox id="connectAutomatically" label= "&accountSummary.connectAutomatically.label;" checked="true"/>
-   </wizardpage>

@@ -1,5 +1,5 @@
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index 707f1c7..2ca929a 100644
+index 707f1c7..f27ae92 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
 @@ -7,6 +7,14 @@ Cu.import("resource:///modules/imServices.jsm");
@@ -69,17 +69,21 @@ index 707f1c7..2ca929a 100644
  
      let proxyVisible = this.proto.usePurpleProxy;
      if (proxyVisible) {
-@@ -407,6 +440,13 @@ var accountWizard = {
+@@ -405,7 +438,16 @@ var accountWizard = {
+     for (let i = 0; i < this.prefs.length; ++i) {
+       let opt = this.prefs[i];
        let label = bundle.getFormattedString("accountColon", [opt.opt.label]);
-       rows.appendChild(this.createSummaryRow(label, opt.value));
+-      rows.appendChild(this.createSummaryRow(label, opt.value));
++      if (this.onionAddress && label == "Server:") {
++        let wizardBundle = document.getElementById("topProtocolsBundle");
++        let onionLabel = wizardBundle.getFormattedString("onionAddress.label",
++                                                      [this.jabberDomain.value]);
++        rows.appendChild(this.createSummaryRow(label, opt.value));
++        rows.appendChild(this.createSummaryRow("", onionLabel));
++      }
++      else {
++        rows.appendChild(this.createSummaryRow(label, opt.value));
++      }
      }
-+
-+    if (this.onionAddress) {
-+      let onionLabel = document.getElementById("topProtocolsBundle");
-+      let onion = document.getElementById("onionAddress");
-+      onion.value = onionLabel.getFormattedString("onionAddress.label",
-+                                  [this.jabberDomain.value, this.onionAddress]);
-+    }
    },
  
-   createAccount: function aw_createAccount() {

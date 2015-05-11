@@ -1,5 +1,5 @@
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
-index 77dd6dd..7ee9bce 100644
+index 77dd6dd..8fa4c4f 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
 @@ -19,3 +19,5 @@ topProtocol.prpl-twitter.description=Stay up to date with your Twitter timeline
@@ -7,4 +7,4 @@ index 77dd6dd..7ee9bce 100644
  topProtocol.prpl-msn.description=Microsoft Windows Live Messenger (formerly MSN)
  topProtocol.prpl-yahoo.description=Chat with friends using Yahoo! Messenger
 +
-+onionAddress.label=We will secure your connection to %S by connecting to %S.
++onionAddress.label=(Secure connection to %S)
