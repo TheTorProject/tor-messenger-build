@@ -84,6 +84,8 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: 824009fbc42f.mozpatch
     enable: '[% c("var/windows") %]'
+  - filename: Bug-1133689-backport-Make-D3DVsyncDisplay-destructor.mozpatch
+    enable: '[% c("var/windows") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python
