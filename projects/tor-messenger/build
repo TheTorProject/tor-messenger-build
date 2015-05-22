@@ -27,6 +27,7 @@ mkdir -p tor-launcher@torproject.org/TorBrowser/Data
 [% IF c("var/windows") -%]
 7z x ../../../[% c('input_files_by_name/tor-browser') %]
 mv \$_OUTDIR tor-browser_en-US
+cp -pf tor-browser_en-US/Browser/libssp-0.dll tor-browser_en-US/Browser/TorBrowser/Tor/
 [% ELSE -%]
 tar xf ../../../[% c('input_files_by_name/tor-browser') %]
 [% END -%]
