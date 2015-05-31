@@ -1,14 +1,15 @@
 diff --git a/src/chrome/skin/network-settings.css b/src/chrome/skin/network-settings.css
-index 646baa6..e8f236f 100644
+index 646baa6..66a89a3 100644
 --- a/src/chrome/skin/network-settings.css
 +++ b/src/chrome/skin/network-settings.css
-@@ -90,8 +90,7 @@ button.firstAnswer {
+@@ -89,8 +89,8 @@ button.firstAnswer {
+ 
  .tbb-logo {
    list-style-image: url("chrome://torlauncher/skin/tbb-logo.png");
-   width: 115px;
+-  width: 115px;
 -  height: 80px;
--  margin-right: 20px;
-+  height: 94px;
++  width: 128px;
++  height: 96px;
+   margin-right: 20px;
  }
- 
- wizard[tor_hide_browser_logo="true"] .tbb-logo,
+
