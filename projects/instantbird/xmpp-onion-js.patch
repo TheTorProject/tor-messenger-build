@@ -1,8 +1,7 @@
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index 707f1c7..f27ae92 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
-@@ -7,6 +7,14 @@ Cu.import("resource:///modules/imServices.jsm");
+@@ -7,6 +7,14 @@
  
  const PREF_EXTENSIONS_GETMOREPROTOCOLSURL = "extensions.getMoreProtocolsURL";
  
@@ -17,7 +16,7 @@ index 707f1c7..f27ae92 100644
  var accountWizard = {
    onload: function aw_onload() {
      let topProtoList = document.getElementById("topprotolist");
-@@ -105,6 +113,21 @@ var accountWizard = {
+@@ -105,6 +113,21 @@
      return textbox;
    },
  
@@ -39,12 +38,12 @@ index 707f1c7..f27ae92 100644
    showUsernamePage: function aw_showUsernamePage() {
      let proto = this.proto.id;
      if ("userNameBoxes" in this && this.userNameProto == proto) {
-@@ -160,11 +183,20 @@ var accountWizard = {
+@@ -160,11 +183,20 @@
      document.getElementById("accountusername").next = next;
    },
  
 +  setOnionAddress: function aw_setOnionAddress() {
-+    if (this.proto.id == "prpl-jabber") {
++    if (this.proto.id == "prpl-jabber" && this.onionAddress) {
 +      document.getElementById("prpl-jabber-server").value = this.onionAddress;
 +    }
 +  },
@@ -61,7 +60,7 @@ index 707f1c7..f27ae92 100644
      this.protoSpecOptId = id;
  
  /* FIXME
-@@ -172,6 +204,7 @@ var accountWizard = {
+@@ -172,6 +204,7 @@
        !this.proto.newMailNotification;
  */
      this.populateProtoSpecificBox();
@@ -69,12 +68,13 @@ index 707f1c7..f27ae92 100644
  
      let proxyVisible = this.proto.usePurpleProxy;
      if (proxyVisible) {
-@@ -405,7 +438,16 @@ var accountWizard = {
+@@ -405,7 +438,17 @@
      for (let i = 0; i < this.prefs.length; ++i) {
        let opt = this.prefs[i];
        let label = bundle.getFormattedString("accountColon", [opt.opt.label]);
 -      rows.appendChild(this.createSummaryRow(label, opt.value));
-+      if (this.onionAddress && label == "Server:") {
++      // Only append the label for the "Server" field.
++      if (this.onionAddress == opt.value) {
 +        let wizardBundle = document.getElementById("topProtocolsBundle");
 +        let onionLabel = wizardBundle.getFormattedString("onionAddress.label",
 +                                                      [this.jabberDomain.value]);
