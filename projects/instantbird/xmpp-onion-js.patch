@@ -43,7 +43,7 @@ diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
    },
  
 +  setOnionAddress: function aw_setOnionAddress() {
-+    if (this.proto.id == "prpl-jabber" && this.onionAddress) {
++    if (this.proto.id == "prpl-jabber") {
 +      document.getElementById("prpl-jabber-server").value = this.onionAddress;
 +    }
 +  },
