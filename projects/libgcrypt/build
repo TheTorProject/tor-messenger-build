@@ -11,7 +11,7 @@ distdir=/tmp/dist/[% project %]
 mkdir -p $distdir
 tar xf [% project %]-[% c('version') %].tar.bz2
 cd [% project %]-[% c('version') %]
-./configure --prefix=$distdir [% c("var/configure_opt") %]
+./configure --prefix=$distdir [% c("var/configure_opt") %][% IF c('var/windows') %] --enable-static --disable-shared[% END %]
 make -j4
 make prefix=$distdir install
 cd /tmp/dist

@@ -5,7 +5,7 @@ mkdir -p "$distdir"
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
 tar xf [% project %]-[% c('version') %].tar.bz2
 cd [% project %]-[% c('version') %]
-./configure --prefix="$distdir" [% c("var/configure_opt") %]
+./configure --prefix="$distdir" [% c("var/configure_opt") %][% IF c('var/windows') %] --enable-static --disable-shared[% END %]
 make -j4
 make prefix="$distdir" install
 cd /tmp/dist
