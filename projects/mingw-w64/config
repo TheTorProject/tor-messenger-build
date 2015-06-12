@@ -16,10 +16,10 @@ var:
     - libmpc-dev
     - g++-mingw-w64-i686
   setup: |
-    mkdir -p /tmp/dist
-    tar -C /tmp/dist -xf [% c("compiler_tarfile") %]
-    export PATH="/tmp/dist/mingw-w64/bin:$PATH"
-    gcclibs=/tmp/dist/mingw-w64/gcclibs
+    mkdir -p /var/tmp/dist
+    tar -C /var/tmp/dist -xf [% c("compiler_tarfile") %]
+    export PATH="/var/tmp/dist/mingw-w64/bin:$PATH"
+    gcclibs=/var/tmp/dist/mingw-w64/gcclibs
 input_files:
   - URL: 'https://ftp.gnu.org/gnu/gcc/gcc-[% c("var/gcc_version") %]/gcc-[% c("var/gcc_version") %].tar.bz2'
     sha256sum: d334781a124ada6f38e63b545e2a3b8c2183049515a1abab6d513f109f1d717e

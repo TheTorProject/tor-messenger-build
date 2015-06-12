@@ -12,13 +12,13 @@ var:
     - libmpc-dev
     - libc6-dev-i386
   setup: |
-    mkdir -p /tmp/dist
-    tar -C /tmp/dist -xf [% c("compiler_tarfile") %]
-    export PATH="/tmp/dist/gcc/bin:$PATH"
+    mkdir -p /var/tmp/dist
+    tar -C /var/tmp/dist -xf [% c("compiler_tarfile") %]
+    export PATH="/var/tmp/dist/gcc/bin:$PATH"
     [% IF c("var/osname") == "linux-i686" -%]
-    export LD_LIBRARY_PATH=/tmp/dist/gcc/lib32
+    export LD_LIBRARY_PATH=/var/tmp/dist/gcc/lib32
     [% ELSE -%]
-    export LD_LIBRARY_PATH=/tmp/dist/gcc/lib64
+    export LD_LIBRARY_PATH=/var/tmp/dist/gcc/lib64
     [% END -%]
 input_files:
   - URL: 'https://ftp.gnu.org/gnu/gcc/gcc-[% c("version") %]/gcc-[% c("version") %].tar.bz2'

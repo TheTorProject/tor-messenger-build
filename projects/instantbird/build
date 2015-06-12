@@ -4,13 +4,13 @@ rootdir=$(pwd)
 export SHELL=/bin/sh
 export HOME=$rootdir
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
-mkdir -p /tmp/dist
-cd /tmp/dist
+mkdir -p /var/tmp/dist
+cd /var/tmp/dist
 [% IF c("var/linux") -%]
 tar xf $rootdir/[% c('input_files_by_name/python') %]
-export PATH="/tmp/dist/python/bin:$PATH"
+export PATH="/var/tmp/dist/python/bin:$PATH"
 tar xf $rootdir/[% c('input_files_by_name/binutils') %]
-export PATH="/tmp/dist/binutils/bin:$PATH"
+export PATH="/var/tmp/dist/binutils/bin:$PATH"
 [% END -%]
 # LD_BIND_NOW needed to avoid this error:
 # undefined symbol: _ZNSt14error_categoryD2Ev
@@ -21,9 +21,9 @@ export CFLAGS=-m32
 export CC='gcc -m32'
 [% END -%]
 [% IF c("var/linux") -%]
-mkdir -p /tmp/dist/yasm/bin
-ln -s /usr/bin/yasm-1 /tmp/dist/yasm/bin/yasm
-export PATH="/tmp/dist/yasm/bin:$PATH"
+mkdir -p /var/tmp/dist/yasm/bin
+ln -s /usr/bin/yasm-1 /var/tmp/dist/yasm/bin/yasm
+export PATH="/var/tmp/dist/yasm/bin:$PATH"
 [% END -%]
 cd $rootdir
 tar xf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]

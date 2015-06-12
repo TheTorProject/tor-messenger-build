@@ -2,20 +2,20 @@
 set -e
 rootdir=$(pwd)
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
-mkdir -p /tmp/dist
-cd /tmp/dist
+mkdir -p /var/tmp/dist
+cd /var/tmp/dist
 tar xf $rootdir/[% c('input_files_by_name/libgpg-error') %]
-export PATH="/tmp/dist/libgpg-error/bin:$PATH"
+export PATH="/var/tmp/dist/libgpg-error/bin:$PATH"
 tar xf $rootdir/[% c('input_files_by_name/libgcrypt') %]
-export PATH="/tmp/dist/libgcrypt/bin:$PATH"
+export PATH="/var/tmp/dist/libgcrypt/bin:$PATH"
 cd $rootdir
-distdir=/tmp/dist/[% project %]
+distdir=/var/tmp/dist/[% project %]
 tar xf libotr-[% c('version') %].tar.gz
 cd libotr-[% c('version') %]
 ./configure --prefix=$distdir [% c("var/configure_opt") %]
 make -j4 [% IF c("var/windows") %]LDFLAGS='-no-undefined -lssp'[% END %]
 make prefix=$distdir install
-cd /tmp/dist
+cd /var/tmp/dist
 [% c('tar', {
         tar_src => [ project ],
         tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),

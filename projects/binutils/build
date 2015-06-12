@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-distdir=/tmp/dist/binutils
+distdir=/var/tmp/dist/binutils
 tar xf [% project %]-[% c("version") %].tar.bz2
 cd [% project %]-[% c("version") %]
 [% IF c('var/windows') -%]
@@ -14,7 +14,7 @@ patch -p1 < ../peXXigen.patch
 ./configure --prefix=$distdir [% c('var/configure_opt') %]
 make -j4
 make install
-cd /tmp/dist
+cd /var/tmp/dist
 [% c('tar', {
         tar_src => [ project ],
         tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),

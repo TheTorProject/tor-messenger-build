@@ -1,10 +1,10 @@
 #!/bin/sh
 set -e
 rootdir=$(pwd)
-distdir=/tmp/dist/[% project %]
+distdir=/var/tmp/dist/[% project %]
 
-mkdir /tmp/dist
-cd /tmp/dist
+mkdir /var/tmp/dist
+cd /var/tmp/dist
 tar xf $rootdir/[% c('input_files_by_name/binutils') %]
 mv binutils $distdir
 export PATH="$distdir/bin:$PATH"
@@ -56,7 +56,7 @@ mkdir -p $distdir/gcclibs
 cp i686-w64-mingw32/libssp/.libs/libssp-0.dll $distdir/gcclibs
 cp i686-w64-mingw32/libgcc/shlib/libgcc_s_sjlj-1.dll $distdir/gcclibs
 
-cd /tmp/dist
+cd /var/tmp/dist
 [% c('tar', {
         tar_src => [ project ],
         tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
