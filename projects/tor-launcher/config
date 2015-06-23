@@ -1,4 +1,4 @@
-# vim: filetype=yaml
+# vim: filetype=yaml sw=2
 version: 0.2.7.2
 git_url: https://git.torproject.org/tor-launcher.git
 git_hash: '[% c("version") %]'

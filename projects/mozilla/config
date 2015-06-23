@@ -1,4 +1,4 @@
-# vim: filetype=yaml
+# vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 git_url: https://github.com/mozilla/gecko-dev
 git_hash: esr38

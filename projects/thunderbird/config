@@ -1,18 +1,18 @@
-# vim: filetype=yaml
+# vim: filetype=yaml sw=2
 version: 31.5.0
 filename: 'thunderbird-[% c("version") %]-[% c("var/osname") %].[% c("var/extension") %]'
 
 var:
-    moz_osname: '[% c("var/osname") %]'
-    extension: tar.bz2
-    src_filename: 'thunderbird-[% c("version") %].[% c("var/extension") %]'
+  moz_osname: '[% c("var/osname") %]'
+  extension: tar.bz2
+  src_filename: 'thunderbird-[% c("version") %].[% c("var/extension") %]'
 
 input_files:
-    - filename: 'mozilla-thunderbird-[% c("version") %]-[% c("var/moz_osname") %].[% c("var/extension") %]'
-      URL: 'https://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/[% c("version") %]/[% c("var/moz_osname") %]/en-US/[% c("var/src_filename") %]'
-      name: thunderbird
-    - filename: 'sha512sums-[% c("version") %]'
-      URL: 'https://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/[% c("version") %]/SHA512SUMS'
-      file_gpg_id: 1
-      sig_ext: asc
-      gpg_keyring: thunderbird.gpg
+  - filename: 'mozilla-thunderbird-[% c("version") %]-[% c("var/moz_osname") %].[% c("var/extension") %]'
+    URL: 'https://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/[% c("version") %]/[% c("var/moz_osname") %]/en-US/[% c("var/src_filename") %]'
+    name: thunderbird
+  - filename: 'sha512sums-[% c("version") %]'
+    URL: 'https://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/[% c("version") %]/SHA512SUMS'
+    file_gpg_id: 1
+    sig_ext: asc
+    gpg_keyring: thunderbird.gpg

@@ -1,4 +1,4 @@
-# vim: filetype=yaml
+# vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 hg_url: https://hg.mozilla.org/releases/comm-beta/
 hg_hash: THUNDERBIRD_38_0b4_RELEASE

@@ -1,4 +1,4 @@
-# vim: filetype=yaml
+# vim: filetype=yaml sw=2
 version: 0.0.5
 filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].[% c("var/filename_ext") %]'
 input_files:
@@ -22,14 +22,14 @@ input_files:
 
 remote_docker: 1
 lsb_release:
-    id: Ubuntu
-    release: 12.04
-    codename: precise
+  id: Ubuntu
+  release: 12.04
+  codename: precise
 var:
-    filename_ext: 'tar.xz'
-    deps:
-        - p7zip-full
-        - bzip2
+  filename_ext: 'tar.xz'
+  deps:
+    - p7zip-full
+    - bzip2
 targets:
   windows-i686:
     lsb_release:

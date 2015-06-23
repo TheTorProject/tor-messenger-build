@@ -1,4 +1,4 @@
-# vim: filetype=yaml
+# vim: filetype=yaml sw=2
 version: 4.1.0
 filename: 'libotr-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 remote_docker: 1

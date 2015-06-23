@@ -1,4 +1,4 @@
-# vim: filetype=yaml
+# vim: filetype=yaml sw=2
 filename: '[% sha256(c("pre")).substr(0, 12) %]'
 remote_docker: 1
 docker_image_prefix: 'tor-messenger_[% GET ENV.RBM_BUILDNAME ? ENV.RBM_BUILDNAME : ENV.USER ? ENV.USER : c("uid") %]'

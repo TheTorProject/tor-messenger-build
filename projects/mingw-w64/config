@@ -1,4 +1,4 @@
-# vim: filetype=yaml
+# vim: filetype=yaml sw=2
 filename: '[% project %]-[% c("version") %]-[% c("var/build_id") %].tar.gz'
 git_url: http://git.code.sf.net/p/mingw-w64/mingw-w64
 git_hash: 85b403445b2308fa6277aa26446da790866fe052
