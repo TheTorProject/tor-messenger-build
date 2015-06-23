@@ -27,6 +27,11 @@ targets:
     var:
       arch_deps:
         - libc6-dev-i386
+  osx-x86_64:
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
 input_files:
   - filename: 'libotr-[% c("version") %].tar.gz'
     URL: 'https://otr.cypherpunks.ca/libotr-[% c("version") %].tar.gz'
