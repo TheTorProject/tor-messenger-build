@@ -85,6 +85,9 @@ input_files:
   - filename: branding/default.png
   - filename: branding/default16.png
   - filename: branding/default48.png
+  - filename: branding/blistWindow.ico
+  - filename: branding/convWindow.ico
+  - filename: branding/default.ico
   - filename: branding/name.patch
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'

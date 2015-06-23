@@ -51,6 +51,8 @@ cp ../branding/default*.png im/branding/messenger/gtk/
 cp ../branding/convWindow*.png im/branding/messenger/gtk/
 cp ../branding/blistWindow*.png im/branding/messenger/gtk/
 
+cp ../branding/*.ico im/branding/messenger/windows/
+
 cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
 then
