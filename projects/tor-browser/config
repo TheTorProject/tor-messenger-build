@@ -13,6 +13,8 @@ input_files:
    targets:
        windows-i686:
            URL: "[% c('var/base_url') %]/torbrowser-install-[% c('version') %]_en-US.exe"
+       osx-x86_64:
+         URL: "[% c('var/base_url') %]/TorBrowser-[% c('version') %]-osx64_en-US.dmg"
 
 var:
   extension: 'tar.xz'
@@ -27,3 +29,6 @@ targets:
   windows-i686:
     var:
        extension: 'exe'
+  osx-x86_64:
+    var:
+      extension: 'dmg'
