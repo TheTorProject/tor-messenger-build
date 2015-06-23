@@ -23,11 +23,18 @@ targets:
     var:
       arch_deps:
         - libc6-dev-i386
+  osx-x86_64:
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
 input_files:
   - URL: 'ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-[% c("version") %].tar.bz2'
     sig_ext: sig
     file_gpg_id: 1
     gpg_keyring: libgcrypt.gpg
+  - filename: lock-obj-pub.x86_64-apple-darwin14.0.0.h
+    enable: '[% c("var/osx") %]'
   - name: '[% c("var/compiler") %]'
     project: '[% c("var/compiler") %]'
   - project: docker-image
