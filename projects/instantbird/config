@@ -88,6 +88,7 @@ input_files:
   - filename: branding/blistWindow.ico
   - filename: branding/convWindow.ico
   - filename: branding/default.ico
+  - filename: branding/instantbird.ico
   - filename: branding/name.patch
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
