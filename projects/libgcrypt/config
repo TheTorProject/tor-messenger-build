@@ -23,6 +23,11 @@ targets:
     var:
       arch_deps:
         - libc6-dev-i386
+  osx-x86_64:
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
 input_files:
   - URL: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.6.2.tar.bz2
     sig_ext: sig

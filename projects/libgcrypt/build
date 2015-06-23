@@ -11,6 +11,10 @@ distdir=/var/tmp/dist/[% project %]
 mkdir -p $distdir
 tar xf [% project %]-[% c('version') %].tar.bz2
 cd [% project %]-[% c('version') %]
+[% IF c("var/osx") -%]
+# our compiler does not like -g
+sed -i 's/ac_cv_prog_cc_g=yes/ac_cv_prog_cc_g=no/' configure
+[% END -%]
 ./configure --prefix=$distdir [% c("var/configure_opt") %][% IF c('var/windows') %] --enable-static --disable-shared[% END %]
 make -j4
 make prefix=$distdir install
