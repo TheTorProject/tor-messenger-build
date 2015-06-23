@@ -76,10 +76,16 @@ input_files:
   - filename: xmpp-onion-locale.patch
   - filename: xmpp-username-split.patch
   - filename: version.patch
-  - filename: branding/name.patch
+  - filename: branding/blistWindow.png
+  - filename: branding/blistWindow16.png
+  - filename: branding/blistWindow48.png
+  - filename: branding/convWindow.png
+  - filename: branding/convWindow16.png
+  - filename: branding/convWindow48.png
   - filename: branding/default.png
   - filename: branding/default16.png
   - filename: branding/default48.png
+  - filename: branding/name.patch
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
   - filename: f2e7cea9bc6a-bug-1150967.patch

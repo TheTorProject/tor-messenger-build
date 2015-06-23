@@ -48,6 +48,8 @@ cat ../spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
 cp ../cert_override.txt im/app/profile
 
 cp ../branding/default*.png im/branding/messenger/gtk/
+cp ../branding/convWindow*.png im/branding/messenger/gtk/
+cp ../branding/blistWindow*.png im/branding/messenger/gtk/
 
 cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
