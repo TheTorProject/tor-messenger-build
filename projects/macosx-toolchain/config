@@ -1,14 +1,15 @@
 # vim: filetype=yaml sw=2
 filename: '[% project %]-[% c("version") %].tar.gz'
-version: 1
+version: 10.7-1
 var:
   setup: |
     mkdir -p /var/tmp/dist
     tar -C /var/tmp/dist -xf [% c("compiler_tarfile") %]
-    sysrootdir=/var/tmp/dist/[% project %]/SDK/MacOSX10.6.sdk/
+    sysrootdir=/var/tmp/dist/[% project %]/SDK/
     ccbindir=/var/tmp/dist/[% project %]/x-tools/x86_64-apple-darwin10/bin
     export PATH="$ccbindir:$PATH"
-    FLAGS="-arch x86_64 -isysroot $sysrootdir"
+    CFLAGS="-arch x86_64 -isysroot $sysrootdir"
+    CXXFLAGS="-arch x86_64 -isysroot $sysrootdir"
     CC="$ccbindir/x86_64-apple-darwin10-clang $FLAGS"
     CXX="$ccbindir/x86_64-apple-darwin10-clang++ $FLAGS"
     RANLIB=$ccbindir/x86_64-apple-darwin10-ranlib
@@ -27,5 +28,5 @@ input_files:
     URL: https://people.torproject.org/~mikeperry/mirrors/sources/x86_64-apple-darwin10.tar.xz
     sha256sum: 7b71bfe02820409b994c5c33a7eab81a81c72550f5da85ff7af70da3da244645
   - name: SDK
-    URL: https://launchpad.net/~flosoft/+archive/cross-apple/+files/apple-uni-sdk-10.6_20110407-0.flosoft1_i386.deb
-    sha256sum: 6602d8d5ddb371fbc02e2a5967d9bd0cd7358d46f9417753c8234b923f2ea6fc
+    URL: https://people.torproject.org/~mikeperry/mirrors/sources/MacOSX10.7.sdk.tar.gz
+    sha256sum: da77bb0003fcca5ea8c4e8cb2da8828ded750c54afdcac29ec6f3b46ad5e3adf

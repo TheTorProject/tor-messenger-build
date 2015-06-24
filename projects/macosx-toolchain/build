@@ -3,9 +3,8 @@ set -e
 rootdir=$(pwd)
 distdir="$rootdir/dist/[% project %]"
 mkdir -p "$distdir"
-ar vx [% c('input_files_by_name/SDK') %]
-tar xzf data.tar.gz
-mv usr/lib/apple/SDKs "$distdir/SDK"
+tar xzf [% c('input_files_by_name/SDK') %]
+mv MacOSX10.7.sdk "$distdir/SDK"
 tar xf [% c('input_files_by_name/clang') %]
 mv x-tools "$distdir"
 cd "$rootdir/dist"
