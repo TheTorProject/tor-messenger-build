@@ -9,6 +9,9 @@ targets:
   windows-i686:
     var:
       lib_glob: 'bin/*.dll'
+  osx-x86_64:
+    var:
+      lib_glob: 'lib/*.dylib'
 input_files:
   - name: libotr
     project: libotr
