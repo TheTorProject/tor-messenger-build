@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+distdir=$(pwd)/dist
+mkdir -p $distdir/[% project %]
+tar xf [% project %]-[% c('version') %].tar.gz
+cd [% project %]-[% c('version') %]
+patch -p1 < ../libdmg.patch
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$distdir/[% project %] CMakeLists.txt
+cd dmg
+make -j4
+make install
+cd $distdir
+[% c('tar', {
+        tar_src => [ project ],
+        tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
+        }) %]

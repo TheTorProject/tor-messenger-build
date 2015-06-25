@@ -1,0 +1,39 @@
+From d1a5eca891f32103ccda80ee75e158dfc7ece70d Mon Sep 17 00:00:00 2001
+From: Mike Perry <mikeperry-git@torproject.org>
+Date: Thu, 6 Mar 2014 19:47:05 -0800
+Subject: [PATCH] Memset a UDIF header to ensure archive reproducibility.
+
+Some of the struct padding and fields contained unitialized memory, which
+caused two successive invocations to produce archives that differed in some
+bytes.
+---
+ dmg/dmglib.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/dmg/dmglib.c b/dmg/dmglib.c
+index f481b1f..b74e50b 100644
+--- a/dmg/dmglib.c
++++ b/dmg/dmglib.c
+@@ -108,7 +108,8 @@ int buildDmg(AbstractFile* abstractIn, AbstractFile* abstractOut) {
+ 	ChecksumToken dataForkToken;
+ 	
+ 	UDIFResourceFile koly;
+-	
++	memset(&koly, 0, sizeof(koly));
++
+ 	off_t plistOffset;
+ 	uint32_t plistSize;
+ 	uint32_t dataForkChecksum;
+@@ -284,7 +285,8 @@ int convertToDMG(AbstractFile* abstractIn, AbstractFile* abstractOut) {
+ 	uint64_t numSectors;
+ 	
+ 	UDIFResourceFile koly;
+-	
++	memset(&koly, 0, sizeof(koly));
++
+ 	char partitionName[512];
+ 	
+ 	off_t fileLength;
+-- 
+1.8.1.2
+

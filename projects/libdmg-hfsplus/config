@@ -1,0 +1,19 @@
+# vim: filetype=yaml sw=2
+version: '[% c("abbrev") %]'
+git_url: https://github.com/vasi/libdmg-hfsplus
+git_hash: dfd5e5cc3dc1191e37d3c3a6118975afdd1d7014
+filename: '[% project %]-[% c("version") %]-[% c("var/build_id") %].tar.gz'
+remote_docker: 1
+lsb_release:
+  id: Ubuntu
+  release: 12.04
+  codename: precise
+var:
+  deps:
+    - build-essential
+    - cmake
+    - zlib1g-dev
+    - libbz2-dev
+input_files:
+  - filename: libdmg.patch
+  - project: docker-image
