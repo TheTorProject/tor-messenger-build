@@ -7,6 +7,7 @@ lsb_release:
   release: 10.04
   codename: lucid
 var:
+  configure_opt: --enable-multilib --enable-languages=c,c++ --with-arch_32=i686
   deps:
     - build-essential
     - libmpc-dev
@@ -20,6 +21,14 @@ var:
     [% ELSE -%]
     export LD_LIBRARY_PATH=/var/tmp/dist/gcc/lib64
     [% END -%]
+targets:
+  osx-x86_64:
+    var:
+      configure_opt: --enable-multilib --enable-languages=c,c++
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
 input_files:
   - URL: 'https://ftp.gnu.org/gnu/gcc/gcc-[% c("version") %]/gcc-[% c("version") %].tar.bz2'
     sha256sum: d334781a124ada6f38e63b545e2a3b8c2183049515a1abab6d513f109f1d717e

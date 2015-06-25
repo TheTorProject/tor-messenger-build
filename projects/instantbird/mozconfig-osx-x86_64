@@ -1,0 +1,31 @@
+CROSS_COMPILE=1
+
+no_tooltool=1
+
+TOOLCHAIN_PREFIX="$ccbindir/x86_64-apple-darwin10-"
+CROSS_PRIVATE_FRAMEWORKS="$sysrootdir/System/Library/PrivateFrameworks"
+
+FLAGS="-arch x86_64 -isysroot $sysrootdir"
+CC="$ccbindir/x86_64-apple-darwin10-clang $FLAGS"
+CXX="$ccbindir/x86_64-apple-darwin10-clang++ $FLAGS"
+
+CONCURRENCY=$(( `grep processor /proc/cpuinfo | wc -l` + 2 ))
+mk_add_options MOZ_MAKE_FLAGS="-j$CONCURRENCY"
+
+ac_add_options --enable-application=im
+ac_add_options --enable-optimize
+ac_add_options --disable-debug
+ac_add_options --target=x86_64-apple-darwin10
+ac_add_options --enable-strip
+ac_add_options --with-macos-private-frameworks="$CROSS_PRIVATE_FRAMEWORKS"
+ac_add_options --disable-crashreporter
+ac_add_options --disable-maintenance-service
+ac_add_options --disable-webrtc
+ac_add_options --disable-tests
+# Let's not compile EME at least until we can enable ClearKey and only Clearkey.
+# (Apart from that there is no Adobe CRM module for OS X right now)
+ac_add_options --disable-eme
+
+ac_add_options --with-l10n-base=..
+
+ac_add_options --with-branding=im/branding/messenger

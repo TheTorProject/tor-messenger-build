@@ -5,13 +5,13 @@ var:
   setup: |
     mkdir -p /var/tmp/dist
     tar -C /var/tmp/dist -xf [% c("compiler_tarfile") %]
-    sysrootdir=/var/tmp/dist/[% project %]/SDK/
-    ccbindir=/var/tmp/dist/[% project %]/x-tools/x86_64-apple-darwin10/bin
+    export sysrootdir=/var/tmp/dist/[% project %]/SDK/
+    export ccbindir=/var/tmp/dist/[% project %]/x-tools/x86_64-apple-darwin10/bin
     export PATH="$ccbindir:$PATH"
     CFLAGS="-arch x86_64 -isysroot $sysrootdir"
     CXXFLAGS="-arch x86_64 -isysroot $sysrootdir"
-    CC="$ccbindir/x86_64-apple-darwin10-clang $FLAGS"
-    CXX="$ccbindir/x86_64-apple-darwin10-clang++ $FLAGS"
+    CC="$ccbindir/x86_64-apple-darwin10-clang $CFLAGS"
+    CXX="$ccbindir/x86_64-apple-darwin10-clang++ $CFLAGS"
     RANLIB=$ccbindir/x86_64-apple-darwin10-ranlib
     AR=$ccbindir/x86_64-apple-darwin10-ar
     AS=$ccbindir/x86_64-apple-darwin10-as

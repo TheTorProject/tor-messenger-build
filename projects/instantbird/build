@@ -3,6 +3,10 @@ set -e
 rootdir=$(pwd)
 export SHELL=/bin/sh
 export HOME=$rootdir
+[% IF c('var/osx') -%]
+[% pc('gcc', 'var/setup', { compiler_tarfile => c('input_files_by_name/gcchost') }) %]
+ln -s /var/tmp/dist/gcc/bin/gcc /var/tmp/dist/gcc/bin/cc
+[% END -%]
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
 mkdir -p /var/tmp/dist
 cd /var/tmp/dist

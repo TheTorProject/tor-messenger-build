@@ -52,6 +52,16 @@ targets:
         - lib32z1-dev
         - lib32asound2-dev
         - yasm-1
+  osx-x86_64:
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
+    var:
+      arch_deps:
+        - yasm
+        - rsync
+        - sqlite3
 input_files:
   - name: mozilla-src
     project: mozilla
@@ -98,6 +108,8 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: Bug-1133689-backport-Make-D3DVsyncDisplay-destructor.mozpatch
     enable: '[% c("var/windows") %]'
+  - filename: OSX-package-as-tar.bz2.mozpatch
+    enable: '[% c("var/osx") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python
@@ -106,6 +118,9 @@ input_files:
   - name: binutils
     project: binutils
     enable: '[% c("var/linux") %]'
+  - name: gcchost
+    project: gcc
+    enable: '[% c("var/osx") %]'
   - name: '[% c("var/compiler") %]'
     project: '[% c("var/compiler") %]'
   - project: docker-image
