@@ -100,6 +100,7 @@ input_files:
   - filename: branding/default.ico
   - filename: branding/instantbird.ico
   - filename: branding/name.patch
+  - filename: branding/instantbird.icns
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
   - filename: f2e7cea9bc6a-bug-1150967.patch
