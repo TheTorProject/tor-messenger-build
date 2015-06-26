@@ -18,6 +18,9 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: tor-messenger.ico
     enable: '[% c("var/windows") %]'
+  - project: libdmg-hfsplus
+    name: libdmg
+    enable: '[% c("var/osx") %]'
   - project: docker-image
 
 remote_docker: 1
@@ -40,3 +43,12 @@ targets:
       filename_ext: 'exe'
       arch_deps:
         - nsis
+  osx-x86_64:
+    lsb_release:
+      id: Ubuntu
+      release: 12.04
+      codename: precise
+    var:
+      filename_ext: 'dmg'
+      arch_deps:
+        - genisoimage

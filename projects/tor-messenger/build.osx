@@ -1,0 +1,40 @@
+#!/bin/sh
+set -e
+rootdir=$(pwd)
+tar xf [% c('input_files_by_name/instantbird') %]
+mv Instantbird.app TorMessenger.app
+
+tar xf [% c('input_files_by_name/libdmg') %]
+export PATH="$(pwd)/libdmg-hfsplus:$PATH"
+
+mkdir torbrowser
+cd torbrowser
+mkdir tor-launcher@torproject.org
+7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
+7z x $rootdir/[% c('input_files_by_name/tor-browser') %]
+7z x '0.unknown partition'
+sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
+sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
+mkdir -p tor-launcher@torproject.org/TorBrowser/Data
+mv TorBrowser.app/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
+mv TorBrowser.app/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor
+mv tor-launcher@torproject.org $rootdir/TorMessenger.app/Contents/Resources/extensions/
+cd ..
+
+mkdir ctypes-otr
+cd ctypes-otr
+tar xf $rootdir/[% c('input_files_by_name/ctypes-otr') %]
+mv ctypes-otr* $rootdir/TorMessenger.app/Contents/Resources/extensions/ctypes-otr@tormessenger
+cd ..
+
+mkdir dmg
+mv TorMessenger.app dmg
+cd dmg
+find $@ -executable -exec chmod 750 {} \;
+find $@ ! -executable -exec chmod 640 {} \;
+find . -type f | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" > ../filelist.txt
+find . -type l | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" >> ../filelist.txt
+
+mkisofs -D -V "Tor Messenger" -no-pad -R -apple -o ../TorMessenger-uncompressed.dmg -path-list ../filelist.txt -graft-points -gid 20 -dir-mode 0750 -new-dir-mode 0750
+cd ..
+dmg dmg TorMessenger-uncompressed.dmg [% dest_dir _ '/' _ c('filename') %]

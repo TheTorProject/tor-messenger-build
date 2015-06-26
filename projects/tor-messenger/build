@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+[% IF c("var/osx");
+     INCLUDE build.osx;
+     STOP;
+   END -%]
+
 mkdir bundle
 [% IF c("var/windows") -%]
 7z x -y -obundle [% c('input_files_by_name/instantbird') %]
