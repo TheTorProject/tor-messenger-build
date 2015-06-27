@@ -79,7 +79,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  // The breakpad report server to link to in about:crashes
  pref("breakpad.reportURL", "http://crash-stats.instantbird.com/report/index/");
  
-@@ -297,14 +278,77 @@
+@@ -297,14 +278,79 @@
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -139,6 +139,8 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +pref("messenger.options.playSounds.message", false);
 +// Disable text formatting (remove the tags)
 +pref("messenger.options.filterMode", 0);
++// Disable typing notifications
++pref("purple.conversations.im.send_typing", false);
 +
 +// Browser
 +// Disable caching
