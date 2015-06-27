@@ -1,5 +1,5 @@
 # vim: filetype=yaml sw=2
-version: 0.2.7.2
+version: 0.2.7.6
 git_url: https://git.torproject.org/tor-launcher.git
 git_hash: '[% c("version") %]'
 gpg_keyring: mikeperry.gpg
@@ -9,7 +9,6 @@ input_files:
   - filename: torbirdy.png
   - filename: messenger.png
   - filename: logo.patch
-  - filename: topdir.patch
   - filename: controlport.patch
     content: '[% INCLUDE controlport.patch.tmpl -%]'
     refresh_input: 1
