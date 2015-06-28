@@ -62,6 +62,8 @@ cp ../branding/default.ico im/branding/messenger/windows/
 cp ../branding/instantbird.ico im/branding/messenger/
 cp ../branding/instantbird.icns im/branding/messenger/
 
+cp ../branding/about.png im/branding/messenger/content/
+
 cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
 then

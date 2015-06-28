@@ -1,0 +1,73 @@
+diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
+--- a/im/content/aboutDialog.xul
++++ b/im/content/aboutDialog.xul
+@@ -24,7 +24,7 @@
+ <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+         id="aboutDialog"
+         windowtype="Messenger:About"
+-        buttons="accept,extra2"
++        buttons="accept"
+         onload="onLoad();"
+         title="&aboutDialog.title;" creditslabel="&credits.label;" creditsaccesskey="&credits.accesskey;"
+         aboutlabel="&aboutLink.label;" aboutaccesskey="&aboutLink.accesskey;" versionlabel="&aboutVersion;"
+@@ -39,36 +39,8 @@
+         var gSelectedPage;
+ 
+         function onLoad() {
+-          var xai = Components.classes["@mozilla.org/xre/app-info;1"]
+-                              .getService(Components.interfaces.nsIXULAppInfo);
+-
+-          var versionField = document.getElementById("versionField");
+-          versionField.value = versionField.value + xai.version
+-                             + ' (' + xai.appBuildID + ')';
+-
+-          versionField = document.getElementById("geckoVersionField");
+-          versionField.value = versionField.value + xai.platformVersion
+-                             + ' (' + xai.platformBuildID + ')';
+-
+-          versionField = document.getElementById("libpurpleVersionField");
+-          if ("@instantbird.org/libpurple/core;1" in Components.classes) {
+-            var pcs = Components.classes["@instantbird.org/libpurple/core;1"]
+-                                .getService(Components.interfaces.purpleICoreService);
+-            versionField.value = versionField.value + pcs.version;
+-          }
+-          else {
+-            versionField.hidden = true;
+-          }
+-
+           versionField = document.getElementById("userAgentField");
+           versionField.value = navigator.userAgent;
+-
+-          var button = document.documentElement.getButton("extra2");
+-          button.setAttribute("label", document.documentElement.getAttribute("creditslabel"));
+-          button.setAttribute("accesskey", document.documentElement.getAttribute("creditsaccesskey"));
+-          gSelectedPage = 0;
+-          button.addEventListener("command", switchPage);
+-          document.documentElement.getButton("accept").focus();
+         }
+ 
+         function uninit(aEvent)
+@@ -106,14 +78,6 @@
+ 
+     <deck id="modes" flex="1">
+       <vbox flex="1" id="clientBox">
+-        <vbox id="versionWrapper" flex="1">
+-          <textbox id="versionField" readonly="true" class="plain" tabindex="2"
+-                   value="&aboutVersion; "/>
+-          <textbox id="geckoVersionField" readonly="true" class="plain"
+-                   tabindex="3" value="&geckoVersion; "/>
+-          <textbox id="libpurpleVersionField" readonly="true" class="plain"
+-                   tabindex="4" value="&libpurpleVersion; "/>
+-        </vbox>
+         <description id="copyright" flex="1">&copyrightText2;</description>
+         <separator/>
+         <textbox id="userAgentField" readonly="true" class="plain"
+diff --git a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd b/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
+--- a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
++++ b/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
+@@ -7,4 +7,4 @@
+ <!ENTITY geckoVersion           "Gecko">
+ <!ENTITY libpurpleVersion       "libpurple">
+ <!-- Use the &copyrightYear; entity to place the current year. -->
+-<!ENTITY copyrightText2         "&#169;2007-&copyrightYear; Contributors. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
++<!ENTITY copyrightText2         "&#169;&copyrightYear; Contributors. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
