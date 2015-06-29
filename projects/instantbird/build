@@ -51,6 +51,8 @@ done
 cat ../spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
 cp ../cert_override.txt im/app/profile
 
+cp ../xmppRegister* im/content/
+
 cp ../branding/default*.png im/branding/messenger/gtk/
 cp ../branding/convWindow*.png im/branding/messenger/gtk/
 cp ../branding/blistWindow*.png im/branding/messenger/gtk/
