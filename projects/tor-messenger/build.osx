@@ -2,7 +2,7 @@
 set -e
 rootdir=$(pwd)
 tar xf [% c('input_files_by_name/instantbird') %]
-mv Instantbird.app Tor\ Messenger.app
+mv TorMessenger.app Tor\ Messenger.app
 
 tar xf [% c('input_files_by_name/libdmg') %]
 export PATH="$(pwd)/libdmg-hfsplus:$PATH"
