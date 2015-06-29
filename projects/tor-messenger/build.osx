@@ -12,7 +12,7 @@ cd torbrowser
 mkdir tor-launcher@torproject.org
 7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
 7z x $rootdir/[% c('input_files_by_name/tor-browser') %]
-7z x '0.unknown partition'
+bsdtar xf '0.unknown partition'
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data

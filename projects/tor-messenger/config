@@ -52,3 +52,4 @@ targets:
       filename_ext: 'dmg'
       arch_deps:
         - genisoimage
+        - bsdtar
