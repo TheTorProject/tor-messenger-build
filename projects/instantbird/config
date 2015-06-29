@@ -79,6 +79,9 @@ input_files:
   - filename: cert_override.txt
   - filename: ctcp-time.patch
   - filename: ctcp-ping.patch
+  - filename: xmpp-inband-registration.patch
+  - filename: xmppRegister.js
+  - filename: xmppRegister.xul
   - filename: xmpp-domain.patch
   - filename: xmpp-resource.patch
   - filename: xmpp-onion-js.patch
@@ -100,10 +103,11 @@ input_files:
   - filename: branding/default.ico
   - filename: branding/instantbird.ico
   - filename: branding/name.patch
-  - filename: branding/osx.patch
   - filename: branding/instantbird.icns
   - filename: branding/credits.patch
   - filename: branding/about.png
+  - filename: branding/osx.patch
+    enable: '[% c("var/osx") %]
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
   - filename: f2e7cea9bc6a-bug-1150967.patch
