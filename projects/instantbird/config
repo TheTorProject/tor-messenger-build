@@ -100,6 +100,7 @@ input_files:
   - filename: branding/default.ico
   - filename: branding/instantbird.ico
   - filename: branding/name.patch
+  - filename: branding/osx.patch
   - filename: branding/instantbird.icns
   - filename: branding/credits.patch
   - filename: branding/about.png
