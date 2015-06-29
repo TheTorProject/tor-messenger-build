@@ -7,7 +7,7 @@ index c581e2d..cf0d085 100644
    usernameSplits: [
      {get label() _("options.server"), separator: "@",
 -     defaultValue: "chat.freenode.net", reverse: true}
-+     defaultValue: "irc.oftc.net", reverse: true}
++     defaultValue: "", reverse: true}
    ],
  
    options: {
