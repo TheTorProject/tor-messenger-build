@@ -76,7 +76,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
 -  NS_ENSURE_TRUE(dirFileMac, NS_ERROR_UNEXPECTED);
 +  int levelsToRemove = 1; // In FF21+, appDir points to browser subdirectory.
 +#if defined(XP_MACOSX)
-+  levelsToRemove += 2;
++  levelsToRemove += 1;
 +#endif
 +  while (localDir && (levelsToRemove > 0)) {
 +    // When crawling up the hierarchy, components named "." do not count.
@@ -125,7 +125,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
 -#ifdef ANDROID /* We want (ProfD == ProfLD) on Android. */
 -  aLocal = false;
 -#endif
-+  rv = localDir->AppendRelativeNativePath(NS_LITERAL_CSTRING("TorBrowser"
++  rv = localDir->AppendRelativeNativePath(NS_LITERAL_CSTRING("TorMessenger"
 +                                     XPCOM_FILE_PATH_SEPARATOR "Data"
 +                                     XPCOM_FILE_PATH_SEPARATOR "Browser"));
 +  NS_ENSURE_SUCCESS(rv, rv);
@@ -322,8 +322,8 @@ index a5c71e723907..f93e7f430996 100644
 -// UNIX   : ~/.mozilla/
 -// WIN    : <Application Data folder on user's machine>\Mozilla
 -// Mac    : :Documents:Mozilla:
-+// UNIX and WIN   : <App Folder>/TorBrowser/Data/Browser
-+// Mac            : <App Folder>/../../TorBrowser/Data/Browser
++// UNIX and WIN   : <App Folder>/TorMessenger/Data/Browser
++// Mac            : <App Folder>/../TorMessenger/Data/Browser
  //----------------------------------------------------------------------------------------
  NS_METHOD
  nsAppFileLocationProvider::GetProductDirectory(nsIFile** aLocalFile,
@@ -343,7 +343,7 @@ index a5c71e723907..f93e7f430996 100644
 +
 +  int levelsToRemove = 1; // In FF21+, bin dir points to browser subdirectory.
 +#if defined(XP_MACOSX)
-+  levelsToRemove += 2;
++  levelsToRemove += 1;
 +#endif
 +  while (localDir && (levelsToRemove > 0)) {
 +    // When crawling up the hierarchy, components named "." do not count.
@@ -396,7 +396,7 @@ index a5c71e723907..f93e7f430996 100644
 -  rv = localDir->AppendRelativeNativePath(DEFAULT_PRODUCT_DIR);
 -  if (NS_FAILED(rv)) {
 -    return rv;
-+  rv = localDir->AppendRelativeNativePath(NS_LITERAL_CSTRING("TorBrowser"
++  rv = localDir->AppendRelativeNativePath(NS_LITERAL_CSTRING("TorMessenger"
 +                                        XPCOM_FILE_PATH_SEPARATOR "Data"
 +                                        XPCOM_FILE_PATH_SEPARATOR "Browser"));
 +  NS_ENSURE_SUCCESS(rv, rv);
