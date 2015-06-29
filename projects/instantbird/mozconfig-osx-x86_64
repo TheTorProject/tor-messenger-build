@@ -31,3 +31,5 @@ ac_add_options --with-l10n-base=..
 ac_add_options --with-branding=im/branding/messenger
 
 ac_add_options --disable-updater
+
+ac_add_options --disable-crashreporter

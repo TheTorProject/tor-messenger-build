@@ -30,3 +30,5 @@ ac_add_options --disable-signmar
 ac_add_options --with-branding=im/branding/messenger
 
 ac_add_options --disable-updater
+
+ac_add_options --disable-crashreporter
