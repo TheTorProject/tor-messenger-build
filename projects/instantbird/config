@@ -84,9 +84,6 @@ input_files:
   - filename: xmppRegister.xul
   - filename: xmpp-domain.patch
   - filename: xmpp-resource.patch
-  - filename: xmpp-onion-js.patch
-  - filename: xmpp-onion-xul.patch
-  - filename: xmpp-onion-locale.patch
   - filename: xmpp-username-split.patch
   - filename: version.patch
   - filename: branding/blistWindow.png
