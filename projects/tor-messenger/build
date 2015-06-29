@@ -15,6 +15,9 @@ mkdir bundle/Messenger
 tar xf [% c('input_files_by_name/instantbird') %] -C bundle/Messenger --strip 1
 [% END -%]
 
+mkdir bundle/Messenger/TorMessenger
+tar xf [% c('input_files_by_name/bundle-data') %] -C bundle/Messenger/TorMessenger
+
 [% IF c("var/linux") %]
 tar xf [% c('input_files_by_name/gcc') %]
 chmod 755 start-tor-messenger

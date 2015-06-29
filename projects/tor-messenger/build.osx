@@ -27,6 +27,9 @@ tar xf $rootdir/[% c('input_files_by_name/ctypes-otr') %]
 mv ctypes-otr* $rootdir/Tor\ Messenger.app/Contents/Resources/extensions/ctypes-otr@tormessenger
 cd ..
 
+mkdir Tor\ Messenger.app/TorMessenger
+tar xf [% c('input_files_by_name/bundle-data') %] -C Tor\ Messenger.app/TorMessenger
+
 mkdir dmg
 mv Tor\ Messenger.app dmg
 cd dmg

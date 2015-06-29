@@ -1,0 +1,14 @@
+# vim: filetype=yaml sw=2
+version: '[% c("abbrev") %]'
+git_url: https://git.torproject.org/builders/tor-browser-bundle.git
+git_hash: faa6152ada46c03bac9918dd69fa5646847be2e1
+filename: 'bundle-data-[% c("version") %]-[% c("var/osname") %].tar.gz'
+var:
+  bundledir: Bundle-Data/linux
+targets:
+  windows-i686:
+    var:
+      bundledir: Bundle-Data/windows
+  osx-x86_64:
+    var:
+      bundledir: Bundle-Data/mac/TorBrowser

@@ -10,6 +10,8 @@ input_files:
     name: tor-launcher
   - project: tor-browser
     name: tor-browser
+  - project: bundle-data
+    name: bundle-data
   - project: gcc
     name: gcc
     enable: '[% c("var/linux") %]'

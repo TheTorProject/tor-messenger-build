@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+tar xf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]
+cd [% project %]-[% c('version') %]/[% c("var/bundledir") %]
+tar czf [% dest_dir _ '/' _ c('filename') %] .
