@@ -30,8 +30,8 @@ cd ..
 mkdir dmg
 mv Tor\ Messenger.app dmg
 cd dmg
-find $@ -executable -exec chmod 750 {} \;
-find $@ ! -executable -exec chmod 640 {} \;
+find . -executable -exec chmod 750 {} \;
+find . ! -executable -exec chmod 640 {} \;
 find . -type f | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" > ../filelist.txt
 find . -type l | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" >> ../filelist.txt
 
