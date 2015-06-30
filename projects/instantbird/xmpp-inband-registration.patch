@@ -80,7 +80,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
        return;
      let now = Date.now();
      if (aJustSentSomething)
-@@ -265,28 +268,98 @@ XMPPSession.prototype = {
+@@ -265,28 +268,97 @@ XMPPSession.prototype = {
                       _("connection.error.startTLSNotSupported"));
          return;
        }
@@ -119,8 +119,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
 +        let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
 +                   .getService(Ci.nsIWindowWatcher);
 +        let win = ww.openWindow(null, registerWindow, "",
-+                                "centerscreen,chrome,modal,
-+                                resizable=yes,minimizable=no", registerStanza);
++                                "centerscreen,chrome,modal,resizable=yes,minimizable=no", registerStanza);
 +      } else {
 +        this.onError(null, _("connection.error.noRegistrationSupport"));
 +      }
