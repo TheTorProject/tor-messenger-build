@@ -15,7 +15,7 @@ cd [% project %]-[% c('version') %]
 # our compiler does not like -g
 sed -i 's/ac_cv_prog_cc_g=yes/ac_cv_prog_cc_g=no/' configure
 [% END -%]
-./configure --prefix=$distdir [% c("var/configure_opt") %][% IF c('var/windows') %] --enable-static --disable-shared[% END %]
+./configure --prefix=$distdir [% c("var/configure_opt") %][% IF c('var/windows') or c('var/osx') %] --enable-static --disable-shared[% END %]
 make -j4
 make prefix=$distdir install
 cd /var/tmp/dist
