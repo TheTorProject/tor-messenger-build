@@ -71,3 +71,25 @@ diff --git a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd b/im/locales/en
  <!-- Use the &copyrightYear; entity to place the current year. -->
 -<!ENTITY copyrightText2         "&#169;2007-&copyrightYear; Contributors. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
 +<!ENTITY copyrightText2         "&#169;&copyrightYear; Contributors. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
+diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
+--- a/im/content/aboutDialog.xul
++++ b/im/content/aboutDialog.xul
+@@ -9,17 +9,17 @@
+ <?xul-overlay href="chrome://instantbird/content/menus.xul"?>
+ #endif
+ 
+ <!DOCTYPE window [
+ <!ENTITY % brandDTD SYSTEM "chrome://branding/locale/brand.dtd" >
+ %brandDTD;
+ <!ENTITY % aboutDialogDTD SYSTEM "chrome://instantbird/locale/aboutDialog.dtd" >
+ %aboutDialogDTD;
+-<!ENTITY copyrightYear "2014">
++<!ENTITY copyrightYear "2015">
+ #ifdef XP_MACOSX
+  <!ENTITY % instantbirdDTD SYSTEM "chrome://instantbird/locale/instantbird.dtd">
+  %instantbirdDTD;
+ #endif
+ ]>
+ 
+ <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+         id="aboutDialog"

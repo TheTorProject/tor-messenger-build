@@ -80,7 +80,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
        return;
      let now = Date.now();
      if (aJustSentSomething)
-@@ -265,28 +268,95 @@ XMPPSession.prototype = {
+@@ -265,28 +268,98 @@ XMPPSession.prototype = {
                       _("connection.error.startTLSNotSupported"));
          return;
        }
@@ -119,14 +119,17 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
 +        let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
 +                   .getService(Ci.nsIWindowWatcher);
 +        let win = ww.openWindow(null, registerWindow, "",
-+                                "centerscreen,chrome,modal,minimizable=no", registerStanza);
++                                "centerscreen,chrome,modal,
++                                resizable=yes,minimizable=no", registerStanza);
 +      } else {
 +        this.onError(null, _("connection.error.noRegistrationSupport"));
 +      }
 +
 +      // If the user cancelled the form, we should stop the registration.
-+      if (this.nodes["cancel"])
++      if (this.nodes["cancel"]) {
 +        this.onError(null, _("connection.error.registrationCancel"));
++        return;
++      }
 +
 +      let xml = '<?xml version="1.0"?>';
 +      let fieldNodes = [];
@@ -179,7 +182,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
-@@ -106,16 +106,20 @@ var accountWizard = {
+@@ -106,16 +106,22 @@ var accountWizard = {
    },
  
    showUsernamePage: function aw_showUsernamePage() {
@@ -191,6 +194,8 @@ diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
 +    
 +    if (this.proto.id == "prpl-jabber") {
 +      document.getElementById("registerXMPP").hidden = false;
++    } else {
++      document.getElementById("registerXMPP").hidden = true;
 +    }
  
      let bundle = document.getElementById("accountsBundle");
@@ -200,7 +205,7 @@ diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
        usernameInfo =
          bundle.getFormattedString("accountUsernameInfoWithDescription",
                                    [emptyText, this.proto.name]);
-@@ -412,16 +416,18 @@ var accountWizard = {
+@@ -412,16 +418,18 @@ var accountWizard = {
    createAccount: function aw_createAccount() {
      let acc = Services.accounts.createAccount(this.username, this.proto.id);
      if (!this.proto.noPassword && this.password)

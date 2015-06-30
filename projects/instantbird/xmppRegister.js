@@ -29,6 +29,10 @@ let registerAccount = {
     this.rows = document.getElementById("register-rows");
 
     this.nodes = XMPPSession.prototype.nodes;
+    // Clear the existing elements from previous registrations.
+    for (let elem in this.nodes)
+      delete this.nodes[elem];
+
     this.registerStanza = window.arguments[0].wrappedJSObject;
     this.dataStanza = this.registerStanza.getElement(["x"]);
 
