@@ -11,7 +11,6 @@ mk_add_options MOZ_MAKE_FLAGS="-j$CONCURRENCY"
 
 ac_add_options --enable-application=im
 ac_add_options --enable-optimize
-ac_add_options --disable-debug
 
 ac_add_options --with-l10n-base=..
 
@@ -21,14 +20,13 @@ ac_add_options --disable-sandbox
 # ICU seems still to have cross-compiling issues:
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1019744#c19
 ac_add_options --without-intl-api
+
+ac_add_options --with-branding=im/branding/messenger
+
+ac_add_options --disable-updater
 ac_add_options --disable-crashreporter
 ac_add_options --disable-maintenance-service
 ac_add_options --disable-webrtc
 ac_add_options --disable-tests
 ac_add_options --disable-signmar
-
-ac_add_options --with-branding=im/branding/messenger
-
-ac_add_options --disable-updater
-
-ac_add_options --disable-crashreporter
+ac_add_options --disable-debug
