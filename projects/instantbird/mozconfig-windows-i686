@@ -6,9 +6,6 @@ ac_add_options --target=i686-w64-mingw32
 ac_add_options --enable-default-toolkit=cairo-windows
 ac_add_options --enable-strip
 
-CONCURRENCY=$(( `grep processor /proc/cpuinfo | wc -l` + 2 ))
-mk_add_options MOZ_MAKE_FLAGS="-j$CONCURRENCY"
-
 ac_add_options --enable-application=im
 ac_add_options --enable-optimize
 
