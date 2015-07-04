@@ -27,21 +27,17 @@ let registerAccount = {
     document.documentElement.getButton("accept").disabled = true;
 
     this.rows = document.getElementById("register-rows");
+    this.groupbox = document.getElementById("register-groupbox");
 
     this.nodes = XMPPSession.prototype.nodes;
-    // Clear the existing elements from previous registrations.
-    for (let elem in this.nodes)
-      delete this.nodes[elem];
-
     this.registerStanza = window.arguments[0].wrappedJSObject;
     this.dataStanza = this.registerStanza.getElement(["x"]);
 
     let instructions = this.dataStanza.getElement(["instructions"]);
     if (instructions) {
-      let instructionRow = this.createRow();
-      let instructionLabel = this.createElement("label", null, instructions.innerText);
-      instructionRow.appendChild(instructionLabel);
-      this.rows.appendChild(instructionRow);
+      let instructionLabel = this.createElement("caption");
+      instructionLabel.setAttribute("label", instructions.innerText);
+      this.groupbox.appendChild(instructionLabel);
     }
 
     let title = this.dataStanza.getElement(["title"]);
@@ -51,21 +47,30 @@ let registerAccount = {
       document.title = _("brandShortName");
 
     for each (let ele in this.dataStanza.getElements(["field"])) {
-      let fieldType = ele.attributes["type"];
+      let attrib = ele.attributes;
+      let fieldType = attrib["type"];
       switch (fieldType) {
 
         case "text-single":
         case "text-private":
-
           let textRow = this.createRow();
-          let textLabel = this.createElement("label", null, ele.attributes["label"]);
+          let textLabel = this.createElement("label", null,
+                                             ele.getElement(["required"]) ?
+                                             attrib["label"] + " *" : attrib["label"]);
 
-          let textBox = this.createElement("textbox", ele.attributes["var"],
-                                           ele.getElement(["value"]) ? ele.getElement(["value"]).innerText : "");
-          if (fieldType == "text-private")
+          let textBox = this.createElement("textbox", attrib["var"],
+                                           ele.getElement(["value"]) ?
+                                           ele.getElement(["value"]).innerText : "");
+
+          if (attrib["var"] == "username")
+            textBox.setAttribute("value", this.nodes["username"]);
+          if (attrib["var"] == "url")
+            textBox.setAttribute("readonly", "true");
+
+          if (fieldType == "text-private") {
             textBox.setAttribute("type", "password");
-          if (ele.getElement(["required"]))
-            textBox.setAttribute("oninput", "onInput(this)");
+            textBox.setAttribute("oninput", "onInput(this);");
+          }
 
           textRow.appendChild(textLabel);
           textRow.appendChild(textBox);
@@ -73,7 +78,6 @@ let registerAccount = {
           break;
 
         case "fixed":
-
           let fixedRow = this.createRow();
           let fixedLabel = this.createElement("label", null, ele.getElement(["value"]).innerText);
           fixedRow.appendChild(fixedLabel);
@@ -87,23 +91,30 @@ let registerAccount = {
     let ocr = this.dataStanza.getElements(["field"]).find(e => e.attributes["var"] == "ocr");
     if (ocr) {
       let ocrRow = this.createRow();
+
       let ocrImage = this.createElement("image");
       ocrImage.setAttribute("src", "data:image/png;base64," + this.registerStanza.getElement(["data"]).innerText);
 
-      let ocrLabel = this.createElement("label", null, ocr.attributes["label"]);
+      // OCR will always be a required entry.
+      let ocrLabel = this.createElement("label", null, ocr.attributes["label"] + " *");
       let ocrInput = this.createElement("textbox", ocr.attributes["var"], null);
 
       ocrRow.appendChild(ocrLabel);
-      ocrRow.appendChild(ocrInput);
       this.rows.appendChild(ocrRow);
 
       let ocrBox = document.createElement("hbox");
       ocrBox.setAttribute("align", "center");
-      ocrBox.appendChild(ocrImage);
+      let spacer = document.createElement("spacer");
+      spacer.setAttribute("flex", "1");
 
-      let ocrImageRow = this.createRow();
-      ocrImageRow.appendChild(ocrBox);
-      this.rows.appendChild(ocrImageRow);
+      ocrBox.appendChild(ocrImage);
+      ocrBox.appendChild(spacer);
+      ocrBox.appendChild(ocrInput);
+      this.groupbox.appendChild(ocrBox);
+    }
+    // Set focus on the password field.
+    if (document.getElementById("password")) {
+      document.getElementById("password").focus();
     }
   },
 

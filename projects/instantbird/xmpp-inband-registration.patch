@@ -80,7 +80,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
        return;
      let now = Date.now();
      if (aJustSentSomething)
-@@ -265,28 +268,97 @@ XMPPSession.prototype = {
+@@ -265,28 +268,103 @@ XMPPSession.prototype = {
                       _("connection.error.startTLSNotSupported"));
          return;
        }
@@ -111,17 +111,23 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
 +        return;
 +      }
 +
++      // Clear the existing elements from previous registrations.
++      for (let elem in this.nodes)
++        delete this.nodes[elem];
++
 +      this._account.reportConnecting(_("connection.gettingRegistration"));
 +      let registerStanza = aStanza.getChildrenByNS(Stanza.NS.register)[0];
 +      // If we get registration data, show the form, else quit.
 +      if (registerStanza.getElement(["x"])) {
++        this.nodes["username"] = this._jid.node;
 +        registerStanza.wrappedJSObject = registerStanza;
 +        let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
 +                   .getService(Ci.nsIWindowWatcher);
 +        let win = ww.openWindow(null, registerWindow, "",
-+                                "centerscreen,chrome,modal,resizable=yes,minimizable=no", registerStanza);
++                                "centerscreen,chrome,modal,minimizable=no", registerStanza);
 +      } else {
 +        this.onError(null, _("connection.error.noRegistrationSupport"));
++        return;
 +      }
 +
 +      // If the user cancelled the form, we should stop the registration.

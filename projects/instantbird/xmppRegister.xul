@@ -11,15 +11,17 @@
 
   <script type="application/javascript" src="chrome://instantbird/content/xmppRegister.js" />
 
-  <grid flex="1">
+  <groupbox id="register-groupbox" flex="1">
 
-    <columns>
-      <column flex="1" />
-      <column flex="1" />
-    </columns>
+    <grid flex="1">
+      <columns>
+        <column flex="1" />
+      </columns>
 
-    <rows id="register-rows" />
+      <rows id="register-rows" />
 
-  </grid>
+    </grid>
+
+  </groupbox>
 
 </dialog>
