@@ -124,7 +124,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
 +        let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
 +                   .getService(Ci.nsIWindowWatcher);
 +        let win = ww.openWindow(null, registerWindow, "",
-+                                "centerscreen,chrome,modal,minimizable=no", registerStanza);
++                                "centerscreen,chrome,modal,resizable=no,minimizable=no", registerStanza);
 +      } else {
 +        this.onError(null, _("connection.error.noRegistrationSupport"));
 +        return;
