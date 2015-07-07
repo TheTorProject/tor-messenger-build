@@ -1,19 +1,91 @@
+diff --git a/im/content/aboutDialog.css b/im/content/aboutDialog.css
+--- a/im/content/aboutDialog.css
++++ b/im/content/aboutDialog.css
+@@ -3,7 +3,7 @@
+ }
+ 
+ #modes {
+-  min-height: 380px;
++  min-height: 300px;
+ }
+ 
+ #clientBox {
+@@ -18,44 +18,14 @@
+   margin: 0px 0px 3px 20px;
+ }
+ 
+-#versionField {
+-  background-color: #FFFFFF;
+-  -moz-appearance: none;
+-  border: none;
+-  font-weight: bold;
+-  color: #909090;
+-}
+-
+-#geckoVersionField,
+-#libpurpleVersionField {
+-  background-color: #FFFFFF;
+-  -moz-appearance: none;
+-  border: none;
+-  color: #909090;
+-  padding-top: 3px !important;
+-  padding-left: 10px !important;
+-}
+-
+ #copyright {
+   margin: 10px 20px 3px 20px;
+ }
+ 
+-#userAgentField {
+-  margin: 0px 0px 3px 20px !important;
+-  background-color: #FFFFFF;
+-  -moz-appearance: none;
+-  border: none;
+-}
+-
+ #groove {
+   margin-top: 0px;
+ }
+ 
+-#creditsIframe {
+-   cursor: default;
+-   -moz-user-select: none;
+-}
+-
+ button[dlgtype="extra2"] {
+   margin-left: 13px;
+ }
 diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 --- a/im/content/aboutDialog.xul
 +++ b/im/content/aboutDialog.xul
-@@ -24,7 +24,7 @@
+@@ -14,7 +14,7 @@
+ %brandDTD;
+ <!ENTITY % aboutDialogDTD SYSTEM "chrome://instantbird/locale/aboutDialog.dtd" >
+ %aboutDialogDTD;
+-<!ENTITY copyrightYear "2014">
++<!ENTITY copyrightYear "2015">
+ #ifdef XP_MACOSX
+  <!ENTITY % instantbirdDTD SYSTEM "chrome://instantbird/locale/instantbird.dtd">
+  %instantbirdDTD;
+@@ -24,8 +24,7 @@
  <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
          id="aboutDialog"
          windowtype="Messenger:About"
 -        buttons="accept,extra2"
+-        onload="onLoad();"
 +        buttons="accept"
-         onload="onLoad();"
          title="&aboutDialog.title;" creditslabel="&credits.label;" creditsaccesskey="&credits.accesskey;"
          aboutlabel="&aboutLink.label;" aboutaccesskey="&aboutLink.accesskey;" versionlabel="&aboutVersion;"
-@@ -39,36 +39,8 @@
-         var gSelectedPage;
+         style="width: 299px; height: 330px;">
+@@ -34,95 +33,12 @@
+ #include menus.xul.inc
+ #endif
  
-         function onLoad() {
+-    <script type="application/x-javascript">
+-      <![CDATA[
+-        var gSelectedPage;
+-
+-        function onLoad() {
 -          var xai = Components.classes["@mozilla.org/xre/app-info;1"]
 -                              .getService(Components.interfaces.nsIXULAppInfo);
 -
@@ -35,8 +107,8 @@ diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 -            versionField.hidden = true;
 -          }
 -
-           versionField = document.getElementById("userAgentField");
-           versionField.value = navigator.userAgent;
+-          versionField = document.getElementById("userAgentField");
+-          versionField.value = navigator.userAgent;
 -
 -          var button = document.documentElement.getButton("extra2");
 -          button.setAttribute("label", document.documentElement.getAttribute("creditslabel"));
@@ -44,11 +116,41 @@ diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 -          gSelectedPage = 0;
 -          button.addEventListener("command", switchPage);
 -          document.documentElement.getButton("accept").focus();
-         }
- 
-         function uninit(aEvent)
-@@ -106,14 +78,6 @@
- 
+-        }
+-
+-        function uninit(aEvent)
+-        {
+-          if (aEvent.target != document)
+-            return;
+-          var iframe = document.getElementById("creditsIframe");
+-          iframe.setAttribute("src", "");
+-        }
+-
+-        function switchPage(aEvent)
+-        {
+-          var button = aEvent.target;
+-          if (button.localName != "button")
+-            return;
+-
+-          var iframe = document.getElementById("creditsIframe");
+-          if (gSelectedPage == 0) {
+-            iframe.setAttribute("src", "chrome://instantbird/content/credits.xhtml");
+-            button.setAttribute("label", document.documentElement.getAttribute("aboutlabel"));
+-            button.setAttribute("accesskey", document.documentElement.getAttribute("aboutaccesskey"));
+-            gSelectedPage = 1;
+-          }
+-          else {
+-            iframe.setAttribute("src", "");
+-            button.setAttribute("label", document.documentElement.getAttribute("creditslabel"));
+-            button.setAttribute("accesskey", document.documentElement.getAttribute("creditsaccesskey"));
+-            gSelectedPage = 0;
+-          }
+-          var modes = document.getElementById("modes");
+-          modes.setAttribute("selectedIndex", gSelectedPage);
+-        }
+-      ]]>
+-    </script>
+-
      <deck id="modes" flex="1">
        <vbox flex="1" id="clientBox">
 -        <vbox id="versionWrapper" flex="1">
@@ -61,7 +163,16 @@ diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 -        </vbox>
          <description id="copyright" flex="1">&copyrightText2;</description>
          <separator/>
-         <textbox id="userAgentField" readonly="true" class="plain"
+-        <textbox id="userAgentField" readonly="true" class="plain"
+-                 tabindex="5" multiline="true"/>
+       </vbox>
+ 
+-      <vbox flex="1" id="creditsBox">
+-        <iframe id="creditsIframe" flex="1"/>
+-      </vbox>
+     </deck>
+ 
+     <separator class="groove" id="groove"/>
 diff --git a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd b/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
 --- a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
 +++ b/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
@@ -71,25 +182,3 @@ diff --git a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd b/im/locales/en
  <!-- Use the &copyrightYear; entity to place the current year. -->
 -<!ENTITY copyrightText2         "&#169;2007-&copyrightYear; Contributors. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
 +<!ENTITY copyrightText2         "&#169;&copyrightYear; Contributors. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
-diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
---- a/im/content/aboutDialog.xul
-+++ b/im/content/aboutDialog.xul
-@@ -9,17 +9,17 @@
- <?xul-overlay href="chrome://instantbird/content/menus.xul"?>
- #endif
- 
- <!DOCTYPE window [
- <!ENTITY % brandDTD SYSTEM "chrome://branding/locale/brand.dtd" >
- %brandDTD;
- <!ENTITY % aboutDialogDTD SYSTEM "chrome://instantbird/locale/aboutDialog.dtd" >
- %aboutDialogDTD;
--<!ENTITY copyrightYear "2014">
-+<!ENTITY copyrightYear "2015">
- #ifdef XP_MACOSX
-  <!ENTITY % instantbirdDTD SYSTEM "chrome://instantbird/locale/instantbird.dtd">
-  %instantbirdDTD;
- #endif
- ]>
- 
- <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-         id="aboutDialog"
