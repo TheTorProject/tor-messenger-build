@@ -1,0 +1,21 @@
+diff --git a/im/content/preferences/advanced.xul b/im/content/preferences/advanced.xul
+--- a/im/content/preferences/advanced.xul
++++ b/im/content/preferences/advanced.xul
+@@ -135,17 +135,6 @@
+                       preference="layout.spellcheckDefault"/>
+           </groupbox>
+ 
+-          <!-- Search engines -->
+-          <groupbox id="searchEnginesGroup" orient="horizontal" align="center">
+-            <caption label="&searchEnginesGroup.label;"/>
+-
+-            <description control="manageSearchEnginesButton"
+-                         flex="1">&searchEnginesDesc.label;</description>
+-            <button id="manageSearchEnginesButton" label="&searchEngines.label;"
+-                    accesskey="&searchEngines.accesskey;"
+-                    oncommand="gAdvancedPane.showSearchEngineManager();"/>
+-          </groupbox>
+-
+ #ifdef HAVE_SHELL_SERVICE
+           <!-- System Defaults -->
+           <groupbox id="systemDefaultsGroup" orient="horizontal">
