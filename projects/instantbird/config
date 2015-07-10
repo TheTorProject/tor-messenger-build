@@ -88,6 +88,7 @@ input_files:
   - filename: version.patch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
+  - filename: log-preferences-xul.patch
   - filename: branding/blistWindow.png
   - filename: branding/blistWindow16.png
   - filename: branding/blistWindow48.png
