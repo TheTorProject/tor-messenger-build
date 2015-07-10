@@ -1,0 +1,26 @@
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1436500709 25200
+#      Thu Jul 09 20:58:29 2015 -0700
+# Node ID 1464e4f7b9d0578859a3c25b55b096be83c782a7
+# Parent  dfe08be4ec2350ca30eb7bc9f95f0ab363f25a10
+Set NSDisablePersistence to prevent disk leaks.
+
+diff --git a/im/app/macbuild/Contents/Info.plist.in b/im/app/macbuild/Contents/Info.plist.in
+--- a/im/app/macbuild/Contents/Info.plist.in
++++ b/im/app/macbuild/Contents/Info.plist.in
+@@ -25,12 +25,14 @@
+ 	<key>CFBundleVersion</key>
+ 	<string>%APP_VERSION%</string>
+ 	<key>NSAppleScriptEnabled</key>
+ 	<true/>
+ 	<key>LSMinimumSystemVersion</key>
+ 	<string>10.6.0</string>
+ 	<key>NSSupportsAutomaticGraphicsSwitching</key>
+ 	<true/>
++	<key>NSDisablePersistence</key>
++	<true/>
+ 	<key>NSPrincipalClass</key>
+ 	<string>GeckoNSApplication</string>
+ </dict>
+ </plist>
