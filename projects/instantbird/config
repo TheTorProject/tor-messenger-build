@@ -116,6 +116,7 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
   - filename: block-plugins.mozpatch
+  - filename: js-locale.mozpatch
   - filename: 824009fbc42f.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: Bug-1133689-backport-Make-D3DVsyncDisplay-destructor.mozpatch
