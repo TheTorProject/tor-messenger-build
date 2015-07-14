@@ -49,7 +49,6 @@ do
   patch -p1 < $patch
 done
 cat ../spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
-cp ../cert_override.txt im/app/profile
 
 cp ../xmppRegister* im/content/
 

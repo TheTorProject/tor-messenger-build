@@ -16,8 +16,11 @@ input_files:
     name: gcc
     enable: '[% c("var/linux") %]'
   - filename: start-tor-messenger
+  - filename: start-tor-messenger.desktop
+  - filename: execdesktop
   - filename: tor-messenger.nsi
     enable: '[% c("var/windows") %]'
+  - filename: cert_override.txt
   - filename: tor-messenger.ico
     enable: '[% c("var/windows") %]'
   - project: libdmg-hfsplus

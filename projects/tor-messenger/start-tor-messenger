@@ -1,52 +1,30 @@
-#!/bin/bash
-# 
-# Based on the start-tor-browser script
+#!/usr/bin/env bash
 #
 # GNU/Linux does not really require something like RelativeLink.c
 # However, we do want to have the same look and feel with similar features.
 #
-# To run in debug mode simply pass --debug
-#
-# Copyright 2014 The Tor Project.  See LICENSE for licensing information.
+# Copyright 2015 The Tor Project.  See LICENSE for licensing information.
 
 complain_dialog_title="Tor Messenger"
 
 # First, make sure DISPLAY is set.  If it isn't, we're hosed; scream
 # at stderr and die.
 if [ "x$DISPLAY" = "x" ]; then
-	echo "$complain_dialog_title must be run within the X Window System." >&2
-	echo "Exiting." >&2
-	exit 1
+    echo "$complain_dialog_title must be run within the X Window System." >&2
+    echo "Exiting." >&2
+    exit 1
 fi
 
-# Do not (try to) connect to the session manager 
-unset SESSION_MANAGER 
-
-# Determine whether we are running in a terminal.  If we are, we
-# should send our error messages to stderr...
-ARE_WE_RUNNING_IN_A_TERMINAL=0
-if [ -t 1 -o -t 2 ]; then
-	ARE_WE_RUNNING_IN_A_TERMINAL=1
+# Second, make sure this script wasn't started as 'sh start-tor-messenger' or
+# similar.
+if [ "x$BASH" = "x" ]; then
+    echo "$complain_dialog_title should be started as './start-tor-messenger'"
+    echo "Exiting." >&2
+    exit 1;
 fi
 
-# ...unless we're running in the same terminal as startx or xinit.  In
-# that case, the user is probably running us from a GUI file manager
-# in an X session started by typing startx at the console.
-#
-# Hopefully, the local ps command supports BSD-style options.  (The ps
-# commands usually used on Linux and FreeBSD do; do any other OSes
-# support running Linux binaries?)
-ps T 2>/dev/null |grep startx 2>/dev/null |grep -v grep 2>&1 >/dev/null
-not_running_in_same_terminal_as_startx="$?"
-ps T 2>/dev/null |grep xinit 2>/dev/null |grep -v grep 2>&1 >/dev/null
-not_running_in_same_terminal_as_xinit="$?"
-
-# not_running_in_same_terminal_as_foo has the value 1 if we are *not*
-# running in the same terminal as foo.
-if [ "$not_running_in_same_terminal_as_startx" -eq 0 -o \
-     "$not_running_in_same_terminal_as_xinit" -eq 0 ]; then
-	ARE_WE_RUNNING_IN_A_TERMINAL=0
-fi
+# Do not (try to) connect to the session manager
+unset SESSION_MANAGER
 
 # Complain about an error, by any means necessary.
 # Usage: complain message
@@ -55,8 +33,8 @@ complain () {
 	# Trim leading newlines, to avoid breaking formatting in some dialogs.
 	complain_message="`echo "$1" | sed '/./,$!d'`"
 
-	# If we're being run in a terminal, complain there.
-	if [ "$ARE_WE_RUNNING_IN_A_TERMINAL" -ne 0 ]; then
+	# If we're being run in debug/verbose mode, complain to stderr.
+	if [ "$show_output" -eq 1 ]; then
 		echo "$complain_message" >&2
 		return
 	fi
@@ -114,38 +92,86 @@ complain () {
 }
 
 if [ "`id -u`" -eq 0 ]; then
-	complain "Tor Messenger should not be run as root.  Exiting."
+	complain "The Tor Messenger Bundle should not be run as root.  Exiting."
 	exit 1
 fi
 
-debug=0
-usage_message="usage: $0 [--debug]"
-# !!! We may have more than one argument, changed -eq to -ge in if & elif clauses below
-if [ "$#" -ge 1 -a \( "x$1" = "x--debug" -o "x$1" = "x-debug" \) ]; then
-	debug=1
-	shift # pop the debug argument
-	printf "\nDebug enabled.\n\n"
-elif [ "$#" -ge 1 -a \( "x$1" = "x--help" -o "x$1" = "x-help" \) ]; then
-	echo "$usage_message"
-	exit 0
+tbb_usage () {
+    printf "\nTor Messenger Script Options\n"
+    printf "  --verbose         Display Tor and Firefox output in the terminal\n"
+    printf "  --log [file]      Record Tor and Firefox output in file (default: tor-messenger.log)\n"
+    printf "  --detach          Detach from terminal and run Tor Messenger in the background.\n"
+    printf "  --register-app    Register Tor Messenger as a desktop app for this user\n"
+    printf "  --unregister-app  Unregister Tor Messenger as a desktop app for this user\n"
+}
+log_output=0
+show_output=0
+detach=0
+show_usage=0
+register_desktop_app=0
+logfile=/dev/null
+while :
+do
+    case "$1" in
+      --detach)
+          detach=1
+          shift
+          ;;
+      -v | --verbose | -d | --debug)
+          show_output=1
+          verbose_arg="$2"
+          shift
+          ;;
+      -h | "-?" | --help | -help)
+          show_usage=1
+          show_output=1
+          shift
+          ;;
+      -l | --log)
+          if [ -z "$2" -o "${2:0:1}" == "-" ]; then
+             printf "Logging Tor Messenger debug information to tor-messenger.log\n"
+             logfile="../tor-messenger.log"
+          elif [ "${2:0:1}" == "/" -o "${2:0:1}" == "~" ]; then
+             printf "Logging Tor Messenger debug information to %s\n" "$2"
+             logfile="$2"
+             shift
+          else
+             printf "Logging Tor Messenger debug information to %s\n" "$2"
+             logfile="../$2"
+             shift
+          fi
+          log_output=1
+          shift
+          ;;
+      --register-app)
+          register_desktop_app=1
+          show_output=1
+          shift
+          ;;
+      --unregister-app)
+          register_desktop_app=-1
+          show_output=1
+          shift
+          ;;
+      *) # No more options
+          break
+          ;;
+    esac
+done
+
+# We can't detach and show output at the same time..
+if [ "$show_output" -eq 1 -a "$detach" -eq 1 ]; then
+    detach=0
 fi
 
-# If the user hasn't requested 'debug mode', close whichever of stdout
-# and stderr are not ttys, to keep Firefox and the stuff loaded by/for
-# it (including the system's shared-library loader) from printing
-# messages to $HOME/.xsession-errors .  (Users wouldn't have seen
-# messages there anyway.)
-#
-# If the user has requested 'debug mode', don't muck with the FDs.
-if [ "$debug" -ne 1 ]; then
-  if [ '!' -t 1 ]; then
-    # stdout is not a tty
-    exec >/dev/null
-  fi
-  if [ '!' -t 2 ]; then
-    # stderr is not a tty
-    exec 2>/dev/null
-  fi
+if [ "$show_output" -eq 0 ]; then
+    # If the user hasn't requested 'debug mode' or --help, close stdout and stderr,
+    # to keep Firefox and the stuff loaded by/for it (including the
+    # system's shared-library loader) from printing messages to
+    # $HOME/.xsession-errors or other files. (Users wouldn't have seen
+    # messages there anyway.)
+    exec > "$logfile"
+    exec 2> "$logfile"
 fi
 
 # If XAUTHORITY is unset, set it to its default value of $HOME/.Xauthority
@@ -191,6 +217,13 @@ fi
 mydir="`dirname "$myname"`"
 test -d "$mydir" && cd "$mydir"
 
+# If ${PWD} results in a zero length string, we can try something else...
+if [ ! "${PWD}" ]; then
+	# "hacking around some braindamage"
+	PWD="`pwd`"
+	surveysays="This system has a messed up shell.\n"
+fi
+
 # This is a fix for an ibus issue on some Linux systems. See #9353 for more
 # details. The symlink needs to be created before we change HOME.
 if [ ! -d ".config/ibus" ]; then
@@ -198,19 +231,37 @@ if [ ! -d ".config/ibus" ]; then
   ln -nsf ~/.config/ibus/bus .config/ibus
 fi
 
-# If ${PWD} results in a zero length HOME, we can try something else...
-if [ ! "${PWD}" ]; then
-	# "hacking around some braindamage"
-	HOME="`pwd`"
-	export HOME
-	surveysays="This system has a messed up shell.\n"
-else
-	HOME="${PWD}/Messenger"
-	export HOME
+# Fix up .desktop Icon and Exec Paths, and update the .desktop file from the
+# canonical version if it was changed by the updater.
+cp start-tor-messenger.desktop ../
+sed -i -e "s,^Name=.*,Name=Tor Messenger,g" ../start-tor-messenger.desktop
+sed -i -e "s,^Icon=.*,Icon=$PWD/chrome/icons/default/default48.png,g" ../start-tor-messenger.desktop
+sed -i -e "s,^Exec=.*,Exec=sh -c '\"$PWD/start-tor-messenger\" --detach || ([ !  -x \"$PWD/start-tor-messenger\" ] \&\& \"\$(dirname \"\$*\")\"/Messenger/start-tor-messenger --detach)' dummy %k,g" ../start-tor-messenger.desktop
+
+if [ "$register_desktop_app" -eq 1 ]; then
+	mkdir -p "$HOME/.local/share/applications/"
+	cp ../start-tor-messenger.desktop "$HOME/.local/share/applications/"
+	update-desktop-database "$HOME/.local/share/applications/"
+	printf "Tor Messenger has been registered as a desktop app for this user in ~/.local/share/applications/\n"
+	exit 0
 fi
 
+if [ "$register_desktop_app" -eq -1 ]; then
+	if [ -e "$HOME/.local/share/applications/start-tor-messenger.desktop" ]; then
+		rm -f "$HOME/.local/share/applications/start-tor-messenger.desktop"
+		update-desktop-database "$HOME/.local/share/applications/"
+		printf "Tor Messenger has been removed as a user desktop app (from ~/.local/share/applications/)\n"
+	else
+		printf "Tor Messenger does not appear to be a desktop app (not present in ~/.local/share/applications/)\n"
+	fi
+	exit 0
+fi
+
+HOME="${PWD}"
+export HOME
+
 SYSARCHITECTURE=$(getconf LONG_BIT)
-TORARCHITECTURE=$(expr "$(file Messenger/instantbird)" : '.*ELF \([[:digit:]]*\)')
+TORARCHITECTURE=$(expr "$(file extensions/tor-launcher@torproject.org/TorBrowser/Tor/tor)" : '.*ELF \([[:digit:]]*\)')
 
 if [ $SYSARCHITECTURE -ne $TORARCHITECTURE ]; then
    complain "Wrong architecture? 32-bit vs. 64-bit."
@@ -257,8 +308,8 @@ EOF
 # TOR_CONTROL_PASSWD='"secret"'
 #
 # Yes, the variable MUST be double-quoted, then single-quoted, exactly as
-# shown. This is used by TorButtom to authenticate to Tor's ControlPort, and
-# is necessary for using TBB with a with a system-installed Tor.
+# shown. This is used by TorButton and Tor Launcher to authenticate to Tor's
+# ControlPort, and is necessary for using TB with a system-installed Tor.
 #
 # Additionally, if using a system-installed Tor, the following about:config
 # options should be set (values in <> mean they are the value taken from your
@@ -285,25 +336,35 @@ EOF
 # where the '[...]' in the banned_ports option means "leave anything that was
 # already in the preference alone, just append the things specified after it".
 
-# Either set `TOR_CONTROL_PASSWD` before running ./start-tor-browser, or put
+# Either set `TOR_CONTROL_PASSWD` before running ./start-tor-messenger, or put
 # your password in the following line where the word “secret” is:
 setControlPortPasswd ${TOR_CONTROL_PASSWD:='"secret"'}
 
-# XXX: Debug mode for Firefox??
-
-# not in debug mode, run proceed normally
-printf "Launching Tor Messenger for Linux in ${HOME}...\n"
 cd "${HOME}"
-# XXX Someday we should pass whatever command-line arguments we got
-# (probably filenames or URLs) to Firefox.
-# !!! Dash above comment! Now we pass command-line arguments we got (except --debug) to Firefox.
-# !!! Use at your own risk!
-# Adding --class for fixing bug 11102.
-TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird "${@}"
-exitcode="$?"
-if [ "$exitcode" -ne 0 ]; then
-	complain "Tor Messenger exited abnormally.  Exit code: $exitcode"
-	exit "$exitcode"
+
+# We pass all additional command-line arguments we get to Firefox.
+#
+# The --class parameter was added to fix bug 11102.
+
+if [ "$show_usage" -eq 1 ]; then
+    # Display Firefox help, then our help
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
+        -profile TorMessenger/Data/Browser/profile.default --help 2>/dev/null
+    tbb_usage
+elif [ "$detach" -eq 1 ] ; then
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
+       -profile TorMessenger/Data/Browser/profile.default "${@}" > "$logfile" 2>&1 </dev/null &
+    disown "$!"
+elif [ "$log_output" -eq 1 -a "$show_output" -eq 1 ]; then
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
+        -profile TorMessenger/Data/Browser/profile.default "${@}" 2>&1 </dev/null | \
+        tee "$logfile"
+elif [ "$show_output" -eq 1 ]; then
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
+        -profile TorMessenger/Data/Browser/profile.default "${@}" < /dev/null
 else
-	printf '\nTor Messenger exited cleanly.\n'
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
+        -profile TorMessenger/Data/Browser/profile.default "${@}" > "$logfile" 2>&1 </dev/null
 fi
+
+exit $?

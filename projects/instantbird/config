@@ -75,8 +75,6 @@ input_files:
   - filename: account-picture.patch
   - filename: show-traffic-tor.patch
   - filename: theme-extension-update.patch
-  - filename: cert-installer.patch
-  - filename: cert_override.txt
   - filename: ctcp-time.patch
   - filename: ctcp-ping.patch
   - filename: xmpp-inband-registration.patch
