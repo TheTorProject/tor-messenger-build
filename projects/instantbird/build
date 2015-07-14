@@ -50,6 +50,10 @@ do
 done
 cat ../spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
 
+[% IF c("var/osx") -%]
+cp ../cert_override.txt im/app/profile
+[% END -%]
+
 cp ../xmppRegister* im/content/
 
 cp ../branding/default*.png im/branding/messenger/gtk/

@@ -108,6 +108,10 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: osx-saved-application-state.patch
     enable: '[% c("var/osx") %]'
+  - filename: cert-installer.patch
+    enable: '[% c("var/osx") %]'
+  - filename: cert_override.txt
+    enable: '[% c("var/osx") %]'
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
   - filename: f2e7cea9bc6a-bug-1150967.patch
