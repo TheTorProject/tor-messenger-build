@@ -10,9 +10,9 @@ diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.proper
  connection.authenticating=Authenticating
  connection.gettingResource=Getting resource
  connection.downloadingRoster=Downloading contact list
-+connection.registering=Registering new account with server
++connection.registering=Registering new account
 +connection.gettingRegistration=Getting registration form
-+connection.onRegistrationSuccess=Account registration successful
++connection.onRegistrationSuccess=Account registered
  
  # LOCALIZATION NOTE (connection.error.*)
  #   These will show in the account manager if an error occurs during the
