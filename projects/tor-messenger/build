@@ -27,7 +27,6 @@ mv start-tor-messenger.desktop bundle/Messenger/
 mv start-tor-messenger bundle/Messenger/
 mv execdesktop bundle/Messenger/
 
-mv start-tor-messenger bundle/
 mkdir -p bundle/Messenger/lib
 cp -L gcc/lib[% c('arch') == 'x86_64' ? '64' : '32' %]/libstdc++.so.6 bundle/Messenger/lib/
 [% END %]
