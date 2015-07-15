@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
-hg_url: https://hg.mozilla.org/releases/comm-esr38/
-hg_hash: THUNDERBIRD_38_1_0_RELEASE
+hg_url: https://hg.mozilla.org/releases/comm-aurora/
+hg_hash: AURORA_BASE_20150629
 filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %].[% c('var/archive_suffix') %]"
 remote_docker: 1
 lsb_release:
