@@ -103,7 +103,7 @@ let registerAccount = {
       this.rows.appendChild(ocrRow);
 
       let ocrBox = document.createElement("hbox");
-      ocrBox.setAttribute("align", "center");
+      ocrBox.setAttribute("flex", "1");
       let spacer = document.createElement("spacer");
       spacer.setAttribute("flex", "1");
 
