@@ -105,6 +105,8 @@ input_files:
   - filename: branding/about.png
   - filename: branding/osx.patch
     enable: '[% c("var/osx") %]'
+  - filename: osx-saved-application-state.patch
+    enable: '[% c("var/osx") %]'
   - filename: cert-installer.patch
     enable: '[% c("var/osx") %]'
   - filename: cert_override.txt
