@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 git_url: https://github.com/mozilla/gecko-dev
-git_hash: esr38
+git_hash: aurora
 src: |
   #!/bin/sh
   set -e
