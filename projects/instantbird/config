@@ -78,11 +78,10 @@ input_files:
   - filename: ctcp-time.patch
   - filename: ctcp-ping.patch
   - filename: xmpp-inband-registration.patch
+  - filename: xmpp-default-domain.patch
   - filename: xmppRegister.js
   - filename: xmppRegister.xul
-  - filename: xmpp-domain.patch
   - filename: xmpp-resource.patch
-  - filename: xmpp-username-split.patch
   - filename: version.patch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
