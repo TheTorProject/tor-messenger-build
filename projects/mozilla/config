@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
-hg_url: https://hg.mozilla.org/releases/mozilla-aurora/
-hg_hash: FIREFOX_AURORA_40_END
+git_url: https://github.com/mozilla/gecko-dev
+git_hash: 4638b2174877749f01298fb364a25077f8854d00
 src: |
   #!/bin/sh
   set -e
