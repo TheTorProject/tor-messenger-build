@@ -25,6 +25,9 @@ pre: |
   #!/bin/sh
   # [% c('docker_image') %]
   set -e
+  [% IF pc(c('origin_project'), 'var/pre_pkginst') -%]
+  [% pc(c('origin_project'), 'var/pre_pkginst') %]
+  [% END -%]
   [% IF c('lsb_release/id') == 'Ubuntu' %]
   apt-get update -y
   apt-get upgrade -y
@@ -47,3 +50,6 @@ pre: |
        END;
      END;
   -%]
+  [% IF pc(c('origin_project'), 'var/post_pkginst') -%]
+  [% pc(c('origin_project'), 'var/post_pkginst') %]
+  [% END -%]
