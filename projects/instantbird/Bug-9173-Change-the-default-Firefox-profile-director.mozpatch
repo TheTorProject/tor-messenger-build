@@ -1,23 +1,8 @@
-From e40c55e5d4c8ea9e354f00277478accae84970de Mon Sep 17 00:00:00 2001
-From: Kathy Brade <brade@pearlcrescent.com>
-Date: Fri, 18 Oct 2013 15:20:06 -0400
-Subject: [PATCH] Bug #9173: Change the default Firefox profile directory to be
- TBB-relative.
-
-This should eliminate our need to rely on a wrapper script that sets $HOME and
-launches Firefox with -profile.
----
- toolkit/xre/nsXREDirProvider.cpp       | 153 ++++++++-------------------------
- toolkit/xre/nsXREDirProvider.h         |  10 +--
- xpcom/io/moz.build                     |   4 +
- xpcom/io/nsAppFileLocationProvider.cpp |  96 ++++++++-------------
- 4 files changed, 79 insertions(+), 184 deletions(-)
-
 diff --git a/toolkit/xre/nsXREDirProvider.cpp b/toolkit/xre/nsXREDirProvider.cpp
 index c496a14ce84a..689cb0f8ecb1 100644
 --- a/toolkit/xre/nsXREDirProvider.cpp
 +++ b/toolkit/xre/nsXREDirProvider.cpp
-@@ -33,6 +33,7 @@
+@@ -32,6 +32,7 @@
  #include "nsArrayEnumerator.h"
  #include "nsEnumeratorUtils.h"
  #include "nsReadableUtils.h"
@@ -25,7 +10,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
  #include "mozilla/Services.h"
  #include "mozilla/Omnijar.h"
  #include "mozilla/Preferences.h"
-@@ -195,9 +196,6 @@ nsXREDirProvider::GetUserProfilesRootDir(nsIFile** aResult,
+@@ -200,9 +201,6 @@
                                       aProfileName, aAppName, aVendorName);
  
    if (NS_SUCCEEDED(rv)) {
@@ -35,7 +20,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
      // We must create the profile directory here if it does not exist.
      nsresult tmp = EnsureDirectoryExists(file);
      if (NS_FAILED(tmp)) {
-@@ -220,9 +218,6 @@ nsXREDirProvider::GetUserProfilesLocalDir(nsIFile** aResult,
+@@ -225,9 +223,6 @@
                                       aProfileName, aAppName, aVendorName);
  
    if (NS_SUCCEEDED(rv)) {
@@ -45,7 +30,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
      // We must create the profile directory here if it does not exist.
      nsresult tmp = EnsureDirectoryExists(file);
      if (NS_FAILED(tmp)) {
-@@ -1212,82 +1207,45 @@ nsresult
+@@ -1222,90 +1217,45 @@
  nsXREDirProvider::GetUserDataDirectoryHome(nsIFile** aFile, bool aLocal)
  {
    // Copied from nsAppFileLocationProvider (more or less)
@@ -53,7 +38,11 @@ index c496a14ce84a..689cb0f8ecb1 100644
 +  NS_ENSURE_ARG_POINTER(aFile);
    nsCOMPtr<nsIFile> localDir;
  
--#if defined(XP_MACOSX)
++  nsresult rv = GetAppDir()->Clone(getter_AddRefs(localDir));
++  NS_ENSURE_SUCCESS(rv, rv);
++
++  int levelsToRemove = 0;
+ #if defined(XP_MACOSX)
 -  FSRef fsRef;
 -  OSType folderType;
 -  if (aLocal) {
@@ -63,21 +52,14 @@ index c496a14ce84a..689cb0f8ecb1 100644
 -    folderType = kDomainLibraryFolderType;
 -#else
 -    folderType = kApplicationSupportFolderType;
--#endif
++  levelsToRemove += 1;
+ #endif
 -  }
 -  OSErr err = ::FSFindFolder(kUserDomain, folderType, kCreateFolder, &fsRef);
 -  NS_ENSURE_FALSE(err, NS_ERROR_FAILURE);
 -
 -  rv = NS_NewNativeLocalFile(EmptyCString(), true, getter_AddRefs(localDir));
-+  nsresult rv = GetAppDir()->Clone(getter_AddRefs(localDir));
-   NS_ENSURE_SUCCESS(rv, rv);
- 
--  nsCOMPtr<nsILocalFileMac> dirFileMac = do_QueryInterface(localDir);
--  NS_ENSURE_TRUE(dirFileMac, NS_ERROR_UNEXPECTED);
-+  int levelsToRemove = 0;
-+#if defined(XP_MACOSX)
-+  levelsToRemove += 1;
-+#endif
+-  NS_ENSURE_SUCCESS(rv, rv);
 +  while (localDir && (levelsToRemove > 0)) {
 +    // When crawling up the hierarchy, components named "." do not count.
 +    nsAutoCString removedName;
@@ -85,24 +67,36 @@ index c496a14ce84a..689cb0f8ecb1 100644
 +    NS_ENSURE_SUCCESS(rv, rv);
 +    bool didRemove = !removedName.Equals(".");
  
--  rv = dirFileMac->InitWithFSRef(&fsRef);
--  NS_ENSURE_SUCCESS(rv, rv);
+-  nsCOMPtr<nsILocalFileMac> dirFileMac = do_QueryInterface(localDir);
+-  NS_ENSURE_TRUE(dirFileMac, NS_ERROR_UNEXPECTED);
 +    // Remove a directory component.
 +    nsCOMPtr<nsIFile> parentDir;
 +    rv = localDir->GetParent(getter_AddRefs(parentDir));
 +    NS_ENSURE_SUCCESS(rv, rv);
 +    localDir = parentDir;
  
+-  rv = dirFileMac->InitWithFSRef(&fsRef);
+-  NS_ENSURE_SUCCESS(rv, rv);
++    if (didRemove)
++      --levelsToRemove;
++   }
+ 
 -  localDir = do_QueryInterface(dirFileMac, &rv);
+-#elif defined(XP_IOS)
+-  nsAutoCString userDir;
+-  if (GetUIKitDirectory(aLocal, userDir)) {
+-    rv = NS_NewNativeLocalFile(userDir, true, getter_AddRefs(localDir));
+-  } else {
+-    rv = NS_ERROR_FAILURE;
+-  }
+-  NS_ENSURE_SUCCESS(rv, rv);
 -#elif defined(XP_WIN)
 -  nsString path;
 -  if (aLocal) {
 -    rv = GetShellFolderPath(CSIDL_LOCAL_APPDATA, path);
 -    if (NS_FAILED(rv))
 -      rv = GetRegWindowsAppDataFolder(aLocal, path);
-+    if (didRemove)
-+      --levelsToRemove;
-   }
+-  }
 -  if (!aLocal || NS_FAILED(rv)) {
 -    rv = GetShellFolderPath(CSIDL_APPDATA, path);
 -    if (NS_FAILED(rv)) {
@@ -111,7 +105,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
 -    }
 -  }
 -  NS_ENSURE_SUCCESS(rv, rv);
- 
+-
 -  rv = NS_NewLocalFile(path, true, getter_AddRefs(localDir));
 -#elif defined(MOZ_WIDGET_GONK)
 -  rv = NS_NewNativeLocalFile(NS_LITERAL_CSTRING("/data/b2g"), true,
@@ -154,7 +148,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
  
    NS_IF_ADDREF(*aFile = localDir);
    return rv;
-@@ -1500,48 +1458,25 @@ nsXREDirProvider::AppendProfilePath(nsIFile* aFile,
+@@ -1518,48 +1468,25 @@
    }
  
    nsAutoCString profile;
@@ -206,7 +200,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
  
  #elif defined(ANDROID)
    // The directory used for storing profiles
-@@ -1553,12 +1488,6 @@ nsXREDirProvider::AppendProfilePath(nsIFile* aFile,
+@@ -1571,12 +1498,6 @@
    rv = aFile->AppendNative(nsDependentCString("mozilla"));
    NS_ENSURE_SUCCESS(rv, rv);
  #elif defined(XP_UNIX)
@@ -219,7 +213,7 @@ index c496a14ce84a..689cb0f8ecb1 100644
    if (!profile.IsEmpty()) {
      // Skip any leading path characters
      const char* profileStart = profile.get();
-@@ -1567,31 +1496,17 @@ nsXREDirProvider::AppendProfilePath(nsIFile* aFile,
+@@ -1585,31 +1506,17 @@
  
      // On the off chance that someone wanted their folder to be hidden don't
      // let it become ".."

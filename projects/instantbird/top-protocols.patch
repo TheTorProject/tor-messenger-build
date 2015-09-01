@@ -1,19 +1,12 @@
-# HG changeset patch
-# User Sukhbir Singh <sukhbir@torproject.org>
-# Date 1414029949 -19800
-#      Thu Oct 23 07:35:49 2014 +0530
-# Node ID 947732f86131ec2882340344ba0c29cc9943de48
-# Parent  1d142c56cdf63cb3b0bcab81607c72c4b8a04599
-Redesign the account creation protocol screen (closes #13323)
-
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
+index da7d6b7..90fbf3e 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
 @@ -8,11 +8,13 @@
  # Exceeding 4 protocols may cause scrolling. A list of the
  # available protocols can be found at
  #     https://wiki.instantbird.org/Protocol_Identifiers
--topProtocol.list=prpl-gtalk,prpl-facebook,prpl-twitter,prpl-aim,prpl-msn,prpl-yahoo
+-topProtocol.list=prpl-gtalk,prpl-facebook,prpl-twitter,prpl-aim,prpl-yahoo
 +topProtocol.list=prpl-irc,prpl-jabber,prpl-gtalk,prpl-facebook
  
  # LOCALIZATION NOTE
