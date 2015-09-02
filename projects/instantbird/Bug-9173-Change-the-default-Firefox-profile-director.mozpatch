@@ -309,19 +309,7 @@ index a5c71e723907..f93e7f430996 100644
  
  #if defined(MOZ_WIDGET_COCOA)
  #include <Carbon/Carbon.h>
-@@ -279,9 +280,8 @@ nsAppFileLocationProvider::CloneMozBinDirectory(nsIFile** aLocalFile)
- //----------------------------------------------------------------------------------------
- // GetProductDirectory - Gets the directory which contains the application data folder
- //
--// UNIX   : ~/.mozilla/
--// WIN    : <Application Data folder on user's machine>\Mozilla
--// Mac    : :Documents:Mozilla:
-+// UNIX and WIN   : <App Folder>/TorMessenger/Data/Browser
-+// Mac            : <App Folder>/../TorMessenger/Data/Browser
- //----------------------------------------------------------------------------------------
- NS_METHOD
- nsAppFileLocationProvider::GetProductDirectory(nsIFile** aLocalFile,
-@@ -295,48 +295,45 @@ nsAppFileLocationProvider::GetProductDirectory(nsIFile** aLocalFile,
+@@ -296,48 +297,45 @@
    bool exists;
    nsCOMPtr<nsIFile> localDir;
  
@@ -403,18 +391,7 @@ index a5c71e723907..f93e7f430996 100644
    rv = localDir->Exists(&exists);
  
    if (NS_SUCCEEDED(rv) && !exists) {
-@@ -356,10 +353,6 @@ nsAppFileLocationProvider::GetProductDirectory(nsIFile** aLocalFile,
- 
- //----------------------------------------------------------------------------------------
- // GetDefaultUserProfileRoot - Gets the directory which contains each user profile dir
--//
--// UNIX   : ~/.mozilla/
--// WIN    : <Application Data folder on user's machine>\Mozilla\Profiles
--// Mac    : :Documents:Mozilla:Profiles:
- //----------------------------------------------------------------------------------------
- NS_METHOD
- nsAppFileLocationProvider::GetDefaultUserProfileRoot(nsIFile** aLocalFile,
-@@ -377,23 +370,6 @@ nsAppFileLocationProvider::GetDefaultUserProfileRoot(nsIFile** aLocalFile,
+@@ -377,23 +375,6 @@
      return rv;
    }
  
@@ -435,6 +412,6 @@ index a5c71e723907..f93e7f430996 100644
 -  }
 -#endif
 -
-   *aLocalFile = localDir;
-   NS_ADDREF(*aLocalFile);
+   localDir.forget(aLocalFile);
  
+   return rv;

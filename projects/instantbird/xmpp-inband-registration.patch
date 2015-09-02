@@ -43,31 +43,16 @@ diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.proper
 diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-session.jsm
 --- a/chat/protocols/xmpp/xmpp-session.jsm
 +++ b/chat/protocols/xmpp/xmpp-session.jsm
-@@ -6,16 +6,18 @@ const EXPORTED_SYMBOLS = ["XMPPSession",
- 
- const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
- 
- Cu.import("resource:///modules/imXPCOMUtils.jsm");
- Cu.import("resource:///modules/socket.jsm");
+@@ -11,6 +11,8 @@ Cu.import("resource:///modules/socket.jsm");
  Cu.import("resource:///modules/xmpp-xml.jsm");
  Cu.import("resource:///modules/xmpp-authmechs.jsm");
  
 +const registerWindow = "chrome://instantbird/content/xmppRegister.xul";
 +
- XPCOMUtils.defineLazyGetter(this, "_", function()
+ XPCOMUtils.defineLazyGetter(this, "_", () =>
    l10nHelper("chrome://chat/locale/xmpp.properties")
  );
- 
- // Workaround because a lazy getter can't be exported.
- XPCOMUtils.defineLazyGetter(this, "_defaultResource", function()
-   l10nHelper("chrome://branding/locale/brand.properties")("brandShortName")
- );
-@@ -63,16 +65,17 @@ XMPPSession.prototype = {
-   __proto__: Socket,
-   connectTimeout: 60,
-   readWriteTimeout: 300,
-   sendPing: function() {
-     this.sendStanza(Stanza.iq("get", null, null,
+@@ -68,6 +70,7 @@ XMPPSession.prototype = {
                                Stanza.node("ping", Stanza.NS.ping)),
                      this.cancelDisconnectTimer, this);
    },
@@ -75,17 +60,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
    _lastReceiveTime: 0,
    _lastSendTime: 0,
    checkPingTimer(aJustSentSomething = false) {
-     // Don't start a ping timer if we're not fully connected yet.
-     if (this.onXmppStanza != this.stanzaListeners.accountListening)
-       return;
-     let now = Date.now();
-     if (aJustSentSomething)
-@@ -265,28 +268,103 @@ XMPPSession.prototype = {
-                      _("connection.error.startTLSNotSupported"));
-         return;
-       }
- 
-       // If we aren't starting TLS, jump to the auth step.
+@@ -271,6 +274,69 @@ XMPPSession.prototype = {
        this.onXmppStanza = this.stanzaListeners.startAuth;
        this.onXmppStanza(aStanza);
      },
@@ -155,12 +130,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
      startTLS: function(aStanza) {
        if (aStanza.localName != "proceed") {
          this._networkError(_("connection.error.failedToStartTLS"));
-         return;
-       }
- 
-       this.startTLS();
-       this._encrypted = true;
-       this.startStream();
+@@ -283,6 +349,18 @@ XMPPSession.prototype = {
        this.onXmppStanza = this.stanzaListeners.startAuth;
      },
      startAuth: function(aStanza) {
@@ -179,11 +149,6 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
        if (aStanza.localName != "features") {
          this.ERROR("Unexpected stanza " + aStanza.localName + ", expected 'features'");
          this._networkError(_("connection.error.incorrectResponse"));
-         return;
-       }
- 
-       let mechs = aStanza.getElement(["mechanisms"]);
-       if (!mechs) {
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js

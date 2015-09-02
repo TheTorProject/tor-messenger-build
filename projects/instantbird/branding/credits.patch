@@ -58,15 +58,6 @@ diff --git a/im/content/aboutDialog.css b/im/content/aboutDialog.css
 diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 --- a/im/content/aboutDialog.xul
 +++ b/im/content/aboutDialog.xul
-@@ -14,7 +14,7 @@
- %brandDTD;
- <!ENTITY % aboutDialogDTD SYSTEM "chrome://instantbird/locale/aboutDialog.dtd" >
- %aboutDialogDTD;
--<!ENTITY copyrightYear "2014">
-+<!ENTITY copyrightYear "2015">
- #ifdef XP_MACOSX
-  <!ENTITY % instantbirdDTD SYSTEM "chrome://instantbird/locale/instantbird.dtd">
-  %instantbirdDTD;
 @@ -24,8 +24,7 @@
  <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
          id="aboutDialog"
