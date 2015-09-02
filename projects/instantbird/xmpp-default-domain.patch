@@ -1,22 +1,13 @@
 diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
+index f7dfc46..c2c3a09 100644
 --- a/chat/protocols/xmpp/xmpp.js
 +++ b/chat/protocols/xmpp/xmpp.js
-@@ -24,17 +24,17 @@ XMPPProtocol.prototype = {
-   __proto__: GenericProtocolPrototype,
-   get normalizedName() "jabber",
-   get name() "XMPP",
-   get iconBaseURI() "chrome://prpl-jabber/skin/",
-   getAccount: function(aImAccount) new XMPPAccount(this, aImAccount),
+@@ -31,7 +31,7 @@ XMPPProtocol.prototype = {
  
    usernameSplits: [
-     {get label() _("options.domain"), separator: "@",
+     {get label() { return _("options.domain"); }, separator: "@",
 -     defaultValue: "jabber.org", reverse: true}
 +     defaultValue: "", reverse: true}
    ],
  
    options: {
-     resource: {get label() _("options.resource"),
-                get default() XMPPDefaultResource},
-     priority: {get label() _("options.priority"), default: 0},
-     connection_security: {
-       get label() _("options.connectionSecurity"),
