@@ -28,7 +28,7 @@ pre: |
   [% IF pc(c('origin_project'), 'var/pre_pkginst') -%]
   [% pc(c('origin_project'), 'var/pre_pkginst') %]
   [% END -%]
-  [% IF c('lsb_release/id') == 'Ubuntu' %]
+  [% IF c('lsb_release/id') == 'Ubuntu' || c('lsb_release/id') == 'Debian' %]
   apt-get update -y
   apt-get upgrade -y
   [% END %]
