@@ -125,9 +125,6 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
-  - name: python
-    project: python
-    enable: '[% c("var/linux") %]'
   - name: binutils
     project: binutils
     enable: '[% c("var/linux") %]'

@@ -11,8 +11,6 @@ ln -s /var/tmp/dist/gcc/bin/gcc /var/tmp/dist/gcc/bin/cc
 mkdir -p /var/tmp/dist
 cd /var/tmp/dist
 [% IF c("var/linux") -%]
-tar xf $rootdir/[% c('input_files_by_name/python') %]
-export PATH="/var/tmp/dist/python/bin:$PATH"
 tar xf $rootdir/[% c('input_files_by_name/binutils') %]
 export PATH="/var/tmp/dist/binutils/bin:$PATH"
 [% END -%]
