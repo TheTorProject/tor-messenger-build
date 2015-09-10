@@ -30,9 +30,9 @@ input_files:
 
 remote_docker: 1
 lsb_release:
-  id: Ubuntu
-  release: 12.04
-  codename: precise
+  id: Debian
+  release: 7.8
+  codename: wheezy
 var:
   filename_ext: 'tar.xz'
   deps:

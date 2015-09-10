@@ -3,9 +3,9 @@ version: 2.25
 filename: '[% project %]-[% c("version") %]-[% c("var/build_id") %].tar.gz'
 remote_docker: 1
 lsb_release:
-  id: Ubuntu
-  release: 10.04
-  codename: lucid
+  id: Debian
+  release: 7.8
+  codename: wheezy
 var:
   deps:
     - build-essential

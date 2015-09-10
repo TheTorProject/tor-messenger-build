@@ -5,9 +5,9 @@ git_hash: 4852c9386d1d7b5d67d8bb3da0a77194ae3aa36f
 filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %].[% c('var/archive_suffix') %]"
 remote_docker: 1
 lsb_release:
-  id: Ubuntu
-  release: 10.04
-  codename: lucid
+  id: Debian
+  release: 7.8
+  codename: wheezy
 var:
   archive_suffix: tar.bz2
   deps:
