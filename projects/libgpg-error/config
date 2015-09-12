@@ -3,9 +3,9 @@ filename: '[% project %]-[% c("version") %]-[% c("var/osname") %]-[% c("var/buil
 version: 1.16
 remote_docker: 1
 lsb_release:
-  id: Debian
-  release: 7.8
-  codename: wheezy
+  id: Ubuntu
+  release: 10.04
+  codename: lucid
 var:
   deps:
     - build-essential
