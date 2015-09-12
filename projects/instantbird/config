@@ -80,6 +80,7 @@ input_files:
   - filename: xmpp-default-domain.patch
   - filename: xmppRegister.js
   - filename: xmppRegister.xul
+  - filename: xmpp-gtalk-resource.patch
   - filename: version.patch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
