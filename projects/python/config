@@ -1,0 +1,22 @@
+# vim: filetype=yaml sw=2
+version: 2.7.8
+filename: 'python-[% c("lsb_release/id") %]-[% c("lsb_release/codename") %]-[% c("var/build_id") %].tar.gz'
+lsb_release:
+  id: Debian
+  release: 7.8
+  codename: wheezy
+remote_docker: 1
+var:
+  deps:
+    - xz-utils
+    - build-essential
+    - python-all
+    - zlib1g-dev
+    - libssl-dev
+input_files:
+  - name: python
+    URL: 'https://www.python.org/ftp/python/[% c("version") %]/Python-[% c("version") %].tar.xz'
+    gpg_keyring: python.gpg
+    sig_ext: asc
+    file_gpg_id: 1
+  - project: docker-image

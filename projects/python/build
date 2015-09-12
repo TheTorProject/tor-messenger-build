@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+rootdir=$(pwd)
+distdir=/var/tmp/dist/python
+mkdir -p $distdir
+tar xf [% c('input_files_by_name/python') %]
+cd Python-[% c('version') %]
+./configure --prefix=$distdir
+make -j4
+make prefix=$distdir install
+cd /var/tmp/dist
+[% c('tar', {
+	tar_src => 'python',
+	tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
+    }) %]
