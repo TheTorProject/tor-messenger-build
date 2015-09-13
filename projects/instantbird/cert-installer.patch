@@ -1,15 +1,3 @@
-diff --git a/im/app/profile/Makefile.in b/im/app/profile/Makefile.in
-index 4f48e97..4e02fdf 100644
---- a/im/app/profile/Makefile.in
-+++ b/im/app/profile/Makefile.in
-@@ -15,6 +15,7 @@ include $(topsrcdir)/config/rules.mk
- FILES := \
- 	mimeTypes.rdf \
- 	localstore.rdf \
-+	cert_override.txt \
- 	$(NULL)
- 
- libs:: $(FILES)
 diff --git a/im/installer/Makefile.in b/im/installer/Makefile.in
 index 0234b21..5d20e62 100644
 --- a/im/installer/Makefile.in
