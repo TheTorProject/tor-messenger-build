@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 git_url: https://github.com/mozilla/releases-comm-central
-git_hash: 4852c9386d1d7b5d67d8bb3da0a77194ae3aa36f
+git_hash: master
 filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %].[% c('var/archive_suffix') %]"
 remote_docker: 1
 lsb_release:
