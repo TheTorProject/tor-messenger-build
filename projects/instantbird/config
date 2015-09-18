@@ -13,6 +13,7 @@ var:
   deps:
     - build-essential
     - libmpc-dev
+    - libgconf2-dev
     - autotools-dev
     - autoconf2.13
     - python
