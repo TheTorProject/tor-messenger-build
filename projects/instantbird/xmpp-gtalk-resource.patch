@@ -6,7 +6,7 @@ diff --git a/chat/protocols/gtalk/gtalk.js b/chat/protocols/gtalk/gtalk.js
    options: {
      resource: {get label() { return _("options.resource"); },
 -               get default() { return XMPPDefaultResource; }}
-+               default: "Instantbird"}}
++               default: "Instantbird"},
    },
    get chatHasTopic() { return true; },
    classID: Components.ID("{38a224c1-6748-49a9-8ab2-efc362b1000d}")
@@ -18,7 +18,7 @@ diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
    options: {
      resource: {get label() { return _("options.resource"); },
 -               get default() { return XMPPDefaultResource; }},
-+               default: "Instanbird"}},
++               default: "Instanbird"},
      priority: {get label() { return _("options.priority"); }, default: 0},
      connection_security: {
        get label() { return _("options.connectionSecurity"); },
