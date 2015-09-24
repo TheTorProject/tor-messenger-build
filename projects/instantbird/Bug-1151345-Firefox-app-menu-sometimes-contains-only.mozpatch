@@ -1,15 +1,3 @@
-From bfb108f8d8ba5c748ac0daa027271b063fd503b1 Mon Sep 17 00:00:00 2001
-From: Steven Michaud <smichaud@pobox.com>
-Date: Wed, 3 Jun 2015 16:19:51 -0500
-Subject: [PATCH] Bug 1151345 - Firefox app menu sometimes contains only "Quit"
- on OS X. r=spohl
-
----
- widget/cocoa/nsAppShell.mm | 2 ++
- widget/cocoa/nsMenuBarX.h  | 1 +
- widget/cocoa/nsMenuBarX.mm | 8 ++++++++
- 3 files changed, 11 insertions(+)
-
 diff --git a/widget/cocoa/nsAppShell.mm b/widget/cocoa/nsAppShell.mm
 index 10e0f0e..c89cee9 100644
 --- a/widget/cocoa/nsAppShell.mm
@@ -30,37 +18,3 @@ index 10e0f0e..c89cee9 100644
  
    NS_OBJC_TRY_ABORT([NSApp run]);
  
-diff --git a/widget/cocoa/nsMenuBarX.h b/widget/cocoa/nsMenuBarX.h
-index a27d373..50f76cb 100644
---- a/widget/cocoa/nsMenuBarX.h
-+++ b/widget/cocoa/nsMenuBarX.h
-@@ -127,6 +127,7 @@ public:
-   void              ForceUpdateNativeMenuAt(const nsAString& indexString);
-   void              ForceNativeMenuReload(); // used for testing
-   static char       GetLocalizedAccelKey(const char *shortcutID);
-+  static void       ResetNativeApplicationMenu();
- 
- protected:
-   void              ConstructNativeMenus();
-diff --git a/widget/cocoa/nsMenuBarX.mm b/widget/cocoa/nsMenuBarX.mm
-index 90c681f..5e13538 100644
---- a/widget/cocoa/nsMenuBarX.mm
-+++ b/widget/cocoa/nsMenuBarX.mm
-@@ -498,6 +498,14 @@ char nsMenuBarX::GetLocalizedAccelKey(const char *shortcutID)
-   return retval;
- }
- 
-+/* static */
-+void nsMenuBarX::ResetNativeApplicationMenu()
-+{
-+  [sApplicationMenu removeAllItems];
-+  [sApplicationMenu release];
-+  sApplicationMenu = nil;
-+}
-+
- // Hide the item in the menu by setting the 'hidden' attribute. Returns it in |outHiddenNode| so
- // the caller can hang onto it if they so choose. It is acceptable to pass nsull
- // for |outHiddenNode| if the caller doesn't care about the hidden node.
--- 
-2.1.4
-
