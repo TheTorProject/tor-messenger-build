@@ -1,18 +1,14 @@
-diff --git a/im/installer/Makefile.in b/im/installer/Makefile.in
-index 0234b21..5d20e62 100644
---- a/im/installer/Makefile.in
-+++ b/im/installer/Makefile.in
-@@ -113,7 +113,9 @@ MOZ_PKG_MAC_ICON=branding/disk.icns
- MOZ_PKG_MAC_EXTRA=--symlink "/Applications:/ "
- endif
+diff --git a/im/app/profile/moz.build b/im/app/profile/moz.build
+--- a/im/app/profile/moz.build
++++ b/im/app/profile/moz.build
+@@ -9,6 +9,7 @@
+     DEFINES['HAVE_SHELL_SERVICE'] = 1
  
--NON_OMNIJAR_FILES =
-+NON_OMNIJAR_FILES = \
-+	defaults/profile/cert_override.txt \
-+	$(NULL)
- 
- ifndef LIBXUL_SDK
- INSTALL_SDK = 1
+ FINAL_TARGET_FILES.defaults.profile += [
++    'cert_override.txt',
+     'localstore.rdf',
+     'mimeTypes.rdf',
+ ]
 diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
 index edf01b1..78db5e4 100644
 --- a/im/installer/package-manifest.in
@@ -25,3 +21,18 @@ index edf01b1..78db5e4 100644
  
  #ifdef XP_MACOSX
  @RESPATH@/components/ibDockBadge.js
+diff --git a/im/installer/Makefile.in b/im/installer/Makefile.in
+index 0234b21..5d20e62 100644
+--- a/im/installer/Makefile.in
++++ b/im/installer/Makefile.in
+@@ -113,7 +113,9 @@ MOZ_PKG_MAC_ICON=branding/disk.icns
+ MOZ_PKG_MAC_EXTRA=--symlink "/Applications:/ "
+ endif
+ 
+-NON_OMNIJAR_FILES =
++NON_OMNIJAR_FILES = \
++       defaults/profile/cert_override.txt \
++       $(NULL)
+ 
+ ifndef LIBXUL_SDK
+ INSTALL_SDK = 1
