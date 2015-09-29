@@ -12,6 +12,7 @@ cd $rootdir
 distdir=/var/tmp/dist/[% project %]
 tar xf libotr-[% c('version') %].tar.gz
 cd libotr-[% c('version') %]
+patch -p1 < ../bugs-otr-im-72.patch
 ./configure --prefix=$distdir [% c("var/configure_opt") %]
 make -j4 [% IF c("var/windows") %]LDFLAGS='-no-undefined -lssp'[% END %]
 make prefix=$distdir install

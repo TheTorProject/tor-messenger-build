@@ -38,6 +38,7 @@ input_files:
     file_gpg_id: 1
     sig_ext: asc
     gpg_keyring: libotr.gpg
+  - filename: bugs-otr-im-72.patch
   - project: libgcrypt
     name: libgcrypt
   - project: libgpg-error
