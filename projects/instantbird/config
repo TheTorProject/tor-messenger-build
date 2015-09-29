@@ -86,6 +86,7 @@ input_files:
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
   - filename: log-preferences-xul.patch
+  - filename: ifdef-performance-toolkit-xpt.patch
   - filename: branding/blistWindow.png
   - filename: branding/blistWindow16.png
   - filename: branding/blistWindow48.png
