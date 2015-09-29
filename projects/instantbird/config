@@ -111,14 +111,8 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
-  - filename: f2e7cea9bc6a-bug-1150967.patch
-    enable: '[% c("var/windows") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
   - filename: block-plugins.mozpatch
-  - filename: 824009fbc42f.mozpatch
-    enable: '[% c("var/windows") %]'
-  - filename: Bug-1133689-backport-Make-D3DVsyncDisplay-destructor.mozpatch
-    enable: '[% c("var/windows") %]'
   - filename: OSX-package-as-tar.bz2.mozpatch
     enable: '[% c("var/osx") %]'
   - filename: Bug-1151345-Firefox-app-menu-sometimes-contains-only.mozpatch
