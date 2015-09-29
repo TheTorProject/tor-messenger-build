@@ -1,0 +1,24 @@
+From 464da9c6d7b576a9b92b2c2e26d52a9213e3f89d Mon Sep 17 00:00:00 2001
+From: Nicolas Vigier <boklm@torproject.org>
+Date: Tue, 29 Sep 2015 16:06:38 +0200
+Subject: [PATCH 1/2] Revert "no bug - fix case of nsIDocShell.h in
+ WindowsUIUtils.cpp"
+
+This reverts commit 02335958d9315e5620f030617e4a599209697054.
+---
+ widget/windows/WindowsUIUtils.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/widget/windows/WindowsUIUtils.cpp b/widget/windows/WindowsUIUtils.cpp
+index 0c93d945cf30..98325f0eb055 100644
+--- a/widget/windows/WindowsUIUtils.cpp
++++ b/widget/windows/WindowsUIUtils.cpp
+@@ -11,7 +11,7 @@
+ 
+ #include "nsIObserverService.h"
+ #include "nsIBaseWindow.h"
+-#include "nsIDocShell.h"
++#include "nsIDocshell.h"
+ #include "nsIAppShellService.h"
+ #include "nsAppShellCID.h"
+ #include "nsIXULWindow.h"
