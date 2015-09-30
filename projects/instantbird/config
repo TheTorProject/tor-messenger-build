@@ -124,6 +124,8 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: 0001-Avoid-double-definition-of-MFVideoFormat_VP80-with-m.mozpatch
     enable: '[% c("var/windows") %]'
+    # When 1197281 is fixed, this should not be needed anymore:
+    # https://bugzilla.mozilla.org/show_bug.cgi?id=1197281
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
   - filename: block-plugins.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
