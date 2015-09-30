@@ -1,0 +1,149 @@
+From 8fffddd5b63e14b70213fe93a2dbac2953f10d5a Mon Sep 17 00:00:00 2001
+From: Nicolas Vigier <boklm@torproject.org>
+Date: Wed, 30 Sep 2015 12:08:26 +0200
+Subject: [PATCH 3/3] Revert "Bug 1192573 - Require tablet-mode (Win10+) to
+ show the on-screen keyboard. r=masayuki, a=sledru"
+
+This reverts commit 7af35d3472734b241fa053c1d5e3ff8fe1b0d513.
+---
+ modules/libpref/init/all.js      |  3 ---
+ widget/windows/WinIMEHandler.cpp | 52 +++++++++++++++-------------------------
+ 2 files changed, 19 insertions(+), 36 deletions(-)
+
+diff --git a/modules/libpref/init/all.js b/modules/libpref/init/all.js
+index 6e22123e9084..27b3b2834841 100644
+--- a/modules/libpref/init/all.js
++++ b/modules/libpref/init/all.js
+@@ -3237,9 +3237,6 @@ pref("ui.osk.enabled", true);
+ pref("ui.osk.detect_physical_keyboard", true);
+ // Path to TabTip.exe on local machine. Cached for performance reasons.
+ pref("ui.osk.on_screen_keyboard_path", "");
+-// Only show the on-screen keyboard when Windows is in Tablet mode. Setting
+-// this pref to false will allow the OSK to show in regular non-tablet mode.
+-pref("ui.osk.require_tablet_mode", true);
+ 
+ # XP_WIN
+ #endif
+diff --git a/widget/windows/WinIMEHandler.cpp b/widget/windows/WinIMEHandler.cpp
+index 8d56bb1d3985..28b4f5a704f7 100644
+--- a/widget/windows/WinIMEHandler.cpp
++++ b/widget/windows/WinIMEHandler.cpp
+@@ -16,7 +16,6 @@
+ #include "nsLookAndFeel.h"
+ #include "nsWindow.h"
+ #include "WinUtils.h"
+-#include "nsIWindowsUIUtils.h"
+ 
+ #include "shellapi.h"
+ #include "Shlobj.h"
+@@ -27,7 +26,6 @@
+ const char* kOskPathPrefName = "ui.osk.on_screen_keyboard_path";
+ const char* kOskEnabled = "ui.osk.enabled";
+ const char* kOskDetectPhysicalKeyboard = "ui.osk.detect_physical_keyboard";
+-const char* kOskRequireTabletMode = "ui.osk.require_tablet_mode";
+ 
+ namespace mozilla {
+ namespace widget {
+@@ -527,44 +525,19 @@ IMEHandler::SetInputScopeForIMM32(nsWindow* aWindow,
+ void
+ IMEHandler::MaybeShowOnScreenKeyboard()
+ {
+-  if (sPluginHasFocus ||
+-      !IsWin10OrLater() ||
+-      !Preferences::GetBool(kOskEnabled, true) ||
+-      sShowingOnScreenKeyboard ||
+-      IMEHandler::IsKeyboardPresentOnSlate()) {
++  if (sPluginHasFocus) {
+     return;
+   }
+-
+-  if (Preferences::GetBool(kOskRequireTabletMode, true)) {
+-    // Tablet Mode is only supported on Windows 10 and higher.
+-    // When touch-event detection within IME is better supported
+-    // this check may be removed, and ShowOnScreenKeyboard can
+-    // run on Windows 8 and higher (adjusting the IsWin10OrLater
+-    // guard above and within MaybeDismissOnScreenKeyboard).
+-    nsCOMPtr<nsIWindowsUIUtils>
+-      uiUtils(do_GetService("@mozilla.org/windows-ui-utils;1"));
+-    if (uiUtils) {
+-      bool isInTabletMode = false;
+-      uiUtils->GetInTabletMode(&isInTabletMode);
+-      if (!isInTabletMode) {
+-        return;
+-      }
+-    }
+-  }
+-
+- IMEHandler::ShowOnScreenKeyboard();
++  IMEHandler::ShowOnScreenKeyboard();
+ }
+ 
+ // static
+ void
+ IMEHandler::MaybeDismissOnScreenKeyboard()
+ {
+-  if (sPluginHasFocus ||
+-      !IsWin10OrLater() ||
+-      !sShowingOnScreenKeyboard) {
++  if (sPluginHasFocus) {
+     return;
+   }
+-
+   IMEHandler::DismissOnScreenKeyboard();
+ }
+ 
+@@ -666,12 +639,13 @@ IMEHandler::IsKeyboardPresentOnSlate()
+     { 0x4D36E96B, 0xE325,  0x11CE,
+       { 0xBF, 0xC1, 0x08, 0x00, 0x2B, 0xE1, 0x03, 0x18 } };
+ 
++  bool result = false;
+   // Query for all the keyboard devices.
+   HDEVINFO device_info =
+     ::SetupDiGetClassDevs(&KEYBOARD_CLASS_GUID, nullptr,
+                           nullptr, DIGCF_PRESENT);
+   if (device_info == INVALID_HANDLE_VALUE) {
+-    return false;
++    return result;
+   }
+ 
+   // Enumerate all keyboards and look for ACPI\PNP and HID\VID devices. If
+@@ -701,11 +675,11 @@ IMEHandler::IsKeyboardPresentOnSlate()
+         // return true if the API's report one or more keyboards. Please note
+         // that this will break for non keyboard devices which expose a
+         // keyboard PDO.
+-        return true;
++        result = true;
+       }
+     }
+   }
+-  return false;
++  return result;
+ }
+ 
+ // Based on DisplayVirtualKeyboard() in Chromium's base/win/win_util.cc.
+@@ -713,6 +687,13 @@ IMEHandler::IsKeyboardPresentOnSlate()
+ void
+ IMEHandler::ShowOnScreenKeyboard()
+ {
++  if (!IsWin8OrLater() ||
++      !Preferences::GetBool(kOskEnabled, true) ||
++      sShowingOnScreenKeyboard ||
++      IMEHandler::IsKeyboardPresentOnSlate()) {
++    return;
++  }
++
+   nsAutoString cachedPath;
+   nsresult result = Preferences::GetString(kOskPathPrefName, &cachedPath);
+   if (NS_FAILED(result) || cachedPath.IsEmpty()) {
+@@ -793,6 +774,11 @@ IMEHandler::ShowOnScreenKeyboard()
+ void
+ IMEHandler::DismissOnScreenKeyboard()
+ {
++  if (!IsWin8OrLater() ||
++      !sShowingOnScreenKeyboard) {
++    return;
++  }
++
+   sShowingOnScreenKeyboard = false;
+ 
+   // Dismiss the virtual keyboard by generating the ESC keystroke

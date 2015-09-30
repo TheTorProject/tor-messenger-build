@@ -116,6 +116,8 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: 0002-Revert-Bug-1170522-expose-whether-or-not-we-re-in-ta.mozpatch
     enable: '[% c("var/windows") %]'
+  - filename: 0003-Revert-Bug-1192573-Require-tablet-mode-Win10-to-show.mozpatch
+    enable: '[% c("var/windows") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
   - filename: block-plugins.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
