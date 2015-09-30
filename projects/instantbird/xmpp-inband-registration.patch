@@ -29,7 +29,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
  
 +const registerWindow = "chrome://instantbird/content/xmppRegister.xul";
 +
- XPCOMUtils.defineLazyGetter(this, "_", () =>
+ XPCOMUtils.defineLazyGetter(this, "_", function() =>
    l10nHelper("chrome://chat/locale/xmpp.properties")
  );
 @@ -68,6 +70,7 @@
