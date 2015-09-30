@@ -1,11 +1,10 @@
 diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
-index fc90494..d546b6b 100644
 --- a/chat/protocols/irc/irc.js
 +++ b/chat/protocols/irc/irc.js
-@@ -1960,7 +1960,7 @@ ircProtocol.prototype = {
+@@ -1959,7 +1959,7 @@
  
    usernameSplits: [
-     {get label() { return _("options.server"); }, separator: "@",
+     {get label() _("options.server"), separator: "@",
 -     defaultValue: "chat.freenode.net", reverse: true}
 +     defaultValue: "", reverse: true}
    ],
