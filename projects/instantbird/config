@@ -122,6 +122,8 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: bug-1197282-include-atomic-in-videodecoder.mozpatch
     enable: '[% c("var/windows") %]'
+  - filename: 0001-Avoid-double-definition-of-MFVideoFormat_VP80-with-m.mozpatch
+    enable: '[% c("var/windows") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
   - filename: block-plugins.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
