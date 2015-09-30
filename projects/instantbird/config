@@ -130,8 +130,6 @@ input_files:
   - filename: block-plugins.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
     enable: '[% c("var/osx") %]'
-  - filename: Bug-1151345-Firefox-app-menu-sometimes-contains-only.mozpatch
-    enable: '[% c("var/osx") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python
