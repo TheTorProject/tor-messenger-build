@@ -1,12 +1,7 @@
 diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.properties
 --- a/chat/locales/en-US/xmpp.properties
 +++ b/chat/locales/en-US/xmpp.properties
-@@ -8,16 +8,19 @@
- #   (These will be displayed in account.connection.progress from
- #    accounts.properties, which adds … at the end, so do not include
- #    periods at the end of these messages.)
- connection.initializingStream=Initializing stream
- connection.initializingEncryption=Initializing encryption
+@@ -13,6 +13,9 @@
  connection.authenticating=Authenticating
  connection.gettingResource=Getting resource
  connection.downloadingRoster=Downloading contact list
@@ -16,17 +11,7 @@ diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.proper
  
  # LOCALIZATION NOTE (connection.error.*)
  #   These will show in the account manager if an error occurs during the
- #   connection attempt.
- connection.error.invalidUsername=Invalid username (your username should contain an '@' character)
- connection.error.failedToCreateASocket=Failed to create a socket (Are you offline?)
- connection.error.serverClosedConnection=The server closed the connection
- connection.error.resetByPeer=Connection reset by peer
-@@ -28,16 +31,18 @@ connection.error.startTLSRequired=The se
- connection.error.startTLSNotSupported=The server doesn't support encryption but your configuration requires it
- connection.error.failedToStartTLS=Failed to start encryption
- connection.error.noAuthMec=No authentication mechanism offered by the server
- connection.error.noCompatibleAuthMec=None of the authentication mechanisms offered by the server are supported
- connection.error.notSendingPasswordInClear=The server only supports authentication by sending the password in cleartext
+@@ -33,6 +36,8 @@
  connection.error.authenticationFailure=Authentication failure
  connection.error.notAuthorized=Not authorized (Did you enter the wrong password?)
  connection.error.failedToGetAResource=Failed to get a resource
@@ -35,15 +20,10 @@ diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.proper
  
  
  # LOCALIZATION NOTE (conversation.error.notDelivered):
- #   This is displayed in a conversation as an error message when a message
- #   the user has sent wasn't delivered.
- #   %S is replaced by the text of the message that wasn't delivered.
- conversation.error.notDelivered=This message could not be delivered: %S
- #   This is displayed in a conversation as an error message when joining a MUC
 diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-session.jsm
 --- a/chat/protocols/xmpp/xmpp-session.jsm
 +++ b/chat/protocols/xmpp/xmpp-session.jsm
-@@ -11,6 +11,8 @@ Cu.import("resource:///modules/socket.jsm");
+@@ -11,6 +11,8 @@
  Cu.import("resource:///modules/xmpp-xml.jsm");
  Cu.import("resource:///modules/xmpp-authmechs.jsm");
  
@@ -52,7 +32,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
  XPCOMUtils.defineLazyGetter(this, "_", () =>
    l10nHelper("chrome://chat/locale/xmpp.properties")
  );
-@@ -68,6 +70,7 @@ XMPPSession.prototype = {
+@@ -68,6 +70,7 @@
                                Stanza.node("ping", Stanza.NS.ping)),
                      this.cancelDisconnectTimer, this);
    },
@@ -60,7 +40,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
    _lastReceiveTime: 0,
    _lastSendTime: 0,
    checkPingTimer(aJustSentSomething = false) {
-@@ -271,6 +274,69 @@ XMPPSession.prototype = {
+@@ -271,6 +274,69 @@
        this.onXmppStanza = this.stanzaListeners.startAuth;
        this.onXmppStanza(aStanza);
      },
@@ -130,7 +110,7 @@ diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-ses
      startTLS: function(aStanza) {
        if (aStanza.localName != "proceed") {
          this._networkError(_("connection.error.failedToStartTLS"));
-@@ -283,6 +349,18 @@ XMPPSession.prototype = {
+@@ -283,6 +349,18 @@
        this.onXmppStanza = this.stanzaListeners.startAuth;
      },
      startAuth: function(aStanza) {
