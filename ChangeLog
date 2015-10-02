@@ -1,4 +1,4 @@
-Tor Messenger 0.1.0-beta -- October 2 2015
+Tor Messenger 0.1.0b1 -- October 2 2015
 * All Platforms
   * Bug 15162: Set user agent string to Instantbird stable/Windows
   * Bug 16475: Prevent plugins from loading into address space
