@@ -1,10 +1,10 @@
-Tor Messenger Version -- Release Date
+Tor Messenger 0.1.0-beta -- October 2 2015
 * All Platforms
   * Bug 15162: Set user agent string to Instantbird stable/Windows
   * Bug 16475: Prevent plugins from loading into address space
   * Bug 16477: Disable search engine query and related settings
   * Bug 15161: Fix JavaScript locale disclosure and CTCP fingerprinting
-  * Update build repository to Thunderbird 38 ESR
+  * Update build repository to Mozilla Aurora (Firefox 42)
 * Linux
   * Update start-tor-messenger script to include start-tor-browser options
 * Mac
