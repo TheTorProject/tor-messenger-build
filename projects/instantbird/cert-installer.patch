@@ -4,11 +4,11 @@ diff --git a/im/app/profile/moz.build b/im/app/profile/moz.build
 @@ -7,3 +7,7 @@
 
  if CONFIG['MOZ_WIDGET_TOOLKIT'] in ('gtk2', 'mac', 'cocoa'):
-      DEFINES['HAVE_SHELL_SERVICE'] = 1
-      +
-      +FINAL_TARGET_FILES.defaults.profile += [
-      +    'cert_override.txt',
-      +]
+     DEFINES['HAVE_SHELL_SERVICE'] = 1
++
++FINAL_TARGET_FILES.defaults.profile += [
++    'cert_override.txt',
++]
 diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
 index edf01b1..78db5e4 100644
 --- a/im/installer/package-manifest.in
