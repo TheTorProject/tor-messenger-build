@@ -130,6 +130,8 @@ input_files:
   - filename: block-plugins.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
     enable: '[% c("var/osx") %]'
+  - filename: 0001-bug-1183129-Remove-a-dead-iOS-related-conditional-fr.mozpatch
+    enable: '[% c("var/osx") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python
