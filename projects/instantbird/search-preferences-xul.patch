@@ -1,7 +1,7 @@
 diff --git a/im/content/preferences/advanced.xul b/im/content/preferences/advanced.xul
 --- a/im/content/preferences/advanced.xul
 +++ b/im/content/preferences/advanced.xul
-@@ -143,17 +143,6 @@
+@@ -135,17 +135,6 @@
                        preference="layout.spellcheckDefault"/>
            </groupbox>
  
@@ -16,6 +16,6 @@ diff --git a/im/content/preferences/advanced.xul b/im/content/preferences/advanc
 -                    oncommand="gAdvancedPane.showSearchEngineManager();"/>
 -          </groupbox>
 -
-           <!-- Advanced Configuration -->
-           <groupbox>
-             <caption label="&configEditDesc.label;"/>
+ #ifdef HAVE_SHELL_SERVICE
+           <!-- System Defaults -->
+           <groupbox id="systemDefaultsGroup" orient="horizontal">
