@@ -8,21 +8,20 @@ Subject: [PATCH] Avoid double definition of MFVideoFormat_VP80 with mingw-w64
  1 file changed, 2 insertions(+)
 
 diff --git a/dom/media/platforms/wmf/WMFVideoMFTManager.cpp b/dom/media/platforms/wmf/WMFVideoMFTManager.cpp
-index ba87a34bc6db..33ab0a4ad5a8 100644
 --- a/dom/media/platforms/wmf/WMFVideoMFTManager.cpp
 +++ b/dom/media/platforms/wmf/WMFVideoMFTManager.cpp
-@@ -31,6 +31,7 @@ using mozilla::layers::LayerManager;
+@@ -30,6 +30,7 @@
+ using mozilla::layers::LayerManager;
  using mozilla::layers::LayersBackend;
  
- #if MOZ_WINSDK_MAXVER < 0x0A000000
 +#if 0
- // Windows 10+ SDK has VP80 and VP90 defines
  const GUID MFVideoFormat_VP80 =
  {
-@@ -48,6 +49,7 @@ const GUID MFVideoFormat_VP90 =
+   0x30385056,
+@@ -45,6 +46,7 @@
+   0x0010,
    {0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71}
  };
- #endif
 +#endif
  
  const CLSID CLSID_WebmMfVp8Dec =
