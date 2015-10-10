@@ -25,6 +25,9 @@ pre: |
   #!/bin/sh
   # [% c('docker_image') %]
   set -e
+  [% IF c('lsb_release/codename') == 'utopic' -%]
+  sed -i 's/archive\.ubuntu\.com/old-releases.ubuntu.com/' /etc/apt/sources.list
+  [% END -%]
   [% IF pc(c('origin_project'), 'var/pre_pkginst') -%]
   [% pc(c('origin_project'), 'var/pre_pkginst') %]
   [% END -%]
