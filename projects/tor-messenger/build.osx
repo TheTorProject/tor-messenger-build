@@ -24,7 +24,7 @@ cd ..
 mkdir ctypes-otr
 cd ctypes-otr
 tar xf $rootdir/[% c('input_files_by_name/ctypes-otr') %]
-mv ctypes-otr* $rootdir/Tor\ Messenger.app/Contents/Resources/extensions/ctypes-otr@tormessenger
+mv ctypes-otr* $rootdir/Unnamed\ Messenger.app/Contents/Resources/extensions/ctypes-otr@tormessenger
 cd ..
 
 mkdir Unnamed\ Messenger.app/TorMessenger
