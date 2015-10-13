@@ -6,4 +6,4 @@ diff --git a/im/branding/messenger/configure.sh b/im/branding/messenger/configur
  # file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
 -MOZ_APP_DISPLAYNAME=Instantbird
-+MOZ_APP_DISPLAYNAME="Tor Messenger"
++MOZ_APP_DISPLAYNAME="Unnamed Messenger"

@@ -20,11 +20,11 @@ tar xf [% c('input_files_by_name/bundle-data') %] -C bundle/Messenger/TorMesseng
 
 [% IF c("var/linux") %]
 tar xf [% c('input_files_by_name/gcc') %]
-chmod 755 start-tor-messenger start-tor-messenger.desktop execdesktop
+chmod 755 start-unnamed-messenger start-unnamed-messenger.desktop execdesktop
 
-cp start-tor-messenger.desktop bundle/
-mv start-tor-messenger.desktop bundle/Messenger/
-mv start-tor-messenger bundle/Messenger/
+cp start-unnamed-messenger.desktop bundle/
+mv start-unnamed-messenger.desktop bundle/Messenger/
+mv start-unnamed-messenger bundle/Messenger/
 mv execdesktop bundle/Messenger/
 
 mkdir -p bundle/Messenger/lib
@@ -52,13 +52,13 @@ mv tor-browser_en-US/Browser/TorBrowser/Tor tor-launcher@torproject.org/TorBrows
 mv tor-browser_en-US/Browser/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor
 rm -Rf tor-browser_en-US
 cd ../../../
-mv bundle tor-messenger
+mv bundle unnamed-messenger
 [% IF c('var/windows') -%]
-makensis tor-messenger.nsi
-mv tor-messenger-install.exe [% dest_dir _ '/' _ c('filename') %]
+makensis unnamed-messenger.nsi
+mv unnamed-messenger-install.exe [% dest_dir _ '/' _ c('filename') %]
 [% ELSE -%]
 [% c('tar', {
-        tar_src => [ 'tor-messenger' ],
+        tar_src => [ 'unnamed-messenger' ],
         tar_args => '-cJf ' _ dest_dir _ '/' _ c('filename'),
         }) %]
 [% END -%]

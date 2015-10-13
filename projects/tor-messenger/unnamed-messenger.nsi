@@ -1,4 +1,4 @@
-;NSIS Installer for Tor Messenger
+;NSIS Installer for Unnamed Messenger
 ;Based on NSIS Installer for Tor Browser Bundle
 ;Written by Moritz Bartl
 ;released under Public Domain
@@ -11,14 +11,14 @@
 ;--------------------------------
 ;General
  
-  ; location of Tor Messenger to put into installer
-  !define TBBSOURCE ".\tor-messenger\"  
+  ; location of Unnamed Messenger to put into installer
+  !define TBBSOURCE ".\unnamed-messenger\"  
 
-  Name "Tor Messenger"
-  OutFile "tor-messenger-install.exe"
+  Name "Unnamed Messenger"
+  OutFile "unnamed-messenger-install.exe"
 
   ;Default installation folder
-  InstallDir "$DESKTOP\Tor Messenger"
+  InstallDir "$DESKTOP\Unnamed Messenger"
   
   ;Best (but slowest) compression
   SetCompressor /SOLID lzma
@@ -30,14 +30,14 @@
 ;--------------------------------
 ;Interface Configuration
 
-  !define MUI_ICON   "tor-messenger.ico"
+  !define MUI_ICON   "unnamed-messenger.ico"
   !define MUI_ABORTWARNING
 
 ;--------------------------------
 ;Modern UI settings
   !define MUI_FINISHPAGE_NOREBOOTSUPPORT     ; we don't require a reboot
   !define MUI_FINISHPAGE_RUN
-  !define MUI_FINISHPAGE_RUN_FUNCTION "StartTorMessenger"
+  !define MUI_FINISHPAGE_RUN_FUNCTION "StartUnnamedMessenger"
   !define MUI_FINISHPAGE_SHOWREADME ; misuse for option to create shortcut; less ugly than MUI_PAGE_COMPONENTS
   !define MUI_FINISHPAGE_SHOWREADME_TEXT "&Add Start Menu && Desktop shortcuts"
   !define MUI_FINISHPAGE_SHOWREADME_FUNCTION "CreateShortCuts"
@@ -126,19 +126,19 @@
 ;--------------------------------
 ;Installer Sections
 
-Section "Tor Messenger" SecTBB
+Section "Unnamed Messenger" SecTBB
 
   SetOutPath "$INSTDIR"
   File /r "${TBBSOURCE}\*.*"
   SetOutPath "$INSTDIR\Messenger"
-  CreateShortCut "$INSTDIR\Start Tor Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe"
+  CreateShortCut "$INSTDIR\Start Unnamed Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe"
 
 SectionEnd
 
 Function CreateShortcuts
 
-  CreateShortCut "$SMPROGRAMS\Start Tor Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe" 
-  CreateShortCut "$DESKTOP\Start Tor Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe"
+  CreateShortCut "$SMPROGRAMS\Start Unnamed Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe" 
+  CreateShortCut "$DESKTOP\Start Unnamed Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe"
 
 FunctionEnd
 ;--------------------------------
@@ -155,14 +155,14 @@ FunctionEnd
 
 Function CheckIfTargetDirectoryExists
 ${If} ${FileExists} "$INSTDIR\*.*"
- MessageBox MB_YESNO "The destination directory already exists. You can try to upgrade Tor Messenger, but if you run into any problems, use a new directory instead. Continue?" IDYES NoAbort
+ MessageBox MB_YESNO "The destination directory already exists. You can try to upgrade Unnamed Messenger, but if you run into any problems, use a new directory instead. Continue?" IDYES NoAbort
    Abort
  NoAbort:
 ${EndIf}
 FunctionEnd
 
 
-Function StartTorMessenger
-ExecShell "open" "$INSTDIR/Start Tor Messenger.lnk"
+Function StartUnnamedMessenger
+ExecShell "open" "$INSTDIR/Start Unnamed Messenger.lnk"
 FunctionEnd
 
