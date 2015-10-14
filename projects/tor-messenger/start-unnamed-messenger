@@ -236,7 +236,7 @@ fi
 # Fix up .desktop Icon and Exec Paths, and update the .desktop file from the
 # canonical version if it was changed by the updater.
 cp start-unnamed-messenger.desktop ../
-sed -i -e "s,^Name=.*,Name=Unnamed Messenger,g" ../start-tor-messenger.desktop
+sed -i -e "s,^Name=.*,Name=Unnamed Messenger,g" ../start-unnamed-messenger.desktop
 sed -i -e "s,^Icon=.*,Icon=$PWD/chrome/icons/default/default48.png,g" ../start-unnamed-messenger.desktop
 sed -i -e "s,^Exec=.*,Exec=sh -c '\"$PWD/start-unnamed-messenger\" --detach || ([ !  -x \"$PWD/start-unnamed-messenger\" ] \&\& \"\$(dirname \"\$*\")\"/Messenger/start-unnamed-messenger --detach)' dummy %k,g" ../start-unnamed-messenger.desktop
 
