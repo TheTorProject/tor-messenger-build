@@ -1,0 +1,37 @@
+# HG changeset patch
+# User aleth <aleth@instantbird.org>
+# Date 1437694911 -7200
+#      Fri Jul 24 01:41:51 2015 +0200
+# Node ID fee4408ddba2383c7c12e149792356fc9ff169dc
+# Parent  bb21a5dd4d1d3b9ff9f108ca8ab759504fc3ba59
+Bug 1179943 - Stop the themes preference pane being intermittently positioned too high. r=clokep
+
+diff --git a/im/content/preferences/messagestyle.js b/im/content/preferences/messagestyle.js
+--- a/im/content/preferences/messagestyle.js
++++ b/im/content/preferences/messagestyle.js
+@@ -166,18 +166,24 @@ var previewObserver = {
+     this.browser._theme = this.theme;
+     Services.obs.addObserver(this, "conversation-loaded", false);
+   },
+
+   observe: function(aSubject, aTopic, aData) {
+     if (aTopic != "conversation-loaded" || aSubject != this.browser)
+       return;
+
++    // Similar to the log viewer, disable the convbrowser feature
++    // that scrolls to the last message after it has been added.
++    this.browser._autoScrollEnabled = false;
++    this.browser.getPendingMessagesCount =
++      () => previewObserver.conv.messages.length + 1;
++
+     // Display all queued messages. Use a timeout so that message text
+     // modifiers can be added with observers for this notification.
+     setTimeout(function() {
+-      for each (let message in previewObserver.conv.messages)
++      for (let message of previewObserver.conv.messages)
+         aSubject.appendMessage(message, false);
+     }, 0);
+
+     Services.obs.removeObserver(this, "conversation-loaded");
+   }
+ };
