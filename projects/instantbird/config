@@ -74,6 +74,7 @@ input_files:
   - filename: disable-links.patch
   - filename: account-picture.patch
   - filename: show-traffic-tor.patch
+  - filename: hide-get-protocols.patch
   - filename: theme-extension-update.patch
   - filename: ctcp-time.patch
   - filename: ctcp-ping.patch
