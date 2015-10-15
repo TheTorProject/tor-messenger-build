@@ -29,5 +29,8 @@ input_files:
   - project: docker-image
   - filename: enable-reloc-section-ld.patch
     enable: '[% c("var/windows") %]'
-  - filename: peXXigen.patch
+
+  # specify-timestamp patch from Stephen Kitt <steve@sk2.org>
+  # https://anonscm.debian.org/cgit/collab-maint/binutils-mingw-w64.git/
+  - filename: specify-timestamp.patch
     enable: '[% c("var/windows") %]'

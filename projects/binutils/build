@@ -8,8 +8,9 @@ cd [% project %]-[% c("version") %]
 sed 's/= extern_rt_rel_d;/= extern_rt_rel_d;\n  memset (extern_rt_rel_d, 0, PE_IDATA5_SIZE);/' -i ld/pe-dll.c
 # Needed for the hardening...
 patch -p1 < ../enable-reloc-section-ld.patch
-# Zeroing timestamps in PE headers reliably, see bug 12753.
-patch -p1 < ../peXXigen.patch
+# specify-timestamp patch from Stephen Kitt <steve@sk2.org>
+# https://anonscm.debian.org/cgit/collab-maint/binutils-mingw-w64.git/
+patch -p2 < ../specify-timestamp.patch
 [% END -%]
 ./configure --prefix=$distdir [% c('var/configure_opt') %]
 make -j4
