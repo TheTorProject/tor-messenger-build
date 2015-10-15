@@ -14,6 +14,7 @@ mkdir -p /var/tmp/build
 tar -C /var/tmp/build -xf libotr-[% c('version') %].tar.gz
 cd /var/tmp/build/libotr-[% c('version') %]
 patch -p1 < $rootdir/bugs-otr-im-72.patch
+export SOURCE_DATE_EPOCH=$(stat -c %Y ChangeLog)
 ./configure --prefix=$distdir [% c("var/configure_opt") %]
 make -j4 [% IF c("var/windows") %]LDFLAGS='-no-undefined -lssp'[% END %]
 make prefix=$distdir install
