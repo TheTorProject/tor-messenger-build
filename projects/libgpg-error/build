@@ -1,12 +1,14 @@
 #!/bin/sh
 set -e
+rootdir=$(pwd)
 distdir="/var/tmp/dist/[% project %]"
 mkdir -p "$distdir"
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
-tar xf [% project %]-[% c('version') %].tar.bz2
-cd [% project %]-[% c('version') %]
+mkdir -p /var/tmp/build
+tar -C /var/tmp/build -xf $rootdir/[% project %]-[% c('version') %].tar.bz2
+cd /var/tmp/build/[% project %]-[% c('version') %]
 [% IF c("var/osx") -%]
-cp ../lock-obj-pub.x86_64-apple-darwin14.0.0.h src/syscfg/lock-obj-pub.darwin10.h
+cp $rootdir/lock-obj-pub.x86_64-apple-darwin14.0.0.h src/syscfg/lock-obj-pub.darwin10.h
 echo 'int main() {}' > src/gen-posix-lock-obj.c
 [% END -%]
 ./configure --prefix="$distdir" [% c("var/configure_opt") %][% IF c('var/windows') or c('var/osx') %] --enable-static --disable-shared[% END %]
