@@ -11,6 +11,7 @@ cd /var/tmp/build/[% project %]-[% c('version') %]
 cp $rootdir/lock-obj-pub.x86_64-apple-darwin14.0.0.h src/syscfg/lock-obj-pub.darwin10.h
 echo 'int main() {}' > src/gen-posix-lock-obj.c
 [% END -%]
+export SOURCE_DATE_EPOCH=$(stat -c %Y ChangeLog)
 ./configure --prefix="$distdir" [% c("var/configure_opt") %][% IF c('var/windows') or c('var/osx') %] --enable-static --disable-shared[% END %]
 make -j4
 make prefix="$distdir" install
