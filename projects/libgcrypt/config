@@ -1,6 +1,6 @@
 # vim: filetype=yaml sw=2
 filename: '[% project %]-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
-version: 1.6.2
+version: 1.6.4
 remote_docker: 1
 lsb_release:
   id: Ubuntu
@@ -29,7 +29,7 @@ targets:
       release: 12.04
       codename: precise
 input_files:
-  - URL: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.6.2.tar.bz2
+  - URL: 'ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-[% c("version") %].tar.bz2'
     sig_ext: sig
     file_gpg_id: 1
     gpg_keyring: libgcrypt.gpg
