@@ -10,12 +10,12 @@ var:
   deps:
     - build-essential
     - bison
-  configure_opt: '--disable-multilib --enable-gold'
+  configure_opt: '--disable-multilib --enable-gold --enable-deterministic-archives'
 
 targets:
   windows-i686:
     var:
-      configure_opt: '--target=i686-w64-mingw32 --disable-multilib'
+      configure_opt: '--target=i686-w64-mingw32 --disable-multilib --enable-deterministic-archives'
     lsb_release:
       id: Ubuntu
       release: 14.10
