@@ -1,8 +1,9 @@
 #!/bin/sh
 set -e
 distdir=/var/tmp/dist/[% project %]
-tar xf [% project %]-[% c("version") %].tar.bz2
-cd [% project %]-[% c("version") %]
+mkdir /var/tmp/build
+tar -C /var/tmp/build -xf [% project %]-[% c("version") %].tar.bz2
+cd /var/tmp/build/[% project %]-[% c("version") %]
 ./configure --prefix=$distdir [% c("var/configure_opt") %]
 make -j4
 make install
