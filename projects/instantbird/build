@@ -79,6 +79,16 @@ then
         patch -p1 < $patch
     done
 fi
+
+if ls -1 $rootdir/*.nsspatch > /dev/null 2>&1
+then
+    cd security/nss
+    for patch in $(ls -1 $rootdir/*.nsspatch | sort)
+    do
+        patch -p1 < $patch
+    done
+    cd ../..
+fi
 cd ..
 
 cp $rootdir/[% c('input_files_by_name/mozconfig') %] .mozconfig

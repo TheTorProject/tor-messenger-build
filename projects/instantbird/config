@@ -88,6 +88,7 @@ input_files:
   - filename: search-preferences-xul.patch
   - filename: log-preferences-xul.patch
   - filename: ifdef-performance-toolkit-xpt.patch
+  - filename: 8ea23862252b-remove__DATE__and__TIME__.nsspatch
   - filename: branding/blistWindow.png
   - filename: branding/blistWindow16.png
   - filename: branding/blistWindow48.png

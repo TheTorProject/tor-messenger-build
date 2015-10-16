@@ -1,0 +1,345 @@
+# HG changeset patch
+# User Mike Hommey <mh+mozilla@glandium.org>
+# Date 1436438559 -7200
+#      Thu Jul 09 12:42:39 2015 +0200
+# Node ID 8ea23862252b009f097807267f43248a820f673e
+# Parent  cac90b6155c9f140f63a75d38c7d7da8d2d6ca55
+Bug 1169174, Remove __DATE__ and __TIME__ references from NSS, r=rrelyea
+
+diff -r cac90b6155c9 -r 8ea23862252b lib/ckfw/builtins/binst.c
+--- a/lib/ckfw/builtins/binst.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/ckfw/builtins/binst.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -65,11 +65,10 @@
+   NSSCKFWInstance *fwInstance
+ )
+ {
+-  extern const char __nss_builtins_rcsid[];
+-  extern const char __nss_builtins_sccsid[];
++  extern const char __nss_builtins_version[];
+   volatile char c; /* force a reference that won't get optimized away */
+ 
+-  c = __nss_builtins_rcsid[0] + __nss_builtins_sccsid[0];
++  c = __nss_builtins_version[0];
+   return nss_builtins_LibraryVersion;
+ }
+ 
+diff -r cac90b6155c9 -r 8ea23862252b lib/ckfw/builtins/ckbiver.c
+--- a/lib/ckfw/builtins/ckbiver.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/ckfw/builtins/ckbiver.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -13,14 +13,7 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_builtins_rcsid[] = "$Header: NSS Builtin Trusted Root CAs "
+-        NSS_BUILTINS_LIBRARY_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_builtins_sccsid[] = "@(#)NSS Builtin Trusted Root CAs "
+-        NSS_BUILTINS_LIBRARY_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_builtins_version[] = "Version: NSS Builtin Trusted Root CAs "
++        NSS_BUILTINS_LIBRARY_VERSION _DEBUG_STRING;
+diff -r cac90b6155c9 -r 8ea23862252b lib/ckfw/capi/ckcapiver.c
+--- a/lib/ckfw/capi/ckcapiver.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/ckfw/capi/ckcapiver.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -12,14 +12,7 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_ckcapi_rcsid[] = "$Header: NSS Access to Microsoft Certificate Store "
+-        NSS_CKCAPI_LIBRARY_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_ckcapi_sccsid[] = "@(#)NSS Access to Microsoft Certificate Store "
+-        NSS_CKCAPI_LIBRARY_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_ckcapi_version[] = "Version: NSS Access to Microsoft Certificate Store "
++        NSS_CKCAPI_LIBRARY_VERSION _DEBUG_STRING;
+diff -r cac90b6155c9 -r 8ea23862252b lib/ckfw/nssmkey/ckmkver.c
+--- a/lib/ckfw/nssmkey/ckmkver.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/ckfw/nssmkey/ckmkver.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -12,14 +12,7 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_ckmk_rcsid[] = "$Header: NSS Access to the MAC OS X Key Ring "
+-        NSS_CKMK_LIBRARY_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_ckmk_sccsid[] = "@(#)NSS Access to the MAC OS X Key Ring "
+-        NSS_CKMK_LIBRARY_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_ckmk_version[] = "Version: NSS Access to the MAC OS X Key Ring "
++        NSS_CKMK_LIBRARY_VERSION _DEBUG_STRING;
+diff -r cac90b6155c9 -r 8ea23862252b lib/freebl/freeblver.c
+--- a/lib/freebl/freeblver.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/freebl/freeblver.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -13,12 +13,6 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_freebl_rcsid[] = "$Header: NSS " SOFTOKEN_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_freebl_sccsid[] = "@(#)NSS " SOFTOKEN_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_freebl_version[] = "Version: NSS " SOFTOKEN_VERSION _DEBUG_STRING;
+diff -r cac90b6155c9 -r 8ea23862252b lib/freebl/ldvector.c
+--- a/lib/freebl/ldvector.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/freebl/ldvector.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -294,13 +294,12 @@
+ const FREEBLVector *
+ FREEBL_GetVector(void)
+ {
+-    extern const char __nss_freebl_rcsid[];
+-    extern const char __nss_freebl_sccsid[];
++    extern const char __nss_freebl_version[];
+ 
+     /* force a reference that won't get optimized away */
+     volatile char c;
+ 
+-    c = __nss_freebl_rcsid[0] + __nss_freebl_sccsid[0];
++    c = __nss_freebl_version[0];
+ #ifdef FREEBL_NO_DEPEND
+     FREEBL_InitStubs();
+ #endif
+diff -r cac90b6155c9 -r 8ea23862252b lib/nss/nssinit.c
+--- a/lib/nss/nssinit.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/nss/nssinit.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -1230,8 +1230,7 @@
+ }
+ 	
+ 
+-extern const char __nss_base_rcsid[];
+-extern const char __nss_base_sccsid[];
++extern const char __nss_base_version[];
+ 
+ PRBool
+ NSS_VersionCheck(const char *importedVersion)
+@@ -1249,7 +1248,7 @@
+     const char *ptr = importedVersion;
+     volatile char c; /* force a reference that won't get optimized away */
+ 
+-    c = __nss_base_rcsid[0] + __nss_base_sccsid[0]; 
++    c = __nss_base_version[0];
+ 
+     while (isdigit(*ptr)) {
+         vmajor = 10 * vmajor + *ptr - '0';
+diff -r cac90b6155c9 -r 8ea23862252b lib/nss/nssver.c
+--- a/lib/nss/nssver.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/nss/nssver.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -13,12 +13,6 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_base_rcsid[] = "$Header: NSS " NSS_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_base_sccsid[] = "@(#)NSS " NSS_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_base_version[] = "Version: NSS " NSS_VERSION _DEBUG_STRING;
+diff -r cac90b6155c9 -r 8ea23862252b lib/smime/smimeutil.c
+--- a/lib/smime/smimeutil.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/smime/smimeutil.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -754,8 +754,7 @@
+     return cert;
+ }
+ 
+-extern const char __nss_smime_rcsid[];
+-extern const char __nss_smime_sccsid[];
++extern const char __nss_smime_version[];
+ 
+ PRBool
+ NSSSMIME_VersionCheck(const char *importedVersion)
+@@ -771,7 +770,7 @@
+      */
+     volatile char c; /* force a reference that won't get optimized away */
+ 
+-    c = __nss_smime_rcsid[0] + __nss_smime_sccsid[0]; 
++    c = __nss_smime_version[0];
+ 
+     return NSS_VersionCheck(importedVersion);
+ }
+diff -r cac90b6155c9 -r 8ea23862252b lib/smime/smimever.c
+--- a/lib/smime/smimever.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/smime/smimever.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -13,12 +13,6 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_smime_rcsid[] = "$Header: NSS " NSS_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_smime_sccsid[] = "@(#)NSS " NSS_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_smime_version[] = "Version: NSS " NSS_VERSION _DEBUG_STRING;
+diff -r cac90b6155c9 -r 8ea23862252b lib/softoken/legacydb/lginit.c
+--- a/lib/softoken/legacydb/lginit.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/softoken/legacydb/lginit.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -22,15 +22,9 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_dbm_rcsid[] = "$Header: NSS " SOFTOKEN_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_dbm_sccsid[] = "@(#)NSS " SOFTOKEN_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_dbm_version[] = "Version: NSS " SOFTOKEN_VERSION _DEBUG_STRING;
+ 
+ typedef struct LGPrivateStr {
+     NSSLOWCERTCertDBHandle *certDB;
+@@ -595,7 +589,7 @@
+     PRBool readOnly = (flags == SDB_RDONLY)? PR_TRUE: PR_FALSE;
+     volatile char c; /* force a reference that won't get optimized away */
+ 
+-    c = __nss_dbm_rcsid[0] + __nss_dbm_sccsid[0];
++    c = __nss_dbm_version[0];
+ 
+     rv = SECOID_Init();
+     if (SECSuccess != rv) {
+diff -r cac90b6155c9 -r 8ea23862252b lib/softoken/pkcs11.c
+--- a/lib/softoken/pkcs11.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/softoken/pkcs11.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -3135,8 +3135,7 @@
+     return crv;
+ }
+ 
+-extern const char __nss_softokn_rcsid[];
+-extern const char __nss_softokn_sccsid[];
++extern const char __nss_softokn_version[];
+ 
+ /* NSC_GetInfo returns general information about Cryptoki. */
+ CK_RV  NSC_GetInfo(CK_INFO_PTR pInfo)
+@@ -3145,7 +3144,7 @@
+ 
+     CHECK_FORK();
+     
+-    c = __nss_softokn_rcsid[0] + __nss_softokn_sccsid[0]; 
++    c = __nss_softokn_version[0];
+     pInfo->cryptokiVersion.major = 2;
+     pInfo->cryptokiVersion.minor = 20;
+     PORT_Memcpy(pInfo->manufacturerID,manufacturerID,32);
+diff -r cac90b6155c9 -r 8ea23862252b lib/softoken/softkver.c
+--- a/lib/softoken/softkver.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/softoken/softkver.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -13,12 +13,6 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_softokn_rcsid[] = "$Header: NSS " SOFTOKEN_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_softokn_sccsid[] = "@(#)NSS " SOFTOKEN_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_softokn_version[] = "Version: NSS " SOFTOKEN_VERSION _DEBUG_STRING;
+diff -r cac90b6155c9 -r 8ea23862252b lib/ssl/sslcon.c
+--- a/lib/ssl/sslcon.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/ssl/sslcon.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -3669,8 +3669,7 @@
+ */
+ 
+ #include "nss.h"
+-extern const char __nss_ssl_rcsid[];
+-extern const char __nss_ssl_sccsid[];
++extern const char __nss_ssl_version[];
+ 
+ PRBool
+ NSSSSL_VersionCheck(const char *importedVersion)
+@@ -3686,7 +3685,7 @@
+      */
+     volatile char c; /* force a reference that won't get optimized away */
+ 
+-    c = __nss_ssl_rcsid[0] + __nss_ssl_sccsid[0]; 
++    c = __nss_ssl_version[0];
+     return NSS_VersionCheck(importedVersion);
+ }
+ 
+diff -r cac90b6155c9 -r 8ea23862252b lib/ssl/sslver.c
+--- a/lib/ssl/sslver.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/ssl/sslver.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -13,12 +13,6 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_ssl_rcsid[] = "$Header: NSS " NSS_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_ssl_sccsid[] = "@(#)NSS " NSS_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_ssl_version[] = "Version: NSS " NSS_VERSION _DEBUG_STRING;
+diff -r cac90b6155c9 -r 8ea23862252b lib/util/secoid.c
+--- a/lib/util/secoid.c	Thu May 28 15:34:09 2015 -0700
++++ b/lib/util/secoid.c	Thu Jul 09 12:42:39 2015 +0200
+@@ -20,15 +20,9 @@
+ #endif
+ 
+ /*
+- * Version information for the 'ident' and 'what commands
+- *
+- * NOTE: the first component of the concatenated rcsid string
+- * must not end in a '$' to prevent rcs keyword substitution.
++ * Version information
+  */
+-const char __nss_util_rcsid[] = "$Header: NSS " NSSUTIL_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__ " $";
+-const char __nss_util_sccsid[] = "@(#)NSS " NSSUTIL_VERSION _DEBUG_STRING
+-        "  " __DATE__ " " __TIME__;
++const char __nss_util_version[] = "Version: NSS " NSSUTIL_VERSION _DEBUG_STRING;
+ 
+ /* MISSI Mosaic Object ID space */
+ /* USGov algorithm OID space: { 2 16 840 1 101 } */
+@@ -1921,7 +1915,7 @@
+     char * envVal;
+     volatile char c; /* force a reference that won't get optimized away */
+ 
+-    c = __nss_util_rcsid[0] + __nss_util_sccsid[0];
++    c = __nss_util_version[0];
+ 
+     if (oidhash) {
+ 	return SECSuccess; /* already initialized */
