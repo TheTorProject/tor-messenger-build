@@ -15,6 +15,12 @@ mkdir bundle/Messenger
 tar xf [% c('input_files_by_name/instantbird') %] -C bundle/Messenger --strip 1
 [% END -%]
 
+[% IF c("var/linux") -%]
+# remove non reproducible files (FIPS-140)
+# Tor Browser removes them too
+rm -f bundle/Messenger/*.chk
+[% END -%]
+
 mkdir bundle/Messenger/TorMessenger
 tar xf [% c('input_files_by_name/bundle-data') %] -C bundle/Messenger/TorMessenger
 
