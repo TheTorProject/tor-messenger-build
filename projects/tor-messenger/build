@@ -13,6 +13,7 @@ mv bundle/instantbird bundle/Messenger
 [% ELSE -%]
 mkdir bundle/Messenger
 tar xf [% c('input_files_by_name/instantbird') %] -C bundle/Messenger --strip 1
+find bundle/Messenger -exec touch -m -t $(date -d @[% c('timestamp') %] +%Y%m%d%H%M) {} \;
 [% END -%]
 
 [% IF c("var/linux") -%]
