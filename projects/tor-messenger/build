@@ -13,8 +13,8 @@ mv bundle/instantbird bundle/Messenger
 [% ELSE -%]
 mkdir bundle/Messenger
 tar xf [% c('input_files_by_name/instantbird') %] -C bundle/Messenger --strip 1
-find bundle/Messenger -exec touch -m -t $(date -d @[% c('timestamp') %] +%Y%m%d%H%M) {} \;
 [% END -%]
+find bundle/Messenger -exec touch -m -t $(date -d @[% c('timestamp') %] +%Y%m%d%H%M) {} \;
 
 [% IF c("var/linux") -%]
 # remove non reproducible files (FIPS-140)
