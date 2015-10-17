@@ -3,7 +3,7 @@ set -e
 rootdir=$(pwd)
 export SHELL=/bin/sh
 export HOME=$rootdir
-export MOZ_BUILD_DATE=$(date -d @[% c('timestamp') %] +%Y%m%d%H)
+export MOZ_BUILD_DATE=$(date -d @[% c('timestamp') %] +%Y%m%d%H%M%S)
 [% IF c('var/osx') -%]
 [% pc('gcc', 'var/setup', { compiler_tarfile => c('input_files_by_name/gcchost') }) %]
 ln -s /var/tmp/dist/gcc/bin/gcc /var/tmp/dist/gcc/bin/cc
