@@ -5,16 +5,7 @@ docker_image_prefix: 'tor-messenger_[% GET ENV.RBM_BUILDNAME ? ENV.RBM_BUILDNAME
 docker_save_image: '[% c("docker_image_prefix") %]:[% c("filename") %]'
 pkg_type: build
 
-distributions:
-  - lsb_release:
-      id: Ubuntu
-    docker_image: 'ubuntu:[% c("lsb_release/codename") %]'
-  - lsb_release:
-      id: Debian
-    docker_image: 'debian:[% c("lsb_release/codename") %]'
-  - lsb_release:
-      id: Fedora
-    docker_image: 'fedora:[% c("lsb_release/release") %]'
+docker_image: '[% c("lsb_release/id").lower %]:[% c("lsb_release/codename") %]'
 
 lsb_release:
   id: '[% pc(c("origin_project", { no_distro => 1 }), "lsb_release/id", { no_distro => 1 }) %]'
