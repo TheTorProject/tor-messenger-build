@@ -2,10 +2,6 @@
 version: 2.25
 filename: '[% project %]-[% c("version") %]-[% c("var/build_id") %].tar.gz'
 remote_docker: 1
-lsb_release:
-  id: Ubuntu
-  release: 10.04
-  codename: lucid
 var:
   deps:
     - build-essential
@@ -16,10 +12,6 @@ targets:
   windows-i686:
     var:
       configure_opt: '--target=i686-w64-mingw32 --disable-multilib --enable-deterministic-archives'
-    lsb_release:
-      id: Ubuntu
-      release: 14.10
-      codename: utopic
 
 input_files:
   - URL: https://ftp.gnu.org/gnu/binutils/binutils-[% c("version") %].tar.bz2

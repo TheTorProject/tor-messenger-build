@@ -18,11 +18,6 @@ var:
     LD=$ccbindir/x86_64-apple-darwin10-ld
     STRIP=$ccbindir/x86_64-apple-darwin10-strip
 
-lsb_release:
-  id: Ubuntu
-  release: 12.04
-  codename: precise
-
 input_files:
   - name: clang
     URL: https://people.torproject.org/~mikeperry/mirrors/sources/x86_64-apple-darwin10.tar.xz

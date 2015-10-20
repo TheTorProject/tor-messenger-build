@@ -4,10 +4,6 @@ git_url: http://git.code.sf.net/p/mingw-w64/mingw-w64
 git_hash: 548b1984042a1dd66cae95ad8c0003b5e5494a68
 version: '[% c("abbrev") %]'
 remote_docker: 1
-lsb_release:
-  id: Ubuntu
-  release: 14.10
-  codename: utopic
 var:
   gcc_version: 4.9.1
   deps:

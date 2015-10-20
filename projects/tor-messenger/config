@@ -29,10 +29,7 @@ input_files:
   - project: docker-image
 
 remote_docker: 1
-lsb_release:
-  id: Ubuntu
-  release: 12.04
-  codename: precise
+distribution: Ubuntu-12.04
 var:
   filename_ext: 'tar.xz'
   deps:
@@ -40,19 +37,13 @@ var:
     - bzip2
 targets:
   windows-i686:
-    lsb_release:
-      id: Ubuntu
-      release: 14.10
-      codename: utopic
+    distribution: Ubuntu-14.10
     var:
       filename_ext: 'exe'
       arch_deps:
         - nsis
   osx-x86_64:
-    lsb_release:
-      id: Ubuntu
-      release: 12.04
-      codename: precise
+    distribution: Ubuntu-12.04
     var:
       filename_ext: 'dmg'
       arch_deps:

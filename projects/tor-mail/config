@@ -15,10 +15,7 @@ input_files:
   - project: docker-image
 
 remote_docker: 1
-lsb_release:
-  id: Ubuntu
-  release: 12.04
-  codename: precise
+distribution: Ubuntu-12.04
 var:
   deps:
     - bzip2

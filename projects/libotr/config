@@ -2,10 +2,6 @@
 version: 4.1.0
 filename: 'libotr-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 remote_docker: 1
-lsb_release:
-  id: Ubuntu
-  release: 10.04
-  codename: lucid
 var:
   deps:
     - build-essential
@@ -13,10 +9,6 @@ var:
     - file
 targets:
   windows-i686:
-    lsb_release:
-      id: Ubuntu
-      release: 14.10
-      codename: utopic
     var:
       arch_deps:
         - gettext
@@ -27,11 +19,6 @@ targets:
     var:
       arch_deps:
         - libc6-dev-i386
-  osx-x86_64:
-    lsb_release:
-      id: Ubuntu
-      release: 12.04
-      codename: precise
 input_files:
   - filename: 'libotr-[% c("version") %].tar.gz'
     URL: 'https://otr.cypherpunks.ca/libotr-[% c("version") %].tar.gz'

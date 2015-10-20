@@ -2,20 +2,12 @@
 filename: '[% project %]-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 version: 1.6.4
 remote_docker: 1
-lsb_release:
-  id: Ubuntu
-  release: 10.04
-  codename: lucid
 var:
   deps:
     - build-essential
     - libmpc-dev
 targets:
   windows-i686:
-    lsb_release:
-      id: Ubuntu
-      release: 14.10
-      codename: utopic
     var:
       arch_deps:
         - gettext
@@ -23,11 +15,6 @@ targets:
     var:
       arch_deps:
         - libc6-dev-i386
-  osx-x86_64:
-    lsb_release:
-      id: Ubuntu
-      release: 12.04
-      codename: precise
 input_files:
   - URL: 'ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-[% c("version") %].tar.bz2'
     sig_ext: sig

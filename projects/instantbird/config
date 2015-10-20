@@ -4,10 +4,6 @@ hg_url: https://hg.mozilla.org/releases/comm-release/
 hg_hash: THUNDERBIRD_41_0b1_RELEASE
 filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %].[% c('var/archive_suffix') %]"
 remote_docker: 1
-lsb_release:
-  id: Ubuntu
-  release: 10.04
-  codename: lucid
 var:
   archive_suffix: tar.bz2
   deps:
@@ -33,10 +29,6 @@ var:
     - ccache
 targets:
   windows-i686:
-    lsb_release:
-      id: Ubuntu
-      release: 14.10
-      codename: utopic
     var:
       archive_suffix: zip
       arch_deps:
@@ -54,10 +46,6 @@ targets:
         - lib32asound2-dev
         - yasm-1
   osx-x86_64:
-    lsb_release:
-      id: Ubuntu
-      release: 12.04
-      codename: precise
     var:
       arch_deps:
         - yasm
