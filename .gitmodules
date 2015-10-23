@@ -1,3 +1,6 @@
 [submodule "rbm"]
 	path = rbm
 	url = https://github.com/boklm/rbm
+[submodule "tools/version-control-tools"]
+	path = tools/version-control-tools
+	url = https://github.com/mozilla/version-control-tools
