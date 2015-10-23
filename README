@@ -13,6 +13,9 @@ Your user account should have access to the docker command without using
 sudo, so it should be in the docker group. The docker daemon should
 also be running.
 
+The sources are downloaded using git and mercurial which need to be
+installed.
+
 You also need a few perl modules installed:
 - YAML::XS
 - File::Basename
@@ -50,11 +53,11 @@ If you want to build only one architecture, you can run something like
 The resulting builds are stored in the out/tor-messenger directory.
 
 
-Updating git sources
---------------------
+Updating git and hg sources
+---------------------------
 
-You can run "make fetch" to fetch the latest sources from git for all
-components included in Tor Messenger.
+You can run "make fetch" to fetch the latest sources from git and
+mercurial for all components included in Tor Messenger.
 
 
 Cleaning obsolete files and containers images
