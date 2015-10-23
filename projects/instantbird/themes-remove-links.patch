@@ -1,0 +1,21 @@
+diff --git a/im/content/preferences/themes.xul b/im/content/preferences/themes.xul
+--- a/im/content/preferences/themes.xul
++++ b/im/content/preferences/themes.xul
+@@ -65,7 +65,7 @@
+               </menupopup>
+             </menulist>
+             <separator orient="vertical" class="thin"/>
+-            <label id="getMoreMessageStyles" class="text-link" value="&messageStyleGetMore.label;"
++            <label id="getMoreMessageStyles" class="text-link" value=""
+                    onclick="if (event.button == 0) { gThemePane.openURL(this.getAttribute('getMoreURL')); }"/>
+           </hbox>
+           <separator class="thin"/>
+@@ -116,7 +116,7 @@
+               </menupopup>
+             </menulist>
+             <separator orient="vertical" class="thin"/>
+-            <label id="getMoreEmoticons" class="text-link" value="&emoticonsGetMore.label;"
++            <label id="getMoreEmoticons" class="text-link" value=""
+                    onclick="if (event.button == 0) { gThemePane.openURL(this.getAttribute('getMoreURL')); }"/>
+           </hbox>
+           <separator class="thin"/>
