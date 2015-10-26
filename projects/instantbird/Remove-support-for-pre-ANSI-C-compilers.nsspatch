@@ -1,0 +1,468 @@
+# HG changeset patch
+# User Felix Janda <felix.janda@posteo.de>
+# Date 1435085630 25200
+#      Tue Jun 23 11:53:50 2015 -0700
+# Node ID 1c628bb28ce0ae24e50bf3421d6c7b0abfeeef6f
+# Parent  22bc54abbfc7cfd3583d603cc2e589fe67a692e2
+Bug 1128184: lib/dbm: Remove support for pre-ANSI-C compilers. r=wtc.
+
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/config/config.mk
+--- a/lib/dbm/config/config.mk	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/config/config.mk	Tue Jun 23 11:53:50 2015 -0700
+@@ -25,10 +25,6 @@
+ DEFINES += -DHAVE_SNPRINTF
+ endif
+ 
+-ifeq (,$(filter-out IRIX Linux,$(OS_TARGET)))
+-DEFINES += -DHAVE_SYS_CDEFS_H
+-endif
+-
+ ifeq (,$(filter-out DGUX NCR ReliantUNIX SCO_SV SCOOS UNIXWARE,$(OS_TARGET)))
+ DEFINES += -DHAVE_SYS_BYTEORDER_H
+ endif
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/include/cdefs.h
+--- a/lib/dbm/include/cdefs.h	Mon Jun 22 12:15:41 2015 -0700
++++ /dev/null	Thu Jan 01 00:00:00 1970 +0000
+@@ -1,126 +0,0 @@
+-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+-/*
+- * Copyright (c) 1991, 1993
+- *	The Regents of the University of California.  All rights reserved.
+- *
+- * This code is derived from software contributed to Berkeley by
+- * Berkeley Software Design, Inc.
+- *
+- * Redistribution and use in source and binary forms, with or without
+- * modification, are permitted provided that the following conditions
+- * are met:
+- * 1. Redistributions of source code must retain the above copyright
+- *    notice, this list of conditions and the following disclaimer.
+- * 2. Redistributions in binary form must reproduce the above copyright
+- *    notice, this list of conditions and the following disclaimer in the
+- *    documentation and/or other materials provided with the distribution.
+- * 3. ***REMOVED*** - see 
+- *    ftp://ftp.cs.berkeley.edu/pub/4bsd/README.Impt.License.Change
+- * 4. Neither the name of the University nor the names of its contributors
+- *    may be used to endorse or promote products derived from this software
+- *    without specific prior written permission.
+- *
+- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+- * SUCH DAMAGE.
+- *
+- *	@(#)cdefs.h	8.7 (Berkeley) 1/21/94
+- */
+-
+-#ifndef	_CDEFS_H_
+-#define	_CDEFS_H_
+-
+-#if defined(__cplusplus)
+-#define	__BEGIN_DECLS	extern "C" {
+-#define	__END_DECLS	}
+-#else
+-#define	__BEGIN_DECLS
+-#define	__END_DECLS
+-#endif
+-
+-/*
+- * The __CONCAT macro is used to concatenate parts of symbol names, e.g.
+- * with "#define OLD(foo) __CONCAT(old,foo)", OLD(foo) produces oldfoo.
+- * The __CONCAT macro is a bit tricky -- make sure you don't put spaces
+- * in between its arguments.  __CONCAT can also concatenate double-quoted
+- * strings produced by the __STRING macro, but this only works with ANSI C.
+- */
+-#if defined(__STDC__) || defined(__cplusplus) || defined(_WINDOWS) || defined(XP_OS2)
+-#define	__P(protos)	protos		/* full-blown ANSI C */
+-#define	__CONCAT(x,y)	x ## y
+-#define	__STRING(x)	#x
+-
+-/* On HP-UX 11.00, <sys/stdsyms.h> defines __const. */
+-#ifndef __const
+-#define	__const		const		/* define reserved names to standard */
+-#endif  /* __const */
+-#define	__signed	signed
+-#define	__volatile	volatile
+-#ifndef _WINDOWS
+-#if defined(__cplusplus)
+-#define	__inline	inline		/* convert to C++ keyword */
+-#else
+-#if !defined(__GNUC__) && !defined(__MWERKS__)
+-#define	__inline			/* delete GCC keyword */
+-#endif /* !__GNUC__ */
+-#endif /* !__cplusplus */
+-#endif /* !_WINDOWS */
+-
+-#else	/* !(__STDC__ || __cplusplus) */
+-#define	__P(protos)	()		/* traditional C preprocessor */
+-#define	__CONCAT(x,y)	x/**/y
+-#define	__STRING(x)	"x"
+-
+-#ifndef __GNUC__
+-#define	__const				/* delete pseudo-ANSI C keywords */
+-#define	__inline
+-#define	__signed
+-#define	__volatile
+-/*
+- * In non-ANSI C environments, new programs will want ANSI-only C keywords
+- * deleted from the program and old programs will want them left alone.
+- * When using a compiler other than gcc, programs using the ANSI C keywords
+- * const, inline etc. as normal identifiers should define -DNO_ANSI_KEYWORDS.
+- * When using "gcc -traditional", we assume that this is the intent; if
+- * __GNUC__ is defined but __STDC__ is not, we leave the new keywords alone.
+- */
+-#ifndef	NO_ANSI_KEYWORDS
+-#define	const				/* delete ANSI C keywords */
+-#define	inline
+-#define	signed
+-#define	volatile
+-#endif
+-#endif	/* !__GNUC__ */
+-#endif	/* !(__STDC__ || __cplusplus) */
+-
+-/*
+- * GCC1 and some versions of GCC2 declare dead (non-returning) and
+- * pure (no side effects) functions using "volatile" and "const";
+- * unfortunately, these then cause warnings under "-ansi -pedantic".
+- * GCC2 uses a new, peculiar __attribute__((attrs)) style.  All of
+- * these work for GNU C++ (modulo a slight glitch in the C++ grammar
+- * in the distribution version of 2.5.5).
+- */
+-#if !defined(__GNUC__) || __GNUC__ < 2 || __GNUC_MINOR__ < 5
+-#define	__attribute__(x)	/* delete __attribute__ if non-gcc or gcc1 */
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-#define	__dead		__volatile
+-#define	__pure		__const
+-#endif
+-#endif
+-
+-/* Delete pseudo-keywords wherever they are not available or needed. */
+-#ifndef __dead
+-#define	__dead
+-#define	__pure
+-#endif
+-
+-#endif /* !_CDEFS_H_ */
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/include/manifest.mn
+--- a/lib/dbm/include/manifest.mn	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/include/manifest.mn	Tue Jun 23 11:53:50 2015 -0700
+@@ -8,8 +8,7 @@
+ 
+ MODULE = dbm
+ 
+-EXPORTS =	cdefs.h   \
+-		mcom_db.h \
++EXPORTS =	mcom_db.h \
+ 		ncompat.h \
+ 		winfile.h \
+ 		$(NULL)
+@@ -19,7 +18,6 @@
+ 			extern.h  \
+ 			queue.h   \
+ 			hash.h    \
+-			mpool.h   \
+ 			search.h  \
+ 			$(NULL)
+ 
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/include/mcom_db.h
+--- a/lib/dbm/include/mcom_db.h	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/include/mcom_db.h	Tue Jun 23 11:53:50 2015 -0700
+@@ -56,12 +56,6 @@
+ 
+ #ifdef __DBINTERFACE_PRIVATE
+ 
+-#ifdef HAVE_SYS_CDEFS_H
+-#include <sys/cdefs.h>
+-#else
+-#include "cdefs.h"
+-#endif
+-
+ #ifdef HAVE_SYS_BYTEORDER_H
+ #include <sys/byteorder.h>
+ #endif
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/include/mpool.h
+--- a/lib/dbm/include/mpool.h	Mon Jun 22 12:15:41 2015 -0700
++++ /dev/null	Thu Jan 01 00:00:00 1970 +0000
+@@ -1,97 +0,0 @@
+-/*-
+- * Copyright (c) 1991, 1993, 1994
+- *	The Regents of the University of California.  All rights reserved.
+- *
+- * Redistribution and use in source and binary forms, with or without
+- * modification, are permitted provided that the following conditions
+- * are met:
+- * 1. Redistributions of source code must retain the above copyright
+- *    notice, this list of conditions and the following disclaimer.
+- * 2. Redistributions in binary form must reproduce the above copyright
+- *    notice, this list of conditions and the following disclaimer in the
+- *    documentation and/or other materials provided with the distribution.
+- * 3. ***REMOVED*** - see 
+- *    ftp://ftp.cs.berkeley.edu/pub/4bsd/README.Impt.License.Change
+- * 4. Neither the name of the University nor the names of its contributors
+- *    may be used to endorse or promote products derived from this software
+- *    without specific prior written permission.
+- *
+- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+- * SUCH DAMAGE.
+- *
+- *	@(#)mpool.h	8.2 (Berkeley) 7/14/94
+- */
+-
+-#include <sys/queue.h>
+-
+-/*
+- * The memory pool scheme is a simple one.  Each in-memory page is referenced
+- * by a bucket which is threaded in up to two of three ways.  All active pages
+- * are threaded on a hash chain (hashed by page number) and an lru chain.
+- * Inactive pages are threaded on a free chain.  Each reference to a memory
+- * pool is handed an opaque MPOOL cookie which stores all of this information.
+- */
+-#define	HASHSIZE	128
+-#define	HASHKEY(pgno)	((pgno - 1) % HASHSIZE)
+-
+-/* The BKT structures are the elements of the queues. */
+-typedef struct _bkt {
+-	CIRCLEQ_ENTRY(_bkt) hq;		/* hash queue */
+-	CIRCLEQ_ENTRY(_bkt) q;		/* lru queue */
+-	void    *page;			/* page */
+-	pgno_t   pgno;			/* page number */
+-
+-#define	MPOOL_DIRTY	0x01		/* page needs to be written */
+-#define	MPOOL_PINNED	0x02		/* page is pinned into memory */
+-	uint8 flags;			/* flags */
+-} BKT;
+-
+-typedef struct MPOOL {
+-	CIRCLEQ_HEAD(_lqh, _bkt) lqh;	/* lru queue head */
+-					/* hash queue array */
+-	CIRCLEQ_HEAD(_hqh, _bkt) hqh[HASHSIZE];
+-	pgno_t	curcache;		/* current number of cached pages */
+-	pgno_t	maxcache;		/* max number of cached pages */
+-	pgno_t	npages;			/* number of pages in the file */
+-	uint32	pagesize;		/* file page size */
+-	int	fd;			/* file descriptor */
+-					/* page in conversion routine */
+-	void    (*pgin) (void *, pgno_t, void *);
+-					/* page out conversion routine */
+-	void    (*pgout) (void *, pgno_t, void *);
+-	void	*pgcookie;		/* cookie for page in/out routines */
+-#ifdef STATISTICS
+-	uint32	cachehit;
+-	uint32	cachemiss;
+-	uint32	pagealloc;
+-	uint32	pageflush;
+-	uint32	pageget;
+-	uint32	pagenew;
+-	uint32	pageput;
+-	uint32	pageread;
+-	uint32	pagewrite;
+-#endif
+-} MPOOL;
+-
+-__BEGIN_DECLS
+-MPOOL	*mpool_open (void *, int, pgno_t, pgno_t);
+-void	 mpool_filter (MPOOL *, void (*)(void *, pgno_t, void *),
+-	    void (*)(void *, pgno_t, void *), void *);
+-void	*mpool_new (MPOOL *, pgno_t *);
+-void	*mpool_get (MPOOL *, pgno_t, uint);
+-int	 mpool_put (MPOOL *, void *, uint);
+-int	 mpool_sync (MPOOL *);
+-int	 mpool_close (MPOOL *);
+-#ifdef STATISTICS
+-void	 mpool_stat (MPOOL *);
+-#endif
+-__END_DECLS
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/src/h_bigkey.c
+--- a/lib/dbm/src/h_bigkey.c	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/src/h_bigkey.c	Tue Jun 23 11:53:50 2015 -0700
+@@ -72,8 +72,8 @@
+ #include "page.h"
+ /* #include "extern.h" */
+ 
+-static int collect_key __P((HTAB *, BUFHEAD *, int, DBT *, int));
+-static int collect_data __P((HTAB *, BUFHEAD *, int, int));
++static int collect_key(HTAB *, BUFHEAD *, int, DBT *, int);
++static int collect_data(HTAB *, BUFHEAD *, int, int);
+ 
+ /*
+  * Big_insert
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/src/h_func.c
+--- a/lib/dbm/src/h_func.c	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/src/h_func.c	Tue Jun 23 11:53:50 2015 -0700
+@@ -45,14 +45,14 @@
+ /* #include "extern.h" */
+ 
+ #if 0
+-static uint32 hash1 __P((const void *, size_t));
+-static uint32 hash2 __P((const void *, size_t));
+-static uint32 hash3 __P((const void *, size_t));
++static uint32 hash1(const void *, size_t);
++static uint32 hash2(const void *, size_t);
++static uint32 hash3(const void *, size_t);
+ #endif
+-static uint32 hash4 __P((const void *, size_t));
++static uint32 hash4(const void *, size_t);
+ 
+ /* Global default hash function */
+-uint32 (*__default_hash) __P((const void *, size_t)) = hash4;
++uint32 (*__default_hash)(const void *, size_t) = hash4;
+ 
+ /*
+  * HASH FUNCTIONS
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/src/h_page.c
+--- a/lib/dbm/src/h_page.c	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/src/h_page.c	Tue Jun 23 11:53:50 2015 -0700
+@@ -89,13 +89,12 @@
+ 
+ extern int mkstempflags(char *path, int extraFlags);
+ 
+-static uint32	*fetch_bitmap __P((HTAB *, uint32));
+-static uint32	 first_free __P((uint32));
+-static int	 open_temp __P((HTAB *));
+-static uint16	 overflow_page __P((HTAB *));
+-static void	 squeeze_key __P((uint16 *, const DBT *, const DBT *));
+-static int	 ugly_split
+-		    __P((HTAB *, uint32, BUFHEAD *, BUFHEAD *, int, int));
++static uint32	*fetch_bitmap(HTAB *, uint32);
++static uint32	 first_free(uint32);
++static int	 open_temp(HTAB *);
++static uint16	 overflow_page(HTAB *);
++static void	 squeeze_key(uint16 *, const DBT *, const DBT *);
++static int	 ugly_split(HTAB *, uint32, BUFHEAD *, BUFHEAD *, int, int);
+ 
+ #define	PAGE_INIT(P) { \
+ 	((uint16 *)(P))[0] = 0; \
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/src/hash.c
+--- a/lib/dbm/src/hash.c	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/src/hash.c	Tue Jun 23 11:53:50 2015 -0700
+@@ -74,23 +74,23 @@
+ /*
+ #include "extern.h"
+ */
+-static int   alloc_segs __P((HTAB *, int));
+-static int   flush_meta __P((HTAB *));
+-static int   hash_access __P((HTAB *, ACTION, DBT *, DBT *));
+-static int   hash_close __P((DB *));
+-static int   hash_delete __P((const DB *, const DBT *, uint));
+-static int   hash_fd __P((const DB *));
+-static int   hash_get __P((const DB *, const DBT *, DBT *, uint));
+-static int   hash_put __P((const DB *, DBT *, const DBT *, uint));
+-static void *hash_realloc __P((SEGMENT **, size_t, size_t));
+-static int   hash_seq __P((const DB *, DBT *, DBT *, uint));
+-static int   hash_sync __P((const DB *, uint));
+-static int   hdestroy __P((HTAB *));
+-static HTAB *init_hash __P((HTAB *, const char *, HASHINFO *));
+-static int   init_htab __P((HTAB *, int));
++static int   alloc_segs(HTAB *, int);
++static int   flush_meta(HTAB *);
++static int   hash_access(HTAB *, ACTION, DBT *, DBT *);
++static int   hash_close(DB *);
++static int   hash_delete(const DB *, const DBT *, uint);
++static int   hash_fd(const DB *);
++static int   hash_get(const DB *, const DBT *, DBT *, uint);
++static int   hash_put(const DB *, DBT *, const DBT *, uint);
++static void *hash_realloc(SEGMENT **, size_t, size_t);
++static int   hash_seq(const DB *, DBT *, DBT *, uint);
++static int   hash_sync(const DB *, uint);
++static int   hdestroy(HTAB *);
++static HTAB *init_hash(HTAB *, const char *, HASHINFO *);
++static int   init_htab(HTAB *, int);
+ #if BYTE_ORDER == LITTLE_ENDIAN
+-static void  swap_header __P((HTAB *));
+-static void  swap_header_copy __P((HASHHDR *, HASHHDR *));
++static void  swap_header(HTAB *);
++static void  swap_header_copy(HASHHDR *, HASHHDR *);
+ #endif
+ 
+ /* Fast arithmetic, relying on powers of 2, */
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/src/hash_buf.c
+--- a/lib/dbm/src/hash_buf.c	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/src/hash_buf.c	Tue Jun 23 11:53:50 2015 -0700
+@@ -70,7 +70,7 @@
+ #include "page.h"
+ /* #include "extern.h" */
+ 
+-static BUFHEAD *newbuf __P((HTAB *, uint32, BUFHEAD *));
++static BUFHEAD *newbuf(HTAB *, uint32, BUFHEAD *);
+ 
+ /* Unlink B from its place in the lru */
+ #define BUF_REMOVE(B) { \
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/src/memmove.c
+--- a/lib/dbm/src/memmove.c	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/src/memmove.c	Tue Jun 23 11:53:50 2015 -0700
+@@ -37,11 +37,6 @@
+ static char sccsid[] = "@(#)bcopy.c	8.1 (Berkeley) 6/4/93";
+ #endif /* LIBC_SCCS and not lint */
+ 
+-#ifdef HAVE_SYS_CDEFS_H
+-#include <sys/cdefs.h>
+-#else
+-#include "cdefs.h"
+-#endif
+ #include <string.h>
+ 
+ /*
+diff -r 22bc54abbfc7 -r 1c628bb28ce0 lib/dbm/src/snprintf.c
+--- a/lib/dbm/src/snprintf.c	Mon Jun 22 12:15:41 2015 -0700
++++ b/lib/dbm/src/snprintf.c	Tue Jun 23 11:53:50 2015 -0700
+@@ -4,32 +4,14 @@
+ #include <stddef.h>
+ #include <stdio.h>
+ 
+-#ifdef HAVE_SYS_CDEFS_H
+-#include <sys/cdefs.h>
+-#else
+-#include "cdefs.h"
+-#endif
+-
+ #include "prtypes.h"
+ 
+ #include <ncompat.h>
+ 
+-#ifdef __STDC__
+ #include <stdarg.h>
+-#else
+-#include <varargs.h>
+-#endif
+ 
+ int
+-#ifdef __STDC__
+ snprintf(char *str, size_t n, const char *fmt, ...)
+-#else
+-snprintf(str, n, fmt, va_alist)
+-	char *str;
+-	size_t n;
+-	const char *fmt;
+-	va_dcl
+-#endif
+ {
+ 	va_list ap;
+ #ifdef VSPRINTF_CHARSTAR
+@@ -37,11 +19,7 @@
+ #else
+ 	int rval;
+ #endif
+-#ifdef __STDC__
+ 	va_start(ap, fmt);
+-#else
+-	va_start(ap);
+-#endif
+ #ifdef VSPRINTF_CHARSTAR
+ 	rp = vsprintf(str, fmt, ap);
+ 	va_end(ap);

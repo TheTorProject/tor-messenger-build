@@ -77,6 +77,7 @@ input_files:
   - filename: log-preferences-xul.patch
   - filename: ifdef-performance-toolkit-xpt.patch
   - filename: 8ea23862252b-remove__DATE__and__TIME__.nsspatch
+  - filename: Remove-support-for-pre-ANSI-C-compilers.nsspatch
   - filename: themes-remove-links.patch
   - filename: branding/blistWindow.png
   - filename: branding/blistWindow16.png
