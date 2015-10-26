@@ -7,7 +7,7 @@
 #
 # Copyright 2015 The Tor Project.  See LICENSE for licensing information.
 
-complain_dialog_title="Unnamed Messenger"
+complain_dialog_title="Tor Messenger"
 
 # First, make sure DISPLAY is set.  If it isn't, we're hosed; scream
 # at stderr and die.
@@ -17,10 +17,10 @@ if [ "x$DISPLAY" = "x" ]; then
     exit 1
 fi
 
-# Second, make sure this script wasn't started as 'sh start-unnamed-messenger' or
+# Second, make sure this script wasn't started as 'sh start-tor-messenger' or
 # similar.
 if [ "x$BASH" = "x" ]; then
-    echo "$complain_dialog_title should be started as './start-unnamed-messenger'"
+    echo "$complain_dialog_title should be started as './start-tor-messenger'"
     echo "Exiting." >&2
     exit 1;
 fi
@@ -94,17 +94,17 @@ complain () {
 }
 
 if [ "`id -u`" -eq 0 ]; then
-	complain "The Unnamed Messenger Bundle should not be run as root.  Exiting."
+	complain "The Tor Messenger Bundle should not be run as root.  Exiting."
 	exit 1
 fi
 
 tbb_usage () {
-    printf "\nUnnamed Messenger Script Options\n"
+    printf "\nTor Messenger Script Options\n"
     printf "  --verbose         Display Tor and Instantbird output in the terminal\n"
-    printf "  --log [file]      Record Tor and Instantbird output in file (default: unnamed-messenger.log)\n"
-    printf "  --detach          Detach from terminal and run Unnamed Messenger in the background.\n"
-    printf "  --register-app    Register Unnamed Messenger as a desktop app for this user\n"
-    printf "  --unregister-app  Unregister Unnamed Messenger as a desktop app for this user\n"
+    printf "  --log [file]      Record Tor and Instantbird output in file (default: tor-messenger.log)\n"
+    printf "  --detach          Detach from terminal and run Tor Messenger in the background.\n"
+    printf "  --register-app    Register Tor Messenger as a desktop app for this user\n"
+    printf "  --unregister-app  Unregister Tor Messenger as a desktop app for this user\n"
 }
 log_output=0
 show_output=0
@@ -131,14 +131,14 @@ do
           ;;
       -l | --log)
           if [ -z "$2" -o "${2:0:1}" == "-" ]; then
-             printf "Logging Unnamed Messenger debug information to unnamed-messenger.log\n"
-             logfile="../unnamed-messenger.log"
+             printf "Logging Tor Messenger debug information to tor-messenger.log\n"
+             logfile="../tor-messenger.log"
           elif [ "${2:0:1}" == "/" -o "${2:0:1}" == "~" ]; then
-             printf "Logging Unnamed Messenger debug information to %s\n" "$2"
+             printf "Logging Tor Messenger debug information to %s\n" "$2"
              logfile="$2"
              shift
           else
-             printf "Logging Unnamed Messenger debug information to %s\n" "$2"
+             printf "Logging Tor Messenger debug information to %s\n" "$2"
              logfile="../$2"
              shift
           fi
@@ -209,7 +209,7 @@ if [ -L "$myname" ]; then
 		myname="`readlink -f "$myname" 2>/dev/null`"
 		if [ "$?" -ne 0 ]; then
 			# Ugh.
-			complain "start-unnamed-messenger cannot be run using a symlink on this operating system."
+			complain "start-tor-messenger cannot be run using a symlink on this operating system."
 		fi
 	fi
 fi
@@ -235,26 +235,26 @@ fi
 
 # Fix up .desktop Icon and Exec Paths, and update the .desktop file from the
 # canonical version if it was changed by the updater.
-cp start-unnamed-messenger.desktop ../
-sed -i -e "s,^Name=.*,Name=Unnamed Messenger,g" ../start-unnamed-messenger.desktop
-sed -i -e "s,^Icon=.*,Icon=$PWD/chrome/icons/default/default48.png,g" ../start-unnamed-messenger.desktop
-sed -i -e "s,^Exec=.*,Exec=sh -c '\"$PWD/start-unnamed-messenger\" --detach || ([ !  -x \"$PWD/start-unnamed-messenger\" ] \&\& \"\$(dirname \"\$*\")\"/Messenger/start-unnamed-messenger --detach)' dummy %k,g" ../start-unnamed-messenger.desktop
+cp start-tor-messenger.desktop ../
+sed -i -e "s,^Name=.*,Name=Tor Messenger,g" ../start-tor-messenger.desktop
+sed -i -e "s,^Icon=.*,Icon=$PWD/chrome/icons/default/default48.png,g" ../start-tor-messenger.desktop
+sed -i -e "s,^Exec=.*,Exec=sh -c '\"$PWD/start-tor-messenger\" --detach || ([ !  -x \"$PWD/start-tor-messenger\" ] \&\& \"\$(dirname \"\$*\")\"/Messenger/start-tor-messenger --detach)' dummy %k,g" ../start-tor-messenger.desktop
 
 if [ "$register_desktop_app" -eq 1 ]; then
 	mkdir -p "$HOME/.local/share/applications/"
-	cp ../start-unnamed-messenger.desktop "$HOME/.local/share/applications/"
+	cp ../start-tor-messenger.desktop "$HOME/.local/share/applications/"
 	update-desktop-database "$HOME/.local/share/applications/"
-	printf "Unnamed Messenger has been registered as a desktop app for this user in ~/.local/share/applications/\n"
+	printf "Tor Messenger has been registered as a desktop app for this user in ~/.local/share/applications/\n"
 	exit 0
 fi
 
 if [ "$register_desktop_app" -eq -1 ]; then
-	if [ -e "$HOME/.local/share/applications/start-unnamed-messenger.desktop" ]; then
-		rm -f "$HOME/.local/share/applications/start-unnamed-messenger.desktop"
+	if [ -e "$HOME/.local/share/applications/start-tor-messenger.desktop" ]; then
+		rm -f "$HOME/.local/share/applications/start-tor-messenger.desktop"
 		update-desktop-database "$HOME/.local/share/applications/"
-		printf "Unnamed Messenger has been removed as a user desktop app (from ~/.local/share/applications/)\n"
+		printf "Tor Messenger has been removed as a user desktop app (from ~/.local/share/applications/)\n"
 	else
-		printf "Unnamed Messenger does not appear to be a desktop app (not present in ~/.local/share/applications/)\n"
+		printf "Tor Messenger does not appear to be a desktop app (not present in ~/.local/share/applications/)\n"
 	fi
 	exit 0
 fi
@@ -350,22 +350,22 @@ cd "${HOME}"
 
 if [ "$show_usage" -eq 1 ]; then
     # Display Instantbird help, then our help
-    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Unnamed Messenger" \
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
         -profile TorMessenger/Data/Browser/profile.default --help 2>/dev/null
     tbb_usage
 elif [ "$detach" -eq 1 ] ; then
-    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Unnamed Messenger" \
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
        -profile TorMessenger/Data/Browser/profile.default "${@}" > "$logfile" 2>&1 </dev/null &
     disown "$!"
 elif [ "$log_output" -eq 1 -a "$show_output" -eq 1 ]; then
-    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Unnamed Messenger" \
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
         -profile TorMessenger/Data/Browser/profile.default "${@}" 2>&1 </dev/null | \
         tee "$logfile"
 elif [ "$show_output" -eq 1 ]; then
-    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Unnamed Messenger" \
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
         -profile TorMessenger/Data/Browser/profile.default "${@}" < /dev/null
 else
-    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Unnamed Messenger" \
+    TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
         -profile TorMessenger/Data/Browser/profile.default "${@}" > "$logfile" 2>&1 </dev/null
 fi
 

@@ -1,6 +1,6 @@
 # vim: filetype=yaml sw=2
 version: 0.1.0b1
-filename: 'unnamed-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].[% c("var/filename_ext") %]'
+filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].[% c("var/filename_ext") %]'
 input_files:
   - name: instantbird
     project: instantbird
@@ -15,13 +15,13 @@ input_files:
   - project: gcc
     name: gcc
     enable: '[% c("var/linux") %]'
-  - filename: start-unnamed-messenger
-  - filename: start-unnamed-messenger.desktop
+  - filename: start-tor-messenger
+  - filename: start-tor-messenger.desktop
   - filename: execdesktop
-  - filename: unnamed-messenger.nsi
+  - filename: tor-messenger.nsi
     enable: '[% c("var/windows") %]'
   - filename: cert_override.txt
-  - filename: unnamed-messenger.ico
+  - filename: tor-messenger.ico
     enable: '[% c("var/windows") %]'
   - project: libdmg-hfsplus
     name: libdmg
