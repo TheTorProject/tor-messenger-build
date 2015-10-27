@@ -1,11 +1,25 @@
+Tor Messenger 0.1.0b2 -- October 29 2015
+ * All Platforms
+   * Update libgpg-error to 1.20
+   * Update libgcrypt to 1.6.4
+   * Update GCC to 5.1.0
+   * Use THUNDERBIRD_41_0b1_RELEASE tag on mozilla-release and comm-release
+   * Bug 17409: Disable "Get more ..." links in themes pane
+   * Bug 17346: Update Tor Messenger branding
+   * ctypes-otr
+     * Bug 16544: Display unencrypted received messages
+   * Remove "Get more protocols..." link in account wizard
+ * Linux
+   * Bug 10942: Make Linux builds reproducible
+
 Tor Messenger 0.1.0b1 -- October 2 2015
-* All Platforms
-  * Bug 15162: Set user agent string to Instantbird stable/Windows
-  * Bug 16475: Prevent plugins from loading into address space
-  * Bug 16477: Disable search engine query and related settings
-  * Bug 15161: Fix JavaScript locale disclosure and CTCP fingerprinting
-  * Update build repository to Mozilla Aurora (Firefox 42)
-* Linux
-  * Update start-tor-messenger script to include start-tor-browser options
-* Mac
-  * Bug 16508: Disable "Saved Application State" on OS X 10.7+
+ * All Platforms
+   * Bug 15162: Set user agent string to Instantbird stable/Windows
+   * Bug 16475: Prevent plugins from loading into address space
+   * Bug 16477: Disable search engine query and related settings
+   * Bug 15161: Fix JavaScript locale disclosure and CTCP fingerprinting
+   * Update build repository to Mozilla Aurora (Firefox 42)
+ * Linux
+   * Update start-tor-messenger script to include start-tor-browser options
+ * Mac
+   * Bug 16508: Disable "Saved Application State" on OS X 10.7+
