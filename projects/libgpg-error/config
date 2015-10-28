@@ -20,7 +20,7 @@ input_files:
     sig_ext: sig
     file_gpg_id: 1
     gpg_keyring: libgcrypt.gpg
-  - filename: lock-obj-pub.x86_64-apple-darwin14.0.0.h
+  - filename: lock-obj-pub.x86_64-apple-darwin10.h
     enable: '[% c("var/osx") %]'
   - name: '[% c("var/compiler") %]'
     project: '[% c("var/compiler") %]'
