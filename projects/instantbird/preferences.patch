@@ -79,7 +79,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  // The breakpad report server to link to in about:crashes
  pref("breakpad.reportURL", "http://crash-stats.instantbird.com/report/index/");
  
-@@ -297,14 +278,81 @@
+@@ -297,14 +278,84 @@
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -154,6 +154,9 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +pref("media.peerconnection.enabled", false);
 +// Disable "Take Picture" functionality that accesses the webcam
 +pref("media.navigator.video.enabled", false);
++// Disable hardware acceleration
++pref("gfx.direct2d.disabled", true);
++pref("layers.acceleration.disabled", true);
 +
 +// Updates
 +// Do not auto-update Instantbird

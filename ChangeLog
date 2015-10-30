@@ -1,3 +1,7 @@
+Tor Messenger --
+ * Windows
+   * Bug 17453: Fix Tor Messenger crash on Windows
+
 Tor Messenger 0.1.0b2 -- October 29 2015
  * All Platforms
    * Update libgpg-error to 1.20
