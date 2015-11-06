@@ -100,8 +100,6 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: cert-installer.patch
     enable: '[% c("var/osx") %]'
-  - filename: osx-theme-position.patch
-    enable: '[% c("var/osx") %]'
   - filename: cert_override.txt
     enable: '[% c("var/osx") %]'
   - filename: fix-mingw-build.patch
