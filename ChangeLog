@@ -1,3 +1,9 @@
+Tor Messenger 0.1.0b4 -- 
+ * All Platforms
+   * Bug 16478: Update certificate pane in preferences window
+   * ctypes-otr
+     * Bug 17539: Pass username when interpolating resent string
+
 Tor Messenger 0.1.0b3 -- October 30 2015
  * Windows
    * Bug 17453: Fix Tor Messenger crash on Windows
