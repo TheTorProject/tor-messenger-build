@@ -6,6 +6,8 @@ set -e
      STOP;
    END -%]
 
+rootdir=$(pwd)
+
 mkdir bundle
 [% IF c("var/windows") -%]
 7z x -y -obundle [% c('input_files_by_name/instantbird') %]
@@ -23,7 +25,12 @@ rm -f bundle/Messenger/*.chk
 [% END -%]
 
 mkdir bundle/Messenger/TorMessenger
-tar xf [% c('input_files_by_name/bundle-data') %] -C bundle/Messenger/TorMessenger
+tar xf [% c('input_files_by_name/bundle-data') %]
+[% IF c("var/linux") -%]
+mv Bundle-Data/linux/* bundle/Messenger/TorMessenger/
+[% ELSE -%]
+mv Bundle-Data/windows/* bundle/Messenger/TorMessenger/
+[% END -%]
 
 [% IF c("var/linux") %]
 tar xf [% c('input_files_by_name/gcc') %]
@@ -45,6 +52,9 @@ tar xf ../../../[% c('input_files_by_name/ctypes-otr') %]
 mv ctypes-otr* 'ctypes-otr@tormessenger'
 mkdir tor-launcher@torproject.org
 7z x -y -otor-launcher@torproject.org ../../../[% c('input_files_by_name/tor-launcher') %]
+# exclude meek as it requires firefox
+fgrep -v extensions.torlauncher.default_bridge.meek- $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
+        tor-launcher@torproject.org/defaults/preferences/prefs.js
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
 [% IF c("var/windows") -%]
 7z x ../../../[% c('input_files_by_name/tor-browser') %]

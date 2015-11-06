@@ -7,10 +7,16 @@ mv TorMessenger.app Tor\ Messenger.app
 tar xf [% c('input_files_by_name/libdmg') %]
 export PATH="$(pwd)/libdmg-hfsplus:$PATH"
 
+# extract bundle data files to Bundle-Data
+tar xf [% c('input_files_by_name/bundle-data') %]
+
 mkdir torbrowser
 cd torbrowser
 mkdir tor-launcher@torproject.org
 7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
+# exclude meek as it requires firefox
+fgrep -v extensions.torlauncher.default_bridge.meek- $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
+        tor-launcher@torproject.org/defaults/preferences/prefs.js
 7z x $rootdir/[% c('input_files_by_name/tor-browser') %]
 bsdtar xf '0.unknown partition'
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
@@ -28,7 +34,7 @@ mv ctypes-otr* $rootdir/Tor\ Messenger.app/Contents/Resources/extensions/ctypes-
 cd ..
 
 mkdir Tor\ Messenger.app/TorMessenger
-tar xf [% c('input_files_by_name/bundle-data') %] -C Tor\ Messenger.app/TorMessenger
+mv Bundle-Data/mac/TorBrowser/* Tor\ Messenger.app/TorMessenger/
 
 mkdir dmg
 mv Tor\ Messenger.app dmg

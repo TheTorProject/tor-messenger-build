@@ -3,6 +3,7 @@ Tor Messenger 0.1.0b4 --
    * Bug 16478: Update certificate pane in preferences window
    * ctypes-otr
      * Bug 17539: Pass username when interpolating resent string
+   * Bug 17492: Include default bridges configuration
 
 Tor Messenger 0.1.0b3 -- October 30 2015
  * Windows
