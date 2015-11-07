@@ -6,6 +6,9 @@ Tor Messenger 0.1.0b4 --
    * Bug 17492: Include default bridges configuration
    * Use tor and the pluggable transports from tor-browser 5.0.4
    * Bug 17552: Instantbird throwing on XMPP non-MUC message stanzas w/ subject
+ * Mac
+   * Bug 16476: Themes preference is positioned incorrectly
+   * Bug 17456: Hang in preferences menu
 
 Tor Messenger 0.1.0b3 -- October 30 2015
  * Windows

@@ -1,0 +1,38 @@
+# HG changeset patch
+# User aleth <aleth@instantbird.org>
+# Date 1446853955 -3600
+#      Sat Nov 07 00:52:35 2015 +0100
+# Node ID 1f09dc616d2e058779753327637b85f6dcc0bbf1
+# Parent  073468887b0faecb810a6e4463a2806924fead81
+Bug 1222238 - Avoid hang in proxy preferences pane. r=clokep
+
+diff --git a/im/content/preferences/messagestyle.js b/im/content/preferences/messagestyle.js
+--- a/im/content/preferences/messagestyle.js
++++ b/im/content/preferences/messagestyle.js
+@@ -169,22 +169,20 @@ var previewObserver = {
+ 
+   observe: function(aSubject, aTopic, aData) {
+     if (aTopic != "conversation-loaded" || aSubject != this.browser)
+       return;
+ 
+     // We want to avoid the convbrowser trying to scroll to the last
+     // added message, as that causes the entire pref pane to jump up
+     // (bug 1179943). Therefore, we override the method convbrowser
+-    // uses to determine if there are further messages pending to be
+-    // added. The +1 ensures no scroll occurs after we add the last
+-    // message here.
+-    this.browser._autoScrollEnabled = false;
+-    this.browser.getPendingMessagesCount =
+-      () => previewObserver.conv.messages.length + 1;
++    // uses to determine if it should scroll, as well as its
++    // mirror in the contentWindow (that messagestyle JS can call).
++    this.browser.autoScrollEnabled = () => false;
++    this.browser.contentWindow.autoScrollEnabled = () => false;
+ 
+     // Display all queued messages. Use a timeout so that message text
+     // modifiers can be added with observers for this notification.
+     setTimeout(function() {
+       for (let message of previewObserver.conv.messages)
+         aSubject.appendMessage(message, false);
+     }, 0);
+ 
