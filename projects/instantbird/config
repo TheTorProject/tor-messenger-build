@@ -71,6 +71,7 @@ input_files:
   - filename: xmppRegister.js
   - filename: xmppRegister.xul
   - filename: xmpp-gtalk-resource.patch
+  - filename: trac-17552.patch
   - filename: version.patch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch

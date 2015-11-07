@@ -1,0 +1,92 @@
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1446859847 28800
+#      Fri Nov 06 17:30:47 2015 -0800
+# Node ID b9b0e61d9a2d5092d45b309feb4ae526ae00519c
+# Parent  073468887b0faecb810a6e4463a2806924fead81
+Ensure isMuc when attempting a subject change
+
+diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
+--- a/chat/protocols/xmpp/xmpp.jsm
++++ b/chat/protocols/xmpp/xmpp.jsm
+@@ -1718,16 +1718,17 @@ var XMPPAccountPrototype = {
+ 
+       return null;
+   },
+ 
+   /* Called when a message stanza is received */
+   onMessageStanza: function(aStanza) {
+     let from = aStanza.attributes["from"];
+     let norm = this.normalize(from);
++    let isMuc = this._mucs.has(norm);
+ 
+     let type = aStanza.attributes["type"];
+     let x = aStanza.getElement(["x"]);
+     let body;
+     let b = aStanza.getElement(["body"]);
+     if (b) {
+       // If there's a <body> child we have more than just typing notifications.
+       // Prefer HTML (in <html><body>) and use plain text (<body>) as fallback.
+@@ -1738,17 +1739,21 @@ var XMPPAccountPrototype = {
+         // Even if the message is in plain text, the prplIMessage
+         // should contain a string that's correctly escaped for
+         // insertion in an HTML document.
+         body = TXTToHTML(b.innerText);
+       }
+     }
+ 
+     let subject = aStanza.getElement(["subject"]);
+-    if (subject) {
++    // Ignore subject when !isMuc. We're being permissive about subject changes
++    // in the comment below, so we need to be careful about where that makes
++    // sense. Psi+'s OTR plugin includes a subject and body in its message
++    // stanzas.
++    if (subject && isMuc) {
+       // XEP-0045 (7.2.16): Check for a subject element in the stanza and update
+       // the topic if it exists.
+       // We are breaking the spec because only a message that contains a
+       // <subject/> but no <body/> element shall be considered a subject change
+       // for MUC, but we ignore that to be compatible with ejabberd versions
+       // before 15.06.
+       let muc = this._mucs.get(norm);
+       let nick = this._parseJID(from).resource;
+@@ -1763,18 +1768,18 @@ var XMPPAccountPrototype = {
+       let delay = aStanza.getElement(["delay"]);
+       if (delay && delay.uri == Stanza.NS.delay) {
+         if (delay.attributes["stamp"])
+           date = new Date(delay.attributes["stamp"]);
+       }
+       if (date && isNaN(date))
+         date = undefined;
+       if (type == "groupchat" ||
+-          (type == "error" && this._mucs.has(norm) && !this._conv.has(from))) {
+-        if (!this._mucs.has(norm)) {
++          (type == "error" && isMuc && !this._conv.has(from))) {
++        if (!isMuc) {
+           this.WARN("Received a groupchat message for unknown MUC " + norm);
+           return;
+         }
+         let muc = this._mucs.get(norm);
+         muc.incomingMessage(body, aStanza, date);
+         return;
+       }
+ 
+@@ -1840,17 +1845,17 @@ var XMPPAccountPrototype = {
+     if (state) {
+       this.DEBUG(state);
+       if (state == "composing")
+         typingState = Ci.prplIConvIM.TYPING;
+       else if (state == "paused")
+         typingState = Ci.prplIConvIM.TYPED;
+     }
+     let convName = norm;
+-    if (this._mucs.has(norm))
++    if (isMuc)
+       convName = from;
+     let conv = this._conv.get(convName);
+     if (!conv)
+       return;
+     conv.updateTyping(typingState, conv.shortName);
+     conv.supportChatStateNotifications = !!state;
+   },
+ 

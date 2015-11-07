@@ -5,6 +5,7 @@ Tor Messenger 0.1.0b4 --
      * Bug 17539: Pass username when interpolating resent string
    * Bug 17492: Include default bridges configuration
    * Use tor and the pluggable transports from tor-browser 5.0.4
+   * Bug 17552: Instantbird throwing on XMPP non-MUC message stanzas w/ subject
 
 Tor Messenger 0.1.0b3 -- October 30 2015
  * Windows
