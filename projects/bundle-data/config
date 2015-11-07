@@ -1,5 +1,5 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 git_url: https://git.torproject.org/builders/tor-browser-bundle.git
-git_hash: faa6152ada46c03bac9918dd69fa5646847be2e1
+git_hash: 310740285eed2a0e5fc2fd05c29eaa5ebeec27b9
 filename: 'bundle-data-[% c("version") %].tar.gz'
