@@ -52,8 +52,7 @@ tar xf ../../../[% c('input_files_by_name/ctypes-otr') %]
 mv ctypes-otr* 'ctypes-otr@tormessenger'
 mkdir tor-launcher@torproject.org
 7z x -y -otor-launcher@torproject.org ../../../[% c('input_files_by_name/tor-launcher') %]
-# exclude meek as it requires firefox
-fgrep -v extensions.torlauncher.default_bridge.meek- $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
+cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
         tor-launcher@torproject.org/defaults/preferences/prefs.js
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
 [% IF c("var/windows") -%]
@@ -65,6 +64,8 @@ tar xf ../../../[% c('input_files_by_name/tor-browser') %]
 [% END -%]
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+# use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
+sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's|TorBrowser/Tor/PluggableTransports|extensions/tor-launcher@torproject.org/TorBrowser/Tor/PluggableTransports|g' \
                 tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's|TorBrowser\\Tor\\PluggableTransports|extensions\\tor-launcher@torproject.org\\TorBrowser\\Tor\\PluggableTransports|g' \

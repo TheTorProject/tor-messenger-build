@@ -14,13 +14,14 @@ mkdir torbrowser
 cd torbrowser
 mkdir tor-launcher@torproject.org
 7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
-# exclude meek as it requires firefox
-fgrep -v extensions.torlauncher.default_bridge.meek- $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
+cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
         tor-launcher@torproject.org/defaults/preferences/prefs.js
 7z x $rootdir/[% c('input_files_by_name/tor-browser') %]
 bsdtar xf '0.unknown partition'
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
+# use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
+sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
 mv TorBrowser.app/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
 mv TorBrowser.app/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor
