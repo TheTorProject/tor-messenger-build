@@ -1,15 +1,15 @@
 # HG changeset patch
 # User Arlo Breault <arlolra@gmail.com>
-# Date 1446859847 28800
-#      Fri Nov 06 17:30:47 2015 -0800
-# Node ID b9b0e61d9a2d5092d45b309feb4ae526ae00519c
-# Parent  073468887b0faecb810a6e4463a2806924fead81
+# Date 1446953889 28800
+#      Sat Nov 07 19:38:09 2015 -0800
+# Node ID a42c96a62dee7a73910de738a9809d8247aede8c
+# Parent  492c769c46c9ea9e54fab00d6f0310afd100885a
 Ensure isMuc when attempting a subject change
 
 diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
 --- a/chat/protocols/xmpp/xmpp.jsm
 +++ b/chat/protocols/xmpp/xmpp.jsm
-@@ -1718,16 +1718,17 @@ var XMPPAccountPrototype = {
+@@ -1343,16 +1343,17 @@ const XMPPAccountPrototype = {
  
        return null;
    },
@@ -21,13 +21,13 @@ diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
 +    let isMuc = this._mucs.has(norm);
  
      let type = aStanza.attributes["type"];
-     let x = aStanza.getElement(["x"]);
      let body;
      let b = aStanza.getElement(["body"]);
      if (b) {
        // If there's a <body> child we have more than just typing notifications.
        // Prefer HTML (in <html><body>) and use plain text (<body>) as fallback.
-@@ -1738,17 +1739,21 @@ var XMPPAccountPrototype = {
+       let htmlBody = aStanza.getElement(["html", "body"]);
+@@ -1362,17 +1363,21 @@ const XMPPAccountPrototype = {
          // Even if the message is in plain text, the prplIMessage
          // should contain a string that's correctly escaped for
          // insertion in an HTML document.
@@ -50,7 +50,7 @@ diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
        // before 15.06.
        let muc = this._mucs.get(norm);
        let nick = this._parseJID(from).resource;
-@@ -1763,18 +1768,18 @@ var XMPPAccountPrototype = {
+@@ -1386,18 +1391,18 @@ const XMPPAccountPrototype = {
        let delay = aStanza.getElement(["delay"]);
        if (delay && delay.uri == Stanza.NS.delay) {
          if (delay.attributes["stamp"])
@@ -71,7 +71,7 @@ diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
          return;
        }
  
-@@ -1840,17 +1845,17 @@ var XMPPAccountPrototype = {
+@@ -1454,17 +1459,17 @@ const XMPPAccountPrototype = {
      if (state) {
        this.DEBUG(state);
        if (state == "composing")
