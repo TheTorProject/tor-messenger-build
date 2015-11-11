@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 git_url: https://github.com/arlolra/ctypes-otr
-git_hash: f10fc2ae9f57e27ea1ee2e0fb64790f67318a024
+git_hash: 820ac3c43565b641617e7191a3d9d6c7de9d63ba
 filename: 'ctypes-otr-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 var:
   lib_glob: 'lib/*.so*'
