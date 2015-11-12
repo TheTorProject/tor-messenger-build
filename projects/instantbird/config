@@ -108,23 +108,23 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
-  - filename: bug-1176731-do-not-mark-static-inline-functions.mozpatch
-    enable: '[% c("var/windows") %]'
   - filename: gmploader-sandbox.mozpatch
+    enable: '[% c("var/windows") %]'
+  - filename: 0001-Revert-no-bug-fix-case-of-nsIDocShell.h-in-WindowsUI.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: 0002-Revert-Bug-1170522-expose-whether-or-not-we-re-in-ta.mozpatch
     enable: '[% c("var/windows") %]'
+  - filename: 0003-Revert-Bug-1192573-Require-tablet-mode-Win10-to-show.mozpatch
+    enable: '[% c("var/windows") %]'
   - filename: bug-1197282-include-atomic-in-videodecoder.mozpatch
     enable: '[% c("var/windows") %]'
-  - filename: 0001-Avoid-double-definition-of-MFVideoFormat_VP80-with-m.mozpatch
+  - filename: 0001-Bug-1192248-Fixed-WinIMEHandler.cpp-cross-compilatio.mozpatch
     enable: '[% c("var/windows") %]'
-    # When 1197281 is fixed, this should not be needed anymore:
-    # https://bugzilla.mozilla.org/show_bug.cgi?id=1197281
+  - filename: 0001-Bug-1197281-Use-MOZ_FIND_WINSDK_VERSION-for-MOZ_WINS.mozpatch
+    enable: '[% c("var/windows") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
   - filename: block-plugins.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
-    enable: '[% c("var/osx") %]'
-  - filename: 0001-bug-1183129-Remove-a-dead-iOS-related-conditional-fr.mozpatch
     enable: '[% c("var/osx") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig

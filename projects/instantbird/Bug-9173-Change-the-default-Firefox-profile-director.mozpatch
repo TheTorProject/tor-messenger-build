@@ -25,7 +25,7 @@ index 7d09374ba773..417ebee773ba 100644
  #include "mozilla/Services.h"
  #include "mozilla/Omnijar.h"
  #include "mozilla/Preferences.h"
-@@ -197,9 +198,6 @@
+@@ -200,9 +201,6 @@ nsXREDirProvider::GetUserProfilesRootDir(nsIFile** aResult,
                                       aProfileName, aAppName, aVendorName);
  
    if (NS_SUCCEEDED(rv)) {
@@ -35,7 +35,7 @@ index 7d09374ba773..417ebee773ba 100644
      // We must create the profile directory here if it does not exist.
      nsresult tmp = EnsureDirectoryExists(file);
      if (NS_FAILED(tmp)) {
-@@ -222,9 +220,6 @@
+@@ -225,9 +223,6 @@ nsXREDirProvider::GetUserProfilesLocalDir(nsIFile** aResult,
                                       aProfileName, aAppName, aVendorName);
  
    if (NS_SUCCEEDED(rv)) {
@@ -45,7 +45,7 @@ index 7d09374ba773..417ebee773ba 100644
      // We must create the profile directory here if it does not exist.
      nsresult tmp = EnsureDirectoryExists(file);
      if (NS_FAILED(tmp)) {
-@@ -1219,82 +1214,44 @@
+@@ -1222,90 +1217,45 @@ nsresult
  nsXREDirProvider::GetUserDataDirectoryHome(nsIFile** aFile, bool aLocal)
  {
    // Copied from nsAppFileLocationProvider (more or less)
@@ -84,44 +84,42 @@ index 7d09374ba773..417ebee773ba 100644
 +    rv = localDir->GetNativeLeafName(removedName);
 +    NS_ENSURE_SUCCESS(rv, rv);
 +    bool didRemove = !removedName.Equals(".");
+ 
+-  rv = dirFileMac->InitWithFSRef(&fsRef);
+-  NS_ENSURE_SUCCESS(rv, rv);
 +    // Remove a directory component.
 +    nsCOMPtr<nsIFile> parentDir;
 +    rv = localDir->GetParent(getter_AddRefs(parentDir));
 +    NS_ENSURE_SUCCESS(rv, rv);
 +    localDir = parentDir;
-+
-+    if (didRemove)
-+      --levelsToRemove;
-+  }
-
--  rv = dirFileMac->InitWithFSRef(&fsRef);
-+  if (!localDir)
-+    return NS_ERROR_FAILURE;
-+
-+  rv = localDir->AppendRelativeNativePath(NS_LITERAL_CSTRING("TorMessenger"
-+                                     XPCOM_FILE_PATH_SEPARATOR "Data"
-+                                     XPCOM_FILE_PATH_SEPARATOR "Browser"));
-   NS_ENSURE_SUCCESS(rv, rv);
  
 -  localDir = do_QueryInterface(dirFileMac, &rv);
+-#elif defined(XP_IOS)
+-  nsAutoCString userDir;
+-  if (GetUIKitDirectory(aLocal, userDir)) {
+-    rv = NS_NewNativeLocalFile(userDir, true, getter_AddRefs(localDir));
+-  } else {
+-    rv = NS_ERROR_FAILURE;
+-  }
+-  NS_ENSURE_SUCCESS(rv, rv);
 -#elif defined(XP_WIN)
 -  nsString path;
-   if (aLocal) {
+-  if (aLocal) {
 -    rv = GetShellFolderPath(CSIDL_LOCAL_APPDATA, path);
 -    if (NS_FAILED(rv))
 -      rv = GetRegWindowsAppDataFolder(aLocal, path);
-+    rv = localDir->AppendNative(NS_LITERAL_CSTRING("Caches"));
-+    NS_ENSURE_SUCCESS(rv, rv);
-   }
+-  }
 -  if (!aLocal || NS_FAILED(rv)) {
 -    rv = GetShellFolderPath(CSIDL_APPDATA, path);
 -    if (NS_FAILED(rv)) {
 -      if (!aLocal)
 -        rv = GetRegWindowsAppDataFolder(aLocal, path);
 -    }
--  }
++    if (didRemove)
++      --levelsToRemove;
+   }
 -  NS_ENSURE_SUCCESS(rv, rv);
--
+ 
 -  rv = NS_NewLocalFile(path, true, getter_AddRefs(localDir));
 -#elif defined(MOZ_WIDGET_GONK)
 -  rv = NS_NewNativeLocalFile(NS_LITERAL_CSTRING("/data/b2g"), true,
@@ -129,13 +127,18 @@ index 7d09374ba773..417ebee773ba 100644
 -#elif defined(XP_UNIX)
 -  const char* homeDir = getenv("HOME");
 -  if (!homeDir || !*homeDir)
--    return NS_ERROR_FAILURE;
--
++  if (!localDir)
+     return NS_ERROR_FAILURE;
+ 
 -#ifdef ANDROID /* We want (ProfD == ProfLD) on Android. */
 -  aLocal = false;
 -#endif
--
--  if (aLocal) {
++  rv = localDir->AppendRelativeNativePath(NS_LITERAL_CSTRING("TorMessenger"
++                                     XPCOM_FILE_PATH_SEPARATOR "Data"
++                                     XPCOM_FILE_PATH_SEPARATOR "Browser"));
++  NS_ENSURE_SUCCESS(rv, rv);
+ 
+   if (aLocal) {
 -    // If $XDG_CACHE_HOME is defined use it, otherwise use $HOME/.cache.
 -    const char* cacheHome = getenv("XDG_CACHE_HOME");
 -    if (cacheHome && *cacheHome) {
@@ -150,14 +153,16 @@ index 7d09374ba773..417ebee773ba 100644
 -  } else {
 -    rv = NS_NewNativeLocalFile(nsDependentCString(homeDir), true,
 -                               getter_AddRefs(localDir));
--  }
++    rv = localDir->AppendNative(NS_LITERAL_CSTRING("Caches"));
++    NS_ENSURE_SUCCESS(rv, rv);
+   }
 -#else
 -#error "Don't know how to get product dir on your platform"
 -#endif
  
    NS_IF_ADDREF(*aFile = localDir);
    return rv;
-@@ -1507,48 +1464,25 @@
+@@ -1518,48 +1468,25 @@ nsXREDirProvider::AppendProfilePath(nsIFile* aFile,
    }
  
    nsAutoCString profile;
@@ -209,7 +214,7 @@ index 7d09374ba773..417ebee773ba 100644
  
  #elif defined(ANDROID)
    // The directory used for storing profiles
-@@ -1560,12 +1494,6 @@
+@@ -1571,12 +1498,6 @@ nsXREDirProvider::AppendProfilePath(nsIFile* aFile,
    rv = aFile->AppendNative(nsDependentCString("mozilla"));
    NS_ENSURE_SUCCESS(rv, rv);
  #elif defined(XP_UNIX)
@@ -222,7 +227,7 @@ index 7d09374ba773..417ebee773ba 100644
    if (!profile.IsEmpty()) {
      // Skip any leading path characters
      const char* profileStart = profile.get();
-@@ -1574,31 +1502,17 @@
+@@ -1585,31 +1506,17 @@ nsXREDirProvider::AppendProfilePath(nsIFile* aFile,
  
      // On the off chance that someone wanted their folder to be hidden don't
      // let it become ".."

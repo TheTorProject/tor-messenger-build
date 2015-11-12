@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 filename: '[% project %]-[% c("version") %]-[% c("var/build_id") %].tar.gz'
 git_url: http://git.code.sf.net/p/mingw-w64/mingw-w64
-git_hash: 548b1984042a1dd66cae95ad8c0003b5e5494a68
+git_hash: 917249082fd711f6a3e13515d1f6ffd4474d4f9c
 version: '[% c("abbrev") %]'
 remote_docker: 1
 var:
