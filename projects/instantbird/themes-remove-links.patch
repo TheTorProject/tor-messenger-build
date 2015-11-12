@@ -1,21 +1,46 @@
+diff --git a/im/content/preferences/themes.js b/im/content/preferences/themes.js
+--- a/im/content/preferences/themes.js
++++ b/im/content/preferences/themes.js
+@@ -31,21 +31,6 @@
+       default:
+         return;
+     }
+-
+-    var getMore = document.getElementById("getMore" + aType);
+-    var showGetMore = false;
+-    const nsIPrefBranch2 = Components.interfaces.nsIPrefBranch2;
+-    if (Services.prefs.getPrefType(prefURL) != nsIPrefBranch2.PREF_INVALID) {
+-      try {
+-        var getMoreURL = Components.classes["@mozilla.org/toolkit/URLFormatterService;1"]
+-                                   .getService(Components.interfaces.nsIURLFormatter)
+-                                   .formatURLPref(prefURL);
+-        getMore.setAttribute("getMoreURL", getMoreURL);
+-        showGetMore = getMoreURL != "about:blank";
+-      }
+-      catch (e) { }
+-    }
+-    getMore.hidden = !showGetMore;
+   },
+ 
+   /* Create the drop down list for emoticons and messagestyles;
 diff --git a/im/content/preferences/themes.xul b/im/content/preferences/themes.xul
 --- a/im/content/preferences/themes.xul
 +++ b/im/content/preferences/themes.xul
-@@ -65,7 +65,7 @@
+@@ -65,8 +65,6 @@
                </menupopup>
              </menulist>
              <separator orient="vertical" class="thin"/>
 -            <label id="getMoreMessageStyles" class="text-link" value="&messageStyleGetMore.label;"
-+            <label id="getMoreMessageStyles" class="text-link" value=""
-                    onclick="if (event.button == 0) { gThemePane.openURL(this.getAttribute('getMoreURL')); }"/>
+-                   onclick="if (event.button == 0) { gThemePane.openURL(this.getAttribute('getMoreURL')); }"/>
            </hbox>
            <separator class="thin"/>
-@@ -116,7 +116,7 @@
+           <label value="&messageStylePreview.label;"/>
+@@ -116,8 +114,6 @@
                </menupopup>
              </menulist>
              <separator orient="vertical" class="thin"/>
 -            <label id="getMoreEmoticons" class="text-link" value="&emoticonsGetMore.label;"
-+            <label id="getMoreEmoticons" class="text-link" value=""
-                    onclick="if (event.button == 0) { gThemePane.openURL(this.getAttribute('getMoreURL')); }"/>
+-                   onclick="if (event.button == 0) { gThemePane.openURL(this.getAttribute('getMoreURL')); }"/>
            </hbox>
            <separator class="thin"/>
+           <description>&emoticonsPreview.description;</description>
