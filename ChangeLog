@@ -8,6 +8,7 @@ Tor Messenger 0.1.0b4 --
      * Bug 17539: Pass username when interpolating resent string
      * Bug 15179: Add an OTR Preferences item to the Tools menu
    * Use the FIREFOX_42_0_RELEASE tag on mozilla-release
+   * Bug 16489: Prevent automatic logins at startup
  * Mac
    * Bug 16476: Themes preference is positioned incorrectly
    * Bug 17456: Hang in preferences menu
