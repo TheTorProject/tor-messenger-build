@@ -131,8 +131,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +// Disable geolocation
 +pref("geo.enabled", false);
 +
-+// Messenger //  0 = do not connect / show the account manager
-+pref("messenger.startup.action", 0);
++// Messenger
 +// Do not report idle status or the away message
 +pref("messenger.status.awayWhenIdle", false);
 +pref("messenger.status.defaultIdleAwayMessage", "");
