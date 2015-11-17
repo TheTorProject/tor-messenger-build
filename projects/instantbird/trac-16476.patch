@@ -10,28 +10,15 @@ Bug 1222238 - Avoid hang in proxy preferences pane. r=clokep
 diff --git a/im/content/preferences/messagestyle.js b/im/content/preferences/messagestyle.js
 --- a/im/content/preferences/messagestyle.js
 +++ b/im/content/preferences/messagestyle.js
-@@ -166,16 +166,24 @@ var previewObserver = {
-     this.browser._theme = this.theme;
-     Services.obs.addObserver(this, "conversation-loaded", false);
-   },
- 
-   observe: function(aSubject, aTopic, aData) {
-     if (aTopic != "conversation-loaded" || aSubject != this.browser)
-       return;
- 
-+    // We want to avoid the convbrowser trying to scroll to the last
-+    // added message, as that causes the entire pref pane to jump up
-+    // (bug 1179943). Therefore, we override the method convbrowser
-+    // uses to determine if it should scroll, as well as its
-+    // mirror in the contentWindow (that messagestyle JS can call).
+@@ -177,9 +177,8 @@
+     // uses to determine if there are further messages pending to be
+     // added. The +1 ensures no scroll occurs after we add the last
+     // message here.
+-    this.browser._autoScrollEnabled = false;
+-    this.browser.getPendingMessagesCount =
+-      () => previewObserver.conv.messages.length + 1;
 +    this.browser.autoScrollEnabled = () => false;
 +    this.browser.contentWindow.autoScrollEnabled = () => false;
-+
+ 
      // Display all queued messages. Use a timeout so that message text
      // modifiers can be added with observers for this notification.
-     setTimeout(function() {
-       for each (let message in previewObserver.conv.messages)
-         aSubject.appendMessage(message, false);
-     }, 0);
- 
-     Services.obs.removeObserver(this, "conversation-loaded");

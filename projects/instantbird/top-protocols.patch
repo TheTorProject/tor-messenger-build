@@ -5,7 +5,7 @@ diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/l
  # Exceeding 4 protocols may cause scrolling. A list of the
  # available protocols can be found at
  #     https://wiki.instantbird.org/Protocol_Identifiers
--topProtocol.list=prpl-gtalk,prpl-facebook,prpl-twitter,prpl-aim,prpl-msn,prpl-yahoo
+-topProtocol.list=prpl-gtalk,prpl-facebook,prpl-twitter,prpl-aim,prpl-yahoo
 +topProtocol.list=prpl-irc,prpl-jabber,prpl-gtalk,prpl-facebook
  
  # LOCALIZATION NOTE
