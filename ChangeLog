@@ -1,6 +1,5 @@
 Tor Messenger 0.1.0b4 -- 
  * All Platforms
-   * Bug 16478: Update certificate pane in preferences window
    * Bug 17492: Include default bridges configuration
    * Use tor and the pluggable transports from tor-browser 5.0.4
    * Bug 17552: Instantbird throwing on XMPP non-MUC message stanzas w/ subject
