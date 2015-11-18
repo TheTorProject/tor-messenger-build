@@ -8,6 +8,7 @@ filename: "[% project %]-[% c('version') %]-[% c('var/build_id') %].xpi"
 input_files:
   - filename: torbirdy.png
   - filename: messenger.png
+  - filename: default48.png
   - filename: logo.patch
   - filename: controlport.patch
     content: '[% INCLUDE controlport.patch.tmpl -%]'

@@ -10,6 +10,7 @@ cp ../torbirdy.png src/chrome/skin/tbb-logo.png
 [% END -%]
 [% IF c("var/tor-messenger") -%]
 cp ../messenger.png src/chrome/skin/tbb-logo.png
+cp ../default48.png src/chrome/skin/default48.png
 [% END -%]
 patch -p1 < ../logo.patch
 make package

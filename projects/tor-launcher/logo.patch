@@ -13,3 +13,16 @@ index 646baa6..66a89a3 100644
    margin-right: 20px;
  }
 
+diff --git a/src/chrome/skin/progress.css b/src/chrome/skin/progress.css
+index d718452..5706f4d 100644
+--- a/src/chrome/skin/progress.css
++++ b/src/chrome/skin/progress.css
+@@ -23,7 +23,7 @@ dialog {
+ #tbb-icon {
+   list-style-image: url("chrome://torlauncher/skin/default48.png");
+   width: 48px;
+-  height: 48px;
++  height: 36px;
+ }
+ 
+ #progressDesc {
