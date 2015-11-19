@@ -70,8 +70,6 @@ sed -i 's|TorBrowser/Tor/PluggableTransports|extensions/tor-launcher@torproject.
                 tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's|TorBrowser\\Tor\\PluggableTransports|extensions\\tor-launcher@torproject.org\\TorBrowser\\Tor\\PluggableTransports|g' \
                 tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
-# trac 17476
-rm -Rf tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/TorBrowser.app.meek-http-helper/
 rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser
 mv tor-browser_en-US/Browser/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
 mv tor-browser_en-US/Browser/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor

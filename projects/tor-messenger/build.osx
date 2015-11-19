@@ -23,6 +23,9 @@ sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' TorBrows
 # use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
 sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' TorBrowser.app/TorBrowser/Data/Tor/torrc-defaults
 mkdir -p tor-launcher@torproject.org/TorBrowser/Data
+# trac 17476
+rm -Rf TorBrowser.app/TorBrowser/Tor/PluggableTransports/TorBrowser.app.meek-http-helper/
+rm -f  TorBrowser.app/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser
 mv TorBrowser.app/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
 mv TorBrowser.app/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor
 mv tor-launcher@torproject.org $rootdir/Tor\ Messenger.app/Contents/Resources/extensions/
