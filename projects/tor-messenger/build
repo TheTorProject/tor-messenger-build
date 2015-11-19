@@ -64,13 +64,21 @@ tar xf ../../../[% c('input_files_by_name/tor-browser') %]
 [% END -%]
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+
+[% IF c("var/windows") -%]
+# use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
+sed -i 's/\(ClientTransportPlugin meek exec extensions\\tor-launcher@torproject.org\\TorBrowser\\Tor\\PluggableTransports\\terminateprocess-buffer\) [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+sed -i 's|TorBrowser\\Tor\\PluggableTransports|extensions\\tor-launcher@torproject.org\\TorBrowser\\Tor\\PluggableTransports|g' \
+                tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser.exe
+[% ELSE -%]
 # use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
 sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's|TorBrowser/Tor/PluggableTransports|extensions/tor-launcher@torproject.org/TorBrowser/Tor/PluggableTransports|g' \
                 tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
-sed -i 's|TorBrowser\\Tor\\PluggableTransports|extensions\\tor-launcher@torproject.org\\TorBrowser\\Tor\\PluggableTransports|g' \
-                tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser
+[% END -%]
+
 mv tor-browser_en-US/Browser/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
 mv tor-browser_en-US/Browser/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor
 rm -Rf tor-browser_en-US
