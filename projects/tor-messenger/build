@@ -67,7 +67,7 @@ sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-brow
 
 [% IF c("var/windows") -%]
 # use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
-sed -i 's/\(ClientTransportPlugin meek exec [^ ]\+\) [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's|TorBrowser\\Tor\\PluggableTransports|extensions\\tor-launcher@torproject.org\\TorBrowser\\Tor\\PluggableTransports|g' \
                 tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser.exe
