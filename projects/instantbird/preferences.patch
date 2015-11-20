@@ -1,7 +1,12 @@
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
-@@ -64,9 +64,6 @@
+@@ -59,19 +59,16 @@ pref("extensions.mintrayr.startMinimized
+ // For Linux, use single click.
+ pref("extensions.mintrayr.singleClickRestore", true);
+ #else
+ // For Windows, use double click.
+ pref("extensions.mintrayr.singleClickRestore", false);
  #endif
  #endif
  
@@ -11,7 +16,17 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  // Specifies whether each message event should trigger a sound for incoming
  // and outgoing messages, or when your nickname is mentioned in a chat.
  pref("messenger.options.playSounds.outgoing", true);
-@@ -114,14 +111,6 @@
+ pref("messenger.options.playSounds.incoming", true);
+ pref("messenger.options.playSounds.alert", true);
+ // Whether contact list related sounds should be played at all. If this is
+ // enabled then the more specific prefs are checked as well.
+ pref("messenger.options.playSounds.blist", false);
+@@ -109,41 +106,33 @@ pref("browser.preferences.animateFadeIn"
+ pref("browser.zoom.full", true);
+ pref("conversation.zoomLevel", "1.0");
+ 
+ pref("accessibility.typeaheadfind", false);
+ pref("accessibility.typeaheadfind.timeout", 5000);
  pref("accessibility.typeaheadfind.linksonly", false);
  pref("accessibility.typeaheadfind.flashBar", 1);
  
@@ -26,7 +41,16 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  // Defines how the Application Update Service notifies the user about updates:
  //
  // AUM Set to:        Minor Releases:     Major Releases:
-@@ -138,7 +127,7 @@
+ // 0                  download no prompt  download no prompt
+ // 1                  download no prompt  download no prompt if no incompatibilities
+ // 2                  download no prompt  prompt
+ //
+ // See chart in nsUpdateService.js.in for more details
+ //
+ pref("app.update.mode", 1);
+ 
+ // If set to true, the Update Service will present no UI for any event.
+ pref("app.update.silent", false);
  
  // If set to true, the Update Service will apply updates in the background
  // when it finishes downloading them.
@@ -35,28 +59,55 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // Update service URL:
  // You do not need to use all the %VAR% parameters. Use what you need, %PRODUCT%,%VERSION%,%BUILD_ID%,%CHANNEL% for example
-@@ -198,9 +187,6 @@
+ pref("app.update.url", "https://update.instantbird.org/1/%PRODUCT%/%VERSION%/%BUILD_ID%/%BUILD_TARGET%/%LOCALE%/%CHANNEL%/%OS_VERSION%/update.xml");
+ 
+ // URL user can browse to manually if for some reason all update installation
+ // attempts fail.
+ pref("app.update.url.manual", "http://www.instantbird.com/download.html");
+@@ -194,17 +183,17 @@ pref("browser.search.defaultenginename",
+ // disable logging for the search service by default
+ pref("browser.search.log", false);
+ 
+ // Ordering of Search Engines in the Engine list.
  pref("browser.search.order.1",                "chrome://instantbird/locale/region.properties");
  pref("browser.search.order.2",                "chrome://instantbird/locale/region.properties");
  
--// send ping to the server to update
+ // send ping to the server to update
 -pref("browser.search.update", true);
--
++pref("browser.search.update", false);
+ 
  // disable logging for the search service update system by default
  pref("browser.search.update.log", false);
  
-@@ -219,10 +205,8 @@
+ // Check whether we need to perform engine updates every 6 hours
+ pref("browser.search.updateinterval", 6);
+ 
+ /* Extension manager */
+@@ -214,17 +203,17 @@ pref("xpinstall.dialog.progress.chrome",
+ pref("xpinstall.dialog.progress.type.skin", "Extension:Manager");
+ pref("xpinstall.dialog.progress.type.chrome", "Extension:Manager");
+ pref("extensions.dss.enabled", false);
+ pref("extensions.dss.switchPending", false);
+ pref("extensions.ignoreMTimeChanges", false);
  pref("extensions.logging.enabled", false);
  pref("general.skins.selectedSkin", "classic/1.0");
  
 -pref("extensions.update.enabled", true);
++pref("extensions.update.enabled", false);
  pref("extensions.update.interval", 86400);
  pref("extensions.update.url", "https://addons.instantbird.org/services/update.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&maxAppVersion=%ITEM_MAXAPPVERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&appOS=%APP_OS%&appABI=%APP_ABI%&locale=%APP_LOCALE%");
--pref("extensions.update.autoUpdateDefault", true);
+ pref("extensions.update.autoUpdateDefault", true);
  
  // Preferences for the Get Add-ons pane
  pref("extensions.getAddons.cache.enabled", false);
-@@ -242,9 +226,9 @@
+ pref("extensions.getAddons.browseAddons", "https://addons.instantbird.org/%LOCALE%/%APP%");
+ pref("extensions.getAddons.maxResults", 5);
+@@ -237,35 +226,32 @@ pref("extensions.webservice.discoverURL"
+ pref("extensions.getMoreExtensionsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/extensions/");
+ pref("extensions.getMoreThemesURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/themes/");
+ pref("extensions.getMorePluginsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/plugins/");
+ pref("extensions.getMoreMessageStylesURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/messagestyles/");
+ pref("extensions.getMoreEmoticonsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/emoticons/");
  pref("extensions.getMoreProtocolsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/protocols/");
  
  // suppress external-load warning for standard browser schemes
@@ -69,7 +120,13 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // don't load links inside Instantbird
  pref("network.protocol-handler.expose-all", false);
-@@ -258,9 +242,6 @@
+ // Although we allow these to be exposed internally, there are various places
+ // (e.g. message pane) where we may divert them out to external applications.
+ pref("network.protocol-handler.expose.about", true);
+ pref("network.protocol-handler.expose.http", true);
+ pref("network.protocol-handler.expose.https", true);
+ 
+ // expose javascript: so that message themes can use it.
  // javascript: links inside messages are filtered out.
  pref("network.protocol-handler.expose.javascript", true);
  
@@ -79,7 +136,17 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  // The breakpad report server to link to in about:crashes
  pref("breakpad.reportURL", "http://crash-stats.instantbird.com/report/index/");
  
-@@ -297,14 +278,82 @@
+ // We have an Error Console menu item by default so let's display chrome errors
+ pref("javascript.options.showInConsole", true);
+ #ifdef DEBUG
+ // In debug builds, also display warnings by default
+ pref("javascript.options.strict", true);
+@@ -292,19 +278,89 @@ pref("browser.tabs.tabClipWidth", 140);
+ 
+ // Where to show tab close buttons:
+ // 0  on active tab only
+ // 1  on all tabs until tabClipWidth is reached, then active tab only
+ // 2  no close buttons at all
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -165,3 +232,5 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +pref("extensions.update.autoUpdateDefault", false);
 +// Do not send ping to the server to update
 +pref("browser.search.update", false);
++// Set baseURL to Firefox default to prevent console errors
++pref("app.support.baseURL", "https://support.mozilla.org/1/firefox/%VERSION%/%OS%/%LOCALE%/");
