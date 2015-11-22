@@ -1,4 +1,4 @@
-Tor Messenger 0.1.0b4 -- 
+Tor Messenger 0.1.0b4 -- November 22 2015
  * All Platforms
    * Bug 17492: Include default bridges configuration
    * Use tor and the pluggable transports from tor-browser 5.0.4
