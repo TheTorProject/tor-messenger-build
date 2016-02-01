@@ -51,7 +51,6 @@ for patch in $(ls -1 $rootdir/branding/*.patch | sort)
 do
   patch -p1 < $patch
 done
-cat $rootdir/spi-cacert.der >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
 
 [% IF c("var/osx") -%]
 cp $rootdir/cert_override.txt im/app/profile

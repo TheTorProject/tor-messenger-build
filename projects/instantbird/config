@@ -55,7 +55,6 @@ input_files:
   - name: mozilla-src
     project: mozilla
     pkg_type: src
-  - filename: spi-cacert.der
   - filename: preferences.patch
   - filename: irc-default-server.patch
   - filename: top-protocols.patch
