@@ -1,6 +1,7 @@
 Tor Messenger --
  * All Platforms
-   * Remove SPI root certificate because Debian no longer ships it (#13795)
+   * Bug 13795: Remove SPI root certificate because Debian no longer ships it
+   * Bug 18094: Remove references to torbutton from start-tor-messenger script
 
 Tor Messenger 0.1.0b4 -- November 22 2015
  * All Platforms
