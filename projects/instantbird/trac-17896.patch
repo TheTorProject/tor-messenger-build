@@ -1,0 +1,89 @@
+# HG changeset patch
+# User aleth <aleth@instantbird.org>
+# Date 1454183798 -3600
+#      Sat Jan 30 20:56:38 2016 +0100
+# Node ID 6eac77f5536560efd9028d80faa8df716d20907a
+# Parent  bd360247708a91a220b79303b4c0f59be61520f9
+Bug 1151784 - Add Edit menu to the conversation window on OS X. r=nhnt11,florian
+
+Adding an edit menu also enables the emoji panel and dictation.
+
+diff --git a/im/content/instantbird.xul b/im/content/instantbird.xul
+--- a/im/content/instantbird.xul
++++ b/im/content/instantbird.xul
+@@ -43,17 +43,38 @@
+ #else
+   <script type="application/javascript" src="chrome://global/content/globalOverlay.js"/>
+ #endif
+   <script type="application/javascript" src="chrome://global/content/viewZoomOverlay.js"/>
+   <script type="application/javascript" src="chrome://instantbird/content/convZoom.js"/>
+   <script type="application/javascript" src="chrome://instantbird/content/nsContextMenu.js"/>
+ 
+ #ifdef XP_MACOSX
+-#include menus.xul.inc
++# As menus.xul.inc, but with an Edit menu.
++  <commandset id="maincommandset"/>
++  <keyset id="mainkeyset"/>
++  <menubar id="blistMenubar">
++    <menu id="menu_edit">
++      <menupopup id="menu_editpopup">
++        <menuitem id="menu_undo"/>
++        <menuitem id="menu_redo"/>
++        <menuseparator/>
++        <menuitem id="menu_cut"/>
++        <menuitem id="menu_copy"/>
++        <menuitem id="menu_paste"/>
++        <menuitem id="menu_delete"/>
++        <menuseparator/>
++        <menuitem id="menu_selectAll"/>
++        <menuseparator/>
++        <menuitem id="menu_find"/>
++        <menuitem id="menu_findAgain"/>
++      </menupopup>
++    </menu>
++  </menubar>
++  <popupset id="mainPopupSet"/>
+ #endif
+ 
+   <commandset id="conversationsCommands">
+     <command id="cmd_newtab" oncommand="Conversations.showNewTab()"/>
+     <command id="cmd_close" oncommand="getTabBrowser().removeCurrentTab()"/>
+     <command id="cmd_putOnHold"
+              oncommand="var tabbrowser = getTabBrowser();
+                         if (!tabbrowser.selectedConversation) return;
+diff --git a/im/content/menus.xul b/im/content/menus.xul
+--- a/im/content/menus.xul
++++ b/im/content/menus.xul
+@@ -38,17 +38,17 @@
+     <key id="key_quitApplication" key="&quitApplicationCmdMac.key;" command="cmd_quitApplication" modifiers="accel"/>
+     <key id="joinChatkey" key="&joinChat.commandkey;" command="cmd_joinchat" modifiers="accel"/>
+     <key id="addBuddykey" key="&addContact.commandkey;" command="cmd_addbuddy" modifiers="accel"/>
+     <key id="newtabkey" key="&newtab.commandkey;" command="cmd_newtab" modifiers="accel"/>
+     <key id="addonskey" key="&addonManager.commandkey;" command="cmd_addons" modifiers="accel"/>
+   </keyset>
+ 
+   <menubar id="blistMenubar">
+-    <menu label="&file.menu;" id="fileMenu" accesskey="&file.accesskey;">
++    <menu label="&file.menu;" id="fileMenu" accesskey="&file.accesskey;" insertbefore="menu_edit">
+       <menupopup id="fileMenuPopup" onpopupshowing="menus.updateFileMenuitems();">
+         <menuitem id="addBuddyMenuItem" label="&addContact;" command="cmd_addbuddy" key="addBuddykey" accesskey="&addContact.accesskey;"/>
+         <menuitem id="newTabMenuItem" label="&newtab;" command="cmd_newtab" key="newtabkey" accesskey="&newtab.accesskey;"/>
+         <menuitem id="joinChatMenuItem" label="&joinChat;" command="cmd_joinchat" key="joinChatkey" accesskey="&joinChat.accesskey;"/>
+         <menuseparator/>
+         <menu id="setStatusTo" label="&setStatusTo;" oncommand="menus.setStatus(event);" accesskey="&setStatusTo.accesskey;" >
+           <menupopup id="setStatusMenupopup"> <!-- has onpopupshowing on mac -->
+             <menuitem id="statusAvailable" status="available" label="&available;" accesskey="&available.accesskey;" class="menuitem-iconic"/>
+diff --git a/im/content/menus.xul.inc b/im/content/menus.xul.inc
+--- a/im/content/menus.xul.inc
++++ b/im/content/menus.xul.inc
+@@ -1,8 +1,10 @@
+ # This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ 
++# Note instantbird.xul contains a modified copy of this file that
++# should be kept in sync.
+   <commandset id="maincommandset"/>
+   <keyset id="mainkeyset"/>
+   <menubar id="blistMenubar"/>
+   <popupset id="mainPopupSet"/>

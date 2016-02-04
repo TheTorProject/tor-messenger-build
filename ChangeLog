@@ -2,6 +2,8 @@ Tor Messenger --
  * All Platforms
    * Bug 13795: Remove SPI root certificate because Debian no longer ships it
    * Bug 18094: Remove references to torbutton from start-tor-messenger script
+ * Mac
+   * Bug 17896: Add Edit menu to the conversation window on OS X
 
 Tor Messenger 0.1.0b4 -- November 22 2015
  * All Platforms

@@ -72,6 +72,7 @@ input_files:
   - filename: xmpp-gtalk-resource.patch
   - filename: trac-17552.patch
   - filename: trac-16489.patch
+  - filename: trac-17896.patch
   - filename: version.patch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
