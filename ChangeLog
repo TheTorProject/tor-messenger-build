@@ -4,6 +4,9 @@ Tor Messenger --
    * Bug 18094: Remove references to torbutton from start-tor-messenger script
  * Mac
    * Bug 17896: Add Edit menu to the conversation window on OS X
+ * Windows
+   * ctypes-otr
+     * GH 65: Support Unicode paths on Windows
 
 Tor Messenger 0.1.0b4 -- November 22 2015
  * All Platforms
