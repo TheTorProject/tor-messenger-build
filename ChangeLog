@@ -2,6 +2,7 @@ Tor Messenger --
  * All Platforms
    * Bug 13795: Remove SPI root certificate because Debian no longer ships it
    * Bug 18094: Remove references to torbutton from start-tor-messenger script
+   * Bug 18235: Disable Facebook as they no longer support XMPP
  * Mac
    * Bug 17896: Add Edit menu to the conversation window on OS X
  * Windows

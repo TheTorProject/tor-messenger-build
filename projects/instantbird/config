@@ -59,6 +59,7 @@ input_files:
   - filename: irc-default-server.patch
   - filename: top-protocols.patch
   - filename: disable-links.patch
+  - filename: disable-fb.patch
   - filename: account-picture.patch
   - filename: show-traffic-tor.patch
   - filename: hide-get-protocols.patch

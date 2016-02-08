@@ -1,0 +1,41 @@
+diff --git a/chat/chat-prefs.js b/chat/chat-prefs.js
+--- a/chat/chat-prefs.js
++++ b/chat/chat-prefs.js
+@@ -82,6 +82,8 @@
+ pref("chat.irc.automaticList", true);
+ // Disable Skype until it can be tested further.
+ pref("chat.prpls.prpl-skype.disable", true);
++// Disable Facebook as the XMPP gateway no longer exists.
++pref("chat.prpls.prpl-facebook.disable", true);
+
+ // loglevel is the minimum severity level that a libpurple message
+ // must have to be reported in the Error Console.
+diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
+--- a/im/content/accountWizard.js
++++ b/im/content/accountWizard.js
+@@ -18,6 +18,13 @@
+       if (proto == null)
+         continue;
+
++      // If the preference is set to disable this prpl, don't show it in the
++      // full list of protocols.
++      let pref = "chat.prpls." + topProto + ".disable";
++      if (Services.prefs.getPrefType(pref) == Services.prefs.PREF_BOOL &&
++          Services.prefs.getBoolPref(pref))
++        continue;
++
+       let item = document.createElement("richlistitem");
+       item.className = "top-protocol";
+       topProtoList.insertBefore(item, document.getElementById("otherListItem"));
+diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
+--- a/im/installer/package-manifest.in
++++ b/im/installer/package-manifest.in
+@@ -227,8 +227,6 @@
+ @RESPATH@/components/imConversations.manifest
+ @RESPATH@/components/imCore.js
+ @RESPATH@/components/imCore.manifest
+-@RESPATH@/components/facebook.js
+-@RESPATH@/components/facebook.manifest
+ @RESPATH@/components/gtalk.js
+ @RESPATH@/components/gtalk.manifest
+ @RESPATH@/components/irc.js
