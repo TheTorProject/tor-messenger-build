@@ -1,3 +1,5 @@
+# Modified from aleth's https://hg.mozilla.org/comm-central/rev/4f1b3e5af8ef
+
 diff --git a/chat/chat-prefs.js b/chat/chat-prefs.js
 --- a/chat/chat-prefs.js
 +++ b/chat/chat-prefs.js
