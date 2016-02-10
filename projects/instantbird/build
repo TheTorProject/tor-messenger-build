@@ -71,6 +71,8 @@ cp $rootdir/branding/instantbird.icns im/branding/messenger/
 
 cp $rootdir/branding/about.png im/branding/messenger/content/
 
+echo '<!ENTITY tmVersion "[% c('var/tormessenger_version') %]">' >> im/locales/en-US/chrome/instantbird/aboutDialog.dtd
+
 cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
 then
