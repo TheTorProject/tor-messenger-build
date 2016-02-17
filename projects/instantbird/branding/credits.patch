@@ -155,7 +155,7 @@ diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 -
      <deck id="modes" flex="1">
        <vbox flex="1" id="clientBox">
-         <vbox id="versionWrapper" flex="1">
+-        <vbox id="versionWrapper" flex="1">
 -          <textbox id="versionField" readonly="true" class="plain" tabindex="2"
 -                   value="&aboutVersion; "/>
 -          <textbox id="geckoVersionField" readonly="true" class="plain"
@@ -163,6 +163,7 @@ diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 -          <textbox id="libpurpleVersionField" readonly="true" class="plain"
 -                   tabindex="4" value="&libpurpleVersion; "/>
 -        </vbox>
++        <vbox id="versionWrapper" align="center" flex="1">
 +          <separator/>
 +          <label id="tmLabel" value="&tmText;" />
 +          <separator/>
