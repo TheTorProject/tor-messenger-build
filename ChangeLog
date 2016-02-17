@@ -4,6 +4,7 @@ Tor Messenger --
    * Bug 18094: Remove references to torbutton from start-tor-messenger script
    * Bug 18235: Disable Facebook as they no longer support XMPP
    * Bug 17494: Better error reporting for failed outgoing messages
+   * Bug 17749: Show version information in the "About" window
  * Mac
    * Bug 17896: Add Edit menu to the conversation window on OS X
  * Windows
