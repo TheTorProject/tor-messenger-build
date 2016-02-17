@@ -67,7 +67,7 @@ diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
  #ifdef XP_MACOSX
   <!ENTITY % instantbirdDTD SYSTEM "chrome://instantbird/locale/instantbird.dtd">
   %instantbirdDTD;
-@@ -24,105 +24,27 @@
+@@ -24,105 +24,26 @@
  <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
          id="aboutDialog"
          windowtype="Messenger:About"
@@ -166,7 +166,6 @@ diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 +        <vbox id="versionWrapper" align="center" flex="1">
 +          <separator/>
 +          <label id="tmLabel" value="&tmText;" />
-+          <separator/>
 +          <label id="imLabel" value="&imText;" />
 + 	</vbox>
          <description id="copyright" flex="1">&copyrightText2;</description>
