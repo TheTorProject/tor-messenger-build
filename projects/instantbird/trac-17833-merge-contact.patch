@@ -1,0 +1,28 @@
+diff --git a/chat/components/src/imContacts.js b/chat/components/src/imContacts.js
+--- a/chat/components/src/imContacts.js
++++ b/chat/components/src/imContacts.js
+@@ -588,23 +588,7 @@
+                this._buddies.every(function(b) b._empty),
+ 
+   mergeContact: function(aContact) {
+-    // Avoid merging the contact with itself or merging into an
+-    // already removed contact.
+-    if (aContact.id == this.id || !(this.id in ContactsById))
+-      throw Components.results.NS_ERROR_INVALID_ARG;
+-
+-    this._ensureNotDummy();
+-    let contact = ContactsById[aContact.id]; // remove XPConnect wrapper
+-
+-    // Copy all the contact-only tags first, otherwise they would be lost.
+-    for each (let tag in contact.getTags())
+-      if (!contact._isTagInherited(tag))
+-        this.addTag(tag);
+-
+-    // Adopt each buddy. Removing the last one will delete the contact.
+-    for each (let buddy in contact.getBuddies())
+-      buddy.contact = this;
+-    this._updatePreferredBuddy();
++    return;
+   },
+   moveBuddyBefore: function(aBuddy, aBeforeBuddy) {
+     let buddy = BuddiesById[aBuddy.id]; // remove XPConnect wrapper

@@ -75,6 +75,7 @@ input_files:
   - filename: trac-16489.patch
   - filename: trac-17896.patch
   - filename: trac-17494.patch
+  - filename: trac-17833-merge-contact.patch
   - filename: version.patch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
