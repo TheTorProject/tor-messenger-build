@@ -629,10 +629,10 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
 +var NSGetFactory = XPCOMUtils.generateNSGetFactory([TwitterProtocol]);
 # HG changeset patch
 # User Arlo Breault <arlolra@gmail.com>
-# Date 1456282265 28800
-#      Tue Feb 23 18:51:05 2016 -0800
+# Date 1456343323 28800
+#      Wed Feb 24 11:48:43 2016 -0800
 # Branch THUNDERBIRD420b2_2015101216_RELBRANCH
-# Node ID 01edd1bf5e56e382611823a8f0ab604743c78b02
+# Node ID 1302396bc5605fff3ba7b2b7a762db98630378fa
 # Parent  9d547deb66802e3068767b5df2e687f6a56c5099
 Bug 955642 - Handle Twitter direct messages (DMs)
 
@@ -1273,7 +1273,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
        if (this.incoming) {
          actions.push(
            new Action(_("action.retweet"), function() {
-@@ -118,17 +127,104 @@ function Action(aLabel, aAction, aTweet)
+@@ -118,17 +127,109 @@ function Action(aLabel, aAction, aTweet)
    this._action = aAction;
    this._tweet = aTweet;
  }
@@ -1299,6 +1299,11 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
 +    this.writeMessage("twitter.com", aMessage, flags);
 +  },
 +  onSentCallback: function(aMsg, aData) {
++    // The conversation may have been unitialized in the time it takes for
++    // the async callback to fire.  Use `_observers` as a proxy for uninit'd.
++    if (!Array.isArray(this._observers))
++      return;
++
 +    let tweet = JSON.parse(aData);
 +    // The OTR extension requires that the protocol not modify the message
 +    // (see the notes at `imIOutgoingMessage`).  That's the contract we made.
@@ -1379,7 +1384,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    let entries = [];
    for (let [name, userInfo] of aAccount._userInfo) {
      entries.push([userInfo.id_str, name]);
-@@ -139,17 +235,17 @@ function Conversation(aAccount)
+@@ -139,17 +240,17 @@ function Conversation(aAccount)
  
    // If the user's info has already been received, update the timeline topic.
    if (aAccount._userInfo.has(aAccount.name)) {
@@ -1398,7 +1403,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    inReplyToStatusId: null,
    startReply: function(aTweet) {
      this.inReplyToStatusId = aTweet.id_str;
-@@ -169,203 +265,66 @@ Conversation.prototype = {
+@@ -169,203 +270,66 @@ Conversation.prototype = {
             .map(aNick => "@" + aNick)
             .join(" ") + " ";
  
@@ -1627,7 +1632,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      let chatBuddy = new ChatBuddy(aNick, this._account);
      this._participants.set(aNick, chatBuddy);
      this.notifyObservers(new nsSimpleEnumerator([chatBuddy]),
-@@ -377,23 +336,60 @@ Conversation.prototype = {
+@@ -377,23 +341,60 @@ Conversation.prototype = {
    set nick(aNick) {},
    get topicSettable() { return this.nick == this._account.name; },
    get topic() { return this._topic; }, // can't add a setter without redefining the getter
@@ -1688,7 +1693,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    // Unfortunately, for backwards compatibility we retain this normalization,
    // which can cause edge cases for usernames with underscores.
    normalize: aString => aString.replace(/[^a-z0-9]/gi, "").toLowerCase(),
-@@ -554,16 +550,21 @@ Account.prototype = {
+@@ -554,16 +555,21 @@ Account.prototype = {
    reTweet: function(aTweet, aOnSent, aOnError, aThis) {
      let url = "1.1/statuses/retweet/" + aTweet.id_str + ".json";
      this.signAndSend(url, null, [], aOnSent, aOnError, aThis);
@@ -1710,7 +1715,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    },
    stopFollowing: function(aUserName) {
      // friendships/destroy will return the user in case of success.
-@@ -615,39 +616,17 @@ Account.prototype = {
+@@ -615,39 +621,17 @@ Account.prototype = {
        getParams = "?q=" + trackQuery + lastMsgParam + "&count=100";
        let url = "1.1/search/tweets.json" + getParams;
        this._pendingRequests.push(
@@ -1751,7 +1756,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      this._doneWithTimelineRequest(aRequest);
    },
  
-@@ -685,17 +664,17 @@ Account.prototype = {
+@@ -685,17 +669,17 @@ Account.prototype = {
      this.reportConnected();
  
      // If the conversation already exists, notify it we are back online.
@@ -1770,7 +1775,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      delete this._timelineBuffer;
      delete this._pendingRequests;
  
-@@ -747,18 +726,23 @@ Account.prototype = {
+@@ -747,18 +731,23 @@ Account.prototype = {
          continue;
        let msg;
        try {
@@ -1796,7 +1801,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
            userInfoIds.add(userInfo.id_str);
          let ids = msg.friends.filter(
            aId => !userInfoIds.has(aId.toString()));
-@@ -1099,16 +1083,29 @@ Account.prototype = {
+@@ -1099,16 +1088,29 @@ Account.prototype = {
      this.config = JSON.parse(aData);
    },
  
