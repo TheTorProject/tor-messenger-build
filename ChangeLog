@@ -5,6 +5,7 @@ Tor Messenger 0.1.0b5 --
    * Bug 18235: Disable Facebook as they no longer support XMPP
    * Bug 17494: Better error reporting for failed outgoing messages
    * Bug 17749: Show version information in the "About" window
+   * Bug 13312: OTR over Twitter DMs
  * Mac
    * Bug 17896: Add Edit menu to the conversation window on OS X
  * Windows
