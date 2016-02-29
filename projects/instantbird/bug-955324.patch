@@ -1,0 +1,52 @@
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1456775633 28800
+#      Mon Feb 29 11:53:53 2016 -0800
+# Node ID 6e6444a94b87a64b6ac316280f810709b632d461
+# Parent  f2acd8984cea1a68e57a2c30e93a3089a9bce76d
+Bug 955324 - Starting/stopping to follow someone doesn't update the participant list of the timeline
+
+diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.js
+--- a/chat/protocols/twitter/twitter.js
++++ b/chat/protocols/twitter/twitter.js
+@@ -569,16 +569,17 @@ Account.prototype = {
+     // friendships/destroy will return the user in case of success.
+     // Error cases would return a non 200 HTTP code and not call our callback.
+     this.signAndSend("1.1/friendships/destroy.json", null,
+                      [["screen_name", aUserName]], function(aData, aXHR) {
+       let user = JSON.parse(aData);
+       if (!("id_str" in user))
+         return; // Unexpected response...
+       this._friends.delete(user.id_str);
++      this.timeline.removeParticipant(user.screen_name);
+       let date = aXHR.getResponseHeader("Date");
+       this.timeline.systemMessage(_("event.unfollow", user.screen_name), false,
+                                   new Date(date) / 1000);
+     }, null, this);
+   },
+   addBuddy: function(aTag, aName) {
+     this.follow(aName);
+   },
+@@ -775,19 +776,21 @@ Account.prototype = {
+         // Overwrite the existing _friends list (if any).
+         this._friends = new Set(msg.friends.map(aId => aId.toString()));
+       }
+       else if ("event" in msg) {
+         let user, event;
+         switch(msg.event) {
+           case "follow":
+             if (msg.source.screen_name == this.name) {
+-              this._friends.add(msg.target.id_str);
+               user = msg.target;
+               event = "follow";
++              this.setUserInfo(user);
++              this._friends.add(user.id_str);
++              this.timeline._ensureParticipantExists(user.screen_name);
+             }
+             else if (msg.target.screen_name == this.name) {
+               user = msg.source;
+               event = "followed";
+             }
+             if (user) {
+               this.setUserInfo(user);
+               this.timeline.systemMessage(_("event." + event, user.screen_name),
