@@ -1,0 +1,43 @@
+# vim: filetype=yaml sw=2
+version: '[% c("var/tormessenger_version") %]'
+output_dir: 'release'
+
+input_files:
+
+ - name: linux-x86_64
+   project: tor-messenger
+   target:
+     - tor-messenger
+     - linux-x86_64
+
+ - name: linux-i686
+   project: tor-messenger
+   target:
+     - tor-messenger
+     - linux-i686
+
+ - name: windows-i686
+   project: tor-messenger
+   target:
+     - tor-messenger
+     - windows-i686
+
+ - name: osx-x86_64
+   project: tor-messenger
+   target:
+     - tor-messenger
+     - osx-x86_64
+
+build: |
+  #!/bin/sh
+  set -e
+  export LC_ALL=C
+  destdir="[% dest_dir _ '/' _ c("version") %]"
+  mkdir -p "$destdir"
+  mv [% c('input_files_by_name/linux-x86_64') %] "$destdir"/tor-messenger-linux64-[% c("version") %]_en-US.tar.xz
+  mv [% c('input_files_by_name/linux-i686') %] "$destdir"/tor-messenger-linux32-[% c("version") %]_en-US.tar.xz
+  mv [% c('input_files_by_name/windows-i686') %] "$destdir"/tormessenger-install-[% c("version") %]_en-US.exe
+  mv [% c('input_files_by_name/osx-x86_64') %] "$destdir"/TorMessenger-[% c("version") %]-osx64_en-US.dmg
+  cd "$destdir"
+  sha256sum $(ls -1 *.exe *.tar.xz *.dmg | sort) > sha256sums.txt
+  cat sha256sums.txt

@@ -52,6 +52,10 @@ If you want to build only one architecture, you can run something like
 
 The resulting builds are stored in the out/tor-messenger directory.
 
+You can also run "make tor-messenger-release" to build it for all
+architectures, rename files to their final name and generate an
+sha256sums.txt file in the directory release/$version.
+
 
 Updating git and hg sources
 ---------------------------
