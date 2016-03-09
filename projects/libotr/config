@@ -1,5 +1,5 @@
 # vim: filetype=yaml sw=2
-version: 4.1.0
+version: 4.1.1
 filename: 'libotr-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 remote_docker: 1
 var:
@@ -25,7 +25,6 @@ input_files:
     file_gpg_id: 1
     sig_ext: asc
     gpg_keyring: libotr.gpg
-  - filename: bugs-otr-im-72.patch
   - project: libgcrypt
     name: libgcrypt
   - project: libgpg-error
