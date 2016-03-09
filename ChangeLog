@@ -1,4 +1,4 @@
-Tor Messenger 0.1.0b5 -- 
+Tor Messenger 0.1.0b5 -- March 09, 2016
  * All Platforms
    * Bug 13795: Remove SPI root certificate because Debian no longer ships it
    * Bug 18094: Remove references to torbutton from start-tor-messenger script
