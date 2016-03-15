@@ -1,16 +1,14 @@
 # HG changeset patch
 # User Arlo Breault <arlolra@gmail.com>
-# Date 1455420371 28800
-#      Sat Feb 13 19:26:11 2016 -0800
-# Branch THUNDERBIRD420b2_2015101216_RELBRANCH
-# Node ID f0960c2da89ebf290595a5f07be1d4fc373992bc
-# Parent  a23c99d5fced84533a9a764bb63bbd67d874f62c
+# Date 1454457891 28800
+# Node ID 4cfc2a04ebe02f53d789c7c27f8c3cd2a40b6483
+# Parent  19694424a48639d4f9ca458e3e891292e0c2ae1e
 Bug 1245325 - Better error reporting for failed outgoing messages. r=clokep
 
 diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.properties
 --- a/chat/locales/en-US/xmpp.properties
 +++ b/chat/locales/en-US/xmpp.properties
-@@ -61,18 +61,20 @@ conversation.error.changeTopicFailedNotA
+@@ -61,31 +61,33 @@ conversation.error.changeTopicFailedNotA
  #   %2$S is the text of the message that wasn't delivered.
  conversation.error.sendFailedAsNotInRoom=Message could not be sent to %1$S as you are no longer in the room: %2$S
  #   This is displayed in a conversation as an error message when the user sends
@@ -20,11 +18,24 @@ diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.proper
  conversation.error.sendFailedAsRecipientNotInRoom=Message could not be sent to %1$S as the recipient is no longer in the room: %2$S
  #   These are displayed in a conversation as a system error message.
 -conversation.error.remoteServerNotFound=Could not reach the recipient's server
--conversation.error.unknownError=Unknown error
 +conversation.error.remoteServerNotFound=Could not reach the recipient's server.
 +conversation.error.unknownSendError=An unknown error occurred on sending this message.
 +#   %S is the name of the message recipient.
 +conversation.error.sendServiceUnavailable=It is not possible to send messages to %S at this time.
+ #   %S is the nick of participant that is not in room.
+ conversation.error.nickNotInRoom=%S is not in the room.
+ conversation.error.banCommandAnonymousRoom=You can't ban participants from anonymous rooms. Try /kick instead.
+ conversation.error.banKickCommandNotAllowed=You don't have the required privileges to remove this participant from the room.
+ conversation.error.banKickCommandConflict=Sorry, you can't remove yourself from the room.
+ conversation.error.changeNickFailedConflict=Could not change your nick to %S as this nick is already in use.
+ conversation.error.changeNickFailedNotAcceptable=Could not change your nick to %S as nicks are locked down in this room.
+ conversation.error.inviteFailedForbidden=You don't have the required privileges to invite users to this room.
+ #   %S is the jid of user that is invited.
+ conversation.error.failedJIDNotFound=Could not reach %S.
+ #   %S is the jid that is invalid.
+ conversation.error.invalidJID=%S is an invalid jid (Jabber identifiers must be of the form user@domain).
+ conversation.error.commandFailedNotInRoom=You have to rejoin the room to be able to use this command.
+-conversation.error.unknownError=Unknown error
  
  # LOCALIZATION NOTE (tooltip.*):
  #   These are the titles of lines of information that will appear in
@@ -36,7 +47,7 @@ diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.proper
 diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
 --- a/chat/protocols/xmpp/xmpp.jsm
 +++ b/chat/protocols/xmpp/xmpp.jsm
-@@ -479,21 +479,28 @@ const XMPPConversationPrototype = {
+@@ -674,21 +674,28 @@ var XMPPConversationPrototype = {
      this._targetResource = this._account._parseJID(from).resource;
      let flags = {};
      let error = this._account.parseError(aStanza);
