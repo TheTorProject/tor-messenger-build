@@ -1,82 +1,16 @@
 # HG changeset patch
 # User Arlo Breault <arlolra@gmail.com>
-# Date 1456281485 28800
-#      Tue Feb 23 18:38:05 2016 -0800
-# Branch THUNDERBIRD420b2_2015101216_RELBRANCH
-# Node ID 9d547deb66802e3068767b5df2e687f6a56c5099
-# Parent  a23c99d5fced84533a9a764bb63bbd67d874f62c
-Update twitter.js to HEAD to ease applying dm patch
+# Date 1458088842 25200
+#      Tue Mar 15 17:40:42 2016 -0700
+# Branch THUNDERBIRD450b2_2016021821_RELBRANCH
+# Node ID bdb92c8d38312d083b13dde6bc6ef405b410ed44
+# Parent  3711adcdfdd5439ff9d73e13eefe73193f1e6f95
+Changes to twitter.js upstream
 
 diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.js
 --- a/chat/protocols/twitter/twitter.js
 +++ b/chat/protocols/twitter/twitter.js
-@@ -1,35 +1,48 @@
- /* This Source Code Form is subject to the terms of the Mozilla Public
-  * License, v. 2.0. If a copy of the MPL was not distributed with this
-  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- 
--const {classes: Cc, interfaces: Ci, results: Cr, utils: Cu} = Components;
-+var {classes: Cc, interfaces: Ci, results: Cr, utils: Cu} = Components;
- 
- Cu.import("resource://gre/modules/Http.jsm");
- Cu.import("resource:///modules/imServices.jsm");
- Cu.import("resource:///modules/imXPCOMUtils.jsm");
- Cu.import("resource:///modules/jsProtoHelper.jsm");
- Cu.import("resource:///modules/twitter-text.jsm");
- 
--const NS_PREFBRANCH_PREFCHANGE_TOPIC_ID = "nsPref:changed";
--const kMaxMessageLength = 140;
-+var NS_PREFBRANCH_PREFCHANGE_TOPIC_ID = "nsPref:changed";
-+var kMaxMessageLength = 140;
- 
--XPCOMUtils.defineLazyGetter(this, "_", function()
-+XPCOMUtils.defineLazyGetter(this, "_", () =>
-   l10nHelper("chrome://chat/locale/twitter.properties")
- );
--XPCOMUtils.defineLazyGetter(this, "_lang", function()
-+XPCOMUtils.defineLazyGetter(this, "_lang", () =>
-   l10nHelper("chrome://global/locale/languageNames.properties")
- );
- initLogModule("twitter", this);
- 
--function ChatBuddy(aName) {
-+function ChatBuddy(aName, aAccount) {
-   this._name = aName;
-+  this._account = aAccount;
- }
--ChatBuddy.prototype = GenericConvChatBuddyPrototype;
-+ChatBuddy.prototype = {
-+  __proto__: GenericConvChatBuddyPrototype,
-+  get buddyIconFilename() {
-+    let userInfo = this._account._userInfo.get(this.name);
-+    if (userInfo)
-+      return userInfo.profile_image_url;
-+    return undefined;
-+  },
-+  set buddyIconFilename(aName) {
-+    // Prevent accidental removal of the getter.
-+    throw("Don't set chatBuddy.buddyIconFilename directly for Twitter.");
-+  }
-+}
- 
- function Tweet(aTweet, aWho, aMessage, aObject)
- {
-   this._tweet = aTweet;
-   this._init(aWho, aMessage, aObject);
- }
- Tweet.prototype = {
-   __proto__: GenericMessagePrototype,
-@@ -102,26 +115,30 @@ Tweet.prototype = {
- function Action(aLabel, aAction, aTweet)
- {
-   this.label = aLabel;
-   this._action = aAction;
-   this._tweet = aTweet;
- }
- Action.prototype = {
-   __proto__: ClassInfo("prplIMessageAction", "generic message action object"),
--  get run() this._action.bind(this._tweet)
-+  get run() { return this._action.bind(this._tweet); }
+@@ -124,17 +124,21 @@ Action.prototype = {
  };
  
  function Conversation(aAccount)
@@ -99,109 +33,14 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      let userInfo = aAccount._userInfo.get(aAccount.name);
      if ("description" in userInfo)
        this.setTopic(userInfo.description, aAccount.name, true);
-@@ -137,24 +154,24 @@ Conversation.prototype = {
-   startReply: function(aTweet) {
-     this.inReplyToStatusId = aTweet.id_str;
-     let entities = aTweet.entities;
- 
-     // Twitter replies go to all the users mentioned in the tweet.
-     let nicks = [aTweet.user.screen_name];
-     if ("user_mentions" in entities && Array.isArray(entities.user_mentions)) {
-       nicks = nicks.concat(entities.user_mentions
--                                   .map(function(um) um.screen_name));
-+                                   .map(um => um.screen_name));
-     }
-     // Ignore duplicates and the user's nick.
-     let prompt =
-       nicks.filter(function(aNick, aPos) {
-              return nicks.indexOf(aNick) == aPos && aNick != this._account.name;
-            }, this)
--           .map(function(aNick) "@" + aNick)
-+           .map(aNick => "@" + aNick)
-            .join(" ") + " ";
- 
-     this.notifyObservers(null, "replying-to-prompt", prompt);
-     this.notifyObservers(null, "status-text-changed",
-                          _("replyingToStatusText", aTweet.text));
-   },
-   reTweet: function(aTweet) {
-     this._account.reTweet(aTweet, this.onSentCallback,
-@@ -232,17 +249,17 @@ Conversation.prototype = {
-       let offset = text.indexOf(": ") + 2;
-       text = text.slice(0, offset) + retweet.text;
- 
-       // Keep any entities that refer to the prefix (we can refer directly to
-       // aTweet for these since they are not edited).
-       if ("entities" in aTweet) {
-         for (let type in aTweet.entities) {
-           let filteredEntities =
--            aTweet.entities[type].filter(function(e) e.indices[0] < offset);
-+            aTweet.entities[type].filter(e => e.indices[0] < offset);
-           if (filteredEntities.length)
-             entities[type] = filteredEntities;
-         }
-       }
- 
-       // Add the entities from the retweet (a copy of these must be made since
-       // they will be edited and we do not wish to change aTweet).
-       if ("entities" in retweet) {
-@@ -250,17 +267,17 @@ Conversation.prototype = {
-           if (!(type in entities))
-             entities[type] = [];
- 
-           // Append the entities from the original status.
-           entities[type] = entities[type].concat(
-             retweet.entities[type].map(function(aEntity) {
-               let entity = Object.create(aEntity);
-               // Add the offset to the indices to account for the prefix.
--              entity.indices = entity.indices.map(function(i) i + offset);
-+              entity.indices = entity.indices.map(i => i + offset);
-               return entity;
-             })
-           );
-         }
-       }
-     } else {
-       // For non-retweets, we just want to use the entities that are given.
-       if ("entities" in aTweet)
-@@ -275,42 +292,43 @@ Conversation.prototype = {
-        *  - str: the string that should be replaced inside the tweet,
-        *  - href: the url (href attribute) of the created link tag,
-        *  - [optional] text: the text to display for the link,
-        *     The original string (str) will be used if this is not set.
-        *  - [optional] title: the title attribute for the link.
-        */
-       let entArray = [];
-       if ("hashtags" in entities && Array.isArray(entities.hashtags)) {
--        entArray = entArray.concat(entities.hashtags.map(function(h) ({
-+        entArray = entArray.concat(entities.hashtags.map(h => ({
-           start: h.indices[0],
-           end: h.indices[1],
-           str: "#" + h.text,
-           href: "https://twitter.com/#!/search?q=%23" + h.text})));
-       }
-       if ("urls" in entities && Array.isArray(entities.urls)) {
--        entArray = entArray.concat(entities.urls.map(function(u) ({
-+        entArray = entArray.concat(entities.urls.map(u => ({
-           start: u.indices[0],
-           end: u.indices[1],
-           str: u.url,
-           text: u.display_url || u.url,
-           href: u.expanded_url || u.url})));
-       }
-       if ("user_mentions" in entities &&
-           Array.isArray(entities.user_mentions)) {
--        entArray = entArray.concat(entities.user_mentions.map(function(um) ({
-+        entArray = entArray.concat(entities.user_mentions.map(um => ({
-           start: um.indices[0],
+@@ -314,17 +318,17 @@ Conversation.prototype = {
            end: um.indices[1],
            str: "@" + um.screen_name,
-+          text: '@<span class="ib-person">' + um.screen_name + "</span>",
+           text: '@<span class="ib-person">' + um.screen_name + "</span>",
            title: um.name,
            href: "https://twitter.com/" + um.screen_name})));
        }
--      entArray.sort(function(a, b) a.start - b.start);
-+      entArray.sort((a, b) => a.start - b.start);
+       entArray.sort((a, b) => a.start - b.start);
        let offset = 0;
 -      for each (let entity in entArray) {
 +      for (let entity of entArray) {
@@ -213,100 +52,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
          if (str.toLowerCase() != entity.str.toLowerCase())
            continue;
  
-@@ -332,36 +350,38 @@ Conversation.prototype = {
-     let text = this.parseTweet(aTweet);
- 
-     let flags =
-       name == this._account.name ? {outgoing: true} : {incoming: true};
-     flags.time = Math.round(new Date(aTweet.created_at) / 1000);
-     flags._iconURL = aTweet.user.profile_image_url;
-     if (aTweet.delayed)
-       flags.delayed = true;
--    if (text.includes("@" + this.nick))
-+    if (aTweet.entities && aTweet.entities.user_mentions &&
-+        Array.isArray(aTweet.entities.user_mentions) &&
-+        aTweet.entities.user_mentions.some(mention => mention.screen_name == this.nick))
-       flags.containsNick = true;
- 
-     (new Tweet(aTweet, name, text, flags)).conversation = this;
-   },
-   _ensureParticipantExists: function(aNick) {
-     if (this._participants.has(aNick))
-       return;
- 
--    let chatBuddy = new ChatBuddy(aNick);
-+    let chatBuddy = new ChatBuddy(aNick, this._account);
-     this._participants.set(aNick, chatBuddy);
-     this.notifyObservers(new nsSimpleEnumerator([chatBuddy]),
-                          "chat-buddy-add");
-   },
--  get name() this.nick + " timeline",
--  get title() _("timeline", this.nick),
--  get nick() this._account.name,
-+  get name() { return this.nick + " timeline"; },
-+  get title() { return _("timeline", this.nick); },
-+  get nick() { return this._account.name; },
-   set nick(aNick) {},
--  get topicSettable() this.nick == this._account.name,
--  get topic() this._topic, // can't add a setter without redefining the getter
-+  get topicSettable() { return this.nick == this._account.name; },
-+  get topic() { return this._topic; }, // can't add a setter without redefining the getter
-   set topic(aTopic) {
-     if (this.topicSettable)
-       this._account.setUserDescription(aTopic);
-   }
- };
- 
- function Account(aProtocol, aImAccount)
- {
-@@ -371,17 +391,17 @@ function Account(aProtocol, aImAccount)
-   this._friends = new Set();
- }
- Account.prototype = {
-   __proto__: GenericAccountPrototype,
- 
-   // The correct normalization for twitter would be just toLowerCase().
-   // Unfortunately, for backwards compatibility we retain this normalization,
-   // which can cause edge cases for usernames with underscores.
--  normalize: function(aString) aString.replace(/[^a-z0-9]/gi, "").toLowerCase(),
-+  normalize: aString => aString.replace(/[^a-z0-9]/gi, "").toLowerCase(),
- 
-   consumerKey: Services.prefs.getCharPref("chat.twitter.consumerKey"),
-   consumerSecret: Services.prefs.getCharPref("chat.twitter.consumerSecret"),
-   completionURI: "http://oauthcallback.local/",
-   baseURI: "https://api.twitter.com/",
-   _lastMsgId: "",
- 
-   // Use this to keep track of the pending timeline requests. We attempt to fetch
-@@ -466,49 +486,49 @@ Account.prototype = {
- 
-     let dataParams = [];
-     let url = /^https?:/.test(aUrl) ? aUrl : this.baseURI + aUrl;
-     let urlSpec = url;
-     let queryIndex = url.indexOf("?");
-     if (queryIndex != -1) {
-       urlSpec = url.slice(0, queryIndex);
-       dataParams = url.slice(queryIndex + 1).split("&")
--                      .map(function(p) p.split("=").map(percentEncode));
-+                      .map(p => p.split("=").map(percentEncode));
-     }
-     let method = "GET";
-     if (aPOSTData) {
-       method = "POST";
-       aPOSTData.forEach(function (p) {
-         dataParams.push(p.map(percentEncode));
-       });
-     }
- 
-     let signatureKey = this.consumerSecret + "&" + this.tokenSecret;
-     let signatureBase =
-       method + "&" + encodeURIComponent(urlSpec) + "&" +
-       params.concat(dataParams)
--            .sort(function(a,b) (a[0] < b[0]) ? -1 : (a[0] > b[0]) ? 1 : 0)
--            .map(function(p) p.map(encodeURIComponent).join("%3D"))
-+            .sort((a, b) => (a[0] < b[0]) ? -1 : (a[0] > b[0]) ? 1 : 0)
-+            .map(p => p.map(encodeURIComponent).join("%3D"))
-             .join("%26");
+@@ -507,17 +511,17 @@ Account.prototype = {
  
      let keyFactory = Cc["@mozilla.org/security/keyobjectfactory;1"]
                       .getService(Ci.nsIKeyObjectFactory);
@@ -323,27 +69,15 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      params.push(["oauth_signature", encodeURIComponent(signature)]);
  
      let authorization =
--      "OAuth " + params.map(function (p) p[0] + "=\"" + p[1] + "\"").join(", ");
-+      "OAuth " + params.map(p => p[0] + "=\"" + p[1] + "\"").join(", ");
+       "OAuth " + params.map(p => p[0] + "=\"" + p[1] + "\"").join(", ");
  
-     let options = {
-       headers: (aHeaders || []).concat([["Authorization", authorization]]),
-       postData: aPOSTData,
-       onLoad: aOnLoad ? aOnLoad.bind(aThis) : null,
-       onError: aOnError ? aOnError.bind(aThis) : null,
-       logger: {log: this.LOG.bind(this),
-                debug: this.DEBUG.bind(this)}
-@@ -595,20 +615,20 @@ Account.prototype = {
-       getParams = "?q=" + trackQuery + lastMsgParam + "&count=100";
-       let url = "1.1/search/tweets.json" + getParams;
-       this._pendingRequests.push(
+@@ -615,17 +619,17 @@ Account.prototype = {
          this.signAndSend(url, null, null, this.onTimelineReceived,
                           this.onTimelineError, this, null));
      }
    },
  
--  get timeline() this._timeline || (this._timeline = new Conversation(this)),
-+  get timeline() { return this._timeline || (this._timeline = new Conversation(this)); },
+   get timeline() { return this._timeline || (this._timeline = new Conversation(this)); },
    displayMessages: function(aMessages) {
      let lastMsgId = this._lastMsgId;
 -    for each (let tweet in aMessages) {
@@ -356,45 +90,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
        // Compare the length of the ids first, and then the text.
        // This avoids converting tweet ids into rounded numbers.
        if (id.length > lastMsgId.length ||
-@@ -633,17 +653,17 @@ Account.prototype = {
- 
-   onTimelineReceived: function(aData, aRequest) {
-     this._timelineBuffer = this._timelineBuffer.concat(JSON.parse(aData));
-     this._doneWithTimelineRequest(aRequest);
-   },
- 
-   _doneWithTimelineRequest: function(aRequest) {
-     this._pendingRequests =
--      this._pendingRequests.filter(function (r) r !== aRequest);
-+      this._pendingRequests.filter(r => r !== aRequest);
- 
-     // If we are still waiting for more data, return early
-     if (this._pendingRequests.length != 0)
-       return;
- 
-     if (this._timelineAuthError >= 2) {
-       // 2 out of the 3 timeline requests are authenticated.
-       // With at least 2 '401 - Unauthorized' errors, we are sure
-@@ -678,17 +698,17 @@ Account.prototype = {
-     // Reset in case we get disconnected
-     delete this._timelineBuffer;
-     delete this._pendingRequests;
- 
-     // Open the streams to get the live data.
-     this.openStream();
-   },
- 
--  sortByDate: function(a, b)
-+  sortByDate: (a, b) =>
-     (new Date(a["created_at"])) - (new Date(b["created_at"])),
- 
-   _streamingRequest: null,
-   _pendingData: "",
-   openStream: function() {
-     let track = this.getString("track");
-     this._streamingRequest =
-       this.signAndSend("https://userstream.twitter.com/1.1/user.json", null,
-@@ -717,48 +737,48 @@ Account.prototype = {
+@@ -734,33 +738,33 @@ Account.prototype = {
      this.gotDisconnected(Ci.prplIAccount.ERROR_NETWORK_ERROR, "timeout");
    },
    onDataAvailable: function(aRequest) {
@@ -424,59 +120,15 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
 +        for (let userInfo of this._userInfo.values())
            userInfoIds.add(userInfo.id_str);
          let ids = msg.friends.filter(
--          function(aId) !userInfoIds.has(aId.toString()), this);
-+          aId => !userInfoIds.has(aId.toString()));
+           aId => !userInfoIds.has(aId.toString()));
  
          while (ids.length) {
            // Take the first 100 elements, turn them into a comma separated list.
            this.signAndSend("1.1/users/lookup.json", null,
                             [["user_id", ids.slice(0, 99).join(",")]],
-                            this.onLookupReceived, null, this);
-           // Remove the first 100 elements.
-           ids = ids.slice(100);
-         }
- 
-         // Overwrite the existing _friends list (if any).
--        this._friends = new Set(msg.friends.map(function(aId) aId.toString()));
-+        this._friends = new Set(msg.friends.map(aId => aId.toString()));
-       }
-       else if ("event" in msg) {
-         let user, event;
-         switch(msg.event) {
-           case "follow":
-             if (msg.source.screen_name == this.name) {
-               this._friends.add(msg.target.id_str);
-               user = msg.target;
-@@ -806,17 +826,17 @@ Account.prototype = {
-   },
-   requestAuthorization: function() {
-     this.reportConnecting(_("connection.requestAuth"));
-     let url = this.baseURI + "oauth/authorize?" +
-       "force_login=true&" + // ignore cookies
-       "screen_name=" + this.name + "&" + // prefill the user name input box
-       "oauth_token=" + this.token;
-     this._browserRequest = {
--      get promptText() _("authPrompt"),
-+      get promptText() { return _("authPrompt"); },
-       account: this,
-       url: url,
-       _active: true,
-       cancelled: function() {
-         if (!this._active)
-           return;
- 
-         this.account
-@@ -920,24 +940,24 @@ Account.prototype = {
- 
-     if (aAuthResult.screen_name.toLowerCase() != this.name.toLowerCase()) {
-       this.onError(_("connection.error.userMismatch"));
-       return false;
-     }
- 
-     this.LOG("Fixing the case of the account name: " +
+@@ -946,17 +950,17 @@ Account.prototype = {
               this.name + " -> " + aAuthResult.screen_name);
--    this.__defineGetter__("name", function() aAuthResult.screen_name);
-+    this.__defineGetter__("name", () => aAuthResult.screen_name);
+     this.__defineGetter__("name", () => aAuthResult.screen_name);
      return true;
    },
  
@@ -493,54 +145,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
        delete this._streamTimeout;
        // Remove the preference observer that is added when the user stream is
        // opened. (This needs to be removed even if an error occurs, in which
-@@ -1019,117 +1039,119 @@ Account.prototype = {
-       this.signAndSend("1.1/users/show.json?screen_name=" + aBuddyName, null,
-                        null, this.onRequestedInfoReceived, null, this);
-       return;
-     }
- 
-     // List of the names of the info to actually show in the tooltip and
-     // optionally a transform function to apply to the value.
-     // See https://dev.twitter.com/docs/api/1/get/users/show for the options.
--    let normalizeBool = function(isFollowing) _(isFollowing ? "yes" : "no");
-+    let normalizeBool = isFollowing => _(isFollowing ? "yes" : "no");
-     const kFields = {
-       name: null,
-       following: normalizeBool,
-       description: null,
-       url: null,
-       location: null,
-       lang: function(aLang) {
-         try {
-           return _lang(aLang);
-         }
-         catch(e) {
-           return aLang;
-         }
-       },
-       time_zone: null,
-       protected: normalizeBool,
--      created_at: function(aDate) (new Date(aDate)).toLocaleDateString(),
-+      created_at: aDate => (new Date(aDate)).toLocaleDateString(),
-       statuses_count: null,
-       friends_count: null,
-       followers_count: null,
-       listed_count: null
-     };
- 
-     let tooltipInfo = [];
-     for (let field in kFields) {
-       if (Object.prototype.hasOwnProperty.call(userInfo, field) &&
-           userInfo[field]) {
-         let value = userInfo[field];
-         if (kFields[field])
-           value = kFields[field](value);
-         tooltipInfo.push(new TooltipInfo(_("tooltip." + field), value));
-       }
-     }
-+    tooltipInfo.push(new TooltipInfo(null, userInfo.profile_image_url,
-+                                     Ci.prplITooltipInfo.icon));
- 
+@@ -1083,17 +1087,17 @@ Account.prototype = {
      Services.obs.notifyObservers(new nsSimpleEnumerator(tooltipInfo),
                                   "user-info-received", aBuddyName);
    },
@@ -559,152 +164,22 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    onConfigReceived: function(aData) {
      this.config = JSON.parse(aData);
    },
- 
-   // Allow us to reopen the timeline via the join chat menu.
--  get canJoinChat() true,
-+  get canJoinChat() { return true; },
-   joinChat: function(aComponents) {
-     // The 'timeline' getter opens a timeline conversation if none exists.
-     this.timeline;
-   }
- };
- 
- // Shortcut to get the JavaScript account object.
--function getAccount(aConv) aConv.wrappedJSObject._account;
-+function getAccount(aConv) { return aConv.wrappedJSObject._account; }
- 
- function TwitterProtocol() {
-   this.registerCommands();
- }
- TwitterProtocol.prototype = {
-   __proto__: GenericProtocolPrototype,
--  get normalizedName() "twitter",
--  get name() _("twitter.protocolName"),
--  get iconBaseURI() "chrome://prpl-twitter/skin/",
--  get noPassword() true,
-+  get normalizedName() { return "twitter"; },
-+  get name() { return _("twitter.protocolName"); },
-+  get iconBaseURI() { return "chrome://prpl-twitter/skin/"; },
-+  get noPassword() { return true; },
-   options: {
--    "track": {get label() _("options.track"), default: ""}
-+    "track": {get label() { return _("options.track"); }, default: ""}
-   },
-   // Replace the command name in the help string so translators do not attempt
-   // to translate it.
-   commands: [
-     {
-       name: "follow",
--      get helpString() _("command.follow", "follow"),
-+      get helpString() { return _("command.follow", "follow"); },
-       run: function(aMsg, aConv) {
-         aMsg = aMsg.trim();
-         if (!aMsg)
-           return false;
-         let account = getAccount(aConv);
-         aMsg.split(" ").forEach(account.follow, account);
-         return true;
-       }
-     },
-     {
-       name: "unfollow",
--      get helpString() _("command.unfollow", "unfollow"),
-+      get helpString() { return _("command.unfollow", "unfollow"); },
-       run: function(aMsg, aConv) {
-         aMsg = aMsg.trim();
-         if (!aMsg)
-           return false;
-         let account = getAccount(aConv);
-         aMsg.split(" ").forEach(account.stopFollowing, account);
-         return true;
-       }
-     }
-   ],
--  getAccount: function(aImAccount) new Account(this, aImAccount),
-+  getAccount: function(aImAccount) { return new Account(this, aImAccount); },
-   classID: Components.ID("{31082ff6-1de8-422b-ab60-ca0ac0b2af13}")
- };
- 
--const NSGetFactory = XPCOMUtils.generateNSGetFactory([TwitterProtocol]);
-+var NSGetFactory = XPCOMUtils.generateNSGetFactory([TwitterProtocol]);
 # HG changeset patch
 # User Arlo Breault <arlolra@gmail.com>
-# Date 1456343323 28800
-#      Wed Feb 24 11:48:43 2016 -0800
-# Branch THUNDERBIRD420b2_2015101216_RELBRANCH
-# Node ID 1302396bc5605fff3ba7b2b7a762db98630378fa
-# Parent  9d547deb66802e3068767b5df2e687f6a56c5099
-Bug 955642 - Handle Twitter direct messages (DMs)
+# Date 1458087696 25200
+#      Tue Mar 15 17:21:36 2016 -0700
+# Branch THUNDERBIRD450b2_2016021821_RELBRANCH
+# Node ID 6892b93f1644036c463fe8b6014e4601d58d1676
+# Parent  bdb92c8d38312d083b13dde6bc6ef405b410ed44
+Update twitter-text.jsm
 
-diff --git a/chat/components/src/imConversations.js b/chat/components/src/imConversations.js
---- a/chat/components/src/imConversations.js
-+++ b/chat/components/src/imConversations.js
-@@ -25,16 +25,17 @@ OutgoingMessage.prototype = {
-   action: false
- };
- 
- function imMessage(aPrplMessage) {
-   this.prplMessage = aPrplMessage;
- }
- imMessage.prototype = {
-   __proto__: ClassInfo(["imIMessage", "prplIMessage"], "IM Message"),
-+  get wrappedJSObject() { return this; },
-   cancelled: false,
-   color: "",
-   _displayMessage: null,
- 
-   get displayMessage() {
-     // Explicitly test for null so that blank messages don't fall back to
-     // the original. Especially problematic in encryption extensions like OTR.
-     return this._displayMessage !== null ?
-@@ -409,17 +410,18 @@ UIConversation.prototype = {
-     this._observers = this._observers.filter(function(o) o !== aObserver);
-   },
-   notifyObservers: function(aSubject, aTopic, aData) {
-     if (aTopic == "new-text") {
-       aSubject = new imMessage(aSubject);
-       this.notifyObservers(aSubject, "received-message");
-       if (aSubject.cancelled)
-         return;
--      aSubject.conversation.prepareForDisplaying(aSubject);
-+      if (!aSubject.system)
-+        aSubject.conversation.prepareForDisplaying(aSubject);
- 
-       this._messages.push(aSubject);
-       ++this._unreadMessageCount;
-       if (aSubject.incoming && !aSubject.system) {
-         ++this._unreadIncomingMessageCount;
-         if (!this.isChat || aSubject.containsNick)
-           ++this._unreadTargetedMessageCount;
-       }
-diff --git a/chat/modules/jsProtoHelper.jsm b/chat/modules/jsProtoHelper.jsm
---- a/chat/modules/jsProtoHelper.jsm
-+++ b/chat/modules/jsProtoHelper.jsm
-@@ -373,16 +373,17 @@ const GenericAccountBuddyPrototype = {
- // aUserName is required only if aBuddy is null, i.e., we are adding a buddy.
- function AccountBuddy(aAccount, aBuddy, aTag, aUserName) {
-   this._init(aAccount, aBuddy, aTag, aUserName);
- }
- AccountBuddy.prototype = GenericAccountBuddyPrototype;
- 
- const GenericMessagePrototype = {
-   __proto__: ClassInfo("prplIMessage", "generic message object"),
-+  get wrappedJSObject() { return this; },
- 
-   _lastId: 0,
-   _init: function (aWho, aMessage, aObject) {
-     this.id = ++GenericMessagePrototype._lastId;
-     this.time = Math.round(new Date() / 1000);
-     this.who = aWho;
-     this.message = aMessage;
-     this.originalMessage = aMessage;
 diff --git a/chat/protocols/twitter/twitter-text.jsm b/chat/protocols/twitter/twitter-text.jsm
 --- a/chat/protocols/twitter/twitter-text.jsm
 +++ b/chat/protocols/twitter/twitter-text.jsm
 @@ -14,17 +14,17 @@
   */
  
- const EXPORTED_SYMBOLS = ["twttr"];
+ this.EXPORTED_SYMBOLS = ["twttr"];
  
  var window = {};
  
@@ -1226,10 +701,81 @@ diff --git a/chat/protocols/twitter/twitter-text.jsm b/chat/protocols/twitter/tw
      } else {
        window.twttr = twttr;
      }
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1458087794 25200
+#      Tue Mar 15 17:23:14 2016 -0700
+# Branch THUNDERBIRD450b2_2016021821_RELBRANCH
+# Node ID 423fc04d0bbbf681f1f930d2f242fd2605a5e425
+# Parent  6892b93f1644036c463fe8b6014e4601d58d1676
+Bug 955642 - Handle Twitter direct messages (DMs)
+
+diff --git a/chat/components/src/imConversations.js b/chat/components/src/imConversations.js
+--- a/chat/components/src/imConversations.js
++++ b/chat/components/src/imConversations.js
+@@ -25,16 +25,17 @@ OutgoingMessage.prototype = {
+   action: false
+ };
+ 
+ function imMessage(aPrplMessage) {
+   this.prplMessage = aPrplMessage;
+ }
+ imMessage.prototype = {
+   __proto__: ClassInfo(["imIMessage", "prplIMessage"], "IM Message"),
++  get wrappedJSObject() { return this; },
+   cancelled: false,
+   color: "",
+   _displayMessage: null,
+ 
+   get displayMessage() {
+     // Explicitly test for null so that blank messages don't fall back to
+     // the original. Especially problematic in encryption extensions like OTR.
+     return this._displayMessage !== null ?
+@@ -409,17 +410,18 @@ UIConversation.prototype = {
+     this._observers = this._observers.filter(o => o !== aObserver);
+   },
+   notifyObservers: function(aSubject, aTopic, aData) {
+     if (aTopic == "new-text") {
+       aSubject = new imMessage(aSubject);
+       this.notifyObservers(aSubject, "received-message");
+       if (aSubject.cancelled)
+         return;
+-      aSubject.conversation.prepareForDisplaying(aSubject);
++      if (!aSubject.system)
++        aSubject.conversation.prepareForDisplaying(aSubject);
+ 
+       this._messages.push(aSubject);
+       ++this._unreadMessageCount;
+       if (aSubject.incoming && !aSubject.system) {
+         ++this._unreadIncomingMessageCount;
+         if (!this.isChat || aSubject.containsNick)
+           ++this._unreadTargetedMessageCount;
+       }
+diff --git a/chat/modules/jsProtoHelper.jsm b/chat/modules/jsProtoHelper.jsm
+--- a/chat/modules/jsProtoHelper.jsm
++++ b/chat/modules/jsProtoHelper.jsm
+@@ -376,16 +376,17 @@ var GenericAccountBuddyPrototype = {
+ // aUserName is required only if aBuddy is null, i.e., we are adding a buddy.
+ function AccountBuddy(aAccount, aBuddy, aTag, aUserName) {
+   this._init(aAccount, aBuddy, aTag, aUserName);
+ }
+ AccountBuddy.prototype = GenericAccountBuddyPrototype;
+ 
+ var GenericMessagePrototype = {
+   __proto__: ClassInfo("prplIMessage", "generic message object"),
++  get wrappedJSObject() { return this; },
+ 
+   _lastId: 0,
+   _init: function (aWho, aMessage, aObject) {
+     this.id = ++GenericMessagePrototype._lastId;
+     this.time = Math.round(new Date() / 1000);
+     this.who = aWho;
+     this.message = aMessage;
+     this.originalMessage = aMessage;
 diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.js
 --- a/chat/protocols/twitter/twitter.js
 +++ b/chat/protocols/twitter/twitter.js
-@@ -31,32 +31,41 @@ ChatBuddy.prototype = {
+@@ -31,32 +31,40 @@ ChatBuddy.prototype = {
      let userInfo = this._account._userInfo.get(this.name);
      if (userInfo)
        return userInfo.profile_image_url;
@@ -1258,7 +804,6 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      let actions = [];
  
 -    if (account.connected) {
-+    // TODO(arlolra): DirectMessageConversation actions.
 +    if (!this.conversation.isChat) {
 +      if (aCount)
 +        aCount.value = actions.length;
@@ -1273,7 +818,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
        if (this.incoming) {
          actions.push(
            new Action(_("action.retweet"), function() {
-@@ -118,17 +127,109 @@ function Action(aLabel, aAction, aTweet)
+@@ -118,17 +126,109 @@ function Action(aLabel, aAction, aTweet)
    this._action = aAction;
    this._tweet = aTweet;
  }
@@ -1384,7 +929,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    let entries = [];
    for (let [name, userInfo] of aAccount._userInfo) {
      entries.push([userInfo.id_str, name]);
-@@ -139,17 +240,17 @@ function Conversation(aAccount)
+@@ -139,17 +239,17 @@ function Conversation(aAccount)
  
    // If the user's info has already been received, update the timeline topic.
    if (aAccount._userInfo.has(aAccount.name)) {
@@ -1403,7 +948,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    inReplyToStatusId: null,
    startReply: function(aTweet) {
      this.inReplyToStatusId = aTweet.id_str;
-@@ -169,203 +270,66 @@ Conversation.prototype = {
+@@ -169,203 +269,66 @@ Conversation.prototype = {
             .map(aNick => "@" + aNick)
             .join(" ") + " ";
  
@@ -1632,7 +1177,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      let chatBuddy = new ChatBuddy(aNick, this._account);
      this._participants.set(aNick, chatBuddy);
      this.notifyObservers(new nsSimpleEnumerator([chatBuddy]),
-@@ -377,23 +341,60 @@ Conversation.prototype = {
+@@ -377,23 +340,60 @@ Conversation.prototype = {
    set nick(aNick) {},
    get topicSettable() { return this.nick == this._account.name; },
    get topic() { return this._topic; }, // can't add a setter without redefining the getter
@@ -1658,13 +1203,13 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
 +    }, this);
 +  },
 +  displayMessages: function(aMessages) {
-+    // let account = this._account;
++    let account = this._account;
 +    for (let tweet of aMessages) {
 +      if (!("sender" in tweet) || !("recipient" in tweet) ||
 +          !("text" in tweet) || !("id_str" in tweet))
 +        continue;
-+      // account.setUserInfo(tweet.sender);
-+      // account.setUserInfo(tweet.recipient);
++      account.setUserInfo(tweet.sender);
++      account.setUserInfo(tweet.recipient);
 +      this.displayTweet(tweet, tweet.sender);
 +    }
 +  },
@@ -1693,7 +1238,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    // Unfortunately, for backwards compatibility we retain this normalization,
    // which can cause edge cases for usernames with underscores.
    normalize: aString => aString.replace(/[^a-z0-9]/gi, "").toLowerCase(),
-@@ -554,16 +555,21 @@ Account.prototype = {
+@@ -554,16 +554,21 @@ Account.prototype = {
    reTweet: function(aTweet, aOnSent, aOnError, aThis) {
      let url = "1.1/statuses/retweet/" + aTweet.id_str + ".json";
      this.signAndSend(url, null, [], aOnSent, aOnError, aThis);
@@ -1715,7 +1260,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
    },
    stopFollowing: function(aUserName) {
      // friendships/destroy will return the user in case of success.
-@@ -615,39 +621,17 @@ Account.prototype = {
+@@ -616,39 +621,17 @@ Account.prototype = {
        getParams = "?q=" + trackQuery + lastMsgParam + "&count=100";
        let url = "1.1/search/tweets.json" + getParams;
        this._pendingRequests.push(
@@ -1756,7 +1301,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      this._doneWithTimelineRequest(aRequest);
    },
  
-@@ -685,17 +669,17 @@ Account.prototype = {
+@@ -686,17 +669,17 @@ Account.prototype = {
      this.reportConnected();
  
      // If the conversation already exists, notify it we are back online.
@@ -1775,7 +1320,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
      delete this._timelineBuffer;
      delete this._pendingRequests;
  
-@@ -747,18 +731,23 @@ Account.prototype = {
+@@ -748,18 +731,23 @@ Account.prototype = {
          continue;
        let msg;
        try {
@@ -1801,7 +1346,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
            userInfoIds.add(userInfo.id_str);
          let ids = msg.friends.filter(
            aId => !userInfoIds.has(aId.toString()));
-@@ -1099,16 +1088,29 @@ Account.prototype = {
+@@ -1102,16 +1090,29 @@ Account.prototype = {
      this.config = JSON.parse(aData);
    },
  
