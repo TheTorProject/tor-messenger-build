@@ -1,8 +1,7 @@
 diff --git a/chat/protocols/irc/ircCTCP.jsm b/chat/protocols/irc/ircCTCP.jsm
-index 5722479..4c2d5bf 100644
 --- a/chat/protocols/irc/ircCTCP.jsm
 +++ b/chat/protocols/irc/ircCTCP.jsm
-@@ -167,19 +167,7 @@ var ctcpBase = {
+@@ -167,19 +167,7 @@
      },
  
      // Used to measure the delay of the IRC network between clients.
