@@ -1,7 +1,7 @@
 diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.cpp
 --- a/dom/plugins/base/nsPluginHost.cpp
 +++ b/dom/plugins/base/nsPluginHost.cpp
-@@ -1834,6 +1834,26 @@
+@@ -2085,6 +2085,26 @@
    }
  }
  
@@ -28,7 +28,7 @@ diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.c
  typedef NS_NPAPIPLUGIN_CALLBACK(char *, NP_GETMIMEDESCRIPTION)(void);
  
  nsresult nsPluginHost::ScanPluginsDirectory(nsIFile *pluginsDir,
-@@ -1943,6 +1963,10 @@
+@@ -2194,6 +2214,10 @@
        continue;
      }
  
@@ -42,7 +42,7 @@ diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.c
 diff --git a/dom/plugins/base/nsPluginHost.h b/dom/plugins/base/nsPluginHost.h
 --- a/dom/plugins/base/nsPluginHost.h
 +++ b/dom/plugins/base/nsPluginHost.h
-@@ -304,6 +304,8 @@
+@@ -334,6 +334,8 @@
    // Loads all cached plugins info into mCachedPlugins
    nsresult ReadPluginInfo();
  
