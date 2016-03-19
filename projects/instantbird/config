@@ -59,11 +59,9 @@ input_files:
   - filename: irc-default-server.patch
   - filename: top-protocols.patch
   - filename: disable-links.patch
-  - filename: disable-fb.patch
   - filename: account-picture.patch
   - filename: show-traffic-tor.patch
   - filename: hide-get-protocols.patch
-  - filename: theme-extension-update.patch
   - filename: ctcp-time.patch
   - filename: ctcp-ping.patch
   - filename: xmpp-inband-registration.patch
@@ -79,9 +77,7 @@ input_files:
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
   - filename: log-preferences-xul.patch
-  - filename: ifdef-performance-toolkit-xpt.patch
   - filename: 8ea23862252b-remove__DATE__and__TIME__.nsspatch
-  - filename: Remove-support-for-pre-ANSI-C-compilers.nsspatch
   - filename: themes-remove-links.patch
   - filename: branding/blistWindow.png
   - filename: branding/blistWindow16.png
@@ -106,8 +102,6 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: cert_override.txt
     enable: '[% c("var/osx") %]'
-  - filename: trac-16476.patch
-    enable: '[% c("var/osx") %]'
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
   - filename: gmploader-sandbox.mozpatch
@@ -117,10 +111,6 @@ input_files:
   - filename: 0002-Revert-Bug-1170522-expose-whether-or-not-we-re-in-ta.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: 0003-Revert-Bug-1192573-Require-tablet-mode-Win10-to-show.mozpatch
-    enable: '[% c("var/windows") %]'
-  - filename: bug-1197282-include-atomic-in-videodecoder.mozpatch
-    enable: '[% c("var/windows") %]'
-  - filename: 0001-Bug-1192248-Fixed-WinIMEHandler.cpp-cross-compilatio.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: 0001-Bug-1197281-Use-MOZ_FIND_WINSDK_VERSION-for-MOZ_WINS.mozpatch
     enable: '[% c("var/windows") %]'
