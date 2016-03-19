@@ -4,7 +4,7 @@ diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
 @@ -31,7 +31,7 @@
  
    usernameSplits: [
-     {get label() _("options.domain"), separator: "@",
+     {get label() { return _("options.domain"); }, separator: "@",
 -     defaultValue: "jabber.org", reverse: true}
 +     defaultValue: "", reverse: true}
    ],
