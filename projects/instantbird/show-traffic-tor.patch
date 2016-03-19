@@ -1,5 +1,4 @@
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index 5fa5b82..46447ff 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -39,6 +39,8 @@
@@ -12,7 +11,6 @@ index 5fa5b82..46447ff 100644
  
    <wizardpage id="accountprotocol" pageid="accountprotocol" next="accountusername"
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
-index 43d0f19..5492985 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 @@ -6,6 +6,7 @@
