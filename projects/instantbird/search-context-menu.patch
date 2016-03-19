@@ -1,12 +1,7 @@
 diff --git a/im/content/nsContextMenu.js b/im/content/nsContextMenu.js
 --- a/im/content/nsContextMenu.js
 +++ b/im/content/nsContextMenu.js
-@@ -462,33 +462,17 @@ nsContextMenu.prototype = {
-     var selectedText = getBrowserSelection(16);
- 
-     if (!selectedText)
-       return false;
- 
+@@ -468,23 +468,7 @@
      if (selectedText.length > 15)
        selectedText = selectedText.substr(0,15) + this.ellipsis;
  
@@ -31,8 +26,3 @@ diff --git a/im/content/nsContextMenu.js b/im/content/nsContextMenu.js
    },
  
    // Returns true if anything is selected.
-   isContentSelection: function() {
-     return !document.commandDispatcher.focusedWindow.getSelection().isCollapsed;
-   }
- };
- 
