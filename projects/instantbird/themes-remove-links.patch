@@ -35,7 +35,7 @@ diff --git a/im/content/preferences/themes.xul b/im/content/preferences/themes.x
            </hbox>
            <separator class="thin"/>
            <label value="&messageStylePreview.label;"/>
-@@ -116,8 +114,6 @@
+@@ -115,8 +113,6 @@
                </menupopup>
              </menulist>
              <separator orient="vertical" class="thin"/>
