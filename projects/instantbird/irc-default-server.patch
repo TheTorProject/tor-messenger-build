@@ -1,10 +1,10 @@
 diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
 --- a/chat/protocols/irc/irc.js
 +++ b/chat/protocols/irc/irc.js
-@@ -1959,7 +1959,7 @@
+@@ -1931,7 +1931,7 @@
  
    usernameSplits: [
-     {get label() _("options.server"), separator: "@",
+     {get label() { return _("options.server"); }, separator: "@",
 -     defaultValue: "chat.freenode.net", reverse: true}
 +     defaultValue: "", reverse: true}
    ],
