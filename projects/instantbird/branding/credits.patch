@@ -167,7 +167,7 @@ diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
 +          <separator/>
 +          <label id="tmLabel" value="&tmText;" />
 +          <label id="imLabel" value="&imText;" />
-+ 	</vbox>
++ 	    </vbox>
          <description id="copyright" flex="1">&copyrightText2;</description>
          <separator/>
 -        <textbox id="userAgentField" readonly="true" class="plain"
@@ -194,8 +194,8 @@ diff --git a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd b/im/locales/en
  <!ENTITY geckoVersion           "Gecko">
  <!ENTITY libpurpleVersion       "libpurple">
 +<!ENTITY ibVersion              "Nightly">
- <!-- Use the &copyrightYear; entity to place the current year. -->
--<!ENTITY copyrightText2         "&#169;2007-&copyrightYear; Contributors. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
 +<!ENTITY tmText                 "Version &tmVersion;">
 +<!ENTITY imText                 "(Based on Instantbird IM &ibVersion;)">
+ <!-- Use the &copyrightYear; entity to place the current year. -->
+-<!ENTITY copyrightText2         "&#169;2007-&copyrightYear; Contributors. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
 +<!ENTITY copyrightText2         "&#169;&copyrightYear; The Tor Project, Inc. This program is free software; you can redistribute it and/or modify it under the terms of the GNU GPL license version 2.0 or later.">
