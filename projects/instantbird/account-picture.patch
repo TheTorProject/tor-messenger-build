@@ -1,12 +1,7 @@
 diff --git a/im/content/blist.xul b/im/content/blist.xul
 --- a/im/content/blist.xul
 +++ b/im/content/blist.xul
-@@ -109,18 +109,17 @@
-     </menupopup>
-   </popupset>
- 
-   <toolbox id="mainToolbox">
-     <toolbar id="statusArea">
+@@ -114,8 +114,7 @@
        <stack id="statusImageStack">
          <!-- The box around the user icon is a workaround for bug 955673. -->
          <box id="userIconHolder">
@@ -16,8 +11,3 @@ diff --git a/im/content/blist.xul b/im/content/blist.xul
          </box>
          <panel id="changeUserIconPanel"
                 type="arrow" align="center"
-                onpopupshowing="buddyList.updateUserIconPanelItems();"
-                onpopuphiding="buddyList.stopWebcamStream();">
-           <deck id="userIconPanel">
-             <vbox class="userIconPanelMenu">
-               <stack id="userIconPanelStack" flex="1">
