@@ -9,12 +9,7 @@ trac 16489 - autologin
 diff --git a/chat/components/src/imAccounts.js b/chat/components/src/imAccounts.js
 --- a/chat/components/src/imAccounts.js
 +++ b/chat/components/src/imAccounts.js
-@@ -583,17 +583,17 @@ imAccount.prototype = {
-     if (aException.result != Components.results.NS_ERROR_ABORT)
-       throw aException;
- 
-     gUserCanceledMasterPasswordPrompt = true;
-     executeSoon(function () { gUserCanceledMasterPasswordPrompt = false; });
+@@ -588,7 +588,7 @@
    },
  
    get autoLogin() {
@@ -23,20 +18,10 @@ diff --git a/chat/components/src/imAccounts.js b/chat/components/src/imAccounts.
      try {
        autoLogin = this.prefBranch.getBoolPref(kPrefAccountAutoLogin);
      } catch (e) { }
-     return autoLogin;
-   },
-   set autoLogin(val) {
-     this.prefBranch.setBoolPref(kPrefAccountAutoLogin, val);
-     SavePrefTimer.initTimer();
 diff --git a/im/content/account.xml b/im/content/account.xml
 --- a/im/content/account.xml
 +++ b/im/content/account.xml
-@@ -36,20 +36,16 @@
-             <xul:description class="error" anonid="error"/>
-             <xul:description class="error" anonid="reconnect"/>
-             <xul:label class="addException text-link"
-                        onclick="gAccountManager.addException()"
-                        value="&certmgr.addException.label;"
+@@ -41,10 +41,6 @@
                         accesskey="&certmgr.addException.accesskey;"/>
              <xul:spacer flex="1"/>
            </xul:vbox>
@@ -47,20 +32,10 @@ diff --git a/im/content/account.xml b/im/content/account.xml
          </xul:hbox>
          <xul:hbox flex="1" class="account-buttons" anonid="buttons"
                    xbl:inherits="autologin"/>
-       </xul:vbox>
-     </content>
-     <implementation>
-       <method name="build">
-         <parameter name="aAccount"/>
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
-@@ -430,32 +430,23 @@ var accountWizard = {
-       case opt.typeString:
-       case opt.typeList:
-         acc.setString(option.name, option.value);
-         break;
-       default:
+@@ -442,22 +442,13 @@
          throw "unknown type";
        }
      }
@@ -84,20 +59,10 @@ diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
      if (window.opener) {
        let am = window.opener.gAccountManager;
        if (am)
-         am.selectAccount(acc.id);
-     }
- 
-     return true;
-   },
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
-@@ -132,13 +132,11 @@
-     <separator/>
-     <grid id="summarygrid" flex="1">
-       <columns>
-         <column/>
-         <column flex="1"/>
+@@ -137,8 +137,6 @@
        </columns>
        <rows id="summaryRows"/>
      </grid>
@@ -109,12 +74,7 @@ diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
 diff --git a/im/content/preferences/main.xul b/im/content/preferences/main.xul
 --- a/im/content/preferences/main.xul
 +++ b/im/content/preferences/main.xul
-@@ -15,46 +15,28 @@
- <overlay id="MainPaneOverlay"
-          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
- 
-   <prefpane id="paneMain" onpaneload="gMainPane.init();">
- 
+@@ -20,7 +20,6 @@
      <script type="application/javascript" src="chrome://instantbird/content/preferences/main.js"/>
  
      <preferences id="mainPreferences">
@@ -122,12 +82,7 @@ diff --git a/im/content/preferences/main.xul b/im/content/preferences/main.xul
        <preference id="messenger.options.playSounds.blist"   name="messenger.options.playSounds.blist"   type="bool"/>
        <preference id="messenger.options.playSounds.message" name="messenger.options.playSounds.message" type="bool"/>
        <preference id="messenger.options.getAttentionOnNewMessages" name="messenger.options.getAttentionOnNewMessages" type="bool"/>
- #ifdef XP_MACOSX
-       <preference id="messenger.options.showUnreadCountInDock" name="messenger.options.showUnreadCountInDock" type="bool"/>
- #else
-       <preference id="extensions.mintrayr.alwaysShowTrayIcon" name="extensions.mintrayr.alwaysShowTrayIcon" type="bool"/>
-       <preference id="extensions.mintrayr.minimizeon" name="extensions.mintrayr.minimizeon" type="int"/>
- #endif
+@@ -33,23 +32,6 @@
        <preference id="messenger.options.notifyOfNewMessages" name="messenger.options.notifyOfNewMessages" type="bool"/>
      </preferences>
  
@@ -151,8 +106,3 @@ diff --git a/im/content/preferences/main.xul b/im/content/preferences/main.xul
      <groupbox id="accountsMgrGroup" orient="horizontal" align="center">
        <caption label="&accountsMgr.label;"/>
  
-       <description control="manageAccounts"
- #ifdef XP_WIN
-                    flex="1">&manageAccountsDescWin.label;</description>
- #else
-                    flex="1">&manageAccountsDescUnix2.label;</description>
