@@ -115,7 +115,7 @@ input_files:
   - filename: 0001-Bug-1197281-Use-MOZ_FIND_WINSDK_VERSION-for-MOZ_WINS.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
-  - filename: block-plugins.mozpatch
+  - filename: trac-16475.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
     enable: '[% c("var/osx") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
