@@ -1,3 +1,8 @@
+Tor Messenger 0.1.0b6
+ * All Platforms
+   * Use the THUNDERBIRD_45_0b3_RELEASE tag on mozilla-esr45
+   * Use the THUNDERBIRD_45_0b3_RELEASE tag on comm-esr45
+
 Tor Messenger 0.1.0b5 -- March 09, 2016
  * All Platforms
    * Bug 13795: Remove SPI root certificate because Debian no longer ships it
