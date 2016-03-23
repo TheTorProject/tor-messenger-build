@@ -111,8 +111,6 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: 0003-Revert-Bug-1192573-Require-tablet-mode-Win10-to-show.mozpatch
     enable: '[% c("var/windows") %]'
-  - filename: 0001-Bug-1197281-Use-MOZ_FIND_WINSDK_VERSION-for-MOZ_WINS.mozpatch
-    enable: '[% c("var/windows") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
   - filename: trac-16475.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
