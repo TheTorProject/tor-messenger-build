@@ -1,0 +1,22 @@
+From 65aeb7ca6d2b5f55acb35bb8eef3152b613faf1f Mon Sep 17 00:00:00 2001
+From: Jacek Caban <jacek@codeweavers.com>
+Date: Thu, 21 Jan 2016 13:40:07 +0100
+Subject: [PATCH] Bug 1167248 - Cross compilation fixup.
+
+---
+ js/src/jsmath.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/js/src/jsmath.cpp b/js/src/jsmath.cpp
+index 56ba1cf..3f4ddd9 100644
+--- a/js/src/jsmath.cpp
++++ b/js/src/jsmath.cpp
+@@ -44,7 +44,7 @@
+ // "Community Additions" comment on MSDN here:
+ // https://msdn.microsoft.com/en-us/library/windows/desktop/aa387694.aspx
+ # define SystemFunction036 NTAPI SystemFunction036
+-# include <NTSecAPI.h>
++# include <ntsecapi.h>
+ # undef SystemFunction036
+ #endif
+ 
