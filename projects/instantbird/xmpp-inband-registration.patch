@@ -172,7 +172,7 @@ diff --git a/im/content/jar.mn b/im/content/jar.mn
  *	content/instantbird/viewlog.xul
  	content/instantbird/viewlog.js
  	content/instantbird/viewlog.css
-+*	content/instantbird/xmppRegister.xul
++	content/instantbird/xmppRegister.xul
 +	content/instantbird/xmppRegister.js
  #ifdef XP_MACOSX
  *	content/instantbird/hiddenWindow.xul
