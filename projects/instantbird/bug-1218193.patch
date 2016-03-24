@@ -1,0 +1,31 @@
+
+# HG changeset patch
+# User Nihanth Subramanya <nhnt11@gmail.com>
+# Date 1456270075 28800
+# Node ID 07b10276713c5f9cd891ea6e5b944d985c3f2fc2
+# Parent  599fd18da6c144abcc9b7feec4ee30b92e9d7bfc
+Bug 1218193 - Fix tab strip background colour on OS X. r=aleth
+
+diff --git a/im/themes/tabbrowser-pinstripe/tabbrowser.css b/im/themes/tabbrowser-pinstripe/tabbrowser.css
+--- a/im/themes/tabbrowser-pinstripe/tabbrowser.css
++++ b/im/themes/tabbrowser-pinstripe/tabbrowser.css
+@@ -203,17 +203,17 @@ statusbarpanel#statusbar-display {
+ }
+ 
+ .tabbrowser-tab:-moz-lwtheme {
+   color: inherit;
+   text-shadow: inherit;
+ }
+ 
+ .tabbrowser-strip {
+-  -moz-appearance: -moz-mac-unified-toolbar;
++  -moz-appearance: toolbar;
+   height: 26px;
+   background-repeat: repeat-x;
+ }
+ 
+ .tabbrowser-strip:not(:-moz-lwtheme) {
+   background-color: -moz-mac-chrome-active;
+ }
+ 
+
