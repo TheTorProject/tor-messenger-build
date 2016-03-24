@@ -107,6 +107,8 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: gmploader-sandbox.mozpatch
     enable: '[% c("var/windows") %]'
+  - filename: bug-1240589.mozpatch
+    enable: '[% c("var/windows") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
   - filename: trac-16475.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch

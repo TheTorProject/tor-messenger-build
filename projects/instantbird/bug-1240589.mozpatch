@@ -1,0 +1,22 @@
+From 9e4a3887ed69bccc6186ef8765dfab690239f5fa Mon Sep 17 00:00:00 2001
+From: Jacek Caban <jacek@codeweavers.com>
+Date: Sat, 30 Jan 2016 17:31:37 +0100
+Subject: [PATCH] Bug 1240589 - Cross compilation fixup.
+
+---
+ ipc/chromium/src/base/rand_util_win.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ipc/chromium/src/base/rand_util_win.cc b/ipc/chromium/src/base/rand_util_win.cc
+index 2a4fb29..d998cb6 100644
+--- a/ipc/chromium/src/base/rand_util_win.cc
++++ b/ipc/chromium/src/base/rand_util_win.cc
+@@ -11,7 +11,7 @@
+ // "Community Additions" comment on MSDN here:
+ // http://msdn.microsoft.com/en-us/library/windows/desktop/aa387694.aspx
+ #define SystemFunction036 NTAPI SystemFunction036
+-#include <NTSecAPI.h>
++#include <ntsecapi.h>
+ #undef SystemFunction036
+ 
+ #include <algorithm>
