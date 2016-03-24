@@ -1,0 +1,66 @@
+diff --git a/widget/windows/WindowsUIUtils.cpp b/widget/windows/WindowsUIUtils.cpp
+--- a/widget/windows/WindowsUIUtils.cpp
++++ b/widget/windows/WindowsUIUtils.cpp
+@@ -15,16 +15,51 @@
+ #include "nsIAppShellService.h"
+ #include "nsAppShellCID.h"
+ #include "nsIXULWindow.h"
+ #include "mozilla/Services.h"
+ #include "mozilla/WindowsVersion.h"
+ #include "nsString.h"
+ #include "nsIWidget.h"
+ 
++#if defined(__MINGW64_VERSION_MAJOR)
++/* MinGW-w64 doesn't have support for this WRL stuff yet:
++   https://msdn.microsoft.com/en-us/library/hh438466(v=vs.110).aspx */
++
++WindowsUIUtils::WindowsUIUtils() :
++  mInTabletMode(eTabletModeUnknown)
++{
++}
++
++WindowsUIUtils::~WindowsUIUtils()
++{
++}
++
++/*
++ * Implement the nsISupports methods...
++ */
++NS_IMPL_ISUPPORTS(WindowsUIUtils,
++                  nsIWindowsUIUtils)
++
++NS_IMETHODIMP
++WindowsUIUtils::GetInTabletMode(bool* aResult)
++{
++  *aResult = false;
++  return NS_OK;
++}
++
++NS_IMETHODIMP
++WindowsUIUtils::UpdateTabletModeState()
++{
++  return NS_OK;
++}
++
++
++
++#else
+ #include <windows.ui.viewmanagement.h>
+ 
+ #pragma comment(lib, "runtimeobject.lib")
+ 
+ using namespace mozilla;
+ using namespace ABI::Windows::UI;
+ using namespace ABI::Windows::UI::ViewManagement;
+ using namespace Microsoft::WRL;
+@@ -167,8 +202,10 @@ WindowsUIUtils::UpdateTabletModeState()
+         }
+       }
+     }
+   }
+ 
+   return NS_OK;
+ }
+ 
++#endif /* defined(__MINGW64_VERSION_MAJOR) */
++
