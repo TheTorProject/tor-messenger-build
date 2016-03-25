@@ -1,0 +1,47 @@
+From dfb3f02c452b56bd22d7cdf2086b29e118fea688 Mon Sep 17 00:00:00 2001
+From: Georg Koppen <gk@torproject.org>
+Date: Wed, 10 Feb 2016 13:14:03 +0000
+Subject: [PATCH] Disabling view management for mingw-w64 builds
+
+
+diff --git a/widget/windows/WindowsUIUtils.cpp b/widget/windows/WindowsUIUtils.cpp
+index 85b2879..89be490 100644
+--- a/widget/windows/WindowsUIUtils.cpp
++++ b/widget/windows/WindowsUIUtils.cpp
+@@ -20,6 +20,8 @@
+ #include "nsString.h"
+ #include "nsIWidget.h"
+ 
++/* Disable in mingw-w64 Gecko builds. */
++#if 0
+ #include <windows.ui.viewmanagement.h>
+ 
+ #pragma comment(lib, "runtimeobject.lib")
+@@ -85,6 +87,8 @@ public:
+ };
+ #endif
+ 
++#endif
++
+ WindowsUIUtils::WindowsUIUtils() :
+   mInTabletMode(eTabletModeUnknown)
+ {
+@@ -113,6 +117,7 @@ WindowsUIUtils::GetInTabletMode(bool* aResult)
+ NS_IMETHODIMP
+ WindowsUIUtils::UpdateTabletModeState()
+ {
++#if 0
+   if (!IsWin10OrLater()) {
+     return NS_OK;
+   }
+@@ -168,6 +173,7 @@ WindowsUIUtils::UpdateTabletModeState()
+       }
+     }
+   }
++#endif
+ 
+   return NS_OK;
+ }
+-- 
+2.7.0
+

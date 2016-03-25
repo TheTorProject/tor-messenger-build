@@ -105,7 +105,7 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: fix-mingw-build.patch
     enable: '[% c("var/windows") %]'
-  - filename: 0013-MinGW-w64-Disable-TabletMode-stuff.mozpatch
+  - filename: trac-18290.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: gmploader-sandbox.mozpatch
     enable: '[% c("var/windows") %]'
