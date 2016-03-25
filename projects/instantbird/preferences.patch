@@ -103,7 +103,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // The breakpad report server to link to in about:crashes
  pref("breakpad.reportURL", "http://crash-stats.instantbird.com/report/index/");
-@@ -300,14 +300,68 @@
+@@ -300,14 +300,70 @@
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -157,6 +157,8 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +pref("messenger.status.awayWhenIdle", false);
 +pref("messenger.status.defaultIdleAwayMessage", "");
 +pref("messenger.status.reportIdle", false);
++// Do not send the message format (fonts, colors)
++pref("messenger.conversations.sendFormat", false);
 +// Disable text formatting (remove the tags)
 +pref("messenger.options.filterMode", 0);
 +// Disable typing notifications
