@@ -2,6 +2,7 @@ Tor Messenger 0.1.0b6
  * All Platforms
    * Use the THUNDERBIRD_45_0b3_RELEASE tag on mozilla-esr45
    * Use the THUNDERBIRD_45_0b3_RELEASE tag on comm-esr45
+   * Bug 18533: Disable sending fonts or colors as part of messages
    * ctypes-otr
      * GH 68: Don't close notification bar until verification succeeds
      * GH 71: Improve verifying from the fingerprint manager
