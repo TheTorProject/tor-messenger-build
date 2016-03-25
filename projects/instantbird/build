@@ -96,4 +96,4 @@ cd ..
 cp $rootdir/[% c('input_files_by_name/mozconfig') %] .mozconfig
 ./mozilla/mach build || ./mozilla/mach build
 ./mozilla/mach package
-mv obj-*/dist/*.[% c('var/archive_suffix') %] [% dest_dir _ '/' _ c('filename') %]
+mv obj-*/dist/instantbird-*.[% c('var/archive_suffix') %] [% dest_dir _ '/' _ c('filename') %]
