@@ -11,7 +11,7 @@ ac_add_options --enable-optimize
 
 ac_add_options --with-l10n-base=..
 
-# sandbox currently fail to build with mingw
+# sandbox currently fail to build with mingw, see trac 16010
 ac_add_options --disable-sandbox
 
 # ICU seems still to have cross-compiling issues:
