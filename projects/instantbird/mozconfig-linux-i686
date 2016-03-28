@@ -20,10 +20,6 @@ ac_add_options --host=i686-linux-gnu
 
 ac_add_options --with-branding=im/branding/messenger
 
-# Explicitly disable the sandbox as it doesn't actually work yet according
-# to this bugzilla comment and fails to build on Ubuntu 10.04:
-# https://bugzilla.mozilla.org/show_bug.cgi?id=742434#c18
-ac_add_options --disable-sandbox
 ac_add_options --disable-updater
 ac_add_options --disable-crashreporter
 ac_add_options --disable-webrtc
