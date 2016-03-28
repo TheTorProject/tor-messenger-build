@@ -103,11 +103,7 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: cert_override.txt
     enable: '[% c("var/osx") %]'
-  - filename: fix-mingw-build.patch
-    enable: '[% c("var/windows") %]'
   - filename: trac-18290.mozpatch
-    enable: '[% c("var/windows") %]'
-  - filename: gmploader-sandbox.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: bug-1240589.mozpatch
     enable: '[% c("var/windows") %]'
