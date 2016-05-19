@@ -1,7 +1,9 @@
 Tor Messenger 0.1.0b7 --
-* All Platforms
-  * Use the THUNDERBIRD_45_0_RELEASE tag on mozilla-esr45
-  * Use the THUNDERBIRD_45_0_RELEASE tag on comm-esr45
+ * All Platforms
+   * Use the THUNDERBIRD_45_0_RELEASE tag on mozilla-esr45
+   * Use the THUNDERBIRD_45_0_RELEASE tag on comm-esr45
+   * ctypes-otr
+     * GH 66: Provide functionality for adding verified fingerprints (patch by Vu Quoc Huy)
 
 Tor Messenger 0.1.0b6 -- April 06, 2016
  * All Platforms
