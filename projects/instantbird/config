@@ -110,6 +110,8 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: bug-1167248.mozpatch
     enable: '[% c("var/windows") %]'
+  - filename: bug-1263653.mozpatch
+    enable: '[% c("var/windows") %]'
   - filename: trac-18331.mozpatch
     enable: '[% c("var/osx") %]'
   - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
