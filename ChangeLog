@@ -1,7 +1,7 @@
 Tor Messenger 0.1.0b7 --
  * All Platforms
-   * Use the THUNDERBIRD_45_1_0_RELEASE tag on mozilla-esr45
-   * Use the THUNDERBIRD_45_1_0_RELEASE tag on comm-esr45
+   * Use the THUNDERBIRD_45_1_1_RELEASE tag on mozilla-esr45
+   * Use the THUNDERBIRD_45_1_1_RELEASE tag on comm-esr45
    * Bug 19053: Display plaintext in notifications
    * ctypes-otr
      * GH 66: Provide functionality for adding verified fingerprints (patch by Vu Quoc Huy)
