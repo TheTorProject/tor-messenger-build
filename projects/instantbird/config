@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 hg_url: https://hg.mozilla.org/releases/comm-esr45/
-hg_hash: THUNDERBIRD_45_1_1_RELEASE
+hg_hash: THUNDERBIRD_45_2_0_RELEASE
 filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %].[% c('var/archive_suffix') %]"
 remote_docker: 1
 var:
@@ -73,7 +73,6 @@ input_files:
   - filename: trac-17896.patch
   - filename: trac-17494.patch
   - filename: trac-13312.patch
-  - filename: trac-19053.patch
   - filename: version.patch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
@@ -109,8 +108,6 @@ input_files:
   - filename: bug-1240589.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: bug-1167248.mozpatch
-    enable: '[% c("var/windows") %]'
-  - filename: bug-1263653.mozpatch
     enable: '[% c("var/windows") %]'
   - filename: trac-18331.mozpatch
     enable: '[% c("var/osx") %]'
