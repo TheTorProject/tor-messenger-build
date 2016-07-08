@@ -130,15 +130,15 @@ Section "Tor Messenger" SecTBB
 
   SetOutPath "$INSTDIR"
   File /r "${TBBSOURCE}\*.*"
-  SetOutPath "$INSTDIR\Messenger"
-  CreateShortCut "$INSTDIR\Start Tor Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe"
+  SetOutPath "$INSTDIR\Browser"
+  CreateShortCut "$INSTDIR\Start Tor Messenger.lnk" "$INSTDIR\Browser\instantbird.exe"
 
 SectionEnd
 
 Function CreateShortcuts
 
-  CreateShortCut "$SMPROGRAMS\Start Tor Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe" 
-  CreateShortCut "$DESKTOP\Start Tor Messenger.lnk" "$INSTDIR\Messenger\instantbird.exe"
+  CreateShortCut "$SMPROGRAMS\Start Tor Messenger.lnk" "$INSTDIR\Browser\instantbird.exe" 
+  CreateShortCut "$DESKTOP\Start Tor Messenger.lnk" "$INSTDIR\Browser\instantbird.exe"
 
 FunctionEnd
 ;--------------------------------
