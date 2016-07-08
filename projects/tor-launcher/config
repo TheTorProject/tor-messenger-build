@@ -1,5 +1,5 @@
 # vim: filetype=yaml sw=2
-version: 0.2.8.5
+version: 0.2.7.7
 git_url: https://git.torproject.org/tor-launcher.git
 git_hash: '[% c("version") %]'
 gpg_keyring: gk.gpg
