@@ -238,7 +238,7 @@ fi
 cp start-tor-messenger.desktop ../
 sed -i -e "s,^Name=.*,Name=Tor Messenger,g" ../start-tor-messenger.desktop
 sed -i -e "s,^Icon=.*,Icon=$PWD/chrome/icons/default/default48.png,g" ../start-tor-messenger.desktop
-sed -i -e "s,^Exec=.*,Exec=sh -c '\"$PWD/start-tor-messenger\" --detach || ([ !  -x \"$PWD/start-tor-messenger\" ] \&\& \"\$(dirname \"\$*\")\"/Messenger/start-tor-messenger --detach)' dummy %k,g" ../start-tor-messenger.desktop
+sed -i -e "s,^Exec=.*,Exec=sh -c '\"$PWD/start-tor-messenger\" --detach || ([ !  -x \"$PWD/start-tor-messenger\" ] \&\& \"\$(dirname \"\$*\")\"/Browser/start-tor-messenger --detach)' dummy %k,g" ../start-tor-messenger.desktop
 
 if [ "$register_desktop_app" -eq 1 ]; then
 	mkdir -p "$HOME/.local/share/applications/"
@@ -263,14 +263,14 @@ HOME="${PWD}"
 export HOME
 
 SYSARCHITECTURE=$(getconf LONG_BIT)
-TORARCHITECTURE=$(expr "$(file extensions/tor-launcher@torproject.org/TorBrowser/Tor/tor)" : '.*ELF \([[:digit:]]*\)')
+TORARCHITECTURE=$(expr "$(file TorBrowser/Tor/tor)" : '.*ELF \([[:digit:]]*\)')
 
 if [ $SYSARCHITECTURE -ne $TORARCHITECTURE ]; then
    complain "Wrong architecture? 32-bit vs. 64-bit."
    exit 1
 fi
 
-LD_LIBRARY_PATH="${HOME}/lib/:${HOME}/extensions/tor-launcher@torproject.org/TorBrowser/Tor:${HOME}/extensions/ctypes-otr@tormessenger/chrome/content"
+LD_LIBRARY_PATH="${HOME}/TorBrowser/Tor/:${HOME}/TorBrowser/Data/Browser/profile.default/extensions/ctypes-otr@tormessenger/chrome/content"
 export LD_LIBRARY_PATH
 
 function setControlPortPasswd() {
@@ -310,14 +310,25 @@ EOF
 # TOR_CONTROL_PASSWD='"secret"'
 #
 # Yes, the variable MUST be double-quoted, then single-quoted, exactly as
-# shown. This is used by Tor Launcher to authenticate to Tor's ControlPort,
-# and is necessary for using TM with a system-installed Tor.
+# shown. This is used by TorButton and Tor Launcher to authenticate to Tor's
+# ControlPort, and is necessary for using TB with a system-installed Tor.
 #
 # Additionally, if using a system-installed Tor, the following about:config
 # options should be set (values in <> mean they are the value taken from your
 # torrc):
 #
 # SETTING NAME                            VALUE
+# extensions.torbutton.banned_ports       [...],<SocksPort>,<ControlPort>
+# extensions.torbutton.block_disk         false
+# extensions.torbutton.custom.socks_host  127.0.0.1
+# extensions.torbutton.custom.socks_port  <SocksPort>
+# extensions.torbutton.inserted_button    true
+# extensions.torbutton.launch_warning     false
+# extensions.torbutton.loglevel           2
+# extensions.torbutton.logmethod          0
+# extensions.torbutton.settings_method    custom
+# extensions.torbutton.socks_port         <SocksPort>
+# extensions.torbutton.use_privoxy        false
 # extensions.torlauncher.control_port      <ControlPort>
 # extensions.torlauncher.loglevel          2
 # extensions.torlauncher.logmethod         0
@@ -331,6 +342,10 @@ EOF
 # your password in the following line where the word “secret” is:
 setControlPortPasswd ${TOR_CONTROL_PASSWD:='"secret"'}
 
+# Set up custom bundled fonts. See fonts-conf(5).
+export FONTCONFIG_PATH="${HOME}/TorBrowser/Data/fontconfig"
+export FONTCONFIG_FILE="fonts.conf"
+
 cd "${HOME}"
 
 # We pass all additional command-line arguments we get to Instantbird.
@@ -340,22 +355,22 @@ cd "${HOME}"
 if [ "$show_usage" -eq 1 ]; then
     # Display Instantbird help, then our help
     TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
-        -profile TorMessenger/Data/Browser/profile.default --help 2>/dev/null
+        -profile TorBrowser/Data/Browser/profile.default --help 2>/dev/null
     tbb_usage
 elif [ "$detach" -eq 1 ] ; then
     TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
-       -profile TorMessenger/Data/Browser/profile.default "${@}" > "$logfile" 2>&1 </dev/null &
+       -profile TorBrowser/Data/Browser/profile.default "${@}" > "$logfile" 2>&1 </dev/null &
     disown "$!"
 elif [ "$log_output" -eq 1 -a "$show_output" -eq 1 ]; then
     TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
-        -profile TorMessenger/Data/Browser/profile.default "${@}" 2>&1 </dev/null | \
+        -profile TorBrowser/Data/Browser/profile.default "${@}" 2>&1 </dev/null | \
         tee "$logfile"
 elif [ "$show_output" -eq 1 ]; then
     TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
-        -profile TorMessenger/Data/Browser/profile.default "${@}" < /dev/null
+        -profile TorBrowser/Data/Browser/profile.default "${@}" < /dev/null
 else
     TOR_CONTROL_PASSWD=${TOR_CONTROL_PASSWD} ./instantbird --class "Tor Messenger" \
-        -profile TorMessenger/Data/Browser/profile.default "${@}" > "$logfile" 2>&1 </dev/null
+        -profile TorBrowser/Data/Browser/profile.default "${@}" > "$logfile" 2>&1 </dev/null
 fi
 
 exit $?
