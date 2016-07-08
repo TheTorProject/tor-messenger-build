@@ -1,19 +1,17 @@
-#!/usr/bin/env ./Messenger/execdesktop
+#!/usr/bin/env ./Browser/execdesktop
 #
 # This file is a self-modifying .desktop file that can be run from the shell.
 # It preserves arguments and environment for the start-tor-messenger script.
 #
-# Run './start-tor-messenger.desktop --help' to display the full set of
-# options.
+# Run './start-tor-messenger.desktop --help' to display the full set of options.
 #
-# When invoked from the shell, this file must always be in a Tor Messenger
-# root directory. When run from the file manager or desktop GUI, it is
-# relocatable.
+# When invoked from the shell, this file must always be in a Tor Messenger root
+# directory. When run from the file manager or desktop GUI, it is relocatable.
 #
 # After first invocation, it will update itself with the absolute path to the
 # current TBB location, to support relocation of this .desktop file for GUI
-# invocation. You can also add Tor Messenger to your desktop's application
-# menu by running './start-tor-messenger.desktop --register-app'
+# invocation. You can also add Tor Messenger to your desktop's application menu
+# by running './start-tor-messenger.desktop --register-app'
 #
 # If you use --register-app, and then relocate your TBB directory, Tor
 # Messenger will no longer launch from your desktop's app launcher/dock.
@@ -30,6 +28,7 @@ Name=Tor Messenger Setup
 GenericName=Instant Messenger
 Comment=Tor Messenger is +1 for privacy and -1 for mass surveillance
 Categories=Network;Chat;Security;
-Exec=sh -c '"$(dirname "$*")"/Messenger/start-tor-messenger --detach || ([ ! -x "$(dirname "$*")"/Messenger/start-tor-messenger ] && "$(dirname "$*")"/start-tor-messenger --detach)' dummy %k
-X-TorMessenger-ExecShell=./Messenger/start-tor-messenger --detach
+Exec=sh -c '"$(dirname "$*")"/Browser/start-tor-messenger --detach || ([ ! -x "$(dirname "$*")"/Browser/start-tor-messenger ] && "$(dirname "$*")"/start-tor-messenger --detach)' dummy %k
+X-TorMessenger-ExecShell=./Browser/start-tor-messenger --detach
 Icon=instant-messenger
+StartupWMClass=Tor Messenger
