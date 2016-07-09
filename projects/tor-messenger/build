@@ -11,25 +11,25 @@ rootdir=$(pwd)
 mkdir bundle
 [% IF c("var/windows") -%]
 7z x -y -obundle [% c('input_files_by_name/instantbird') %]
-mv bundle/instantbird bundle/Messenger
+mv bundle/instantbird bundle/Browser
 [% ELSE -%]
-mkdir bundle/Messenger
-tar xf [% c('input_files_by_name/instantbird') %] -C bundle/Messenger --strip 1
+mkdir bundle/Browser
+tar xf [% c('input_files_by_name/instantbird') %] -C bundle/Browser --strip 1
 [% END -%]
-find bundle/Messenger -exec touch -m -t $(date -d @[% c('timestamp') %] +%Y%m%d%H%M) {} \;
+find bundle/Browser -exec touch -m -t $(date -d @[% c('timestamp') %] +%Y%m%d%H%M) {} \;
 
 [% IF c("var/linux") -%]
 # remove non reproducible files (FIPS-140)
 # Tor Browser removes them too
-rm -f bundle/Messenger/*.chk
+rm -f bundle/Browser/*.chk
 [% END -%]
 
-mkdir bundle/Messenger/TorMessenger
+mkdir bundle/Browser/TorBrowser
 tar xf [% c('input_files_by_name/bundle-data') %]
 [% IF c("var/linux") -%]
-mv Bundle-Data/linux/* bundle/Messenger/TorMessenger/
+mv Bundle-Data/linux/* bundle/Browser/TorBrowser/
 [% ELSE -%]
-mv Bundle-Data/windows/* bundle/Messenger/TorMessenger/
+mv Bundle-Data/windows/* bundle/Browser/TorBrowser/
 [% END -%]
 
 [% IF c("var/linux") %]
@@ -37,30 +37,35 @@ tar xf [% c('input_files_by_name/gcc') %]
 chmod 755 start-tor-messenger start-tor-messenger.desktop execdesktop
 
 cp start-tor-messenger.desktop bundle/
-mv start-tor-messenger.desktop bundle/Messenger/
-mv start-tor-messenger bundle/Messenger/
-mv execdesktop bundle/Messenger/
+mv start-tor-messenger.desktop bundle/Browser/
+mv start-tor-messenger bundle/Browser/
+mv execdesktop bundle/Browser/
 
-mkdir -p bundle/Messenger/lib
-cp -L gcc/lib[% c('arch') == 'x86_64' ? '64' : '32' %]/libstdc++.so.6 bundle/Messenger/lib/
+mkdir -p bundle/Browser/lib
+cp -L gcc/lib[% c('arch') == 'x86_64' ? '64' : '32' %]/libstdc++.so.6 bundle/Browser/lib/
 [% END %]
 
-cp cert_override.txt bundle/Messenger/TorMessenger/Data/Browser/profile.default/
+cp cert_override.txt bundle/Browser/TorBrowser/Data/Browser/profile.default/
 
-cd bundle/Messenger/extensions
-tar xf ../../../[% c('input_files_by_name/ctypes-otr') %]
+cd bundle/Browser/TorBrowser/Data/Browser/profile.default/
+mkdir extensions
+cd extensions/
+tar xf ../../../../../../../[% c('input_files_by_name/ctypes-otr') %]
 mv ctypes-otr* 'ctypes-otr@tormessenger'
+
 mkdir tor-launcher@torproject.org
-7z x -y -otor-launcher@torproject.org ../../../[% c('input_files_by_name/tor-launcher') %]
+7z x -y -otor-launcher@torproject.org ../../../../../../../[% c('input_files_by_name/tor-launcher') %]
 cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
         tor-launcher@torproject.org/defaults/preferences/prefs.js
-mkdir -p tor-launcher@torproject.org/TorBrowser/Data
+
 [% IF c("var/windows") -%]
-7z x ../../../[% c('input_files_by_name/tor-browser') %]
+7z x ../../../../../../../[% c('input_files_by_name/tor-browser') %]
 mv \$_OUTDIR tor-browser_en-US
 cp -pf tor-browser_en-US/Browser/libssp-0.dll tor-browser_en-US/Browser/TorBrowser/Tor/
+
 [% ELSE -%]
-tar xf ../../../[% c('input_files_by_name/tor-browser') %]
+tar xf ../../../../../../../[% c('input_files_by_name/tor-browser') %]
+
 [% END -%]
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
@@ -68,21 +73,25 @@ sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-brow
 [% IF c("var/windows") -%]
 # use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
 sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
-sed -i 's|TorBrowser\\Tor\\PluggableTransports|extensions\\tor-launcher@torproject.org\\TorBrowser\\Tor\\PluggableTransports|g' \
+sed -i 's|TorBrowser\\Tor\\PluggableTransports|TorBrowser\\Tor\\PluggableTransports|g' \
                 tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser.exe
 [% ELSE -%]
 # use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
 sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
-sed -i 's|TorBrowser/Tor/PluggableTransports|extensions/tor-launcher@torproject.org/TorBrowser/Tor/PluggableTransports|g' \
+sed -i 's|TorBrowser/Tor/PluggableTransports|TorBrowser/Tor/PluggableTransports|g' \
                 tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser
 [% END -%]
 
-mv tor-browser_en-US/Browser/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
-mv tor-browser_en-US/Browser/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor
-rm -Rf tor-browser_en-US
-cd ../../../
+cd ../../../../../../
+
+mv Browser/TorBrowser/Data/Browser/profile.default/extensions/tor-browser_en-US/Browser/TorBrowser/Tor Browser/TorBrowser/
+cp Browser/TorBrowser/Data/Browser/profile.default/extensions/tor-browser_en-US/Browser/TorBrowser/Data/Tor/* Browser/TorBrowser/Data/Tor/
+
+rm -Rf Browser/TorBrowser/Data/Browser/profile.default/extensions/tor-browser_en-US
+cd ..
+
 mv bundle tor-messenger
 [% IF c('var/windows') -%]
 makensis tor-messenger.nsi
