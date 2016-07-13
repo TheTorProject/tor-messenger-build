@@ -36,7 +36,7 @@ targets:
   linux-x86_64:
     var:
       arch_deps:
-        - yasm-1
+        - yasm
   linux-i686:
     var:
       arch_deps:
@@ -44,7 +44,7 @@ targets:
         - ia32-libs
         - lib32z1-dev
         - lib32asound2-dev
-        - yasm-1
+        - yasm
   osx-x86_64:
     var:
       arch_deps:
