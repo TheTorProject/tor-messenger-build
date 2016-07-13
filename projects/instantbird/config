@@ -94,7 +94,18 @@ input_files:
   - filename: branding/name.patch
   - filename: branding/instantbird.icns
   - filename: branding/credits.patch
+  - filename: branding/jar.patch
   - filename: branding/about.png
+  - filename: aboutDialog.xul
+  - filename: aboutDialog.js
+  - filename: aboutDialog-appUpdater.js
+  - filename: aboutDialog-jar.patch
+  - filename: aboutDialog.css
+  - filename: aboutDialog.dtd
+  - filename: about-logo.png
+  - filename: about-logo@2x.png
+  - filename: about-wordmark.png
+  - filename: branding-aboutDialog.css
   - filename: branding/osx.patch
     enable: '[% c("var/osx") %]'
   - filename: bug-1218193.patch
