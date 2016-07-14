@@ -35,31 +35,39 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  pref("font.default.x-western", "sans-serif");
  pref("font.default.x-unicode", "sans-serif");
-@@ -115,12 +115,12 @@
- pref("accessibility.typeaheadfind.flashBar", 1);
- 
- // Whether or not app updates are enabled
--pref("app.update.enabled", true);
-+pref("app.update.enabled", false);
- 
- // This preference turns on app.update.mode and allows automatic download and
- // install to take place. We use a separate boolean toggle for this to make
- // the UI easier to construct.
--pref("app.update.auto", true);
-+pref("app.update.auto", false);
- 
- // Defines how the Application Update Service notifies the user about updates:
- //
-@@ -138,7 +138,7 @@
- 
- // If set to true, the Update Service will apply updates in the background
- // when it finishes downloading them.
--pref("app.update.staging.enabled", true);
-+pref("app.update.staging.enabled", false);
+@@ -142,26 +142,23 @@
  
  // Update service URL:
  // You do not need to use all the %VAR% parameters. Use what you need, %PRODUCT%,%VERSION%,%BUILD_ID%,%CHANNEL% for example
-@@ -202,7 +202,7 @@
+-pref("app.update.url", "https://update.instantbird.org/1/%PRODUCT%/%VERSION%/%BUILD_ID%/%BUILD_TARGET%/%LOCALE%/%CHANNEL%/%OS_VERSION%/update.xml");
++pref("app.update.url", "https://www.torproject.org/dist/tormessenger/update_2/%CHANNEL%/%BUILD_TARGET%/%VERSION%/%LOCALE%");
+ 
+ // URL user can browse to manually if for some reason all update installation
+ // attempts fail.
+-pref("app.update.url.manual", "http://www.instantbird.com/download.html");
++pref("app.update.url.manual", "https://www.torproject.org/download/download-easy.html");
+ 
+ // A default value for the "More information about this update" link
+ // supplied in the "An update is available" page of the update wizard.
+-pref("app.update.url.details", "http://www.instantbird.com/");
+-
+-// User-settable override to app.update.url for testing purposes.
+-//pref("app.update.url.override", "");
++pref("app.update.url.details", "https://trac.torproject.org/projects/tor/wiki/doc/TorMessenger");
+ 
+ // Interval: Time between checks for a new version (in seconds)
+ //           default=1 day
+-pref("app.update.interval", 86400);
++pref("app.update.interval", 43200);
+ 
+ // Interval: Time before prompting the user to download a new version that
+ //           is available (in seconds) default=1 day
+-pref("app.update.nagTimer.download", 86400);
++pref("app.update.nagTimer.download", 3600);
+ 
+ // Interval: Time before prompting the user to restart to install the latest
+ //           download (in seconds) default=30 minutes
+@@ -202,7 +199,7 @@
  pref("browser.search.order.2",                "chrome://instantbird/locale/region.properties");
  
  // send ping to the server to update
@@ -68,20 +76,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // disable logging for the search service update system by default
  pref("browser.search.update.log", false);
-@@ -222,10 +222,10 @@
- pref("extensions.logging.enabled", false);
- pref("general.skins.selectedSkin", "classic/1.0");
- 
--pref("extensions.update.enabled", true);
-+pref("extensions.update.enabled", false);
- pref("extensions.update.interval", 86400);
- pref("extensions.update.url", "https://addons.instantbird.org/services/update.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&maxAppVersion=%ITEM_MAXAPPVERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&appOS=%APP_OS%&appABI=%APP_ABI%&locale=%APP_LOCALE%");
--pref("extensions.update.autoUpdateDefault", true);
-+pref("extensions.update.autoUpdateDefault", false);
- 
- // Preferences for the Get Add-ons pane
- pref("extensions.getAddons.cache.enabled", false);
-@@ -245,9 +245,9 @@
+@@ -245,9 +242,9 @@
  pref("extensions.getMoreProtocolsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/protocols/");
  
  // suppress external-load warning for standard browser schemes
@@ -94,7 +89,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // don't load links inside Instantbird
  pref("network.protocol-handler.expose-all", false);
-@@ -262,7 +262,7 @@
+@@ -262,10 +259,10 @@
  pref("network.protocol-handler.expose.javascript", true);
  
  // 0-Accept, 1-dontAcceptForeign, 2-dontUse
@@ -102,8 +97,12 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +pref("network.cookie.cookieBehavior", 1);
  
  // The breakpad report server to link to in about:crashes
- pref("breakpad.reportURL", "http://crash-stats.instantbird.com/report/index/");
-@@ -300,14 +300,70 @@
+-pref("breakpad.reportURL", "http://crash-stats.instantbird.com/report/index/");
++pref("breakpad.reportURL", "https://crash-stats.instantbird.com/report/index/");
+ 
+ // We have an Error Console menu item by default so let's display chrome errors
+ pref("javascript.options.showInConsole", true);
+@@ -300,14 +297,70 @@
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
