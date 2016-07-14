@@ -160,7 +160,7 @@
         <label class="text-link bottom-link" href="about:rights">&bottomLinks.rights;</label>
         <label class="text-link bottom-link" href="https://www.mozilla.org/privacy/">&bottomLinks.privacy;</label>
       </hbox>
-      <description id="trademark">&trademarkInfo.part1;</description>
+      <description id="trademark"></description>
     </vbox>
     <hbox id="newBottom" pack="center" position="1">
       <label class="text-link bottom-link"
