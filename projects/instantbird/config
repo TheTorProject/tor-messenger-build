@@ -93,7 +93,6 @@ input_files:
   - filename: branding/instantbird.ico
   - filename: branding/name.patch
   - filename: branding/instantbird.icns
-  - filename: branding/credits.patch
   - filename: branding/jar.patch
   - filename: branding/about.png
   - filename: aboutDialog.xul
