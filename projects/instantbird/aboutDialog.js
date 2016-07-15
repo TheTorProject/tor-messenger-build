@@ -8,6 +8,11 @@ Components.utils.import("resource://gre/modules/AppConstants.jsm");
 
 const PREF_EM_HOTFIX_ID = "extensions.hotfix.id";
 
+#ifdef TOR_BROWSER_VERSION
+# Add double-quotes back on (stripped by JarMaker.py).
+#expand const TOR_BROWSER_VERSION = "__TOR_BROWSER_VERSION__";
+#endif
+
 function init(aEvent)
 {
   if (aEvent.target != document)
@@ -43,12 +48,18 @@ function init(aEvent)
   // Include the build ID and display warning if this is an "a#" (nightly or aurora) build
   let version = Services.appinfo.version;
   if (/a\d+$/.test(version)) {
-    let buildID = Services.appinfo.appBuildID;
-    let buildDate = buildID.slice(0,4) + "-" + buildID.slice(4,6) + "-" + buildID.slice(6,8);
-    document.getElementById("version").textContent += " (" + buildDate + ")";
     document.getElementById("experimental").hidden = false;
     document.getElementById("communityDesc").hidden = true;
   }
+
+#ifdef TOR_BROWSER_VERSION
+  let versionElem = document.getElementById("version");
+  if (versionElem) {
+    versionElem.textContent = TOR_BROWSER_VERSION +
+                              " (based on Mozilla Firefox " +
+                              versionElem.textContent + ")";
+  }
+#endif
 
   if (AppConstants.MOZ_UPDATER) {
     gAppUpdater = new appUpdater();
