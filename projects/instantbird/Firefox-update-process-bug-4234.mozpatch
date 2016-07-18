@@ -265,7 +265,7 @@ index 38df30e..e9fb038 100644
  dnl ========================================================
 +dnl Tor Additions
 +dnl ========================================================
-+MOZ_ARG_WITH_STRING(eor-browser-version,
++MOZ_ARG_WITH_STRING(tor-browser-version,
 +[  --with-tor-browser-version=VERSION
 +                          Set Tor Browser version, e.g., 4.0b1],
 +    TOR_BROWSER_VERSION="$withval")
