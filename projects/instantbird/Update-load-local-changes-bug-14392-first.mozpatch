@@ -1,0 +1,18 @@
+commit bb781597694015aed8ea4d121eac503542fd52f2
+Author: Mike Perry <mikeperry-git@torproject.org>
+Date:   Wed Feb 11 16:45:24 2015 -0800
+
+    Bug 14392: Make about:tor behave like other initial pages.
+
+diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
+index 4f2642a..934a223 100644
+--- a/browser/base/content/browser.js
++++ b/browser/base/content/browser.js
+@@ -258,6 +258,7 @@ XPCOMUtils.defineLazyModuleGetter(this, "LoginManagerParent",
+   "resource://gre/modules/LoginManagerParent.jsm");
+ 
+ var gInitialPages = [
++  "about:tor",
+   "about:blank",
+   "about:newtab",
+   "about:home",

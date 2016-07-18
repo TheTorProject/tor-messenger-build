@@ -1,0 +1,368 @@
+From 3815bb323160cf9163a07e36859c2ea83c905ace Mon Sep 17 00:00:00 2001
+From: Kathy Brade <brade@pearlcrescent.com>
+Date: Wed, 25 Nov 2015 11:36:20 -0500
+Subject: Bug 16940: After update, load local change notes.
+
+Add an about:tbupdate page that displays the first section from
+TorBrowser/Docs/ChangeLog.txt and includes a link to the remote
+post-update page (typically our blog entry for the release).
+
+diff --git a/browser/base/content/abouttbupdate/aboutTBUpdate.css b/browser/base/content/abouttbupdate/aboutTBUpdate.css
+new file mode 100644
+index 0000000..489c9d2
+--- /dev/null
++++ b/browser/base/content/abouttbupdate/aboutTBUpdate.css
+@@ -0,0 +1,34 @@
++body {
++  font-family: sans-serif;
++  font-size: 110%;
++  background-image: -moz-linear-gradient(top, #ffffff, #ffffff 10%, #d5ffd5 50%, #d5ffd5);
++  background-attachment: fixed;
++  background-size: 100% 100%;
++}
++
++#logo {
++  background-image: url("chrome://browser/content/abouttbupdate/aboutTBUpdateLogo.png");
++  height: 128px;
++  width: 128px;
++  margin: 20px;
++  float: left;
++}
++
++#msg {
++  margin-top: 50px;
++  float: left;
++}
++
++#msg-updated {
++  font-size: 120%;
++  margin-bottom: 20px;
++}
++
++#changelog-container {
++  margin: 0px 20px 20px 20px;
++}
++
++#changelog {
++  margin-left: 20px;
++  white-space: pre;
++}
+diff --git a/browser/base/content/abouttbupdate/aboutTBUpdate.js b/browser/base/content/abouttbupdate/aboutTBUpdate.js
+new file mode 100644
+index 0000000..8243647
+--- /dev/null
++++ b/browser/base/content/abouttbupdate/aboutTBUpdate.js
+@@ -0,0 +1,10 @@
++// Copyright (c) 2015, The Tor Project, Inc.
++// See LICENSE for licensing information.
++//
++// vim: set sw=2 sts=2 ts=8 et syntax=javascript:
++
++function init()
++{
++  let event = new CustomEvent("AboutTBUpdateLoad", { bubbles: true });
++  document.dispatchEvent(event);
++}
+diff --git a/browser/base/content/abouttbupdate/aboutTBUpdate.xhtml b/browser/base/content/abouttbupdate/aboutTBUpdate.xhtml
+new file mode 100644
+index 0000000..3a29e0c
+--- /dev/null
++++ b/browser/base/content/abouttbupdate/aboutTBUpdate.xhtml
+@@ -0,0 +1,34 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<!DOCTYPE html [
++  <!ENTITY % htmlDTD
++    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
++    "DTD/xhtml1-strict.dtd">
++  %htmlDTD;
++  <!ENTITY % globalDTD SYSTEM "chrome://global/locale/global.dtd">
++  %globalDTD;
++  <!ENTITY % tbUpdateDTD SYSTEM "chrome://browser/locale/aboutTBUpdate.dtd">
++  %tbUpdateDTD;
++]>
++
++<html xmlns="http://www.w3.org/1999/xhtml">
++<head>
++  <title>&aboutTBUpdate.title;</title>
++  <link rel="stylesheet" type="text/css"
++        href="chrome://browser/content/abouttbupdate/aboutTBUpdate.css"/>
++  <script src="chrome://browser/content/abouttbupdate/aboutTBUpdate.js"
++          type="text/javascript;version=1.7"/>
++</head>
++<body dir="&locale.dir;" onload="init()">
++<div id="logo"/>
++<div id="msg">
++<div id="msg-updated">&aboutTBUpdate.updated;</div>
++<div>&aboutTBUpdate.linkPrefix;<a id="infolink">&aboutTBUpdate.linkLabel;</a>&aboutTBUpdate.linkSuffix;
++</div>
++</div>
++<br clear="all"/>
++<div id="changelog-container">&aboutTBUpdate.changeLogHeading;
++<div id="changelog"></div>
++</div>
++</body>
++</html>
+diff --git a/browser/base/content/abouttbupdate/aboutTBUpdateLogo.png b/browser/base/content/abouttbupdate/aboutTBUpdateLogo.png
+new file mode 100644
+index 0000000..be5cae9
+Binary files /dev/null and b/browser/base/content/abouttbupdate/aboutTBUpdateLogo.png differ
+diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
+index 6e78084..0adbe61 100644
+--- a/browser/base/content/browser.js
++++ b/browser/base/content/browser.js
+@@ -259,6 +259,9 @@ XPCOMUtils.defineLazyModuleGetter(this, "LoginManagerParent",
+ 
+ var gInitialPages = [
+   "about:tor",
++#ifdef TOR_BROWSER_UPDATE
++  "about:tbupdate",
++#endif
+   "about:blank",
+   "about:newtab",
+   "about:home",
+@@ -2425,8 +2428,14 @@ function URLBarSetURI(aURI) {
+ 
+     // Replace initial page URIs with an empty string
+     // only if there's no opener (bug 370555).
++#ifdef TOR_BROWSER_UPDATE
++    if (gInitialPages.indexOf(uri.spec.split('?')[0]) != -1 &&
++        checkEmptyPageOrigin(gBrowser.selectedBrowser, uri))
++#else
+     if (gInitialPages.indexOf(uri.spec) != -1 &&
+-        checkEmptyPageOrigin(gBrowser.selectedBrowser, uri)) {
++        checkEmptyPageOrigin(gBrowser.selectedBrowser, uri))
++#endif
++    {
+       value = "";
+     } else {
+       value = losslessDecodeURI(uri);
+@@ -7043,7 +7052,11 @@ var gIdentityHandler = {
+       this._uriHasHost = false;
+     }
+ 
+-    let whitelist = /^(?:accounts|addons|cache|config|crashes|customizing|downloads|healthreport|home|license|newaddon|permissions|preferences|privatebrowsing|rights|sessionrestore|support|welcomeback)(?:[?#]|$)/i;
++#ifdef TOR_BROWSER_UPDATE
++    let whitelist = /^(?:accounts|addons|cache|config|crashes|customizing|downloads|healthreport|home|license|newaddon|permissions|preferences|privatebrowsing|rights|sessionrestore|support|welcomeback|tor|tbupdate)(?:[?#]|$)/i;
++#else
++    let whitelist = /^(?:accounts|addons|cache|config|crashes|customizing|downloads|healthreport|home|license|newaddon|permissions|preferences|privatebrowsing|rights|sessionrestore|support|welcomeback|tor)(?:[?#]|$)/i;
++#endif
+     this._isSecureInternalUI = uri.schemeIs("about") && whitelist.test(uri.path);
+ 
+     this._sslStatus = gBrowser.securityUI
+diff --git a/browser/base/content/tab-content.js b/browser/base/content/tab-content.js
+index c8f39ee..44489a2 100644
+--- a/browser/base/content/tab-content.js
++++ b/browser/base/content/tab-content.js
+@@ -10,6 +10,9 @@ var {classes: Cc, interfaces: Ci, utils: Cu, results: Cr} = Components;
+ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
+ Cu.import("resource://gre/modules/Services.jsm");
+ Cu.import("resource://gre/modules/ExtensionContent.jsm");
++#ifdef TOR_BROWSER_UPDATE
++Cu.import("resource://gre/modules/NetUtil.jsm");
++#endif
+ 
+ XPCOMUtils.defineLazyModuleGetter(this, "E10SUtils",
+   "resource:///modules/E10SUtils.jsm");
+@@ -368,6 +371,82 @@ var AboutReaderListener = {
+ };
+ AboutReaderListener.init();
+ 
++#ifdef TOR_BROWSER_UPDATE
++let AboutTBUpdateListener = {
++  init: function(chromeGlobal) {
++    chromeGlobal.addEventListener('AboutTBUpdateLoad', this, false, true);
++  },
++
++  get isAboutTBUpdate() {
++    return content.document.documentURI.split('?')[0].toLowerCase()
++           == "about:tbupdate";
++  },
++
++  handleEvent: function(aEvent) {
++    if (this.isAboutTBUpdate && (aEvent.type == "AboutTBUpdateLoad"))
++      this.onPageLoad();
++  },
++
++  onPageLoad: function() {
++    let doc = content.document;
++    doc.getElementById("infolink").setAttribute("href", this.getPostUpdateURL());
++    doc.getElementById("changelog").textContent = this.getChangeLogText();
++  },
++
++  // Extract the post update URL from this page's query string.
++  getPostUpdateURL: function() {
++    let idx = content.document.documentURI.indexOf('?');
++    if (idx > 0)
++      return decodeURIComponent(content.document.documentURI.substring(idx+1));
++
++    // No query string: use the default URL.
++    return Services.urlFormatter.formatURLPref("startup.homepage_override_url");
++  },
++
++  // Read and return the text from the beginning of the changelog file that is
++  // located at TorBrowser/Docs/ChangeLog.txt.
++  // On Mac OS, when building with --enable-tor-browser-data-outside-app-dir
++  // to support Gatekeeper signing, the file is located in
++  // TorBrowser.app/Contents/Resources/TorBrowser/Docs/.
++  //
++  // When electrolysis is enabled we will need to adopt an architecture that is
++  // more similar to the one that is used for about:home (see AboutHomeListener
++  // in this file and browser/modules/AboutHome.jsm).
++  getChangeLogText: function() {
++    try {
++#ifdef TOR_BROWSER_DATA_OUTSIDE_APP_DIR
++      // "XREExeF".parent is the directory that contains firefox, i.e.,
++      // Browser/ or, on Mac OS, TorBrowser.app/Contents/MacOS/.
++      let f = Services.dirsvc.get("XREExeF", Ci.nsIFile).parent;
++#ifdef XP_MACOSX
++      f = f.parent;
++      f.append("Resources");
++#endif
++      f.append("TorBrowser");
++#else
++      // "DefProfRt" is .../TorBrowser/Data/Browser
++      let f = Cc["@mozilla.org/file/directory_service;1"]
++                .getService(Ci.nsIProperties).get("DefProfRt", Ci.nsIFile);
++      f = f.parent.parent;  // Remove "Data/Browser"
++#endif
++      f.append("Docs");
++      f.append("ChangeLog.txt");
++
++      let fs = Cc["@mozilla.org/network/file-input-stream;1"]
++                 .createInstance(Ci.nsIFileInputStream);
++      fs.init(f, -1, 0, 0);
++      let s = NetUtil.readInputStreamToString(fs, fs.available());
++      fs.close();
++
++      // Truncate at the first empty line.
++      return s.replace(/[\r\n][\r\n][\s\S]*$/m, "");
++    } catch (e) {}
++
++    return "";
++  },
++};
++AboutTBUpdateListener.init(this);
++#endif
+ 
+ var ContentSearchMediator = {
+ 
+diff --git a/browser/base/jar.mn b/browser/base/jar.mn
+index a39f8fa..45f6e09 100644
+--- a/browser/base/jar.mn
++++ b/browser/base/jar.mn
+@@ -73,8 +73,14 @@ browser.jar:
+         content/browser/aboutTabCrashed.xhtml         (content/aboutTabCrashed.xhtml)
+ *       content/browser/aboutTabGroupsMigration.xhtml (content/aboutTabGroupsMigration.xhtml)
+         content/browser/aboutTabGroupsMigration.js    (content/aboutTabGroupsMigration.js)
++#ifdef TOR_BROWSER_UPDATE
++        content/browser/abouttbupdate/aboutTBUpdate.xhtml    (content/abouttbupdate/aboutTBUpdate.xhtml)
++        content/browser/abouttbupdate/aboutTBUpdate.js       (content/abouttbupdate/aboutTBUpdate.js)
++        content/browser/abouttbupdate/aboutTBUpdate.css      (content/abouttbupdate/aboutTBUpdate.css)
++        content/browser/abouttbupdate/aboutTBUpdateLogo.png  (content/abouttbupdate/aboutTBUpdateLogo.png)
++#endif
+ *       content/browser/browser.css                   (content/browser.css)
+-        content/browser/browser.js                    (content/browser.js)
++*       content/browser/browser.js                    (content/browser.js)
+ *       content/browser/browser.xul                   (content/browser.xul)
+         content/browser/browser-addons.js             (content/browser-addons.js)
+         content/browser/browser-ctrlTab.js            (content/browser-ctrlTab.js)
+@@ -104,7 +110,7 @@ browser.jar:
+         content/browser/browser-thumbnails.js         (content/browser-thumbnails.js)
+         content/browser/browser-trackingprotection.js (content/browser-trackingprotection.js)
+ *       content/browser/chatWindow.xul                (content/chatWindow.xul)
+-        content/browser/tab-content.js                (content/tab-content.js)
++*       content/browser/tab-content.js                (content/tab-content.js)
+         content/browser/content.js                    (content/content.js)
+         content/browser/social-content.js             (content/social-content.js)
+         content/browser/defaultthemes/1.footer.jpg    (content/defaultthemes/1.footer.jpg)
+diff --git a/browser/components/about/AboutRedirector.cpp b/browser/components/about/AboutRedirector.cpp
+index 78f55c9..ab069e5 100644
+--- a/browser/components/about/AboutRedirector.cpp
++++ b/browser/components/about/AboutRedirector.cpp
+@@ -138,6 +138,13 @@ static RedirEntry kRedirMap[] = {
+     nsIAboutModule::ALLOW_SCRIPT |
+     nsIAboutModule::HIDE_FROM_ABOUTABOUT |
+     nsIAboutModule::MAKE_UNLINKABLE },
++#ifdef TOR_BROWSER_UPDATE
++  { "tbupdate", "chrome://browser/content/abouttbupdate/aboutTBUpdate.xhtml",
++    nsIAboutModule::URI_SAFE_FOR_UNTRUSTED_CONTENT |
++    nsIAboutModule::ALLOW_SCRIPT |
++    nsIAboutModule::MAKE_UNLINKABLE |
++    nsIAboutModule::HIDE_FROM_ABOUTABOUT },
++#endif
+ };
+ static const int kRedirTotal = ArrayLength(kRedirMap);
+ 
+diff --git a/browser/components/build/nsModule.cpp b/browser/components/build/nsModule.cpp
+index 7950d7c..a316cb3 100644
+--- a/browser/components/build/nsModule.cpp
++++ b/browser/components/build/nsModule.cpp
+@@ -115,6 +115,9 @@ static const mozilla::Module::ContractIDEntry kBrowserContracts[] = {
+     { NS_ABOUT_MODULE_CONTRACTID_PREFIX "reader", &kNS_BROWSER_ABOUT_REDIRECTOR_CID },
+     { NS_ABOUT_MODULE_CONTRACTID_PREFIX "pocket-saved", &kNS_BROWSER_ABOUT_REDIRECTOR_CID },
+     { NS_ABOUT_MODULE_CONTRACTID_PREFIX "pocket-signup", &kNS_BROWSER_ABOUT_REDIRECTOR_CID },
++#ifdef TOR_BROWSER_UPDATE
++    { NS_ABOUT_MODULE_CONTRACTID_PREFIX "tbupdate", &kNS_BROWSER_ABOUT_REDIRECTOR_CID },
++#endif
+ #if defined(XP_WIN)
+     { NS_IEHISTORYENUMERATOR_CONTRACTID, &kNS_WINIEHISTORYENUMERATOR_CID },
+ #elif defined(XP_MACOSX)
+diff --git a/browser/components/nsBrowserContentHandler.js b/browser/components/nsBrowserContentHandler.js
+index b892eaf..8cc5cc5 100644
+--- a/browser/components/nsBrowserContentHandler.js
++++ b/browser/components/nsBrowserContentHandler.js
+@@ -573,6 +573,13 @@ nsBrowserContentHandler.prototype = {
+             // into account because that requires waiting for the session file
+             // to be read. If a crash occurs after updating, before restarting,
+             // we may open the startPage in addition to restoring the session.
++            //
++            // Tor Browser: Instead of opening the post-update "override page"
++            // directly, an about:tbupdate page is opened that includes a link
++            // to the override page as well as text from the first part of the
++            // local ChangeLog.txt file. The override page URL comes from the
++            // openURL attribute within the updates.xml file or, if no showURL
++            // action is present, from the startup.homepage_override_url pref.
+             var ss = Components.classes["@mozilla.org/browser/sessionstartup;1"]
+                                .getService(Components.interfaces.nsISessionStartup);
+             willRestoreSession = ss.isAutomaticRestoreEnabled();
+@@ -586,6 +593,11 @@ nsBrowserContentHandler.prototype = {
+             overridePage = overridePage.replace("%OLD_TOR_BROWSER_VERSION%",
+                                                 old_tbversion);
+ #endif
++
++#ifdef TOR_BROWSER_UPDATE
++            if (overridePage)
++              overridePage = "about:tbupdate?" + encodeURIComponent(overridePage);
++#endif
+             break;
+         }
+       }
+diff --git a/browser/locales/en-US/chrome/browser/aboutTBUpdate.dtd b/browser/locales/en-US/chrome/browser/aboutTBUpdate.dtd
+new file mode 100644
+index 0000000..37567bd
+--- /dev/null
++++ b/browser/locales/en-US/chrome/browser/aboutTBUpdate.dtd
+@@ -0,0 +1,6 @@
++<!ENTITY aboutTBUpdate.title "Tor Messenger Update">
++<!ENTITY aboutTBUpdate.updated "Tor Messenger has been updated.">
++<!ENTITY aboutTBUpdate.linkPrefix "For the most up-to-date information about this release, ">
++<!ENTITY aboutTBUpdate.linkLabel  "visit our website">
++<!ENTITY aboutTBUpdate.linkSuffix ".">
++<!ENTITY aboutTBUpdate.changeLogHeading "Changelog:">
+diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
+index 44c5e6a..0f18e06 100644
+--- a/browser/locales/jar.mn
++++ b/browser/locales/jar.mn
+@@ -21,6 +21,9 @@
+     locale/browser/aboutTabCrashed.dtd             (%chrome/browser/aboutTabCrashed.dtd)
+     locale/browser/syncCustomize.dtd               (%chrome/browser/syncCustomize.dtd)
+     locale/browser/aboutSyncTabs.dtd               (%chrome/browser/aboutSyncTabs.dtd)
++#ifdef TOR_BROWSER_UPDATE
++    locale/browser/aboutTBUpdate.dtd               (%chrome/browser/aboutTBUpdate.dtd)
++#endif
+     locale/browser/browser.dtd                     (%chrome/browser/browser.dtd)
+     locale/browser/baseMenuOverlay.dtd             (%chrome/browser/baseMenuOverlay.dtd)
+     locale/browser/browser.properties              (%chrome/browser/browser.properties)
+-- 
+cgit v0.10.2
