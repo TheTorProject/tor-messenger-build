@@ -121,7 +121,14 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: trac-18331.mozpatch
     enable: '[% c("var/osx") %]'
-  - filename: Bug-9173-Change-the-default-Firefox-profile-director.mozpatch
+  - filename: Change-the-default-Firefox-profile-director-bug-9173.mozpatch
+  - filename: Firefox-update-process-bug-4234.mozpatch
+  - filename: Improve-profile-access-bug-14631-first.mozpatch
+  - filename: Improve-profile-access-bug-14631-second.mozpatch
+  - filename: Mac-outside-app-data-bug-13252.mozpatch
+  - filename: Update-load-local-changes-bug-14392-first.mozpatch
+  - filename: Update-load-local-changes-bug-16940-second.mozpatch
+  - filename: aboutTBUpdateLogo.png
   - filename: trac-16475.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
     enable: '[% c("var/osx") %]'

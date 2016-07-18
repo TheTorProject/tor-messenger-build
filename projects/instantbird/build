@@ -89,6 +89,8 @@ then
     done
 fi
 
+cp ../$rootdir/aboutTBUpdateLogo.png browser/base/content/abouttbupdate/
+
 if ls -1 $rootdir/*.nsspatch > /dev/null 2>&1
 then
     cd security/nss
