@@ -28,6 +28,8 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 
 ac_add_options --enable-tor-browser-update
+ac_add_options --with-tor-browser-version=
+ac_add_options --enable-update-channel=release
 ac_add_options --enable-update-packaging
 ac_add_options --enable-signmar
 ac_add_options --enable-verify-mar
