@@ -56,8 +56,7 @@ function init(aEvent)
   let versionElem = document.getElementById("version");
   if (versionElem) {
     versionElem.textContent = TOR_BROWSER_VERSION +
-                              " (based on Instantbird " +
-                              versionElem.textContent + ")";
+                              " (based on Instantbird Nightly)";
   }
 #endif
 
