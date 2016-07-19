@@ -35,12 +35,17 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  pref("font.default.x-western", "sans-serif");
  pref("font.default.x-unicode", "sans-serif");
-@@ -142,26 +142,23 @@
+@@ -142,26 +142,28 @@
  
  // Update service URL:
  // You do not need to use all the %VAR% parameters. Use what you need, %PRODUCT%,%VERSION%,%BUILD_ID%,%CHANNEL% for example
 -pref("app.update.url", "https://update.instantbird.org/1/%PRODUCT%/%VERSION%/%BUILD_ID%/%BUILD_TARGET%/%LOCALE%/%CHANNEL%/%OS_VERSION%/update.xml");
 +pref("app.update.url", "https://www.torproject.org/dist/tormessenger/update_2/%CHANNEL%/%BUILD_TARGET%/%VERSION%/%LOCALE%");
++
++#ifdef XP_WIN
++// For now, disable staged updates on Windows (see #18292).
++pref("app.update.staging.enabled", false);
++#endif
  
  // URL user can browse to manually if for some reason all update installation
  // attempts fail.
@@ -67,7 +72,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // Interval: Time before prompting the user to restart to install the latest
  //           download (in seconds) default=30 minutes
-@@ -202,7 +199,7 @@
+@@ -202,7 +204,7 @@
  pref("browser.search.order.2",                "chrome://instantbird/locale/region.properties");
  
  // send ping to the server to update
@@ -76,7 +81,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // disable logging for the search service update system by default
  pref("browser.search.update.log", false);
-@@ -245,9 +242,9 @@
+@@ -245,9 +247,9 @@
  pref("extensions.getMoreProtocolsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/protocols/");
  
  // suppress external-load warning for standard browser schemes
@@ -89,7 +94,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // don't load links inside Instantbird
  pref("network.protocol-handler.expose-all", false);
-@@ -262,10 +259,10 @@
+@@ -262,10 +264,10 @@
  pref("network.protocol-handler.expose.javascript", true);
  
  // 0-Accept, 1-dontAcceptForeign, 2-dontUse
@@ -102,7 +107,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // We have an Error Console menu item by default so let's display chrome errors
  pref("javascript.options.showInConsole", true);
-@@ -300,14 +297,70 @@
+@@ -300,14 +302,70 @@
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
