@@ -332,8 +332,9 @@ EOF
 setControlPortPasswd ${TOR_CONTROL_PASSWD:='"secret"'}
 
 # Set up custom bundled fonts. See fonts-conf(5).
-export FONTCONFIG_PATH="${HOME}/TorBrowser/Data/fontconfig"
-export FONTCONFIG_FILE="fonts.conf"
+# We don't need to prevent font fingerprinting for Tor Messenger.
+# export FONTCONFIG_PATH="${HOME}/TorBrowser/Data/fontconfig"
+# export FONTCONFIG_FILE="fonts.conf"
 
 cd "${HOME}"
 
