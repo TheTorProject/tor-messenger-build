@@ -1575,7 +1575,7 @@ index 831a373..403e820 100644
 +  nsCOMPtr<nsIFile> localDir;
 +  rv = appRootDir->GetParent(getter_AddRefs(localDir));
 +  NS_ENSURE_SUCCESS(rv, rv);
-+  rv = localDir->AppendRelativeNativePath(NS_LITERAL_CSTRING("TorBrowser-Data"
++  rv = localDir->AppendRelativeNativePath(NS_LITERAL_CSTRING("TorMessenger-Data"
 +                                     XPCOM_FILE_PATH_SEPARATOR "UpdateInfo"));
 +#else
 +  // For Tor Browser, we cannot store update history, etc. under the user's home directory.
