@@ -134,6 +134,8 @@ input_files:
   - filename: trac-16475.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
     enable: '[% c("var/osx") %]'
+  - filename: browserMountPoints.inc
+    enable: '[% c("var/osx") %]'
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python

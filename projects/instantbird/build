@@ -54,6 +54,7 @@ done
 
 [% IF c("var/osx") -%]
 cp $rootdir/cert_override.txt im/app/profile
+cp $rootdir/browserMountPoints.inc im/content/
 [% END -%]
 
 cp $rootdir/xmppRegister* im/content/
