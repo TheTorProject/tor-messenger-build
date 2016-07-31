@@ -105,6 +105,7 @@ input_files:
   - filename: about-logo@2x.png
   - filename: about-wordmark.png
   - filename: branding-aboutDialog.css
+  - filename: updater-text.patch
   - filename: branding/osx.patch
     enable: '[% c("var/osx") %]'
   - filename: bug-1218193.patch
