@@ -131,6 +131,7 @@ input_files:
   - filename: Sign-MAR-files-bug-13379.mozpatch
   - filename: Update-load-local-changes-bug-14392-first.mozpatch
   - filename: Update-load-local-changes-bug-16940-second.mozpatch
+  - filename: Updater-Linux-search-path-bug-18900.mozpatch
   - filename: aboutTBUpdateLogo.png
   - filename: trac-16475.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
