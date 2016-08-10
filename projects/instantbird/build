@@ -90,6 +90,9 @@ then
     done
 fi
 
+cp $rootdir/marsigner.der toolkit/mozapps/update/updater/release_primary.der
+cp $rootdir/marsigner1.der toolkit/mozapps/update/updater/release_secondary.der
+
 cp $rootdir/aboutTBUpdateLogo.png browser/base/content/abouttbupdate/
 
 if ls -1 $rootdir/*.nsspatch > /dev/null 2>&1

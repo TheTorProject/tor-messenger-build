@@ -106,6 +106,8 @@ input_files:
   - filename: about-wordmark.png
   - filename: branding-aboutDialog.css
   - filename: updater-text.patch
+  - filename: marsigner.der
+  - filename: marsigner1.der
   - filename: branding/osx.patch
     enable: '[% c("var/osx") %]'
   - filename: bug-1218193.patch
