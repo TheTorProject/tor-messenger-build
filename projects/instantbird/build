@@ -107,6 +107,7 @@ fi
 cd ..
 
 cp $rootdir/[% c('input_files_by_name/mozconfig') %] .mozconfig
+echo ac_add_options --with-tor-browser-version='[% c("var/tormessenger_version") %]' >> .mozconfig
 ./mozilla/mach build || ./mozilla/mach build
 ./mozilla/mach package
 mv obj-*/dist/instantbird-*.[% c('var/archive_suffix') %] [% dest_dir _ '/' _ c('filename') %]
