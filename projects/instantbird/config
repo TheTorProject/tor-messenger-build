@@ -73,7 +73,6 @@ input_files:
   - filename: trac-17896.patch
   - filename: trac-17494.patch
   - filename: trac-13312.patch
-  - filename: version.patch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
   - filename: log-preferences-xul.patch

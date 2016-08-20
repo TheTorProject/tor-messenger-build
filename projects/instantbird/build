@@ -81,6 +81,8 @@ rm im/content/aboutDialog*
 cp $rootdir/aboutDialog* im/content/
 cp $rootdir/aboutDialog.dtd im/locales/en-US/chrome/instantbird/aboutDialog.dtd
 
+echo '[% c("var/tormessenger_version") %]' > im/config/version.txt
+
 cd mozilla
 if ls -1 $rootdir/*.mozpatch > /dev/null 2>&1
 then

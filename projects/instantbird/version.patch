@@ -1,7 +1,0 @@
-diff --git a/im/config/version.txt b/im/config/version.txt
-index 57b62cb..c239c60 100644
---- a/im/config/version.txt
-+++ b/im/config/version.txt
-@@ -1 +1 @@
--1.6a1pre
-+1.5
