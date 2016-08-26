@@ -116,16 +116,14 @@
         </label>&project.end;
       </description>
       <description class="text-blurb" id="helpDesc">
-        &help.start;
-        <label class="text-link"
-               href="https://www.torproject.org/donate/donate.html.en">
-          &help.donateLink;
-        </label>
-        &help.or;
-        <label class="text-link"
-               href="https://www.torproject.org/getinvolved/volunteer.html.en">
-          &help.getInvolvedLink;
-        </label>&help.end;
+       &help.donate;
+       <textbox flex="1" class="plain" readonly="true" size="36"
+           value="&help.donateLink;" />
+      </description>
+      <description class="text-blurb" id="getInvolvedLinkDesc">
+       &help.getInvolved;
+       <textbox flex="1" class="plain" readonly="true" size="36"
+           value="&help.getInvolvedLink;" />
       </description>
   </vbox>
 
@@ -162,20 +160,6 @@
       </hbox>
       <description id="trademark"></description>
     </vbox>
-    <hbox id="newBottom" pack="center" position="1">
-      <label class="text-link bottom-link"
-             href="https://www.torproject.org/docs/faq.html.en">
-        &bottomLinks.questions;
-      </label>
-      <label class="text-link bottom-link"
-             href="https://www.torproject.org/getinvolved/relays">
-        &bottomLinks.grow;
-      </label>
-      <label class="text-link bottom-link"
-             href="about:license">
-        &bottomLinks.license;
-      </label>
-    </hbox>
     <description id="trademarkTor" insertafter="trademark">
       &tor.TrademarkStatement;
     </description>
