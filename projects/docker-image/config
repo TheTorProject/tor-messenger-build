@@ -23,6 +23,7 @@ pre: |
   [% pc(c('origin_project'), 'var/pre_pkginst') %]
   [% END -%]
   [% IF c('lsb_release/id') == 'Ubuntu' || c('lsb_release/id') == 'Debian' %]
+  dpkg --add-architecture i386
   apt-get update -y
   apt-get upgrade -y
   [% END %]
