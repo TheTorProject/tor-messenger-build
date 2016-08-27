@@ -1,7 +1,7 @@
 Tor Messenger 0.1.0b7 --
  * All Platforms
-   * Use the THUNDERBIRD_45_2_0_RELEASE tag on mozilla-esr45
-   * Use the THUNDERBIRD_45_2_0_RELEASE tag on comm-esr45
+   * Use the THUNDERBIRD_45_3_0_RELEASE tag on mozilla-esr45
+   * Use the THUNDERBIRD_45_3_0_RELEASE tag on comm-esr45
    * Bug 14388: Port Tor Browser's updater patches
    * Bug 19053: Display plaintext in notifications
    * Update libgcrypt to 1.6.6 for CVE-2016-6316

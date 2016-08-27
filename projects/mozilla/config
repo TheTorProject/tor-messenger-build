@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 hg_url: https://hg.mozilla.org/releases/mozilla-esr45/
-hg_hash: THUNDERBIRD_45_2_0_RELEASE
+hg_hash: THUNDERBIRD_45_3_0_RELEASE
 src: |
   #!/bin/sh
   set -e
