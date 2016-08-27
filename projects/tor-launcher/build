@@ -14,5 +14,6 @@ cp ../default48.png src/chrome/skin/default48.png
 [% END -%]
 patch -p1 < ../logo.patch
 patch -p1 < ../locale-disable.patch
+patch -p1 < ../min-version.patch
 make package
 mv pkg/*.xpi [% dest_dir _ '/' _ c('filename') %]
