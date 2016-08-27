@@ -9,23 +9,12 @@ var:
   deps:
     - build-essential
     - libmpc-dev
-    - libgconf2-dev
-    - autotools-dev
     - autoconf2.13
     - python
     - zip
-    - libgtk2.0-dev
     - libidl-dev
-    - libxt-dev
-    - libxml2-dev
     - uuid-runtime
     - imagemagick
-    - mesa-common-dev
-    - libdbus-1-dev
-    - libdbus-glib-1-dev
-    - libasound2-dev
-    - libgstreamer-plugins-base0.10-dev
-    - libpulse-dev
     - ccache
 targets:
   windows-i686:
@@ -37,6 +26,16 @@ targets:
     var:
       arch_deps:
         - yasm
+        - libgconf2-dev
+        - libgtk2.0-dev
+        - libxml2-dev
+        - mesa-common-dev
+        - libdbus-1-dev
+        - libdbus-glib-1-dev
+        - libasound2-dev
+        - libgstreamer-plugins-base0.10-dev
+        - libpulse-dev
+        - libxt-dev
   linux-i686:
     var:
       arch_deps:
@@ -45,6 +44,16 @@ targets:
         - lib32z1-dev
         - lib32asound2-dev
         - yasm
+        - libgconf2-dev:i386
+        - libgtk2.0-dev:i386
+        - libxml2-dev:i386
+        - mesa-common-dev:i386
+        - libdbus-1-dev:i386
+        - libdbus-glib-1-dev:i386
+        - libasound2-dev:i386
+        - libgstreamer-plugins-base0.10-dev:i386
+        - libpulse-dev:i386
+        - libxt-dev:i386
   osx-x86_64:
     var:
       arch_deps:

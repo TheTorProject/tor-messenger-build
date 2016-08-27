@@ -29,7 +29,7 @@ input_files:
   - project: docker-image
 
 remote_docker: 1
-distribution: Ubuntu-12.04
+distribution: Debian-7.11
 var:
   filename_ext: 'tar.xz'
   deps:
