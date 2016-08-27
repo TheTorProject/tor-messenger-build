@@ -1,0 +1,37 @@
+diff --git a/toolkit/locales/en-US/chrome/mozapps/update/updates.dtd b/toolkit/locales/en-US/chrome/mozapps/update/updates.dtd
+--- a/toolkit/locales/en-US/chrome/mozapps/update/updates.dtd
++++ b/toolkit/locales/en-US/chrome/mozapps/update/updates.dtd
+@@ -34,7 +34,7 @@
+ <!ENTITY  incompatibleCheck.title         "Checking Add-on Compatibility">
+ <!ENTITY  incompatibleCheck.label         "Looking for newer versions of your add-ons…">
+ 
+-<!ENTITY  clickHere.label                 "View more information about this update">
++<!ENTITY  clickHere.label                 "View more information about this update:">
+ 
+ <!ENTITY  evangelism.desc                 "It is strongly recommended that you apply this 
+                                            update for &brandShortName; as soon as possible.">
+diff --git a/toolkit/mozapps/update/content/updates.js b/toolkit/mozapps/update/content/updates.js
+--- a/toolkit/mozapps/update/content/updates.js
++++ b/toolkit/mozapps/update/content/updates.js
+@@ -952,7 +952,7 @@
+ 
+     var updateMoreInfoURL = document.getElementById("updateMoreInfoURL");
+     if (update.detailsURL)
+-      updateMoreInfoURL.setAttribute("url", update.detailsURL);
++      updateMoreInfoURL.setAttribute("value", update.detailsURL);
+     else
+       updateMoreInfoURL.hidden = true;
+ 
+diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update/content/updates.xul
+--- a/toolkit/mozapps/update/content/updates.xul
++++ b/toolkit/mozapps/update/content/updates.xul
+@@ -121,8 +121,7 @@
+       <separator id="upgradeEvangelismSep" flex="1"/>
+       <vbox flex="1">
+         <hbox id="moreInfoURL">
+-          <label class="text-link" id="updateMoreInfoURL"
+-                 value="&clickHere.label;" onclick="openUpdateURL(event);"/>
++      	  <textbox class="plain" flex="1" readonly="true" id="updateMoreInfoURL" />
+         </hbox>
+       </vbox>
+     </vbox>

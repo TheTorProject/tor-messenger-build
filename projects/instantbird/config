@@ -135,6 +135,7 @@ input_files:
   - filename: Updater-Linux-search-path-bug-18900.mozpatch
   - filename: aboutTBUpdateLogo.png
   - filename: trac-16475.mozpatch
+  - filename: updater-remove-links.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
     enable: '[% c("var/osx") %]'
   - filename: browserMountPoints.inc
