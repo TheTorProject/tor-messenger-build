@@ -1,15 +1,3 @@
-diff --git a/toolkit/locales/en-US/chrome/mozapps/update/updates.dtd b/toolkit/locales/en-US/chrome/mozapps/update/updates.dtd
---- a/toolkit/locales/en-US/chrome/mozapps/update/updates.dtd
-+++ b/toolkit/locales/en-US/chrome/mozapps/update/updates.dtd
-@@ -34,7 +34,7 @@
- <!ENTITY  incompatibleCheck.title         "Checking Add-on Compatibility">
- <!ENTITY  incompatibleCheck.label         "Looking for newer versions of your add-ons…">
- 
--<!ENTITY  clickHere.label                 "View more information about this update">
-+<!ENTITY  clickHere.label                 "View more information about this update:">
- 
- <!ENTITY  evangelism.desc                 "It is strongly recommended that you apply this 
-                                            update for &brandShortName; as soon as possible.">
 diff --git a/toolkit/mozapps/update/content/updates.js b/toolkit/mozapps/update/content/updates.js
 --- a/toolkit/mozapps/update/content/updates.js
 +++ b/toolkit/mozapps/update/content/updates.js
