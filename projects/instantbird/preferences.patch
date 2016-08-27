@@ -50,7 +50,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  // URL user can browse to manually if for some reason all update installation
  // attempts fail.
 -pref("app.update.url.manual", "http://www.instantbird.com/download.html");
-+pref("app.update.url.manual", "https://www.torproject.org);
++pref("app.update.url.manual", "https://www.torproject.org");
  
  // A default value for the "More information about this update" link
  // supplied in the "An update is available" page of the update wizard.
