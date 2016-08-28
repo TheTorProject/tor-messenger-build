@@ -1,0 +1,47 @@
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1472399861 25200
+#      Sun Aug 28 08:57:41 2016 -0700
+# Branch THUNDERBIRD4530_2016082513_RELBRANCH
+# Node ID 69baf6e1ea1e4c8f4ddf719bff6b542869a99a23
+# Parent  f4a50139b69d93674a2fa55b51ab843a66d3fae2
+Bug 1298574 - Set _userVCard own property when downloading vCard fails. r=aleth
+ * This prevents an infinite req / res cycle.
+
+--HG--
+extra : amend_source : fb94df25b6157ec06dcf8f57b66a484aee243a28
+
+diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
+--- a/chat/protocols/xmpp/xmpp.jsm
++++ b/chat/protocols/xmpp/xmpp.jsm
+@@ -2231,16 +2231,30 @@ var XMPPAccountPrototype = {
+     if (this._userVCard) {
+       let binval = this._userVCard.getElement(["PHOTO", "BINVAL"]);
+       if (binval && binval.children.length) {
+         binval = binval.children[0];
+         binval.text = binval.text.replace(/[^A-Za-z0-9\+\/\=]/g, "")
+                                  .replace(/.{74}/g, "$&\n");
+       }
+     }
++    else {
++      // Downloading the vCard failed.
++      if (this.handleErrors({
++          itemNotFound: () => false,  // OK, no vCard exists yet.
++          default: () => true
++        })(aStanza)) {
++        this.WARN("Unexpected error retrieving the user's vcard, " +
++          "so we won't attempt to set it either.");
++        return;
++      }
++      // Set this so that we don't get into an infinite loop trying to download
++      // the vcard again. The check in sendVCard is for hasOwnProperty.
++      this._userVCard = null;
++    }
+     this._sendVCard();
+   },
+ 
+   _cachingUserIcon: false,
+   _cacheUserIcon: function() {
+     if (this._cachingUserIcon)
+       return;
+ 

@@ -69,6 +69,7 @@ input_files:
   - filename: xmppRegister.js
   - filename: xmppRegister.xul
   - filename: xmpp-gtalk-resource.patch
+  - filename: bug-1298574.patch
   - filename: trac-16489.patch
   - filename: trac-17896.patch
   - filename: trac-17494.patch
