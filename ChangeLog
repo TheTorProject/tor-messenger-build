@@ -10,6 +10,7 @@ Tor Messenger 0.1.0b7 --
      * GH 73: Show progress during verification in notification box (patch by Vu Quoc Huy)
  * Mac
    * Bug 13861: Profile directory stored in ~/Library/Application\ Support
+   * Bug 17460: Add graphics for OS X drag and drop to Applications
 
 Tor Messenger 0.1.0b6 -- April 06, 2016
  * All Platforms
