@@ -2,7 +2,6 @@ Tor Messenger 0.1.0b7 --
  * All Platforms
    * Use the THUNDERBIRD_45_3_0_RELEASE tag on mozilla-esr45
    * Use the THUNDERBIRD_45_3_0_RELEASE tag on comm-esr45
-   * Bug 14388: Port Tor Browser's updater patches
    * Bug 19053: Display plaintext in notifications
    * Bug 17363: Remove redundant Tor Messenger folders
    * Bug 14388: Secure automatic updates for Tor Messenger
