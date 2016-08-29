@@ -40,7 +40,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  // Update service URL:
  // You do not need to use all the %VAR% parameters. Use what you need, %PRODUCT%,%VERSION%,%BUILD_ID%,%CHANNEL% for example
 -pref("app.update.url", "https://update.instantbird.org/1/%PRODUCT%/%VERSION%/%BUILD_ID%/%BUILD_TARGET%/%LOCALE%/%CHANNEL%/%OS_VERSION%/update.xml");
-+pref("app.update.url", "https://www.torproject.org/dist/tormessenger/update_2/%CHANNEL%/%BUILD_TARGET%/%VERSION%/%LOCALE%");
++pref("app.update.url", "https://aus2.torproject.org/tormessenger/update_2/%CHANNEL%/%BUILD_TARGET%/%VERSION%/%LOCALE%");
 +
 +#ifdef XP_WIN
 +// For now, disable staged updates on Windows (see #18292).
