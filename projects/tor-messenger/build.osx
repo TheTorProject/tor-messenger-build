@@ -44,6 +44,13 @@ mv torbrowser/TorBrowser.app/Contents/MacOS/Tor/ $rootdir/TorMessenger.app/Conte
 mkdir dmg
 mv TorMessenger.app dmg
 cd dmg
+
+cp $rootdir/VolumeIcon.icns .VolumeIcon.icns
+mkdir .background
+cp $rootdir/background.png .background/
+cp $rootdir/DS_Store .DS_Store
+ln -s /Applications/ .
+
 find . -executable -exec chmod 750 {} \;
 find . ! -executable -exec chmod 640 {} \;
 find . -type f | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" > ../filelist.txt

@@ -18,6 +18,12 @@ input_files:
   - filename: start-tor-messenger
   - filename: start-tor-messenger.desktop
   - filename: execdesktop
+  - filename: background.png
+    enable: '[% c("var/osx") %]'
+  - filename: DS_Store
+    enable: '[% c("var/osx") %]'
+  - filename: VolumeIcon.icns
+    enable: '[% c("var/osx") %]'
   - filename: tor-messenger.nsi
     enable: '[% c("var/windows") %]'
   - filename: cert_override.txt
