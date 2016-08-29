@@ -2,9 +2,9 @@
 # User Arlo Breault <arlolra@gmail.com>
 # Date 1458088842 25200
 #      Tue Mar 15 17:40:42 2016 -0700
-# Branch THUNDERBIRD450b2_2016021821_RELBRANCH
-# Node ID bdb92c8d38312d083b13dde6bc6ef405b410ed44
-# Parent  3711adcdfdd5439ff9d73e13eefe73193f1e6f95
+# Branch THUNDERBIRD4530_2016082513_RELBRANCH
+# Node ID 64dd542b1c7d0e62b43dc0d5a57a3ff034b514da
+# Parent  69baf6e1ea1e4c8f4ddf719bff6b542869a99a23
 Changes to twitter.js upstream
 
 diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.js
@@ -168,9 +168,9 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
 # User Arlo Breault <arlolra@gmail.com>
 # Date 1458087696 25200
 #      Tue Mar 15 17:21:36 2016 -0700
-# Branch THUNDERBIRD450b2_2016021821_RELBRANCH
-# Node ID 6892b93f1644036c463fe8b6014e4601d58d1676
-# Parent  bdb92c8d38312d083b13dde6bc6ef405b410ed44
+# Branch THUNDERBIRD4530_2016082513_RELBRANCH
+# Node ID 9f2addccb7a8d4875746abd96f6beba38ef0f398
+# Parent  64dd542b1c7d0e62b43dc0d5a57a3ff034b514da
 Update twitter-text.jsm
 
 diff --git a/chat/protocols/twitter/twitter-text.jsm b/chat/protocols/twitter/twitter-text.jsm
@@ -705,9 +705,9 @@ diff --git a/chat/protocols/twitter/twitter-text.jsm b/chat/protocols/twitter/tw
 # User Arlo Breault <arlolra@gmail.com>
 # Date 1458087794 25200
 #      Tue Mar 15 17:23:14 2016 -0700
-# Branch THUNDERBIRD450b2_2016021821_RELBRANCH
-# Node ID 423fc04d0bbbf681f1f930d2f242fd2605a5e425
-# Parent  6892b93f1644036c463fe8b6014e4601d58d1676
+# Branch THUNDERBIRD4530_2016082513_RELBRANCH
+# Node ID f1a6121c96fc353621c823b5d2757805fb65b721
+# Parent  9f2addccb7a8d4875746abd96f6beba38ef0f398
 Bug 955642 - Handle Twitter direct messages (DMs)
 
 diff --git a/chat/components/src/imConversations.js b/chat/components/src/imConversations.js
@@ -1035,23 +1035,7 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
 -      // status with "RT @<username>: ", we need to keep the prefix.
 -      let offset = text.indexOf(": ") + 2;
 -      text = text.slice(0, offset) + retweet.text;
-+  displayMessages: function(aMessages) {
-+    let account = this._account;
-+    let lastMsgId = account._lastMsgId;
-+    for (let tweet of aMessages) {
-+      if (!("user" in tweet) || !("text" in tweet) || !("id_str" in tweet) ||
-+          account._knownMessageIds.has(tweet.id_str))
-+        continue;
-+      let id = tweet.id_str;
-+      // Update the last known message.
-+      // Compare the length of the ids first, and then the text.
-+      // This avoids converting tweet ids into rounded numbers.
-+      if (id.length > lastMsgId.length ||
-+          (id.length == lastMsgId.length && id > lastMsgId))
-+        lastMsgId = id;
-+      account._knownMessageIds.add(id);
-+      account.setUserInfo(tweet.user);
- 
+-
 -      // Keep any entities that refer to the prefix (we can refer directly to
 -      // aTweet for these since they are not edited).
 -      if ("entities" in aTweet) {
@@ -1069,7 +1053,23 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
 -        for (let type in retweet.entities) {
 -          if (!(type in entities))
 -            entities[type] = [];
--
++  displayMessages: function(aMessages) {
++    let account = this._account;
++    let lastMsgId = account._lastMsgId;
++    for (let tweet of aMessages) {
++      if (!("user" in tweet) || !("text" in tweet) || !("id_str" in tweet) ||
++          account._knownMessageIds.has(tweet.id_str))
++        continue;
++      let id = tweet.id_str;
++      // Update the last known message.
++      // Compare the length of the ids first, and then the text.
++      // This avoids converting tweet ids into rounded numbers.
++      if (id.length > lastMsgId.length ||
++          (id.length == lastMsgId.length && id > lastMsgId))
++        lastMsgId = id;
++      account._knownMessageIds.add(id);
++      account.setUserInfo(tweet.user);
+ 
 -          // Append the entities from the original status.
 -          entities[type] = entities[type].concat(
 -            retweet.entities[type].map(function(aEntity) {
@@ -1376,3 +1376,39 @@ diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.
  
  function TwitterProtocol() {
    this.registerCommands();
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1472492642 25200
+#      Mon Aug 29 10:44:02 2016 -0700
+# Branch THUNDERBIRD4530_2016082513_RELBRANCH
+# Node ID 600363f6a85a72e0ef6ccf104b6bc5c8b4f9a0c0
+# Parent  f1a6121c96fc353621c823b5d2757805fb65b721
+Remove backwards compat. normalize in twitter prpl
+
+ * Just use .toLowerCase()
+
+diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.js
+--- a/chat/protocols/twitter/twitter.js
++++ b/chat/protocols/twitter/twitter.js
+@@ -388,21 +388,16 @@ function Account(aProtocol, aImAccount)
+   this._userInfo = new Map();
+   this._friends = new Set();
+   // Contains just `DirectMessageConversation`s
+   this._conversations = new Map();
+ }
+ Account.prototype = {
+   __proto__: GenericAccountPrototype,
+ 
+-  // The correct normalization for twitter would be just toLowerCase().
+-  // Unfortunately, for backwards compatibility we retain this normalization,
+-  // which can cause edge cases for usernames with underscores.
+-  normalize: aString => aString.replace(/[^a-z0-9]/gi, "").toLowerCase(),
+-
+   consumerKey: Services.prefs.getCharPref("chat.twitter.consumerKey"),
+   consumerSecret: Services.prefs.getCharPref("chat.twitter.consumerSecret"),
+   completionURI: "http://oauthcallback.local/",
+   baseURI: "https://api.twitter.com/",
+   _lastMsgId: "",
+ 
+   // Use this to keep track of the pending timeline requests. We attempt to fetch
+   // home_timeline, @ mentions and tracked keywords (i.e. 3 timelines)
