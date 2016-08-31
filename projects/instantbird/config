@@ -83,6 +83,7 @@ input_files:
   - filename: search-preferences-xul.patch
   - filename: log-preferences-xul.patch
   - filename: themes-remove-links.patch
+  - filename: theme-extension-update.patch
   - filename: branding/blistWindow.png
   - filename: branding/blistWindow16.png
   - filename: branding/blistWindow48.png

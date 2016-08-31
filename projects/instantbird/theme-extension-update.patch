@@ -1,0 +1,12 @@
+diff --git a/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf b/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
+--- a/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
++++ b/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
+@@ -26,6 +26,8 @@
+     <!-- Front End MetaData -->
+     <em:name>Instantbird (default)</em:name>
+     <em:description>The default theme.</em:description>
++    <em:updateURL>data:text/plain,</em:updateURL>
++    <em:updateKey>-</em:updateKey>
+ 
+     <!-- EXTENSION AUTHORS!
+          DO NOT COPY THIS PROPERTY INTO YOUR INSTALL RDF FILES
