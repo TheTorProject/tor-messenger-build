@@ -1,5 +1,5 @@
 # vim: filetype=yaml sw=2
-version: 0.0.1
+version: 0.0.2
 git_url: https://github.com/arlolra/ctypes-otr
 git_hash: '[% c("version") %]'
 gpg_keyring: arlolra.gpg
