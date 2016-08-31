@@ -23,3 +23,35 @@ diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update
          </hbox>
        </vbox>
      </vbox>
+@@ -205,8 +204,7 @@
+       <separator/>
+       <label id="errorManual">&errorManual.label;</label>
+       <hbox>
+-        <label class="text-link" id="errorLinkLabel" value=""
+-               onclick="openUpdateURL(event);"/>
++        <label id="errorLinkLabel" value="" />
+       </hbox>
+     </vbox>
+   </wizardpage>
+@@ -223,8 +221,8 @@
+       <label id="genericBackgroundErrorLabel"
+              hidden="true">&genericBackgroundError.label;</label>
+       <hbox>
+-        <label id="errorExtraLinkLabel" class="text-link" hidden="true"
+-               value="" onclick="openUpdateURL(event);"/>
++        <label id="errorExtraLinkLabel" hidden="true"
++               value="" />
+       </hbox>
+     </vbox>
+   </wizardpage>
+@@ -257,8 +255,8 @@
+       <hbox align="center">
+         <label>&finishedBackground.name;</label>
+         <label id="updateFinishedName" flex="1" crop="right" value=""/>
+-        <label id="finishedBackgroundLink" class="text-link" disabled="true"
+-               value="&details.link;" onclick="openUpdateURL(event);"/>
++        <label id="finishedBackgroundLink" disabled="true"
++               value="&details.link;" />
+       </hbox>
+       <spacer flex="1"/>
+       <label id="finishedBackgroundMore">&finishedBackground.more;</label>
