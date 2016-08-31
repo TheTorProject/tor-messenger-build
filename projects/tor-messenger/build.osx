@@ -13,6 +13,10 @@ mkdir torbrowser
 cd torbrowser
 mkdir tor-launcher@torproject.org
 7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
+
+# FTE is disabled on OS X. See #13252.
+sed -i '/default_bridge\.fte/d' $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js
+
 cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
         tor-launcher@torproject.org/defaults/preferences/prefs.js
 7z x $rootdir/[% c('input_files_by_name/tor-browser') %]
