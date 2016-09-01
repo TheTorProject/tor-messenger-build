@@ -50,7 +50,7 @@ diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update
          <label id="updateFinishedName" flex="1" crop="right" value=""/>
 -        <label id="finishedBackgroundLink" class="text-link" disabled="true"
 -               value="&details.link;" onclick="openUpdateURL(event);"/>
-+        <label id="finishedBackgroundLink" disabled="true"
++        <label id="finishedBackgroundLink" hidden="true" disabled="true"
 +               value="&details.link;" />
        </hbox>
        <spacer flex="1"/>
