@@ -110,10 +110,7 @@
 #endif
       <description class="text-blurb" id="projectDesc">
         &project.start;
-        <label class="text-link"
-                     href="https://www.torproject.org/">
-          &project.tpoLink;
-        </label>&project.end;
+        &project.tpoLink;&project.end;
       </description>
       <description class="text-blurb" id="helpDesc">
        &help.donate;
