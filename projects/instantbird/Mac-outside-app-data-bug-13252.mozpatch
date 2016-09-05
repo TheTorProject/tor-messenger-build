@@ -947,9 +947,9 @@ index 0000000..2b0b100
 +  NS_ENSURE_ARG_POINTER(aFile);
 +  nsCOMPtr<nsIFile> appRootDir = aExeFile;
 +
-+  int levelsToRemove = 0; // Remove firefox (the executable file).
++  int levelsToRemove = 1; // Remove firefox (the executable file).
 +#if defined(XP_MACOSX)
-+  levelsToRemove += 1;   // On Mac OS, we must also remove Contents/MacOS.
++  levelsToRemove += 2;   // On Mac OS, we must also remove Contents/MacOS.
 +#endif
 +  while (appRootDir && (levelsToRemove > 0)) {
 +    // When crawling up the hierarchy, components named "." do not count.
