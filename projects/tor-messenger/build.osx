@@ -55,11 +55,11 @@ cp $rootdir/background.png .background/
 cp $rootdir/DS_Store .DS_Store
 ln -s /Applications/ .
 
-find . -executable -exec chmod 750 {} \;
-find . ! -executable -exec chmod 640 {} \;
+find . -executable -exec chmod 755 {} \;
+find . ! -executable -exec chmod 644 {} \;
 find . -type f | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" > ../filelist.txt
 find . -type l | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" >> ../filelist.txt
 
-mkisofs -D -V "Tor Messenger" -no-pad -R -apple -o ../TorMessenger-uncompressed.dmg -path-list ../filelist.txt -graft-points -gid 20 -dir-mode 0750 -new-dir-mode 0750
+mkisofs -D -V "Tor Messenger" -no-pad -R -apple -o ../TorMessenger-uncompressed.dmg -path-list ../filelist.txt -graft-points -gid 20 -dir-mode 0755 -new-dir-mode 0755
 cd ..
 dmg dmg TorMessenger-uncompressed.dmg [% dest_dir _ '/' _ c('filename') %]
