@@ -1,7 +1,7 @@
 Tor Messenger 0.2.0b2 -- September 06, 2016
  * Mac
   * Bug 19269: Fix OS X file permissions
-  * Fix OS X profile when not application not placed in /Applications
+  * Fix OS X profile when application is not placed in /Applications
 
 Tor Messenger 0.2.0b1 -- September 02, 2016
  * All Platforms
