@@ -135,7 +135,6 @@ input_files:
   - filename: Improve-profile-access-bug-14631-first.mozpatch
   - filename: Improve-profile-access-bug-14631-second.mozpatch
   - filename: Mac-outside-app-data-bug-13252.mozpatch
-    enable: '[% c("var/osx") %]'
   - filename: Sign-MAR-files-bug-13379.mozpatch
   - filename: Update-load-local-changes-bug-14392-first.mozpatch
   - filename: Update-load-local-changes-bug-16940-second.mozpatch
