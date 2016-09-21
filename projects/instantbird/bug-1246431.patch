@@ -1,0 +1,31 @@
+
+# HG changeset patch
+# User Arlo Breault <arlolra@gmail.com>
+# Date 1454792228 28800
+# Node ID 1759abefc9195a9110c89822fcaf051cd05b0132
+# Parent  27b50a06b9b2b977b31f0777ae8f3ea355cc1130
+Bug 1246431 - XMPP createConversation should handle incoming messages from the server properly. r=aleth
+
+diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
+--- a/chat/protocols/xmpp/xmpp.jsm
++++ b/chat/protocols/xmpp/xmpp.jsm
+@@ -2096,17 +2096,17 @@ var XMPPAccountPrototype = {
+     // Checks if conversation is with a participant of a MUC we are in. We do
+     // not want to strip the resource as it is of the form room@domain/nick.
+     let isMucParticipant = this._mucs.has(convName);
+     if (isMucParticipant)
+       convName = this.normalizeFullJid(aName);
+ 
+     // Checking that the aName can be parsed and is not broken.
+     let jid = this._parseJID(convName);
+-    if (!jid || !jid.node || (isMucParticipant && !jid.resource)) {
++    if (!jid || !jid.domain || (isMucParticipant && (!jid.node || !jid.resource))) {
+       this.ERROR("Could not create conversation as jid is broken: " + convName);
+       throw "Invalid JID";
+     }
+ 
+     if (!this._conv.has(convName)) {
+       this._conv.set(convName,
+                      new this._conversationConstructor(this, convName,
+                                                        isMucParticipant));
+
