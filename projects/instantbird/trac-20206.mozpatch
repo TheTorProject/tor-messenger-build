@@ -1,0 +1,73 @@
+
+# HG changeset patch
+# User Jonathan Kew <jkew@mozilla.com>
+# Date 1467313395 -3600
+# Node ID eb6de343924f07e384be029a11c2404b7ac5e3df
+# Parent  444a4a7233f776cea47f2a9eabe6a7f301de4b51
+Bug 1283573 - Don't attempt to look up a single-face-family name if the corresponding main family isn't available. r=mstange
+
+diff --git a/gfx/thebes/gfxMacPlatformFontList.mm b/gfx/thebes/gfxMacPlatformFontList.mm
+--- a/gfx/thebes/gfxMacPlatformFontList.mm
++++ b/gfx/thebes/gfxMacPlatformFontList.mm
+@@ -726,22 +726,31 @@ gfxMacPlatformFontList::InitSingleFaceLi
+ {
+     AutoTArray<nsString, 10> singleFaceFonts;
+     gfxFontUtils::GetPrefsFontList("font.single-face-list", singleFaceFonts);
+ 
+     uint32_t numFonts = singleFaceFonts.Length();
+     for (uint32_t i = 0; i < numFonts; i++) {
+         LOG_FONTLIST(("(fontlist-singleface) face name: %s\n",
+                       NS_ConvertUTF16toUTF8(singleFaceFonts[i]).get()));
+-        gfxFontEntry *fontEntry = LookupLocalFont(singleFaceFonts[i],
++        nsAutoString familyName(singleFaceFonts[i]);
++        auto colon = familyName.FindChar(':');
++        if (colon != kNotFound) {
++            nsAutoString key(Substring(familyName, colon + 1));
++            ToLowerCase(key);
++            if (!mFontFamilies.GetWeak(key)) {
++                continue;
++            }
++            familyName.Truncate(colon);
++        }
++        gfxFontEntry *fontEntry = LookupLocalFont(familyName,
+                                                   400, 0,
+                                                   NS_FONT_STYLE_NORMAL);
+         if (fontEntry) {
+-            nsAutoString familyName, key;
+-            familyName = singleFaceFonts[i];
++            nsAutoString key;
+             GenerateFontListKey(familyName, key);
+             LOG_FONTLIST(("(fontlist-singleface) family name: %s, key: %s\n",
+                           NS_ConvertUTF16toUTF8(familyName).get(),
+                           NS_ConvertUTF16toUTF8(key).get()));
+ 
+             // add only if doesn't exist already
+             if (!mFontFamilies.GetWeak(key)) {
+                 gfxFontFamily *familyEntry =
+diff --git a/modules/libpref/init/all.js b/modules/libpref/init/all.js
+--- a/modules/libpref/init/all.js
++++ b/modules/libpref/init/all.js
+@@ -3759,19 +3759,19 @@ pref("font.size.variable.zh-TW", 15);
+ pref("font.name.serif.x-math", "Latin Modern Math");
+ // Apple's Symbol is Unicode so use it
+ pref("font.name-list.serif.x-math", "Latin Modern Math, XITS Math, Cambria Math, TeX Gyre Bonum Math, TeX Gyre Pagella Math, TeX Gyre Schola, TeX Gyre Termes Math, STIX Math, Asana Math, STIXGeneral, DejaVu Serif, DejaVu Sans, Symbol, Times");
+ pref("font.name.sans-serif.x-math", "Helvetica");
+ pref("font.name.monospace.x-math", "Courier");
+ pref("font.name.cursive.x-math", "Apple Chancery");
+ pref("font.name.fantasy.x-math", "Papyrus");
+ 
+-// individual font faces to be treated as independent families
+-// names are Postscript names of each face
+-pref("font.single-face-list", "Osaka-Mono");
++// Individual font faces to be treated as independent families,
++// listed as <Postscript name of face:Owning family name>
++pref("font.single-face-list", "Osaka-Mono:Osaka");
+ 
+ // optimization hint for fonts with localized names to be read in at startup, otherwise read in at lookup miss
+ // names are canonical family names (typically English names)
+ pref("font.preload-names-list", "Hiragino Kaku Gothic ProN,Hiragino Mincho ProN,STSong");
+ 
+ // Override font-weight values for some problematic families Apple ships
+ // (see bug 931426).
+ // The name here is the font's PostScript name, which can be checked in
+
