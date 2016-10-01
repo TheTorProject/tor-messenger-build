@@ -142,6 +142,9 @@ input_files:
   - filename: Update-load-local-changes-bug-16940-second.mozpatch
   - filename: Updater-Linux-search-path-bug-18900.mozpatch
   - filename: aboutTBUpdateLogo.png
+  - filename: 0001-Bug-1070710-Add-mozilla-ViewRegion-which-assembles-a.mozpatch
+  - filename: 0002-Bug-1070710-Use-ViewRegion-for-vibrant-areas-in-Vibr.mozpatch
+  - filename: 0003-Bug-1070710-Use-ViewRegion-for-window-dragging.-r-sp.mozpatch
   - filename: trac-16475.mozpatch
   - filename: updater-remove-links.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
