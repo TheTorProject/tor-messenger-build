@@ -116,7 +116,7 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
  
  // We have an Error Console menu item by default so let's display chrome errors
  pref("javascript.options.showInConsole", true);
-@@ -300,14 +302,73 @@
+@@ -300,14 +302,76 @@
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -193,3 +193,6 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +
 +// Other Updates
 +pref("app.update.promptWaitTime", 3600);
++
++// Put conversations on hold so that OTR disconnect is not sent. See #20208.
++pref("messenger.conversations.holdByDefault", true);
