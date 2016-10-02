@@ -18,20 +18,15 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +pref("messenger.options.playSounds.message", false);
  // Specifies whether each message event should trigger a sound for incoming
  // and outgoing messages, or when your nickname is mentioned in a chat.
--pref("messenger.options.playSounds.outgoing", true);
--pref("messenger.options.playSounds.incoming", true);
--pref("messenger.options.playSounds.alert", true);
-+pref("messenger.options.playSounds.outgoing", false);
-+pref("messenger.options.playSounds.incoming", false);
-+pref("messenger.options.playSounds.alert", false);
+ pref("messenger.options.playSounds.outgoing", true);
+ pref("messenger.options.playSounds.incoming", true);
+ pref("messenger.options.playSounds.alert", true);
  // Whether contact list related sounds should be played at all. If this is
  // enabled then the more specific prefs are checked as well.
  pref("messenger.options.playSounds.blist", false);
  // Specifies whether sounds should be played on login/logout events.
--pref("messenger.options.playSounds.login", true);
--pref("messenger.options.playSounds.logout", true);
-+pref("messenger.options.playSounds.login", false);
-+pref("messenger.options.playSounds.logout", false);
+ pref("messenger.options.playSounds.login", true);
+ pref("messenger.options.playSounds.logout", true);
  
  pref("font.default.x-western", "sans-serif");
  pref("font.default.x-unicode", "sans-serif");
