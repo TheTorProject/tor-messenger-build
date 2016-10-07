@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
-hg_url: https://hg.mozilla.org/releases/mozilla-esr45/
-hg_hash: THUNDERBIRD_45_4_0_RELEASE
+git_url: https://git.torproject.org/tor-browser.git
+git_hash: 90a36a577e8e4934860513c9ec5f1165ac81e53b
 src: |
   #!/bin/sh
   set -e
