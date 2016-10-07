@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 git_url: https://git.torproject.org/tor-browser.git
-git_hash: 90a36a577e8e4934860513c9ec5f1165ac81e53b
+git_hash: 8b1f07f31cd04fb157bf99a9e2e600b4422f277f
 src: |
   #!/bin/sh
   set -e

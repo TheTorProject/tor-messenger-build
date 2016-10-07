@@ -80,7 +80,6 @@ input_files:
   - filename: trac-17896.patch
   - filename: trac-17494.patch
   - filename: trac-13312.patch
-  - filename: trac-20206.mozpatch
   - filename: search-context-menu.patch
   - filename: search-preferences-xul.patch
   - filename: log-preferences-xul.patch
@@ -124,28 +123,11 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: cert_override.txt
     enable: '[% c("var/osx") %]'
-  - filename: trac-18290.mozpatch
-    enable: '[% c("var/windows") %]'
-  - filename: bug-1240589.mozpatch
-    enable: '[% c("var/windows") %]'
-  - filename: bug-1167248.mozpatch
-    enable: '[% c("var/windows") %]'
   - filename: trac-18331.mozpatch
     enable: '[% c("var/osx") %]'
-  - filename: Change-the-default-Firefox-profile-director-bug-9173.mozpatch
-  - filename: Firefox-update-process-bug-4234.mozpatch
-  - filename: Improve-profile-access-bug-14631-first.mozpatch
-  - filename: Improve-profile-access-bug-14631-second.mozpatch
-  - filename: Mac-outside-app-data-bug-13252.mozpatch
-  - filename: Sign-MAR-files-bug-13379.mozpatch
-  - filename: Update-load-local-changes-bug-14392-first.mozpatch
-  - filename: Update-load-local-changes-bug-16940-second.mozpatch
-  - filename: Updater-Linux-search-path-bug-18900.mozpatch
   - filename: aboutTBUpdateLogo.png
-  - filename: 0001-Bug-1070710-Add-mozilla-ViewRegion-which-assembles-a.mozpatch
-  - filename: 0002-Bug-1070710-Use-ViewRegion-for-vibrant-areas-in-Vibr.mozpatch
-  - filename: 0003-Bug-1070710-Use-ViewRegion-for-window-dragging.-r-sp.mozpatch
   - filename: trac-16475.mozpatch
+  - filename: trac-20309.mozpatch
   - filename: updater-remove-links.mozpatch
   - filename: OSX-package-as-tar.bz2.mozpatch
     enable: '[% c("var/osx") %]'

@@ -1,53 +1,32 @@
+From 5baab1b1e4e9c4c4c59f864ffe03265ef17f956a Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Thu, 6 Oct 2016 20:13:35 -0700
+Subject: [PATCH] Block flash too
+
+---
+ dom/plugins/base/nsPluginHost.cpp | 9 ---------
+ 1 file changed, 9 deletions(-)
+
 diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.cpp
+index 5345ce7..1569236 100644
 --- a/dom/plugins/base/nsPluginHost.cpp
 +++ b/dom/plugins/base/nsPluginHost.cpp
-@@ -2085,6 +2085,26 @@
+@@ -2081,15 +2081,6 @@ PRBool nsPluginHost::GhettoBlacklist(nsIFile *pluginFile)
+     return PR_TRUE; // fuck 'em. blacklist.
    }
+ 
+-  // libgnashplugin.so, libflashplayer.so, Flash Player-10.4-10.5.plugin,
+-  // NPSWF32.dll, NPSWF64.dll
+-  if (strstr(leafStr, "libgnashplugin") == leafStr ||
+-      strstr(leafStr, "libflashplayer") == leafStr ||
+-      strstr(leafStr, "Flash Player") == leafStr ||
+-      strstr(leafStr, "NPSWF") == leafStr) {
+-    return PR_FALSE;
+-  }
+-
+   return PR_TRUE; // fuck 'em. blacklist.
  }
  
-+PRBool nsPluginHost::GhettoBlacklist(nsIFile *pluginFile)
-+{
-+    nsCString leaf;
-+    const char *leafStr;
-+    nsresult rv;
-+    
-+    rv = pluginFile->GetNativeLeafName(leaf);
-+    if (NS_FAILED(rv)) {
-+        return PR_TRUE; // blacklist.
-+    }
-+
-+    leafStr = leaf.get();
-+
-+    if (!leafStr) {
-+        return PR_TRUE; // blacklist.
-+    }
-+
-+    return PR_TRUE; // blacklist.
-+}
-+
- typedef NS_NPAPIPLUGIN_CALLBACK(char *, NP_GETMIMEDESCRIPTION)(void);
- 
- nsresult nsPluginHost::ScanPluginsDirectory(nsIFile *pluginsDir,
-@@ -2194,6 +2214,10 @@
-       continue;
-     }
- 
-+    if (GhettoBlacklist(localfile)) {
-+        continue;
-+    }
-+
-     // if it is not found in cache info list or has been changed, create a new one
-     if (!pluginTag) {
-       nsPluginFile pluginFile(localfile);
-diff --git a/dom/plugins/base/nsPluginHost.h b/dom/plugins/base/nsPluginHost.h
---- a/dom/plugins/base/nsPluginHost.h
-+++ b/dom/plugins/base/nsPluginHost.h
-@@ -334,6 +334,8 @@
-   // Loads all cached plugins info into mCachedPlugins
-   nsresult ReadPluginInfo();
- 
-+  PRBool GhettoBlacklist(nsIFile *pluginFile);
-+
-   // Given a file path, returns the plugins info from our cache
-   // and removes it from the cache.
-   void RemoveCachedPluginsInfo(const char *filePath,
+-- 
+2.10.1
+
