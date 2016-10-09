@@ -1,7 +1,18 @@
+From ab9bbbce89ff95ec72690d62c25db20b82f28cd9 Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Sun, 9 Oct 2016 09:34:38 -0700
+Subject: [PATCH 7/7] Remove updater links
+
+---
+ toolkit/mozapps/update/content/updates.js  |  2 +-
+ toolkit/mozapps/update/content/updates.xul | 13 +++++--------
+ 2 files changed, 6 insertions(+), 9 deletions(-)
+
 diff --git a/toolkit/mozapps/update/content/updates.js b/toolkit/mozapps/update/content/updates.js
+index 40e76c8..5565b9c 100644
 --- a/toolkit/mozapps/update/content/updates.js
 +++ b/toolkit/mozapps/update/content/updates.js
-@@ -952,7 +952,7 @@
+@@ -979,7 +979,7 @@ var gUpdatesFoundBasicPage = {
  
      var updateMoreInfoURL = document.getElementById("updateMoreInfoURL");
      if (update.detailsURL)
@@ -11,6 +22,7 @@ diff --git a/toolkit/mozapps/update/content/updates.js b/toolkit/mozapps/update/
        updateMoreInfoURL.hidden = true;
  
 diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update/content/updates.xul
+index 6066802..c82bc77 100644
 --- a/toolkit/mozapps/update/content/updates.xul
 +++ b/toolkit/mozapps/update/content/updates.xul
 @@ -121,8 +121,7 @@
@@ -19,7 +31,7 @@ diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update
          <hbox id="moreInfoURL">
 -          <label class="text-link" id="updateMoreInfoURL"
 -                 value="&clickHere.label;" onclick="openUpdateURL(event);"/>
-+      	  <textbox class="plain" flex="1" readonly="true" id="updateMoreInfoURL" />
++          <textbox class="plain" flex="1" readonly="true" id="updateMoreInfoURL" />
          </hbox>
        </vbox>
      </vbox>
@@ -33,18 +45,17 @@ diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update
        </hbox>
      </vbox>
    </wizardpage>
-@@ -223,8 +221,8 @@
+@@ -223,8 +221,7 @@
        <label id="genericBackgroundErrorLabel"
               hidden="true">&genericBackgroundError.label;</label>
        <hbox>
 -        <label id="errorExtraLinkLabel" class="text-link" hidden="true"
 -               value="" onclick="openUpdateURL(event);"/>
-+        <label id="errorExtraLinkLabel" hidden="true"
-+               value="" />
++        <label id="errorExtraLinkLabel" hidden="true" value="" />
        </hbox>
      </vbox>
    </wizardpage>
-@@ -257,8 +255,8 @@
+@@ -257,8 +254,8 @@
        <hbox align="center">
          <label>&finishedBackground.name;</label>
          <label id="updateFinishedName" flex="1" crop="right" value=""/>
@@ -55,3 +66,6 @@ diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update
        </hbox>
        <spacer flex="1"/>
        <label id="finishedBackgroundMore">&finishedBackground.more;</label>
+-- 
+2.10.1
+

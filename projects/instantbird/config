@@ -123,17 +123,16 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: cert_override.txt
     enable: '[% c("var/osx") %]'
-  - filename: trac-18331.mozpatch
-    enable: '[% c("var/osx") %]'
   - filename: aboutTBUpdateLogo.png
-  - filename: trac-16475.mozpatch
-  - filename: trac-20309.mozpatch
-  - filename: 0001-Revert-Bug-14716-HTTP-Basic-Authentication-prompt-on.mozpatch
-  - filename: updater-remove-links.mozpatch
-  - filename: OSX-package-as-tar.bz2.mozpatch
-    enable: '[% c("var/osx") %]'
   - filename: browserMountPoints.inc
     enable: '[% c("var/osx") %]'
+  - filename: 0001-Revert-Bug-14716-HTTP-Basic-Authentication-prompt-on.mozpatch
+  - filename: 0002-Block-flash-too.mozpatch
+  - filename: 0003-s-TorBrowser-Data-TorMessenger-Data.mozpatch
+  - filename: 0004-Bug-1283573-Don-t-attempt-to-look-up-a-single-face-f.mozpatch
+  - filename: 0005-Adjust-atomic-ops-code-to-be-more-compatible-with-th.mozpatch
+  - filename: 0006-OSX-package-as-tar.bz2.mozpatch
+  - filename: 0007-Remove-updater-links.mozpatch
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: python

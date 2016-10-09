@@ -1,8 +1,9 @@
-From 5baab1b1e4e9c4c4c59f864ffe03265ef17f956a Mon Sep 17 00:00:00 2001
+From 07ad22078a293c7bf12e587a6d4b6569370e050b Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 6 Oct 2016 20:13:35 -0700
-Subject: [PATCH] Block flash too
+Subject: [PATCH 2/7] Block flash too
 
+ * Builds on "Bug #3547: Block all plugins except flash."
 ---
  dom/plugins/base/nsPluginHost.cpp | 9 ---------
  1 file changed, 9 deletions(-)

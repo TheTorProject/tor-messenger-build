@@ -1,8 +1,11 @@
-From 8cb3d859bc95b7d86152437c0983534f6db1f08c Mon Sep 17 00:00:00 2001
+From 1542f877647e82ad9f6be6965bad121fd8335c42 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 6 Oct 2016 20:20:11 -0700
-Subject: [PATCH] s/TorBrowser-Data/TorMessenger-Data/
+Subject: [PATCH 3/7] s/TorBrowser-Data/TorMessenger-Data/
 
+ * All that remains after the updater patches.
+
+ * See trac 20309
 ---
  xpcom/io/TorFileUtils.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

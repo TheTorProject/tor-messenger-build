@@ -1,16 +1,23 @@
-# HG changeset patch
-# User Arlo Breault <arlolra@gmail.com>
-# Date 1458787927 25200
-#      Wed Mar 23 19:52:07 2016 -0700
-# Branch THUNDERBIRD450b3_2016032212_RELBRANCH
-# Node ID b6d62c260cb2d71eea2a13d9b0c64ccb6bd0a42e
-# Parent  ded7e4b0a11f15704ecaccd5e570cc7c59f4c7a8
-Adjust atomic ops code to be more compatible with thread sanitizer tools.
+From 760a2780d529b6c8a569824f7bc4c288c2a6ca2d Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Wed, 23 Mar 2016 19:52:07 -0700
+Subject: [PATCH 5/7] Adjust atomic ops code to be more compatible with thread
+ sanitizer tools.
+
+ * This is until we port the patches for trac 18331
+
+ * See trac 20316
+---
+ intl/icu/source/common/putilimp.h | 17 +----------------
+ intl/icu/source/common/umutex.cpp |  4 ++--
+ intl/icu/source/common/umutex.h   | 29 +----------------------------
+ 3 files changed, 4 insertions(+), 46 deletions(-)
 
 diff --git a/intl/icu/source/common/putilimp.h b/intl/icu/source/common/putilimp.h
+index 55ec0ae..ac083b0 100644
 --- a/intl/icu/source/common/putilimp.h
 +++ b/intl/icu/source/common/putilimp.h
-@@ -1,12 +1,12 @@
+@@ -1,7 +1,7 @@
  /*
  ******************************************************************************
  *
@@ -19,17 +26,7 @@ diff --git a/intl/icu/source/common/putilimp.h b/intl/icu/source/common/putilimp
  *   Corporation and others.  All Rights Reserved.
  *
  ******************************************************************************
- *
- *  FILE NAME : putilimp.h
- *
- *   Date        Name        Description
- *   10/17/04    grhoten     Move internal functions from putil.h to this file.
-@@ -224,31 +224,16 @@ typedef size_t uintptr_t;
- #   if defined(U_HAVE_ATOMIC) &&  U_HAVE_ATOMIC 
- #      define U_HAVE_STD_ATOMICS 1
- #   else
- #      define U_HAVE_STD_ATOMICS 0
- #   endif
+@@ -229,21 +229,6 @@ typedef size_t uintptr_t;
  #endif
  
  
@@ -51,48 +48,35 @@ diff --git a/intl/icu/source/common/putilimp.h b/intl/icu/source/common/putilimp
  
  /*===========================================================================*/
  /** @{ Programs used by ICU code                                             */
- /*===========================================================================*/
- 
- /**
-  * \def U_MAKE_IS_NMAKE
-  * Defines whether the "make" program is Windows nmake.
 diff --git a/intl/icu/source/common/umutex.cpp b/intl/icu/source/common/umutex.cpp
+index 69eab79..dff0b47 100644
 --- a/intl/icu/source/common/umutex.cpp
 +++ b/intl/icu/source/common/umutex.cpp
-@@ -339,27 +339,27 @@ umtx_atomic_dec(u_atomic_int32_t *p) {
-     umtx_lock(&gIncDecMutex);
-     retVal = --(*p);
-     umtx_unlock(&gIncDecMutex);
-     return retVal;
- }
+@@ -344,8 +344,8 @@ umtx_atomic_dec(u_atomic_int32_t *p) {
  
  U_COMMON_API int32_t U_EXPORT2
  umtx_loadAcquire(u_atomic_int32_t &var) {
-+    int32_t val = var;
-     umtx_lock(&gIncDecMutex);
--    int32_t val = var;
+-    umtx_lock(&gIncDecMutex);
+     int32_t val = var;
++    umtx_lock(&gIncDecMutex);
      umtx_unlock(&gIncDecMutex);
      return val;
  }
- 
+@@ -353,8 +353,8 @@ umtx_loadAcquire(u_atomic_int32_t &var) {
  U_COMMON_API void U_EXPORT2
  umtx_storeRelease(u_atomic_int32_t &var, int32_t val) {
      umtx_lock(&gIncDecMutex);
-+    umtx_unlock(&gIncDecMutex);
-     var = val;
--    umtx_unlock(&gIncDecMutex);
+-    var = val;
+     umtx_unlock(&gIncDecMutex);
++    var = val;
  }
  
  U_NAMESPACE_END
- #endif
- 
- //--------------------------------------------------------------------------
- //
- //  Deprecated functions for setting user mutexes.
 diff --git a/intl/icu/source/common/umutex.h b/intl/icu/source/common/umutex.h
+index 0e4d118..e0ad0d3 100644
 --- a/intl/icu/source/common/umutex.h
 +++ b/intl/icu/source/common/umutex.h
-@@ -1,11 +1,11 @@
+@@ -1,6 +1,6 @@
  /*
  **********************************************************************
 -*   Copyright (C) 1997-2015, International Business Machines
@@ -100,17 +84,7 @@ diff --git a/intl/icu/source/common/umutex.h b/intl/icu/source/common/umutex.h
  *   Corporation and others.  All Rights Reserved.
  **********************************************************************
  *
- * File UMUTEX.H
- *
- * Modification History:
- *
- *   Date        Name        Description
-@@ -113,43 +113,16 @@ inline int32_t umtx_atomic_inc(u_atomic_
- }
- 
- inline int32_t umtx_atomic_dec(u_atomic_int32_t *var) {
-     return InterlockedDecrement(var);
- }
+@@ -118,33 +118,6 @@ inline int32_t umtx_atomic_dec(u_atomic_int32_t *var) {
  U_NAMESPACE_END
  
  
@@ -144,8 +118,6 @@ diff --git a/intl/icu/source/common/umutex.h b/intl/icu/source/common/umutex.h
  #elif U_HAVE_GCC_ATOMICS
  /*
   * gcc atomic ops. These are available on several other compilers as well.
-  */
- 
- U_NAMESPACE_BEGIN
- typedef int32_t u_atomic_int32_t;
- #define ATOMIC_INT32_T_INITIALIZER(val) val
+-- 
+2.10.1
+
