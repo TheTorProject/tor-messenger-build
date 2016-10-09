@@ -1,10 +1,10 @@
-From a9cb072ad4b3e50723b182f845628b41f4987ff2 Mon Sep 17 00:00:00 2001
+From 9468b6269eefcfa9a10a90d93b9b565e916050e4 Mon Sep 17 00:00:00 2001
 From: Jonathan Kew <jkew@mozilla.com>
 Date: Sun, 9 Oct 2016 09:18:37 -0700
-Subject: [PATCH 4/7] Bug 1283573 - Don't attempt to look up a
- single-face-family name if the corresponding main family isn't available.
- r=mstange
+Subject: [PATCH 3/6] Trac 20206: Avoid the need to download the font Osaka
 
+ * Bug 1283573 - Don't attempt to look up a single-face-family name if
+   the corresponding main family isn't available. r=mstange
 ---
  gfx/thebes/gfxMacPlatformFontList.mm | 17 +++++++++++++----
  modules/libpref/init/all.js          |  6 +++---

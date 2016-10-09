@@ -1,12 +1,12 @@
-From 760a2780d529b6c8a569824f7bc4c288c2a6ca2d Mon Sep 17 00:00:00 2001
+From ff04db65b95872a3d17793bcfc292a2b4151affb Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 23 Mar 2016 19:52:07 -0700
-Subject: [PATCH 5/7] Adjust atomic ops code to be more compatible with thread
- sanitizer tools.
+Subject: [PATCH 4/6] Trac 18331: Update OS X toolchain to work with ESR 45
 
- * This is until we port the patches for trac 18331
+ * We're reverting the patch, "Adjust atomic ops code to be more
+   compatible with thread sanitizer tools."
 
- * See trac 20316
+ * See trac 20316 where we want to port the gitian patches to rbm.
 ---
  intl/icu/source/common/putilimp.h | 17 +----------------
  intl/icu/source/common/umutex.cpp |  4 ++--

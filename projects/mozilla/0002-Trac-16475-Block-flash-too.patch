@@ -1,7 +1,7 @@
-From 07ad22078a293c7bf12e587a6d4b6569370e050b Mon Sep 17 00:00:00 2001
+From d8481cf36c473024b279b23842ca0d541bdde2d7 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 6 Oct 2016 20:13:35 -0700
-Subject: [PATCH 2/7] Block flash too
+Subject: [PATCH 2/6] Trac 16475: Block flash too
 
  * Builds on "Bug #3547: Block all plugins except flash."
 ---

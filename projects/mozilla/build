@@ -9,14 +9,9 @@ if ls -1 $rootdir/*.patch > /dev/null 2>&1
 then
     for patch in $(ls -1 $rootdir/*.patch | sort)
     do
-        patch -p1 < $patch
+        git apply -p1 < $patch
     done
 fi
-
-cp $rootdir/marsigner.der toolkit/mozapps/update/updater/release_primary.der
-cp $rootdir/marsigner1.der toolkit/mozapps/update/updater/release_secondary.der
-
-cp $rootdir/aboutTBUpdateLogo.png browser/base/content/abouttbupdate/
 
 cd ..
 
