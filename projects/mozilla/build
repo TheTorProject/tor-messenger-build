@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+rootdir=$(pwd)
+
+tar xf [% project %]-[% c('version') %].tar.gz
+cd [% project %]-[% c('version') %]
+
+if ls -1 $rootdir/*.patch > /dev/null 2>&1
+then
+    for patch in $(ls -1 $rootdir/*.patch | sort)
+    do
+        patch -p1 < $patch
+    done
+fi
+
+cp $rootdir/marsigner.der toolkit/mozapps/update/updater/release_primary.der
+cp $rootdir/marsigner1.der toolkit/mozapps/update/updater/release_secondary.der
+
+cp $rootdir/aboutTBUpdateLogo.png browser/base/content/abouttbupdate/
+
+cd ..
+
+[% SET src_dir=project _ '-' _ c('version');
+    c('tar', {
+        tar_src => [src_dir],
+        tar_args => '-czf ' _ dest_dir _ '/' _ c('filename'),
+        }) %]

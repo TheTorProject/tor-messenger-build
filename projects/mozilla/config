@@ -1,11 +1,16 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
+filename: 'mozilla-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 git_url: https://git.torproject.org/tor-browser.git
 git_hash: 8b1f07f31cd04fb157bf99a9e2e600b4422f277f
-src: |
-  #!/bin/sh
-  set -e
-  mv -f mozilla-[% c('version') %].tar.gz [% dest_dir _ '/' _ c('filename') %]
-steps:
-  src:
-    filename: "mozilla-[% c('version') %]-src.tar.gz"
+input_files:
+  - filename: marsigner.der
+  - filename: marsigner1.der
+  - filename: aboutTBUpdateLogo.png
+  - filename: 0001-Revert-Bug-14716-HTTP-Basic-Authentication-prompt-on.patch
+  - filename: 0002-Block-flash-too.patch
+  - filename: 0003-s-TorBrowser-Data-TorMessenger-Data.patch
+  - filename: 0004-Bug-1283573-Don-t-attempt-to-look-up-a-single-face-f.patch
+  - filename: 0005-Adjust-atomic-ops-code-to-be-more-compatible-with-th.patch
+  - filename: 0006-OSX-package-as-tar.bz2.patch
+  - filename: 0007-Remove-updater-links.patch
