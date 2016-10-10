@@ -1,9 +1,9 @@
-From 1cc379a50214fb1e782c76c816b9ef6f8e52b6a0 Mon Sep 17 00:00:00 2001
+From 1703b578adc3d9e57358e3ad2eee08922a9d93ec Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 10 Oct 2016 10:52:52 -0700
-Subject: [PATCH 1/6] Revert "Bug #3875: Use Optimistic Data SOCKS variant."
+Subject: [PATCH 1/6] Trac 19910: Prevents STARTTLS in XMPP
 
- * Preventing startls in xmpp.
+ * Revert "Bug #3875: Use Optimistic Data SOCKS variant."
 
 This reverts commit 9064546a5e54d94054d944dd910a5db3a67032dc.
 ---

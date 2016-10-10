@@ -4,7 +4,7 @@ filename: 'mozilla-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id")
 git_url: https://git.torproject.org/tor-browser.git
 git_hash: 8b1f07f31cd04fb157bf99a9e2e600b4422f277f
 input_files:
-  - filename: 0001-Revert-Bug-3875-Use-Optimistic-Data-SOCKS-variant.patch
+  - filename: 0001-Trac-19910-Prevents-STARTTLS-in-XMPP.patch
   - filename: 0002-Trac-16475-Block-flash-too.patch
   - filename: 0003-Trac-20206-Avoid-the-need-to-download-the-font-Osaka.patch
   - filename: 0004-Trac-18331-Update-OS-X-toolchain-to-work-with-ESR-45.patch
