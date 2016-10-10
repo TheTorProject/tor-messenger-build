@@ -1,7 +1,8 @@
 Tor Messenger 0.2.0b3 --
  * All Platforms
-   * Use the THUNDERBIRD_45_4_0_RELEASE tag on mozilla-esr45
+   * Use the tor-browser-45.4.0esr-6.0-1 branch on tor-browser
    * Use the THUNDERBIRD_45_4_0_RELEASE tag on comm-esr45
+   * Bug 16536: Investigate Tor Browser patches relevant to Tor Messenger
    * Bug 20208: Put conversations on hold by default
    * Properly handle incoming xmpp server messages (bugzilla 1246431)
    * Bug 20276: Fix toggling sounds
