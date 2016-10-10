@@ -1,10 +1,10 @@
-From ed5968f6b886ba8c606a673582ff3ecb36c3cc2a Mon Sep 17 00:00:00 2001
+From 2b92b0019d3700fc4b6304f92f6b7107278c7bf5 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sat, 8 Oct 2016 18:11:20 -0700
-Subject: [PATCH 1/6] Revert "Bug 14716: HTTP Basic Authentication prompt only
+Subject: [PATCH 1/7] Revert "Bug 14716: HTTP Basic Authentication prompt only
  displayed once"
 
- * This patch was breaking Tor Messenger.
+ * Was preventing the profile from loading.
 
 This reverts commit 5995aea1797320295fff1247bf4baac9ec511876.
 ---

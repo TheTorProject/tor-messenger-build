@@ -1,7 +1,7 @@
-From ff04db65b95872a3d17793bcfc292a2b4151affb Mon Sep 17 00:00:00 2001
+From c0dd27a3ec2670e1b6a2df06748ebf5a507e42eb Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 23 Mar 2016 19:52:07 -0700
-Subject: [PATCH 4/6] Trac 18331: Update OS X toolchain to work with ESR 45
+Subject: [PATCH 5/7] Trac 18331: Update OS X toolchain to work with ESR 45
 
  * We're reverting the patch, "Adjust atomic ops code to be more
    compatible with thread sanitizer tools."

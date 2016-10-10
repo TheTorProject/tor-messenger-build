@@ -1,7 +1,7 @@
-From f18bf5119125d98dc635b41db4c73988f36590ff Mon Sep 17 00:00:00 2001
+From 121080a9c0472db657df81cf581a7766cb83a7db Mon Sep 17 00:00:00 2001
 From: Nicolas Vigier <boklm@torproject.org>
 Date: Thu, 25 Jun 2015 12:18:43 +0200
-Subject: [PATCH 5/6] OSX: package as tar.bz2
+Subject: [PATCH 6/7] OSX: package as tar.bz2
 
 ---
  toolkit/mozapps/installer/upload-files.mk | 2 +-

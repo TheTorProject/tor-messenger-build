@@ -1,0 +1,120 @@
+From 646ea9771c1ee265c110238cbaf0488e74f7829a Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Mon, 10 Oct 2016 10:52:52 -0700
+Subject: [PATCH 2/7] Revert "Bug #3875: Use Optimistic Data SOCKS variant."
+
+ * Preventing startls in xmpp.
+
+This reverts commit 9064546a5e54d94054d944dd910a5db3a67032dc.
+---
+ netwerk/base/nsSocketTransport2.cpp | 43 ++++++++-----------------------------
+ netwerk/base/nsSocketTransport2.h   |  4 +---
+ netwerk/socket/nsSOCKSIOLayer.cpp   |  4 +---
+ 3 files changed, 11 insertions(+), 40 deletions(-)
+
+diff --git a/netwerk/base/nsSocketTransport2.cpp b/netwerk/base/nsSocketTransport2.cpp
+index c35a587..6a758f9 100644
+--- a/netwerk/base/nsSocketTransport2.cpp
++++ b/netwerk/base/nsSocketTransport2.cpp
+@@ -1887,26 +1887,8 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+         // Update poll timeout in case it was changed
+         mPollTimeout = mTimeouts[TIMEOUT_READ_WRITE];
+     }
++    else if (mState == STATE_CONNECTING) {
+ 
+-    // Tor 3875: Use optimistic data with SOCKS.
+-    // To accomplish this, two new states were added that are only used with
+-    // SOCKS connections:
+-    //   STATE_SENDINGGET - The SOCKS handshake has proceeded to the
+-    //                        "sent connect" state; now it is okay to
+-    //                         optimistically send some application data (e.g.,
+-    //                         an HTTP GET request).
+-    //   STATE_SENTGET -    Optimistic data has been sent; make a second call
+-    //                        to PR_ConnectContinue() to allow the SOCKS
+-    //                        handshake to finish.
+-    else if (mState == STATE_SENDINGGET) {
+-        if ((mPollFlags & PR_POLL_WRITE) && (outFlags & ~PR_POLL_READ)) {
+-            mOutput.OnSocketReady(NS_OK);  // Allow application data to be sent.
+-        }
+-        mPollTimeout = mTimeouts[TIMEOUT_READ_WRITE];
+-        mPollFlags = (PR_POLL_EXCEPT | PR_POLL_READ);
+-        mState = STATE_SENTGET;  // Wait for SOCKS handshake response.
+-    }
+-    else if (mState == STATE_CONNECTING || mState == STATE_SENTGET) {
+         // We use PRIntervalTime here because we need
+         // nsIOService::LastOfflineStateChange time and
+         // nsIOService::LastConectivityChange time to be atomic.
+@@ -1926,14 +1908,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+                 Telemetry::PRCONNECTCONTINUE_BLOCKING_TIME_OFFLINE);
+         }
+ 
+-        bool isUsingSocks = mProxyTransparent && !mProxyHost.IsEmpty();
+-        if (status == PR_SUCCESS && mState == STATE_CONNECTING) {
+-            OnSocketConnected();
+-            if (isUsingSocks) {
+-                mState = STATE_SENDINGGET;
+-            }
+-        }
+-        else if (status == PR_SUCCESS && mState == STATE_SENTGET) {
++        if (status == PR_SUCCESS) {
+             //
+             // we are connected!
+             //
+@@ -1960,17 +1935,17 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+             // If the connect is still not ready, then continue polling...
+             //
+             if ((PR_WOULD_BLOCK_ERROR == code) || (PR_IN_PROGRESS_ERROR == code)) {
+-                if (mState != STATE_SENTGET) {
+-                    // Set up the select flags for connect...
+-                    mPollFlags = (PR_POLL_EXCEPT | PR_POLL_WRITE);
+-                    // Update poll timeout in case it was changed
+-                    mPollTimeout = mTimeouts[TIMEOUT_CONNECT];
+-                }
++                // Set up the select flags for connect...
++                mPollFlags = (PR_POLL_EXCEPT | PR_POLL_WRITE);
++                // Update poll timeout in case it was changed
++                mPollTimeout = mTimeouts[TIMEOUT_CONNECT];
+             }
+             //
+             // The SOCKS proxy rejected our request. Find out why.
+             //
+-            else if (PR_UNKNOWN_ERROR == code && isUsingSocks) {
++            else if (PR_UNKNOWN_ERROR == code &&
++                     mProxyTransparent &&
++                     !mProxyHost.IsEmpty()) {
+                 code = PR_GetOSError();
+                 mCondition = ErrorAccordingToNSPR(code);
+             }
+diff --git a/netwerk/base/nsSocketTransport2.h b/netwerk/base/nsSocketTransport2.h
+index b7fbc76..b508335 100644
+--- a/netwerk/base/nsSocketTransport2.h
++++ b/netwerk/base/nsSocketTransport2.h
+@@ -190,9 +190,7 @@ private:
+         STATE_IDLE,
+         STATE_RESOLVING,
+         STATE_CONNECTING,
+-        STATE_TRANSFERRING,
+-        STATE_SENDINGGET,
+-        STATE_SENTGET
++        STATE_TRANSFERRING
+     };
+ 
+     // Safer way to get and automatically release PRFileDesc objects.
+diff --git a/netwerk/socket/nsSOCKSIOLayer.cpp b/netwerk/socket/nsSOCKSIOLayer.cpp
+index 568c700..1793001 100644
+--- a/netwerk/socket/nsSOCKSIOLayer.cpp
++++ b/netwerk/socket/nsSOCKSIOLayer.cpp
+@@ -79,9 +79,7 @@ public:
+     void SetConnectTimeout(PRIntervalTime to);
+     PRStatus DoHandshake(PRFileDesc *fd, int16_t oflags = -1);
+     int16_t GetPollFlags() const;
+-    bool IsConnected() const { return (mState == SOCKS_CONNECTED ||
+-                                       mState == SOCKS5_READ_CONNECT_RESPONSE_TOP); }
+-
++    bool IsConnected() const { return mState == SOCKS_CONNECTED; }
+     void ForgetFD() { mFD = nullptr; }
+ 
+ private:
+-- 
+2.10.1
+
