@@ -1,90 +1,67 @@
 #!/bin/sh
 set -e
 rootdir=$(pwd)
+
 export SHELL=/bin/sh
 export HOME=$rootdir
 export MOZ_BUILD_DATE=$(date -d @[% c('timestamp') %] +%Y%m%d%H%M%S)
 export SOURCE_DATE_EPOCH=[% c('timestamp') %]
+
 [% IF c('var/osx') -%]
 [% pc('gcc', 'var/setup', { compiler_tarfile => c('input_files_by_name/gcchost') }) %]
 ln -s /var/tmp/dist/gcc/bin/gcc /var/tmp/dist/gcc/bin/cc
 [% END -%]
+
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
+
 mkdir -p /var/tmp/dist
 cd /var/tmp/dist
+
 [% IF c("var/linux") -%]
 tar xf $rootdir/[% c('input_files_by_name/python') %]
 export PATH="/var/tmp/dist/python/bin:$PATH"
 tar xf $rootdir/[% c('input_files_by_name/binutils') %]
 export PATH="/var/tmp/dist/binutils/bin:$PATH"
 [% END -%]
+
 # LD_BIND_NOW needed to avoid this error:
 # undefined symbol: _ZNSt14error_categoryD2Ev
 export LD_BIND_NOW=1
+
 [% IF c("var/osname") == "linux-i686" -%]
 export LDFLAGS=-m32
 export CFLAGS=-m32
 export CC='gcc -m32'
 [% END -%]
+
 [% IF c("var/linux") -%]
 mkdir -p /var/tmp/dist/yasm/bin
 ln -s /usr/bin/yasm-1 /var/tmp/dist/yasm/bin/yasm
 export PATH="/var/tmp/dist/yasm/bin:$PATH"
 [% END -%]
+
 cd $rootdir
 mkdir /var/tmp/build
 tar -C /var/tmp/build -xf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]
+
 mkdir moz
 cd moz
 tar xf $rootdir/[% c('input_files_by_name/mozilla') %]
 mv mozilla-* /var/tmp/build/[% project %]-[% c('version') %]/mozilla
-cd /var/tmp/build/[% project %]-[% c('version') %]
 
-mkdir im/branding/messenger
-cp -R im/branding/nightly/* im/branding/messenger/
+cd /var/tmp/build/[% project %]-[% c('version') %]
 
 for patch in $(ls -1 $rootdir/*.patch | sort)
 do
-  patch -p1 < $patch
+  git apply -p1 < $patch
 done
-for patch in $(ls -1 $rootdir/branding/*.patch | sort)
-do
-  patch -p1 < $patch
-done
-
-[% IF c("var/osx") -%]
-cp $rootdir/cert_override.txt im/app/profile
-cp $rootdir/browserMountPoints.inc im/content/
-[% END -%]
-
-cp $rootdir/xmppRegister* im/content/
-
-cp $rootdir/branding/default*.png im/branding/messenger/gtk/
-cp $rootdir/branding/convWindow*.png im/branding/messenger/gtk/
-cp $rootdir/branding/blistWindow*.png im/branding/messenger/gtk/
-
-cp $rootdir/branding/blistWindow.ico im/branding/messenger/windows/
-cp $rootdir/branding/convWindow.ico im/branding/messenger/windows/
-cp $rootdir/branding/default.ico im/branding/messenger/windows/
-
-cp $rootdir/branding/instantbird.ico im/branding/messenger/
-cp $rootdir/branding/instantbird.icns im/branding/messenger/
-
-cp $rootdir/about-logo.png im/branding/messenger/content/
-cp $rootdir/about-logo@2x.png im/branding/messenger/content/
-cp $rootdir/about-wordmark.png im/branding/messenger/content/
-
-cp $rootdir/branding-aboutDialog.css im/branding/messenger/content/aboutDialog.css
-
-rm im/content/aboutDialog*
-
-cp $rootdir/aboutDialog* im/content/
-cp $rootdir/aboutDialog.dtd im/locales/en-US/chrome/instantbird/aboutDialog.dtd
 
 echo '[% c("var/tormessenger_version") %]' > im/config/version.txt
 
 cp $rootdir/[% c('input_files_by_name/mozconfig') %] .mozconfig
 echo ac_add_options --with-tor-browser-version='[% c("var/tormessenger_version") %]' >> .mozconfig
-./mozilla/mach build || ./mozilla/mach build
+
+./mozilla/mach build
 ./mozilla/mach package
+
 mv obj-*/dist/instantbird-*.[% c('var/archive_suffix') %] [% dest_dir _ '/' _ c('filename') %]

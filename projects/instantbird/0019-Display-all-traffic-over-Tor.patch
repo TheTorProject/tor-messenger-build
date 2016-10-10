@@ -1,0 +1,38 @@
+From 21ee6198dcd40ce7af5e0baa44c0740114dcfaf4 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 19:58:31 -0700
+Subject: [PATCH 19/20] Display all traffic over Tor
+
+---
+ im/content/accountWizard.xul                          | 2 ++
+ im/locales/en-US/chrome/instantbird/accountWizard.dtd | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
+index a306906..3c3a417 100644
+--- a/im/content/accountWizard.xul
++++ b/im/content/accountWizard.xul
+@@ -39,6 +39,8 @@
+         <description class="top-proto-description" value="&accountProtocolShowMore.description;"/>
+       </richlistitem>
+     </richlistbox>
++    <separator class="thin"/>
++    <description>&accountProtocolInfo.label3;</description>
+   </wizardpage>
+ 
+   <wizardpage id="accountprotocol" pageid="accountprotocol" next="accountusername"
+diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
+index c46fb2f..6b49c84 100644
+--- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
++++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
+@@ -6,6 +6,7 @@
+ 
+ <!ENTITY accountProtocolTitle.label   "Protocol">
+ <!ENTITY accountProtocolInfo.label2   "Please choose the protocol of your IM account.">
++<!ENTITY accountProtocolInfo.label3   "All traffic will be routed over the Tor network.">
+ <!ENTITY accountProtocolGetMore.label "Get more…">
+ <!ENTITY accountProtocolShowMore.label  "Show all protocols">
+ <!ENTITY accountProtocolShowMore.description  "Choose from the full list of protocols">
+-- 
+2.10.1
+

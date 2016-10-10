@@ -1,0 +1,64 @@
+From 43116629bf42352a656ae1b77b2774d2898b1905 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 18:47:48 -0700
+Subject: [PATCH 10/20] Remove search from UI
+
+---
+ im/content/nsContextMenu.js         | 18 +-----------------
+ im/content/preferences/advanced.xul | 11 -----------
+ 2 files changed, 1 insertion(+), 28 deletions(-)
+
+diff --git a/im/content/nsContextMenu.js b/im/content/nsContextMenu.js
+index 5261b79..f667793 100644
+--- a/im/content/nsContextMenu.js
++++ b/im/content/nsContextMenu.js
+@@ -468,23 +468,7 @@ nsContextMenu.prototype = {
+     if (selectedText.length > 15)
+       selectedText = selectedText.substr(0,15) + this.ellipsis;
+ 
+-    var engine = Services.search.defaultEngine;
+-    if (!engine)
+-      return false;
+-
+-    // format "Search <engine> for <selection>" string to show in menu
+-    var bundle = document.getElementById("bundle_instantbird");
+-    var menuLabel = bundle.getFormattedString("contextMenuSearchText",
+-                                              [engine.name,
+-                                               selectedText]);
+-    document.getElementById("context-searchselect").label = menuLabel;
+-    document.getElementById("context-searchselect").accessKey =
+-      bundle.getString("contextMenuSearchText.accesskey");
+-    menuLabel = bundle.getFormattedString("contextMenuSearchWith",
+-                                          [selectedText]);
+-    document.getElementById("context-searchselect-with").label = menuLabel;
+-
+-    return true;
++    return false;
+   },
+ 
+   // Returns true if anything is selected.
+diff --git a/im/content/preferences/advanced.xul b/im/content/preferences/advanced.xul
+index fad67c1..cfe2405 100644
+--- a/im/content/preferences/advanced.xul
++++ b/im/content/preferences/advanced.xul
+@@ -143,17 +143,6 @@
+                       preference="layout.spellcheckDefault"/>
+           </groupbox>
+ 
+-          <!-- Search engines -->
+-          <groupbox id="searchEnginesGroup" orient="horizontal" align="center">
+-            <caption label="&searchEnginesGroup.label;"/>
+-
+-            <description control="manageSearchEnginesButton"
+-                         flex="1">&searchEnginesDesc.label;</description>
+-            <button id="manageSearchEnginesButton" label="&searchEngines.label;"
+-                    accesskey="&searchEngines.accesskey;"
+-                    oncommand="gAdvancedPane.showSearchEngineManager();"/>
+-          </groupbox>
+-
+           <!-- Advanced Configuration -->
+           <groupbox>
+             <caption label="&configEditDesc.label;"/>
+-- 
+2.10.1
+

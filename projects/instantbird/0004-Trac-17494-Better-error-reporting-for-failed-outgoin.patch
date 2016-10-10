@@ -1,0 +1,67 @@
+From 13ffc7769be983fbd7668ad40f716683351b249f Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Tue, 2 Feb 2016 16:04:51 -0800
+Subject: [PATCH 04/20] Trac 17494: Better error reporting for failed outgoing
+ messages
+
+ * Bug 1245325 - Better error reporting for failed outgoing messages. r=clokep
+---
+ chat/locales/en-US/xmpp.properties |  6 ++++--
+ chat/protocols/xmpp/xmpp.jsm       | 17 ++++++++++++-----
+ 2 files changed, 16 insertions(+), 7 deletions(-)
+
+diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.properties
+index 7f824e5..293ab01 100644
+--- a/chat/locales/en-US/xmpp.properties
++++ b/chat/locales/en-US/xmpp.properties
+@@ -66,7 +66,10 @@ conversation.error.sendFailedAsNotInRoom=Message could not be sent to %1$S as yo
+ #   %2$S is the text of the message that wasn't delivered.
+ conversation.error.sendFailedAsRecipientNotInRoom=Message could not be sent to %1$S as the recipient is no longer in the room: %2$S
+ #   These are displayed in a conversation as a system error message.
+-conversation.error.remoteServerNotFound=Could not reach the recipient's server
++conversation.error.remoteServerNotFound=Could not reach the recipient's server.
++conversation.error.unknownSendError=An unknown error occurred on sending this message.
++#   %S is the name of the message recipient.
++conversation.error.sendServiceUnavailable=It is not possible to send messages to %S at this time.
+ #   %S is the nick of participant that is not in room.
+ conversation.error.nickNotInRoom=%S is not in the room.
+ conversation.error.banCommandAnonymousRoom=You can't ban participants from anonymous rooms. Try /kick instead.
+@@ -80,7 +83,6 @@ conversation.error.failedJIDNotFound=Could not reach %S.
+ #   %S is the jid that is invalid.
+ conversation.error.invalidJID=%S is an invalid jid (Jabber identifiers must be of the form user@domain).
+ conversation.error.commandFailedNotInRoom=You have to rejoin the room to be able to use this command.
+-conversation.error.unknownError=Unknown error
+ 
+ # LOCALIZATION NOTE (tooltip.*):
+ #   These are the titles of lines of information that will appear in
+diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
+index 67cab77..0022be3 100644
+--- a/chat/protocols/xmpp/xmpp.jsm
++++ b/chat/protocols/xmpp/xmpp.jsm
+@@ -679,11 +679,18 @@ var XMPPConversationPrototype = {
+       let muc = this._account._mucs.get(norm);
+ 
+       if (!aMsg) {
+-        // Failed outgoing message unknown.
+-        if (error.condition == "remote-server-not-found")
+-          aMsg = _("conversation.error.remoteServerNotFound");
+-        else
+-          aMsg = _("conversation.error.unknownError");
++        // Failed outgoing message.
++        switch (error.condition) {
++          case "remote-server-not-found":
++            aMsg = _("conversation.error.remoteServerNotFound");
++            break;
++          case "service-unavailable":
++            aMsg = _("conversation.error.sendServiceUnavailable", this.shortName);
++            break;
++          default:
++            aMsg = _("conversation.error.unknownSendError");
++            break;
++        }
+       }
+       else if (this._isMucParticipant && muc && !muc.left &&
+                error.condition == "item-not-found") {
+-- 
+2.10.1
+

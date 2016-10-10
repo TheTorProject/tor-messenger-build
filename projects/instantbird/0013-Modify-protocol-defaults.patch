@@ -1,0 +1,48 @@
+From db0abd7e21663ed4cf92495bf7502b02c882c007 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 19:25:34 -0700
+Subject: [PATCH 13/20] Modify protocol defaults
+
+ * Top protocols
+
+ * Hide get protocols
+---
+ im/content/accountWizard.xul                                 | 2 +-
+ im/locales/en-US/chrome/instantbird/accountWizard.properties | 4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
+index 759f42b..a306906 100644
+--- a/im/content/accountWizard.xul
++++ b/im/content/accountWizard.xul
+@@ -50,7 +50,7 @@
+     <listbox flex="1" id="protolist"
+              ondblclick="document.getElementById('accountWizard').advance();"/>
+     <hbox pack="end">
+-      <label id="getMoreProtocols" class="text-link" value="&accountProtocolGetMore.label;"
++      <label id="getMoreProtocols" class="text-link" value=""
+              onclick="if (event.button == 0) { accountWizard.openURL(this.getAttribute('getMoreURL')); }"/>
+     </hbox>
+   </wizardpage>
+diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
+index d552a23..7d371bd 100644
+--- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
++++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
+@@ -8,11 +8,13 @@
+ # Exceeding 4 protocols may cause scrolling. A list of the
+ # available protocols can be found at
+ #     https://wiki.instantbird.org/Protocol_Identifiers
+-topProtocol.list=prpl-gtalk,prpl-twitter,prpl-aim,prpl-yahoo,prpl-irc
++topProtocol.list=prpl-irc,prpl-jabber,prpl-twitter,prpl-gtalk
+ 
+ # LOCALIZATION NOTE
+ # These are the descriptions of the top protocols specified above.
+ # A description should be provided for each protocol ID listed above.
++topProtocol.prpl-irc.description=Connect to your favourite IRC network
++topProtocol.prpl-jabber.description=Chat with friends using XMPP
+ topProtocol.prpl-gtalk.description=Talk to your Gmail contacts
+ topProtocol.prpl-twitter.description=Stay up to date with your Twitter timeline
+ topProtocol.prpl-aim.description=Chat with your buddies on AOL Instant Messenger
+-- 
+2.10.1
+

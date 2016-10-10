@@ -1,0 +1,43 @@
+From e2f35f7b0b8eba6fcfeee629e6bc37f50c9ee153 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 19:50:48 -0700
+Subject: [PATCH 17/20] Remove logging UI
+
+---
+ im/content/preferences/privacy.xul | 20 --------------------
+ 1 file changed, 20 deletions(-)
+
+diff --git a/im/content/preferences/privacy.xul b/im/content/preferences/privacy.xul
+index 7c9db1c..2d7b270 100644
+--- a/im/content/preferences/privacy.xul
++++ b/im/content/preferences/privacy.xul
+@@ -66,26 +66,6 @@
+                 preference="purple.conversations.im.send_typing"/>
+     </groupbox>
+ 
+-    <!-- Logs -->
+-    <groupbox id="logsGroup">
+-      <caption label="&logsGroup.label;"/>
+-      <checkbox id="logConversations" label="&logConversations.label;"
+-                accesskey="&logConversations.accesskey;"
+-                preference="purple.logging.log_ims"
+-                onsynctopreference="document.getElementById('purple.logging.log_chats').value = this.checked;"/>
+-      <checkbox id="logSystem" label="&logSystem.label;"
+-                accesskey="&logSystem.accesskey;"
+-                preference="purple.logging.log_system"/>
+-      <separator class="thin"/>
+-      <hbox align="center">
+-        <description control="openLogFolder"
+-                     flex="1">&logShowFolder.description;</description>
+-        <button id="openLogFolder" label="&logShowFolderButton.label;"
+-                accesskey="&logShowFolderButton.accesskey;"
+-                oncommand="gPrivacyPane.openLogFolder();"/>
+-      </hbox>
+-    </groupbox>
+-
+     <!-- Passwords -->
+     <groupbox id="passwordsGroup" orient="vertical">
+       <caption label="&passwords.label;"/>
+-- 
+2.10.1
+

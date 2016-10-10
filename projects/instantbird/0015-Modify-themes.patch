@@ -1,0 +1,78 @@
+From 278bce580b808cc6881a3ba5cacee69b8ecb7a13 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 19:36:38 -0700
+Subject: [PATCH 15/20] Modify themes
+
+ * theme extension updateh
+
+ * themes remove links
+---
+ .../{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf    |  2 ++
+ im/content/preferences/themes.js                          | 15 ---------------
+ im/content/preferences/themes.xul                         |  4 ----
+ 3 files changed, 2 insertions(+), 19 deletions(-)
+
+diff --git a/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf b/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
+index a7e38bb..c5c781a 100644
+--- a/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
++++ b/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
+@@ -26,6 +26,8 @@
+     <!-- Front End MetaData -->
+     <em:name>Instantbird (default)</em:name>
+     <em:description>The default theme.</em:description>
++    <em:updateURL>data:text/plain,</em:updateURL>
++    <em:updateKey>-</em:updateKey>
+ 
+     <!-- EXTENSION AUTHORS!
+          DO NOT COPY THIS PROPERTY INTO YOUR INSTALL RDF FILES
+diff --git a/im/content/preferences/themes.js b/im/content/preferences/themes.js
+index 5c5d594..4a9d6af 100644
+--- a/im/content/preferences/themes.js
++++ b/im/content/preferences/themes.js
+@@ -31,21 +31,6 @@ var gThemePane = {
+       default:
+         return;
+     }
+-
+-    var getMore = document.getElementById("getMore" + aType);
+-    var showGetMore = false;
+-    const nsIPrefBranch2 = Components.interfaces.nsIPrefBranch2;
+-    if (Services.prefs.getPrefType(prefURL) != nsIPrefBranch2.PREF_INVALID) {
+-      try {
+-        var getMoreURL = Components.classes["@mozilla.org/toolkit/URLFormatterService;1"]
+-                                   .getService(Components.interfaces.nsIURLFormatter)
+-                                   .formatURLPref(prefURL);
+-        getMore.setAttribute("getMoreURL", getMoreURL);
+-        showGetMore = getMoreURL != "about:blank";
+-      }
+-      catch (e) { }
+-    }
+-    getMore.hidden = !showGetMore;
+   },
+ 
+   /* Create the drop down list for emoticons and messagestyles;
+diff --git a/im/content/preferences/themes.xul b/im/content/preferences/themes.xul
+index 454e366..18ba1f9 100644
+--- a/im/content/preferences/themes.xul
++++ b/im/content/preferences/themes.xul
+@@ -65,8 +65,6 @@
+               </menupopup>
+             </menulist>
+             <separator orient="vertical" class="thin"/>
+-            <label id="getMoreMessageStyles" class="text-link" value="&messageStyleGetMore.label;"
+-                   onclick="if (event.button == 0) { gThemePane.openURL(this.getAttribute('getMoreURL')); }"/>
+           </hbox>
+           <separator class="thin"/>
+           <label value="&messageStylePreview.label;"/>
+@@ -115,8 +113,6 @@
+               </menupopup>
+             </menulist>
+             <separator orient="vertical" class="thin"/>
+-            <label id="getMoreEmoticons" class="text-link" value="&emoticonsGetMore.label;"
+-                   onclick="if (event.button == 0) { gThemePane.openURL(this.getAttribute('getMoreURL')); }"/>
+           </hbox>
+           <separator class="thin"/>
+           <description>&emoticonsPreview.description;</description>
+-- 
+2.10.1
+

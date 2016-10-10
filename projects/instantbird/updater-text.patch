@@ -1,9 +1,0 @@
-diff --git a/im/locales/en-US/updater/updater.ini b/im/locales/en-US/updater/updater.ini
---- a/im/locales/en-US/updater/updater.ini
-+++ b/im/locales/en-US/updater/updater.ini
-@@ -5,4 +5,4 @@
- ; This file is in the UTF-8 encoding
- [Strings]
- Title=Software Update
--Info=Instantbird is installing your updates and will start in a few moments…
-+Info=Tor Messenger is installing your updates and will start in a few moments…

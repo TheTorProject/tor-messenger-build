@@ -1,0 +1,396 @@
+From b773d4ee2dc099c684840cc1aef6984572e3dd8d Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 18:42:25 -0700
+Subject: [PATCH 09/20] XMPP in-band registration
+
+---
+ chat/locales/en-US/xmpp.properties                 |   5 +
+ chat/protocols/xmpp/xmpp-session.jsm               |  78 +++++++++++
+ im/content/accountWizard.js                        |   8 ++
+ im/content/accountWizard.xul                       |   1 +
+ im/content/jar.mn                                  |   2 +
+ im/content/xmppRegister.js                         | 142 +++++++++++++++++++++
+ im/content/xmppRegister.xul                        |  27 ++++
+ .../en-US/chrome/instantbird/accountWizard.dtd     |   2 +
+ 8 files changed, 265 insertions(+)
+ create mode 100644 im/content/xmppRegister.js
+ create mode 100644 im/content/xmppRegister.xul
+
+diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.properties
+index 293ab01..237d20c 100644
+--- a/chat/locales/en-US/xmpp.properties
++++ b/chat/locales/en-US/xmpp.properties
+@@ -13,6 +13,9 @@ connection.initializingEncryption=Initializing encryption
+ connection.authenticating=Authenticating
+ connection.gettingResource=Getting resource
+ connection.downloadingRoster=Downloading contact list
++connection.registering=Registering new account
++connection.gettingRegistration=Getting registration form
++connection.onRegistrationSuccess=Account registered
+ 
+ # LOCALIZATION NOTE (connection.error.*)
+ #   These will show in the account manager if an error occurs during the
+@@ -33,6 +36,8 @@ connection.error.notSendingPasswordInClear=The server only supports authenticati
+ connection.error.authenticationFailure=Authentication failure
+ connection.error.notAuthorized=Not authorized (Did you enter the wrong password?)
+ connection.error.failedToGetAResource=Failed to get a resource
++connection.error.noRegistrationSupport=The server does not support in-band registration
++connection.error.registrationCancel=Registration canceled
+ 
+ 
+ # LOCALIZATION NOTE (conversation.error.notDelivered):
+diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-session.jsm
+index 24618ee..246ec2b 100644
+--- a/chat/protocols/xmpp/xmpp-session.jsm
++++ b/chat/protocols/xmpp/xmpp-session.jsm
+@@ -11,6 +11,8 @@ Cu.import("resource:///modules/socket.jsm");
+ Cu.import("resource:///modules/xmpp-xml.jsm");
+ Cu.import("resource:///modules/xmpp-authmechs.jsm");
+ 
++const registerWindow = "chrome://instantbird/content/xmppRegister.xul";
++
+ XPCOMUtils.defineLazyGetter(this, "_", () =>
+   l10nHelper("chrome://chat/locale/xmpp.properties")
+ );
+@@ -68,6 +70,7 @@ XMPPSession.prototype = {
+                               Stanza.node("ping", Stanza.NS.ping)),
+                     this.cancelDisconnectTimer, this);
+   },
++  nodes: {},
+   _lastReceiveTime: 0,
+   _lastSendTime: 0,
+   checkPingTimer(aJustSentSomething = false) {
+@@ -271,6 +274,69 @@ XMPPSession.prototype = {
+       this.onXmppStanza = this.stanzaListeners.startAuth;
+       this.onXmppStanza(aStanza);
+     },
++    onRegisterResponse: function(aStanza) {
++      let error = this._account.parseError(aStanza);
++      if (error) {
++        this.onError(null, aStanza.getElement(["error"]).innerText);
++        return;
++      }
++      if (aStanza.attributes["type"] == "result") {
++        this._account.reportConnecting(_("connection.onRegistrationSuccess"));
++        this._account.prefs.setBoolPref("register", false);
++        this._account.connect();
++      }
++      return;
++    },
++    startRegister: function(aStanza) {
++      // Some servers do not support in-band registration. In that case,
++      // complain and quit the registration process.
++      let error = this._account.parseError(aStanza);
++      if (error) {
++        this.onError(null, _("connection.error.noRegistrationSupport"));
++        return;
++      }
++
++      // Clear the existing elements from previous registrations.
++      for (let elem in this.nodes)
++        delete this.nodes[elem];
++
++      this._account.reportConnecting(_("connection.gettingRegistration"));
++      let registerStanza = aStanza.getChildrenByNS(Stanza.NS.register)[0];
++      // If we get registration data, show the form, else quit.
++      if (registerStanza.getElement(["x"])) {
++        this.nodes["username"] = this._jid.node;
++        registerStanza.wrappedJSObject = registerStanza;
++        let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
++                   .getService(Ci.nsIWindowWatcher);
++        let win = ww.openWindow(null, registerWindow, "",
++                                "centerscreen,chrome,modal,minimizable=no", registerStanza);
++      } else {
++        this.onError(null, _("connection.error.noRegistrationSupport"));
++        return;
++      }
++
++      // If the user cancelled the form, we should stop the registration.
++      if (this.nodes["cancel"]) {
++        this.onError(null, _("connection.error.registrationCancel"));
++        return;
++      }
++
++      let xml = '<?xml version="1.0"?>';
++      let fieldNodes = [];
++      for (let key in this.nodes) {
++        let node = Stanza.node("field", null, {"var": key});
++        let childNode = Stanza.node("value");
++        childNode.addText(this.nodes[key]);
++        node.addChild(childNode);
++        fieldNodes.push(node);
++      }
++      let registerResponse = Stanza.iq("set", null, this._domain,
++                                       Stanza.node("query", Stanza.NS.register, null,
++                                                   Stanza.node("x", Stanza.NS.xdata,
++                                                               {"type": "submit"}, fieldNodes)));
++      this.sendStanza(registerResponse);
++      this.onXmppStanza = this.stanzaListeners.onRegisterResponse;
++    },
+     startTLS: function(aStanza) {
+       if (aStanza.localName != "proceed") {
+         this._networkError(_("connection.error.failedToStartTLS"));
+@@ -283,6 +349,18 @@ XMPPSession.prototype = {
+       this.onXmppStanza = this.stanzaListeners.startAuth;
+     },
+     startAuth: function(aStanza) {
++      // If the user has requested for a new account, we try to perform
++      // in-band registration first (if the server supports it) and then
++      // we authenticate.
++      if (this._account.getBool("register")) {
++        this._account.reportConnecting(_("connection.registering"));
++        let register = Stanza.iq("get", null, null,
++                                 Stanza.node("query", Stanza.NS.register));
++        this.sendStanza(register);
++        this.onXmppStanza = this.stanzaListeners.startRegister;
++        return;
++      }
++
+       if (aStanza.localName != "features") {
+         this.ERROR("Unexpected stanza " + aStanza.localName + ", expected 'features'");
+         this._networkError(_("connection.error.incorrectResponse"));
+diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
+index ed3b8f0..7c26d0d 100644
+--- a/im/content/accountWizard.js
++++ b/im/content/accountWizard.js
+@@ -119,6 +119,12 @@ var accountWizard = {
+       return;
+     }
+ 
++    if (this.proto.id == "prpl-jabber") {
++      document.getElementById("registerXMPP").hidden = false;
++    } else {
++      document.getElementById("registerXMPP").hidden = true;
++    }
++
+     let bundle = document.getElementById("accountsBundle");
+     let usernameInfo;
+     let emptyText = this.proto.usernameEmptyText;
+@@ -424,6 +430,8 @@ var accountWizard = {
+       acc.alias = this.alias;
+     //FIXME: newMailNotification
+ 
++    acc.setBool("register", document.getElementById("registerXMPP").checked);
++
+     for (let i = 0; i < this.prefs.length; ++i) {
+       let option = this.prefs[i];
+       let opt = option.opt;
+diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
+index 9eb5352..759f42b 100644
+--- a/im/content/accountWizard.xul
++++ b/im/content/accountWizard.xul
+@@ -65,6 +65,7 @@
+     <vbox id="userNameBox"/>
+     <separator/>
+     <description id="duplicateAccount" hidden="true">&accountUsernameDuplicate.label;</description>
++    <checkbox id="registerXMPP" label="&registerXMPP.label;" hidden="true" />
+   </wizardpage>
+ 
+   <wizardpage id="accountpassword" pageid="accountpassword" next="accountadvanced"
+diff --git a/im/content/jar.mn b/im/content/jar.mn
+index 98d9a09..20ea9dc 100644
+--- a/im/content/jar.mn
++++ b/im/content/jar.mn
+@@ -61,6 +61,8 @@ instantbird.jar:
+ *	content/instantbird/viewlog.xul
+ 	content/instantbird/viewlog.js
+ 	content/instantbird/viewlog.css
++	content/instantbird/xmppRegister.xul
++	content/instantbird/xmppRegister.js
+ #ifdef XP_MACOSX
+ *	content/instantbird/hiddenWindow.xul
+ 	content/instantbird/menus-mac.xul
+diff --git a/im/content/xmppRegister.js b/im/content/xmppRegister.js
+new file mode 100644
+index 0000000..52852f0
+--- /dev/null
++++ b/im/content/xmppRegister.js
+@@ -0,0 +1,142 @@
++const { interfaces: Ci, utils: Cu, classes: Cc } = Components;
++
++Cu.import("resource:///modules/imXPCOMUtils.jsm");
++Cu.import("resource:///modules/xmpp-session.jsm");
++
++XPCOMUtils.defineLazyGetter(this, "_", function()
++  l10nHelper("chrome://branding/locale/brand.properties")
++);
++
++let registerAccount = {
++  createElement: function(aType, aID, aValue) {
++    let element = document.createElement(aType);
++    if (aID)
++      element.setAttribute("id", aID);
++    if (aValue)
++      element.setAttribute("value", aValue);
++    return element;
++  },
++
++  createRow: function() {
++    let row = document.createElement("row");
++    row.setAttribute("align", "baseline");
++    return row;
++  },
++
++  onLoad: function() {
++    document.documentElement.getButton("accept").disabled = true;
++
++    this.rows = document.getElementById("register-rows");
++    this.groupbox = document.getElementById("register-groupbox");
++
++    this.nodes = XMPPSession.prototype.nodes;
++    this.registerStanza = window.arguments[0].wrappedJSObject;
++    this.dataStanza = this.registerStanza.getElement(["x"]);
++
++    let instructions = this.dataStanza.getElement(["instructions"]);
++    if (instructions) {
++      let instructionLabel = this.createElement("caption");
++      instructionLabel.setAttribute("label", instructions.innerText);
++      this.groupbox.appendChild(instructionLabel);
++    }
++
++    let title = this.dataStanza.getElement(["title"]);
++    if (title)
++      document.title = title.innerText;
++    else
++      document.title = _("brandShortName");
++
++    for each (let ele in this.dataStanza.getElements(["field"])) {
++      let attrib = ele.attributes;
++      let fieldType = attrib["type"];
++      switch (fieldType) {
++
++        case "text-single":
++        case "text-private":
++          let textRow = this.createRow();
++          let textLabel = this.createElement("label", null,
++                                             ele.getElement(["required"]) ?
++                                             attrib["label"] + " *" : attrib["label"]);
++
++          let textBox = this.createElement("textbox", attrib["var"],
++                                           ele.getElement(["value"]) ?
++                                           ele.getElement(["value"]).innerText : "");
++
++          if (attrib["var"] == "username")
++            textBox.setAttribute("value", this.nodes["username"]);
++          if (attrib["var"] == "url")
++            textBox.setAttribute("readonly", "true");
++
++          if (fieldType == "text-private") {
++            textBox.setAttribute("type", "password");
++            textBox.setAttribute("oninput", "onInput(this);");
++          }
++
++          textRow.appendChild(textLabel);
++          textRow.appendChild(textBox);
++          this.rows.appendChild(textRow);
++          break;
++
++        case "fixed":
++          let fixedRow = this.createRow();
++          let fixedLabel = this.createElement("label", null, ele.getElement(["value"]).innerText);
++          fixedRow.appendChild(fixedLabel);
++          this.rows.appendChild(fixedRow);
++          break;
++      }
++    }
++
++    // Some forms have an OCR field. In that case, show the OCR image
++    // and provide input for the same.
++    let ocr = this.dataStanza.getElements(["field"]).find(e => e.attributes["var"] == "ocr");
++    if (ocr) {
++      let ocrRow = this.createRow();
++
++      let ocrImage = this.createElement("image");
++      ocrImage.setAttribute("src", "data:image/png;base64," + this.registerStanza.getElement(["data"]).innerText);
++
++      // OCR will always be a required entry.
++      let ocrLabel = this.createElement("label", null, ocr.attributes["label"] + " *");
++      let ocrInput = this.createElement("textbox", ocr.attributes["var"], null);
++
++      ocrRow.appendChild(ocrLabel);
++      this.rows.appendChild(ocrRow);
++
++      let ocrBox = document.createElement("hbox");
++      ocrBox.setAttribute("flex", "1");
++      let spacer = document.createElement("spacer");
++      spacer.setAttribute("flex", "1");
++
++      ocrBox.appendChild(ocrImage);
++      ocrBox.appendChild(spacer);
++      ocrBox.appendChild(ocrInput);
++      this.groupbox.appendChild(ocrBox);
++    }
++    // Set focus on the password field.
++    if (document.getElementById("password")) {
++      document.getElementById("password").focus();
++    }
++  },
++
++  onSave: function() {
++    for each (let elements in this.dataStanza.getElements(["field"])) {
++      if (elements.attributes["var"] != undefined) {
++        let variable = elements.attributes["var"];
++        if (document.getElementById(variable))
++          this.nodes[variable] = document.getElementById(variable).value;
++        else
++          this.nodes[variable] = elements.getElement(["value"]).innerText;
++      }
++    }
++    delete this.nodes["cancel"];
++  },
++
++  onCancel: function() {
++    // The form was cancelled so we quit the registration.
++    this.nodes["cancel"] = true;
++  },
++};
++
++function onInput(e) {
++  document.documentElement.getButton("accept").disabled = !e.value;
++}
+diff --git a/im/content/xmppRegister.xul b/im/content/xmppRegister.xul
+new file mode 100644
+index 0000000..e2bd367
+--- /dev/null
++++ b/im/content/xmppRegister.xul
+@@ -0,0 +1,27 @@
++<?xml version="1.0" ?>
++<?xml-stylesheet href="chrome://global/skin/" type="text/css" ?>
++
++<dialog
++  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
++  id="registerDialog"
++  onload="registerAccount.onLoad()"
++  buttons="accept,cancel"
++  ondialogaccept="return registerAccount.onSave()"
++  ondialogcancel="registerAccount.onCancel()">
++
++  <script type="application/javascript" src="chrome://instantbird/content/xmppRegister.js" />
++
++  <groupbox id="register-groupbox" flex="1">
++
++    <grid flex="1">
++      <columns>
++        <column flex="1" />
++      </columns>
++
++      <rows id="register-rows" />
++
++    </grid>
++
++  </groupbox>
++
++</dialog>
+diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
+index 43d0f19..c46fb2f 100644
+--- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
++++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
+@@ -31,3 +31,5 @@
+ <!ENTITY accountSummaryTitle.label   "Summary">
+ <!ENTITY accountSummaryInfo.label    "A summary of the information you entered is displayed below. Please check it before the account is created.">
+ <!ENTITY accountSummary.connectAutomatically.label "Connect this account automatically.">
++
++<!ENTITY registerXMPP.label "Create this new account on the server">
+-- 
+2.10.1
+

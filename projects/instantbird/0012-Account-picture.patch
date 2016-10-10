@@ -1,0 +1,26 @@
+From 378d544200db0ef0c4800117826a988f54f88c88 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 19:24:09 -0700
+Subject: [PATCH 12/20] Account picture
+
+---
+ im/content/blist.xul | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/im/content/blist.xul b/im/content/blist.xul
+index b90fdda..f29a48b 100644
+--- a/im/content/blist.xul
++++ b/im/content/blist.xul
+@@ -114,8 +114,7 @@
+       <stack id="statusImageStack">
+         <!-- The box around the user icon is a workaround for bug 955673. -->
+         <box id="userIconHolder">
+-          <image id="userIcon" role="button" popup="changeUserIconPanel"
+-                 aria-label="&userIcon.label;" tooltiptext="&userIcon.label;"/>
++          <image id="userIcon" role="button"/>
+         </box>
+         <panel id="changeUserIconPanel"
+                type="arrow" align="center"
+-- 
+2.10.1
+

@@ -1,0 +1,64 @@
+From d97d6ee26187ae8c682a5b25a8772741fae19be2 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 19:56:46 -0700
+Subject: [PATCH 18/20] Cert override
+
+---
+ im/app/profile/cert_override.txt | 3 +++
+ im/app/profile/moz.build         | 1 +
+ im/installer/Makefile.in         | 4 +++-
+ im/installer/package-manifest.in | 1 +
+ 4 files changed, 8 insertions(+), 1 deletion(-)
+ create mode 100644 im/app/profile/cert_override.txt
+
+diff --git a/im/app/profile/cert_override.txt b/im/app/profile/cert_override.txt
+new file mode 100644
+index 0000000..4e616f6
+--- /dev/null
++++ b/im/app/profile/cert_override.txt
+@@ -0,0 +1,3 @@
++# PSM Certificate Override Settings file
++# This is a generated file!  Do not edit.
++jabber.ccc.de:5222	OID.2.16.840.1.101.3.4.2.1	59:2F:46:18:35:27:AB:40:83:88:82:AB:4C:B4:AE:F4:E2:CF:91:60:74:AB:01:F9:BC:24:39:31:CA:5C:4E:D1	U	AAAAAAAAAAAAAAADAAAAexFL3TB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQL  ExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmlu  ZyBBdXRob3JpdHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZw==
+diff --git a/im/app/profile/moz.build b/im/app/profile/moz.build
+index 46bc16b..b7d4ebd 100644
+--- a/im/app/profile/moz.build
++++ b/im/app/profile/moz.build
+@@ -9,6 +9,7 @@ if CONFIG['MOZ_WIDGET_TOOLKIT'] in ('gtk2', 'gtk3', 'mac', 'cocoa'):
+     DEFINES['HAVE_SHELL_SERVICE'] = 1
+ 
+ FINAL_TARGET_FILES.defaults.profile += [
++    'cert_override.txt',
+     'localstore.rdf',
+     'mimeTypes.rdf',
+ ]
+diff --git a/im/installer/Makefile.in b/im/installer/Makefile.in
+index 25dd676..5f06e78 100644
+--- a/im/installer/Makefile.in
++++ b/im/installer/Makefile.in
+@@ -109,7 +109,9 @@ MOZ_PKG_MAC_ICON=branding/disk.icns
+ MOZ_PKG_MAC_EXTRA=--symlink "/Applications:/ "
+ endif
+ 
+-NON_OMNIJAR_FILES =
++NON_OMNIJAR_FILES = \
++       defaults/profile/cert_override.txt \
++       $(NULL)
+ 
+ INSTALL_SDK = 1
+ 
+diff --git a/im/installer/package-manifest.in b/im/installer/package-manifest.in
+index 1174b3d..3e35a2e 100644
+--- a/im/installer/package-manifest.in
++++ b/im/installer/package-manifest.in
+@@ -160,6 +160,7 @@
+ @RESPATH@/defaults/profile/localstore.rdf
+ @RESPATH@/defaults/profile/prefs.js
+ @RESPATH@/defaults/profile/mimeTypes.rdf
++@RESPATH@/defaults/profile/cert_override.txt
+ 
+ #ifdef XP_MACOSX
+ @RESPATH@/components/ibDockBadge.js
+-- 
+2.10.1
+

@@ -17,6 +17,7 @@ var:
     - imagemagick
     - ccache
     - yasm
+    - git-core
 targets:
   windows-i686:
     var:
@@ -57,71 +58,26 @@ targets:
         - rsync
         - sqlite3
 input_files:
-  - filename: preferences.patch
-  - filename: irc-default-server.patch
-  - filename: top-protocols.patch
-  - filename: disable-links.patch
-  - filename: account-picture.patch
-  - filename: show-traffic-tor.patch
-  - filename: hide-get-protocols.patch
-  - filename: ctcp-time.patch
-  - filename: ctcp-ping.patch
-  - filename: xmpp-inband-registration.patch
-  - filename: xmpp-default-domain.patch
-  - filename: xmppRegister.js
-  - filename: xmppRegister.xul
-  - filename: xmpp-gtalk-resource.patch
-  - filename: bug-1298574.patch
-  - filename: bug-1246431.patch
-  - filename: trac-16489.patch
-  - filename: trac-17896.patch
-  - filename: trac-17494.patch
-  - filename: trac-13312.patch
-  - filename: search-context-menu.patch
-  - filename: search-preferences-xul.patch
-  - filename: log-preferences-xul.patch
-  - filename: themes-remove-links.patch
-  - filename: theme-extension-update.patch
-  - filename: branding/blistWindow.png
-  - filename: branding/blistWindow16.png
-  - filename: branding/blistWindow48.png
-  - filename: branding/convWindow.png
-  - filename: branding/convWindow16.png
-  - filename: branding/convWindow48.png
-  - filename: branding/default.png
-  - filename: branding/default16.png
-  - filename: branding/default48.png
-  - filename: branding/blistWindow.ico
-  - filename: branding/convWindow.ico
-  - filename: branding/default.ico
-  - filename: branding/instantbird.ico
-  - filename: branding/name.patch
-  - filename: branding/instantbird.icns
-  - filename: branding/jar.patch
-  - filename: branding/about.png
-  - filename: aboutDialog.xul
-  - filename: aboutDialog.js
-  - filename: aboutDialog-appUpdater.js
-  - filename: aboutDialog-jar.patch
-  - filename: aboutDialog.css
-  - filename: aboutDialog.dtd
-  - filename: about-logo.png
-  - filename: about-logo@2x.png
-  - filename: about-wordmark.png
-  - filename: branding-aboutDialog.css
-  - filename: updater-text.patch
-  - filename: trac-20207.patch
-    enable: '[% c("var/osx") %]'
-  - filename: branding/osx.patch
-    enable: '[% c("var/osx") %]'
-  - filename: bug-1218193.patch
-    enable: '[% c("var/osx") %]'
-  - filename: cert-installer.patch
-    enable: '[% c("var/osx") %]'
-  - filename: cert_override.txt
-    enable: '[% c("var/osx") %]'
-  - filename: browserMountPoints.inc
-    enable: '[% c("var/osx") %]'
+  - filename: 0001-Set-Tor-Messenger-preferences.patch
+  - filename: 0002-Trac-16489-Prevent-account-autologin.patch
+  - filename: 0003-Trac-17896-Support-Special-Characters-input-prompt-o.patch
+  - filename: 0004-Trac-17494-Better-error-reporting-for-failed-outgoin.patch
+  - filename: 0005-Trac-13312-OTR-over-Twitter-DMs.patch
+  - filename: 0006-Bug-1218193-Fix-tab-strip-background-colour-on-OS-X..patch
+  - filename: 0007-Bug-1246431-XMPP-createConversation-should-handle-in.patch
+  - filename: 0008-Bug-1298574-Set-_userVCard-own-property-when-downloa.patch
+  - filename: 0009-XMPP-in-band-registration.patch
+  - filename: 0010-Remove-search-from-UI.patch
+  - filename: 0011-Add-Tor-Messenger-branding.patch
+  - filename: 0012-Account-picture.patch
+  - filename: 0013-Modify-protocol-defaults.patch
+  - filename: 0014-Modify-IRC-defaults.patch
+  - filename: 0015-Modify-themes.patch
+  - filename: 0016-Modify-XMPP-defaults.patch
+  - filename: 0017-Remove-logging-UI.patch
+  - filename: 0018-Cert-override.patch
+  - filename: 0019-Display-all-traffic-over-Tor.patch
+  - filename: 0020-Trac-17480-Content-sink.patch
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: mozilla

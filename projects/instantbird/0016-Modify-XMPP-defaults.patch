@@ -1,0 +1,48 @@
+From 4199685bb157c9248701353d1da77d43b507f45c Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 10 Oct 2016 19:38:49 -0700
+Subject: [PATCH 16/20] Modify XMPP defaults
+
+ * xmpp-default-domain
+
+ * xmpp-gtalk-resource
+---
+ chat/protocols/gtalk/gtalk.js | 2 +-
+ chat/protocols/xmpp/xmpp.js   | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/chat/protocols/gtalk/gtalk.js b/chat/protocols/gtalk/gtalk.js
+index 8bce0c9..642f456 100644
+--- a/chat/protocols/gtalk/gtalk.js
++++ b/chat/protocols/gtalk/gtalk.js
+@@ -96,7 +96,7 @@ GTalkProtocol.prototype = {
+   getAccount: function(aImAccount) { return new GTalkAccount(this, aImAccount); },
+   options: {
+     resource: {get label() { return _("options.resource"); },
+-               get default() { return XMPPDefaultResource; }}
++               default: "Instantbird"},
+   },
+   get chatHasTopic() { return true; },
+   classID: Components.ID("{38a224c1-6748-49a9-8ab2-efc362b1000d}")
+diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
+index 265445a..a5635ca 100644
+--- a/chat/protocols/xmpp/xmpp.js
++++ b/chat/protocols/xmpp/xmpp.js
+@@ -31,12 +31,12 @@ XMPPProtocol.prototype = {
+ 
+   usernameSplits: [
+     {get label() { return _("options.domain"); }, separator: "@",
+-     defaultValue: "jabber.org", reverse: true}
++     defaultValue: "", reverse: true}
+   ],
+ 
+   options: {
+     resource: {get label() { return _("options.resource"); },
+-               get default() { return XMPPDefaultResource; }},
++               default: "Instantbird"},
+     priority: {get label() { return _("options.priority"); }, default: 0},
+     connection_security: {
+       get label() { return _("options.connectionSecurity"); },
+-- 
+2.10.1
+
