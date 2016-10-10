@@ -158,6 +158,9 @@ diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.
 +// Security
 +// Disable SSLv3 by setting the minimum supported protocol to TLS 1.0.
 +pref("security.tls.version.min", 1);
++// We use the certdb.  Necessary for the TB patch,
++// "Bug 14716: HTTP Basic Authentication prompt only displayed once"
++pref("security.nocertdb", false);
 +// Disable geolocation
 +pref("geo.enabled", false);
 +

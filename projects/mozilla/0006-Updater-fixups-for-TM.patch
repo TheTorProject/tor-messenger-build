@@ -1,7 +1,7 @@
-From 006231c3f3ea0a1c97d40438812b4c6afce968ea Mon Sep 17 00:00:00 2001
+From 5b0b66869046fd7fc802b6636c9d89337aa2f7cb Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 9 Oct 2016 09:34:38 -0700
-Subject: [PATCH 7/7] Updater fixups for TM
+Subject: [PATCH 6/6] Updater fixups for TM
 
  * Remove updater links
 

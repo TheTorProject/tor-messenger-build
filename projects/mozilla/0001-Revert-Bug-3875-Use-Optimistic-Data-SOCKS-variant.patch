@@ -1,7 +1,7 @@
-From 646ea9771c1ee265c110238cbaf0488e74f7829a Mon Sep 17 00:00:00 2001
+From 1cc379a50214fb1e782c76c816b9ef6f8e52b6a0 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 10 Oct 2016 10:52:52 -0700
-Subject: [PATCH 2/7] Revert "Bug #3875: Use Optimistic Data SOCKS variant."
+Subject: [PATCH 1/6] Revert "Bug #3875: Use Optimistic Data SOCKS variant."
 
  * Preventing startls in xmpp.
 
