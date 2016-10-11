@@ -110,6 +110,8 @@ input_files:
   - filename: about-wordmark.png
   - filename: branding-aboutDialog.css
   - filename: updater-text.patch
+  - filename: trac-20207.patch
+    enable: '[% c("var/osx") %]'
   - filename: branding/osx.patch
     enable: '[% c("var/osx") %]'
   - filename: bug-1218193.patch

@@ -1,0 +1,27 @@
+From c57457ede9853527f529fd4dd1337ede51f4f312 Mon Sep 17 00:00:00 2001
+From: Vu Quoc Huy <huyvq.c633@gmail.com>
+Date: Tue, 11 Oct 2016 10:30:40 +0700
+Subject: [PATCH] Change CFBundleIdentifier to prevent notification sharing on
+ macOS
+
+* Resolve ticket #20207
+---
+ im/app/macbuild/Contents/Info.plist.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/im/app/macbuild/Contents/Info.plist.in b/im/app/macbuild/Contents/Info.plist.in
+index dc048c0..78a5305 100644
+--- a/im/app/macbuild/Contents/Info.plist.in
++++ b/im/app/macbuild/Contents/Info.plist.in
+@@ -11,7 +11,7 @@
+ 	<key>CFBundleIconFile</key>
+ 	<string>instantbird.icns</string>
+ 	<key>CFBundleIdentifier</key>
+-	<string>org.instantbird</string>
++	<string>org.mozilla.tor messenger</string>
+ 	<key>CFBundleInfoDictionaryVersion</key>
+ 	<string>6.0</string>
+ 	<key>CFBundleName</key>
+-- 
+2.7.4
+
