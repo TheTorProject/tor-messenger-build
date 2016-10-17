@@ -7,6 +7,8 @@ Tor Messenger 0.2.0b3 --
    * Properly handle incoming xmpp server messages (bugzilla 1246431)
    * Bug 20276: Fix toggling sounds
    * Bug 17480: Make url linkification toggleable
+   * Update ctypes-otr to 00e4e80a
+   * Bug 20231: Remove incomplete translations
  * Mac
    * Bug 20206: Avoid prompting to download font "Osaka" on macOS Sierra
    * Bug 20204: Windows don't drag on macOS Sierra
