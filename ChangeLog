@@ -2,44 +2,44 @@ Tor Messenger 0.2.0b3 --
  * All Platforms
    * Use the tor-browser-45.4.0esr-6.0-1 branch on tor-browser
    * Use the THUNDERBIRD_45_4_0_RELEASE tag on comm-esr45
-   * Bug 16536: Investigate Tor Browser patches relevant to Tor Messenger
-   * Bug 20208: Put conversations on hold by default
+   * Trac 16536: Investigate Tor Browser patches relevant to Tor Messenger
+   * Trac 20208: Put conversations on hold by default
    * Properly handle incoming xmpp server messages (bugzilla 1246431)
-   * Bug 20276: Fix toggling sounds
-   * Bug 17480: Make url linkification toggleable
+   * Trac 20276: Fix toggling sounds
+   * Trac 17480: Make url linkification toggleable
    * Update ctypes-otr to 00e4e80a
-   * Bug 20231: Remove incomplete translations
+   * Trac 20231: Remove incomplete translations
  * Mac
-   * Bug 20206: Avoid prompting to download font "Osaka" on macOS Sierra
-   * Bug 20204: Windows don't drag on macOS Sierra
+   * Trac 20206: Avoid prompting to download font "Osaka" on macOS Sierra
+   * Trac 20204: Windows don't drag on macOS Sierra
 
 Tor Messenger 0.2.0b2 -- September 06, 2016
  * Mac
-   * Bug 19269: Fix OS X file permissions
+   * Trac 19269: Fix OS X file permissions
    * Fix OS X profile when application is not placed in /Applications
 
 Tor Messenger 0.2.0b1 -- September 02, 2016
  * All Platforms
    * Use the THUNDERBIRD_45_3_0_RELEASE tag on mozilla-esr45
    * Use the THUNDERBIRD_45_3_0_RELEASE tag on comm-esr45
-   * Bug 19053: Display plaintext in notifications
-   * Bug 17363: Remove redundant Tor Messenger folders
-   * Bug 14388: Secure automatic updates for Tor Messenger
-   * Bug 13861: Preserve user profiles after updates
+   * Trac 19053: Display plaintext in notifications
+   * Trac 17363: Remove redundant Tor Messenger folders
+   * Trac 14388: Secure automatic updates for Tor Messenger
+   * Trac 13861: Preserve user profiles after updates
    * Update libgcrypt to 1.6.6 for CVE-2016-6316
    * Update ctypes-otr to 0.0.2
  * Linux
-   * Bug 18634: Switch to building Tor Messenger on Debian Wheezy
+   * Trac 18634: Switch to building Tor Messenger on Debian Wheezy
  * Mac
-   * Bug 13861: Profile directory stored in ~/Library/Application\ Support/TorMessenger-Data
-   * Bug 17460: Add graphics for OS X drag and drop to Applications
-   * Bug 17648: Fix update service error in error console
+   * Trac 13861: Profile directory stored in ~/Library/Application\ Support/TorMessenger-Data
+   * Trac 17460: Add graphics for OS X drag and drop to Applications
+   * Trac 17648: Fix update service error in error console
 
 Tor Messenger 0.1.0b6 -- April 06, 2016
  * All Platforms
    * Use the THUNDERBIRD_45_0b3_RELEASE tag on mozilla-esr45
    * Use the THUNDERBIRD_45_0b3_RELEASE tag on comm-esr45
-   * Bug 18533: Disable sending fonts or colors as part of messages
+   * Trac 18533: Disable sending fonts or colors as part of messages
    * ctypes-otr
      * GH 68: Don't close notification bar until verification succeeds (patch by Elias Rohrer)
      * GH 71: Improve verifying from the fingerprint manager (patch by Vu Quoc Huy)
@@ -47,37 +47,37 @@ Tor Messenger 0.1.0b6 -- April 06, 2016
 
 Tor Messenger 0.1.0b5 -- March 09, 2016
  * All Platforms
-   * Bug 13795: Remove SPI root certificate because Debian no longer ships it
-   * Bug 18094: Remove references to torbutton from start-tor-messenger script
-   * Bug 18235: Disable Facebook as they no longer support XMPP
-   * Bug 17494: Better error reporting for failed outgoing messages
-   * Bug 17749: Show version information in the "About" window
-   * Bug 13312: Add support for OTR over Twitter DMs
+   * Trac 13795: Remove SPI root certificate because Debian no longer ships it
+   * Trac 18094: Remove references to torbutton from start-tor-messenger script
+   * Trac 18235: Disable Facebook as they no longer support XMPP
+   * Trac 17494: Better error reporting for failed outgoing messages
+   * Trac 17749: Show version information in the "About" window
+   * Trac 13312: Add support for OTR over Twitter DMs
  * Mac
-   * Bug 17896: Add Edit menu to the conversation window on OS X
+   * Trac 17896: Add Edit menu to the conversation window on OS X
  * Windows
    * ctypes-otr
      * GH 65: Support Unicode paths on Windows
 
 Tor Messenger 0.1.0b4 -- November 22 2015
  * All Platforms
-   * Bug 17492: Include default bridges configuration
+   * Trac 17492: Include default bridges configuration
    * Use tor and the pluggable transports from tor-browser 5.0.4
-   * Bug 17552: Instantbird throwing on XMPP non-MUC message stanzas w/ subject
+   * Trac 17552: Instantbird throwing on XMPP non-MUC message stanzas w/ subject
    * ctypes-otr
-     * Bug 17539: Pass username when interpolating resent string
-     * Bug 15179: Add an OTR Preferences item to the Tools menu
+     * Trac 17539: Pass username when interpolating resent string
+     * Trac 15179: Add an OTR Preferences item to the Tools menu
    * Use the FIREFOX_42_0_RELEASE tag on mozilla-release
    * Use the THUNDERBIRD_42_0b2_RELEASE tag on comm-release
-   * Bug 16489: Prevent automatic logins at startup
+   * Trac 16489: Prevent automatic logins at startup
    * Update Tor Messenger logo in Tor Launcher
  * Mac
-   * Bug 16476: Themes preference is positioned incorrectly
-   * Bug 17456: Hang in preferences menu
+   * Trac 16476: Themes preference is positioned incorrectly
+   * Trac 17456: Hang in preferences menu
 
 Tor Messenger 0.1.0b3 -- October 30 2015
  * Windows
-   * Bug 17453: Fix Tor Messenger crash on Windows
+   * Trac 17453: Fix Tor Messenger crash on Windows
 
 Tor Messenger 0.1.0b2 -- October 29 2015
  * All Platforms
@@ -85,22 +85,22 @@ Tor Messenger 0.1.0b2 -- October 29 2015
    * Update libgcrypt to 1.6.4
    * Update GCC to 5.1.0
    * Use THUNDERBIRD_41_0b1_RELEASE tag on mozilla-release and comm-release
-   * Bug 17409: Disable "Get more ..." links in themes pane
-   * Bug 17346: Update Tor Messenger branding
+   * Trac 17409: Disable "Get more ..." links in themes pane
+   * Trac 17346: Update Tor Messenger branding
    * ctypes-otr
-     * Bug 16544: Display unencrypted received messages
+     * Trac 16544: Display unencrypted received messages
    * Remove "Get more protocols..." link in account wizard
  * Linux
-   * Bug 10942: Make Linux builds reproducible
+   * Trac 10942: Make Linux builds reproducible
 
 Tor Messenger 0.1.0b1 -- October 2 2015
  * All Platforms
-   * Bug 15162: Set user agent string to Instantbird stable/Windows
-   * Bug 16475: Prevent plugins from loading into address space
-   * Bug 16477: Disable search engine query and related settings
-   * Bug 15161: Fix JavaScript locale disclosure and CTCP fingerprinting
+   * Trac 15162: Set user agent string to Instantbird stable/Windows
+   * Trac 16475: Prevent plugins from loading into address space
+   * Trac 16477: Disable search engine query and related settings
+   * Trac 15161: Fix JavaScript locale disclosure and CTCP fingerprinting
    * Update build repository to Mozilla Aurora (Firefox 42)
  * Linux
    * Update start-tor-messenger script to include start-tor-browser options
  * Mac
-   * Bug 16508: Disable "Saved Application State" on OS X 10.7+
+   * Trac 16508: Disable "Saved Application State" on OS X 10.7+
