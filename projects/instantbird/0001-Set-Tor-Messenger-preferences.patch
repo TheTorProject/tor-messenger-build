@@ -1,14 +1,14 @@
-From 81e0dfcc4197e987a8c64cce36b3cda48e84fe54 Mon Sep 17 00:00:00 2001
+From bfa4576ff8e6291a0cd293e05ac48b2a91c6a3c1 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:48:41 -0700
 Subject: [PATCH 01/20] Set Tor Messenger preferences
 
 ---
- im/app/profile/all-instantbird.js | 107 +++++++++++++++++++++++++++++++-------
- 1 file changed, 87 insertions(+), 20 deletions(-)
+ im/app/profile/all-instantbird.js | 110 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 90 insertions(+), 20 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index b7a3970..86f0559 100644
+index b7a3970..eb1423f 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -28,7 +28,7 @@ pref("general.autoScroll", true);
@@ -110,7 +110,7 @@ index b7a3970..86f0559 100644
  
  // We have an Error Console menu item by default so let's display chrome errors
  pref("javascript.options.showInConsole", true);
-@@ -300,14 +302,79 @@ pref("browser.tabs.tabClipWidth", 140);
+@@ -300,14 +302,82 @@ pref("browser.tabs.tabClipWidth", 140);
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -187,6 +187,9 @@ index b7a3970..86f0559 100644
 +// Disable hardware acceleration
 +pref("gfx.direct2d.disabled", true);
 +pref("layers.acceleration.disabled", true);
++// Enable SVG, for the TB patch,
++// "Bug 12827: Create preference to disable SVG."
++pref("svg.in-content.enabled", true);
 +
 +// Other Updates
 +pref("app.update.promptWaitTime", 3600);

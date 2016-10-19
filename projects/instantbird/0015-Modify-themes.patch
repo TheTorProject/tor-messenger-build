@@ -1,4 +1,4 @@
-From 278bce580b808cc6881a3ba5cacee69b8ecb7a13 Mon Sep 17 00:00:00 2001
+From 8f6fad682f3fc785e324faf086e5248b54e50f2e Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:36:38 -0700
 Subject: [PATCH 15/20] Modify themes

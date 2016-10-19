@@ -1,4 +1,4 @@
-From 4199685bb157c9248701353d1da77d43b507f45c Mon Sep 17 00:00:00 2001
+From 7002186f102f329431ad1f1afce87af75f7a4570 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:38:49 -0700
 Subject: [PATCH 16/20] Modify XMPP defaults

@@ -1,4 +1,4 @@
-From ae27272d58c8f3654ba23b1329f07f0dc8fe5a10 Mon Sep 17 00:00:00 2001
+From fa84f77e4b3c3091aec5a479f862aa8cdb12de6a Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Sat, 30 Jan 2016 20:56:38 +0100
 Subject: [PATCH 03/20] Trac 17896: Support "Special Characters" input prompt
