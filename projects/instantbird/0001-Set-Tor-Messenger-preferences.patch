@@ -1,7 +1,7 @@
 From bfa4576ff8e6291a0cd293e05ac48b2a91c6a3c1 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:48:41 -0700
-Subject: [PATCH 01/20] Set Tor Messenger preferences
+Subject: [PATCH 01/21] Set Tor Messenger preferences
 
 ---
  im/app/profile/all-instantbird.js | 110 +++++++++++++++++++++++++++++++-------

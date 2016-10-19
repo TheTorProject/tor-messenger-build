@@ -78,6 +78,7 @@ input_files:
   - filename: 0018-Cert-override.patch
   - filename: 0019-Display-all-traffic-over-Tor.patch
   - filename: 0020-Trac-17480-Content-sink.patch
+  - filename: 0021-SASL-ECDSA-NIST256P-CHALLENGE.patch
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: mozilla
