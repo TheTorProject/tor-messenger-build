@@ -1,7 +1,7 @@
 From 1703b578adc3d9e57358e3ad2eee08922a9d93ec Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 10 Oct 2016 10:52:52 -0700
-Subject: [PATCH 1/6] Trac 19910: Prevents STARTTLS in XMPP
+Subject: [PATCH 1/7] Trac 19910: Prevents STARTTLS in XMPP
 
  * Revert "Bug #3875: Use Optimistic Data SOCKS variant."
 
