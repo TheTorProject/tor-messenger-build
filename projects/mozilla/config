@@ -2,7 +2,7 @@
 version: '[% c("abbrev") %]'
 filename: 'mozilla-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 git_url: https://git.torproject.org/tor-browser.git
-git_hash: 8b1f07f31cd04fb157bf99a9e2e600b4422f277f
+git_hash: 41f1c54ad978155f964fca1100f0c2eda1bef88a
 input_files:
   - filename: 0001-Trac-19910-Prevents-STARTTLS-in-XMPP.patch
   - filename: 0002-Trac-16475-Block-flash-too.patch
@@ -10,4 +10,3 @@ input_files:
   - filename: 0004-Trac-18331-Update-OS-X-toolchain-to-work-with-ESR-45.patch
   - filename: 0005-OSX-package-as-tar.bz2.patch
   - filename: 0006-Updater-fixups-for-TM.patch
-  - filename: 0007-fixup-Bug-1070710-Add-mozilla-ViewRegion-which-assem.patch

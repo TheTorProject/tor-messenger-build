@@ -1,7 +1,7 @@
 From 2476fa68858572f0be003df27b78579a5bb68a7f Mon Sep 17 00:00:00 2001
 From: Jonathan Kew <jkew@mozilla.com>
 Date: Sun, 9 Oct 2016 09:18:37 -0700
-Subject: [PATCH 3/7] Trac 20206: Avoid the need to download the font Osaka
+Subject: [PATCH 3/6] Trac 20206: Avoid the need to download the font Osaka
 
  * Bug 1283573 - Don't attempt to look up a single-face-family name if
    the corresponding main family isn't available. r=mstange
