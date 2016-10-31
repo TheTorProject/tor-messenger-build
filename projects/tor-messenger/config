@@ -26,6 +26,8 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: tor-messenger.nsi
     enable: '[% c("var/windows") %]'
+  - filename: pe_checksum_fix.py
+    enable: '[% c("var/windows") %]'
   - filename: cert_override.txt
   - filename: tor-messenger.ico
     enable: '[% c("var/windows") %]'
@@ -48,6 +50,10 @@ targets:
       filename_ext: 'exe'
       arch_deps:
         - nsis
+        - python
+        - python-pip
+        - python-dev
+        - build-essential
   osx-x86_64:
     distribution: Ubuntu-12.04
     var:

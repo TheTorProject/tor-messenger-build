@@ -13,6 +13,8 @@ Tor Messenger 0.3.0b1 --
  * Mac
    * Trac 20206: Avoid prompting to download font "Osaka" on macOS Sierra
    * Trac 20204: Windows don't drag on macOS Sierra
+ * Windows
+   * Trac 20062: Make stripping signatures reproducible on TM .exe files
 
 Tor Messenger 0.2.0b2 -- September 06, 2016
  * Mac
