@@ -1,7 +1,7 @@
 From 10e196e6c4e26d74baacba3e2b0f367a062b0287 Mon Sep 17 00:00:00 2001
 From: Nihanth Subramanya <nhnt11@gmail.com>
 Date: Sun, 9 Oct 2016 21:53:04 -0700
-Subject: [PATCH 06/21] Bug 1218193 - Fix tab strip background colour on OS X.
+Subject: [PATCH 06/22] Bug 1218193 - Fix tab strip background colour on OS X.
  r=aleth
 
 ---
@@ -22,5 +22,5 @@ index 76c5094..2915450 100644
    background-repeat: repeat-x;
  }
 -- 
-2.10.1
+2.10.2
 

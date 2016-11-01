@@ -1,7 +1,7 @@
 From b4e33411b5743601307009ce6e31235fccb57ba3 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:58:31 -0700
-Subject: [PATCH 19/21] Display all traffic over Tor
+Subject: [PATCH 19/22] Display all traffic over Tor
 
 ---
  im/content/accountWizard.xul                          | 2 ++
@@ -34,5 +34,5 @@ index c46fb2f..6b49c84 100644
  <!ENTITY accountProtocolShowMore.label  "Show all protocols">
  <!ENTITY accountProtocolShowMore.description  "Choose from the full list of protocols">
 -- 
-2.10.1
+2.10.2
 

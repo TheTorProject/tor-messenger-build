@@ -1,7 +1,7 @@
 From 2a8dc4c8043aeae007b4e727c54137f4ae90f3dd Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 15 Mar 2016 17:40:42 -0700
-Subject: [PATCH 05/21] Trac 13312: OTR over Twitter DMs
+Subject: [PATCH 05/22] Trac 13312: OTR over Twitter DMs
 
 ---
  chat/components/src/imConversations.js  |   4 +-
@@ -1002,5 +1002,5 @@ index fac9c56..af5e4d5 100644
  };
  
 -- 
-2.10.1
+2.10.2
 

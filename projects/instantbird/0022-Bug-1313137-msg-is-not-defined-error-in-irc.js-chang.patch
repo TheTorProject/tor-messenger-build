@@ -1,0 +1,29 @@
+From 6f07adf6e3db9f65cf4c45ecaba8f1f12423acff Mon Sep 17 00:00:00 2001
+From: aleth <aleth@instantbird.org>
+Date: Wed, 26 Oct 2016 20:16:58 +0200
+Subject: [PATCH 22/22] Bug 1313137 - "msg is not defined" error in
+ irc.js:changeBuddyNick. r=clokep
+
+--HG--
+extra : rebase_source : 5752a69059ecd48b947809ef12de177ccab8528f
+---
+ chat/protocols/irc/irc.js | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
+index c2167a5..b58c2c2 100644
+--- a/chat/protocols/irc/irc.js
++++ b/chat/protocols/irc/irc.js
+@@ -1289,7 +1289,8 @@ ircAccount.prototype = {
+       this.conversations.set(aNewNick, conversation);
+ 
+       conversation.updateNick(aNewNick);
+-      conversation.writeMessage(aOldNick, msg, {system: true});
++      conversation.writeMessage(aOldNick, _conv("nickSet", aOldNick, aNewNick),
++                                {system: true});
+     }
+   },
+ 
+-- 
+2.10.2
+
