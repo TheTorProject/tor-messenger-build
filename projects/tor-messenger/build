@@ -91,6 +91,10 @@ cd ..
 mv bundle tor-messenger
 [% IF c('var/windows') -%]
 makensis tor-messenger.nsi
+mv tor-messenger-install.exe tor-messenger-install-tmp.exe
+python pe_checksum_fix.py
+mv tor-messenger-install-tmp2.exe tor-messenger-install.exe
+rm tor-messenger-install-tmp.exe
 mv tor-messenger-install.exe [% dest_dir _ '/' _ c('filename') %]
 [% ELSE -%]
 [% c('tar', {
