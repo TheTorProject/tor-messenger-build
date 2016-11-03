@@ -93,12 +93,12 @@ mv bundle tor-messenger
 makensis tor-messenger.nsi
 
 tar xf $rootdir/[% c('input_files_by_name/python-future') %]
-cd future-0.16.0/
+cd $(echo [% c('input_files_by_name/python-future') %] | sed s/\.tar\.gz$//)
 python setup.py install --user
 cd ..
 
 tar xf $rootdir/[% c('input_files_by_name/python-pefile') %]
-cd pefile-2016.3.28/
+cd $(echo [% c('input_files_by_name/python-pefile') %] | sed s/\.tar\.gz$//)
 python setup.py install --user
 cd ..
 
