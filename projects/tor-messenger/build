@@ -91,8 +91,18 @@ cd ..
 mv bundle tor-messenger
 [% IF c('var/windows') -%]
 makensis tor-messenger.nsi
+
+tar xf future-0.16.0.tar.gz
+cd future-0.16.0/
+python setup.py install --user
+cd ..
+
+tar xf pefile-2016.3.28.tar.gz
+cd pefile-2016.3.28/
+python setup.py install --user
+cd ..
+
 mv tor-messenger-install.exe tor-messenger-install-tmp.exe
-pip install --user pefile==2016.3.28
 python pe_checksum_fix.py
 mv tor-messenger-install-tmp2.exe tor-messenger-install.exe
 rm tor-messenger-install-tmp.exe

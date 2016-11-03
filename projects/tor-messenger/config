@@ -26,6 +26,10 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: tor-messenger.nsi
     enable: '[% c("var/windows") %]'
+  - filename: future-0.16.0.tar.gz
+    enable: '[% c("var/windows") %]'
+  - filename: pefile-2016.3.28.tar.gz
+    enable: '[% c("var/windows") %]'
   - filename: pe_checksum_fix.py
     enable: '[% c("var/windows") %]'
   - filename: cert_override.txt
@@ -51,7 +55,6 @@ targets:
       arch_deps:
         - nsis
         - python
-        - python-pip
         - python-dev
         - build-essential
   osx-x86_64:
