@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 rootdir=$(pwd)
-tar xf [% c('input_files_by_name/instantbird') %]
+tar xf [% c('input_files_by_name/instantbird') %]/instantbird.tar.bz2
 
 tar xf [% c('input_files_by_name/libdmg') %]
 export PATH="$(pwd)/libdmg-hfsplus:$PATH"

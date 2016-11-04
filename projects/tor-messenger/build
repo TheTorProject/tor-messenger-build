@@ -10,11 +10,11 @@ rootdir=$(pwd)
 
 mkdir bundle
 [% IF c("var/windows") -%]
-7z x -y -obundle [% c('input_files_by_name/instantbird') %]
+7z x -y -obundle [% c('input_files_by_name/instantbird') %]/instantbird.zip
 mv bundle/instantbird bundle/Browser
 [% ELSE -%]
 mkdir bundle/Browser
-tar xf [% c('input_files_by_name/instantbird') %] -C bundle/Browser --strip 1
+tar xf [% c('input_files_by_name/instantbird') %]/instantbird.tar.bz2 -C bundle/Browser --strip 1
 [% END -%]
 find bundle/Browser -exec touch -m -t $(date -d @[% c('timestamp') %] +%Y%m%d%H%M) {} \;
 
