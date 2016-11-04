@@ -64,3 +64,4 @@ mkisofs -D -V "Tor Messenger" -no-pad -R -apple -o ../TorMessenger-uncompressed.
 cd ..
 mkdir -p '[% dest_dir _ "/" _ c("filename") %]'
 dmg dmg TorMessenger-uncompressed.dmg [% dest_dir _ '/' _ c('filename') _ '/' _ c('var/bundle_filename') %]
+mv -f [% c('input_files_by_name/instantbird') %]/mar-tools-*.zip [% dest_dir _ '/' _ c('filename') %]

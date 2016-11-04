@@ -115,3 +115,4 @@ mv tor-messenger-install.exe [% dest_dir _ '/' _ c('filename') _ '/' _ c('var/bu
                         _ '/' _ c('var/bundle_filename'),
         }) %]
 [% END -%]
+mv -f [% c('input_files_by_name/instantbird') %]/mar-tools-*.zip [% dest_dir _ '/' _ c('filename') %]
