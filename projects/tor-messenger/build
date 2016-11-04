@@ -89,6 +89,7 @@ rm -Rf Browser/TorBrowser/Data/Browser/profile.default/extensions/tor-browser_en
 cd ..
 
 mv bundle tor-messenger
+mkdir -p '[% dest_dir _ "/" _ c("filename") %]'
 [% IF c('var/windows') -%]
 makensis tor-messenger.nsi
 
@@ -106,10 +107,11 @@ mv tor-messenger-install.exe tor-messenger-install-tmp.exe
 python pe_checksum_fix.py
 mv tor-messenger-install-tmp2.exe tor-messenger-install.exe
 rm tor-messenger-install-tmp.exe
-mv tor-messenger-install.exe [% dest_dir _ '/' _ c('filename') %]
+mv tor-messenger-install.exe [% dest_dir _ '/' _ c('filename') _ '/' _ c('var/bundle_filename') %]
 [% ELSE -%]
 [% c('tar', {
         tar_src => [ 'tor-messenger' ],
-        tar_args => '-cJf ' _ dest_dir _ '/' _ c('filename'),
+        tar_args => '-cJf ' _ dest_dir _ '/' _ c('filename')
+                        _ '/' _ c('var/bundle_filename'),
         }) %]
 [% END -%]

@@ -1,6 +1,6 @@
 # vim: filetype=yaml sw=2
 version: '[% c("var/tormessenger_version") %]'
-filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].[% c("var/filename_ext") %]'
+filename: 'tor-messenger-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %]'
 input_files:
   - name: instantbird
     project: instantbird
@@ -47,7 +47,6 @@ input_files:
 remote_docker: 1
 distribution: Debian-7.11
 var:
-  filename_ext: 'tar.xz'
   deps:
     - p7zip-full
     - bzip2
@@ -55,7 +54,7 @@ targets:
   windows-i686:
     distribution: Ubuntu-14.10
     var:
-      filename_ext: 'exe'
+      bundle_filename: 'tormessenger-install-[% c("version") %]_en-US.exe'
       arch_deps:
         - nsis
         - python
@@ -64,7 +63,13 @@ targets:
   osx-x86_64:
     distribution: Ubuntu-12.04
     var:
-      filename_ext: 'dmg'
+      bundle_filename: 'TorMessenger-[% c("version") %]-osx64_en-US.dmg'
       arch_deps:
         - genisoimage
         - bsdtar
+  linux-i686:
+    var:
+      bundle_filename: 'tor-messenger-linux32-[% c("version") %]_en-US.tar.xz'
+  linux-x86_64:
+    var:
+      bundle_filename: 'tor-messenger-linux64-[% c("version") %]_en-US.tar.xz'

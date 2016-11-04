@@ -62,4 +62,5 @@ find . -type l | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" >> ../filelis
 
 mkisofs -D -V "Tor Messenger" -no-pad -R -apple -o ../TorMessenger-uncompressed.dmg -path-list ../filelist.txt -graft-points -gid 20 -dir-mode 0755 -new-dir-mode 0755
 cd ..
-dmg dmg TorMessenger-uncompressed.dmg [% dest_dir _ '/' _ c('filename') %]
+mkdir -p '[% dest_dir _ "/" _ c("filename") %]'
+dmg dmg TorMessenger-uncompressed.dmg [% dest_dir _ '/' _ c('filename') _ '/' _ c('var/bundle_filename') %]

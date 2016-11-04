@@ -34,10 +34,10 @@ build: |
   export LC_ALL=C
   destdir="[% dest_dir _ '/' _ c("version") %]"
   mkdir -p "$destdir"
-  mv [% c('input_files_by_name/linux-x86_64') %] "$destdir"/tor-messenger-linux64-[% c("version") %]_en-US.tar.xz
-  mv [% c('input_files_by_name/linux-i686') %] "$destdir"/tor-messenger-linux32-[% c("version") %]_en-US.tar.xz
-  mv [% c('input_files_by_name/windows-i686') %] "$destdir"/tormessenger-install-[% c("version") %]_en-US.exe
-  mv [% c('input_files_by_name/osx-x86_64') %] "$destdir"/TorMessenger-[% c("version") %]-osx64_en-US.dmg
+  mv [% c('input_files_by_name/windows-i686') %]/* "$destdir"/
+  mv [% c('input_files_by_name/osx-x86_64') %]/* "$destdir"/
+  mv [% c('input_files_by_name/linux-i686') %]/* "$destdir"/
+  mv [% c('input_files_by_name/linux-x86_64') %]/* "$destdir"/
   cd "$destdir"
   sha256sum $(ls -1 *.exe *.tar.xz *.dmg | sort) > sha256sums.txt
   cat sha256sums.txt
