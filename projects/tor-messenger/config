@@ -50,11 +50,13 @@ var:
   deps:
     - p7zip-full
     - bzip2
+    - python
 targets:
   windows-i686:
     distribution: Ubuntu-14.10
     var:
       bundle_filename: 'tormessenger-install-[% c("version") %]_en-US.exe'
+      mar_osname: win32
       arch_deps:
         - nsis
         - python
@@ -64,12 +66,15 @@ targets:
     distribution: Ubuntu-12.04
     var:
       bundle_filename: 'TorMessenger-[% c("version") %]-osx64_en-US.dmg'
+      mar_osname: osx64
       arch_deps:
         - genisoimage
         - bsdtar
   linux-i686:
     var:
       bundle_filename: 'tor-messenger-linux32-[% c("version") %]_en-US.tar.xz'
+      mar_osname: linux32
   linux-x86_64:
     var:
       bundle_filename: 'tor-messenger-linux64-[% c("version") %]_en-US.tar.xz'
+      mar_osname: linux64

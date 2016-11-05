@@ -55,6 +55,12 @@ cp $rootdir/background.png .background/
 cp $rootdir/DS_Store .DS_Store
 ln -s /Applications/ .
 
+# Recreate precomplete file (needs to be accurate for full MAR updates).
+cd TorMessenger.app/Contents/Resources
+rm -f precomplete
+python $MARTOOLS/createprecomplete.py
+cd ../../..
+
 find . -executable -exec chmod 755 {} \;
 find . ! -executable -exec chmod 644 {} \;
 find . -type f | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" > ../filelist.txt
@@ -62,6 +68,10 @@ find . -type l | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" >> ../filelis
 
 mkisofs -D -V "Tor Messenger" -no-pad -R -apple -o ../TorMessenger-uncompressed.dmg -path-list ../filelist.txt -graft-points -gid 20 -dir-mode 0755 -new-dir-mode 0755
 cd ..
-mkdir -p '[% dest_dir _ "/" _ c("filename") %]'
-dmg dmg TorMessenger-uncompressed.dmg [% dest_dir _ '/' _ c('filename') _ '/' _ c('var/bundle_filename') %]
-mv -f [% c('input_files_by_name/instantbird') %]/mar-tools-*.zip [% dest_dir _ '/' _ c('filename') %]
+OUTDIR='[% dest_dir _ "/" _ c("filename") %]'
+mkdir -p $OUTDIR
+dmg dmg TorMessenger-uncompressed.dmg $OUTDIR/[% c('var/bundle_filename') %]
+mv -f [% c('input_files_by_name/instantbird') %]/mar-tools-*.zip $OUTDIR
+MAR_FILE=tor-messenger-[% c("var/mar_osname") %]-[% c("version") %]_en-US.mar
+MAR=$MARTOOLS/mar MBSDIFF=$MARTOOLS/mbsdiff $MARTOOLS/make_full_update.sh \
+    -q $OUTDIR/$MAR_FILE dmg/TorMessenger.app
