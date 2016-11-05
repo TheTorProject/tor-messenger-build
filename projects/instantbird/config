@@ -85,6 +85,7 @@ input_files:
   - filename: 0021-SASL-ECDSA-NIST256P-CHALLENGE.patch
   - filename: 0022-Bug-1313137-msg-is-not-defined-error-in-irc.js-chang.patch
   - filename: 0023-Bug-954368-Contact-list-entries-should-adapt-their-h.patch
+  - filename: 0024-Bug-1187281-Only-show-close-button-on-Windows.patch
   - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig

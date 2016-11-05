@@ -1,0 +1,25 @@
+From aae841a7013929d5ba53e379de0d8b9b947d3789 Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Sat, 5 Nov 2016 14:55:20 -0700
+Subject: [PATCH 24/24] Bug 1187281 - Only show "close" button on Windows
+
+---
+ im/content/accounts.xul | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/im/content/accounts.xul b/im/content/accounts.xul
+index f3f1c6b..d683562 100644
+--- a/im/content/accounts.xul
++++ b/im/content/accounts.xul
+@@ -142,6 +142,8 @@
+   <windowdragbox id="bottombuttons" align="center">
+     <button id="newaccount" command="cmd_new"/>
+     <spacer flex="1"/>
++#ifdef XP_WIN
+     <button id="close" command="cmd_close"/>
++#endif
+   </windowdragbox>
+ </window>
+-- 
+2.10.2
+

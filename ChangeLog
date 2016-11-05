@@ -3,6 +3,7 @@ Tor Messenger 0.3.0b1 --
    * Use the tor-browser-45.4.0esr-6.0-1 branch (41f1c54a) on tor-browser
    * Use the THUNDERBIRD_45_4_0_RELEASE tag on comm-esr45
    * Update ctypes-otr to 00e4e80a
+   * Trac 16489: Only show "close" button on Windows
    * Trac 16491: Contact list entries don't adapt to the actual font size
    * Trac 16536: Investigate Tor Browser patches relevant to Tor Messenger
    * Trac 17471: Investigate Tor Browser preferences relevant to Tor Messenger
