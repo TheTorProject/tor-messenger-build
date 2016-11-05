@@ -1,0 +1,322 @@
+From b55560a8e94434e8320e428145f9d93ca494ce04 Mon Sep 17 00:00:00 2001
+From: aleth <aleth@instantbird.org>
+Date: Thu, 12 May 2016 15:10:43 +0200
+Subject: [PATCH 23/23] Bug 954368 - Contact list entries should adapt their
+ height to the actual font size. r=florian
+
+--HG--
+extra : rebase_source : 9820f3a68794f98260f3ac406772da6d176d02ec
+---
+ chat/themes/imtooltip.css                          |  1 +
+ im/content/blist.css                               | 38 ++++++++++++---
+ im/content/blist.js                                |  7 +++
+ im/content/blist.xul                               |  4 ++
+ im/content/contact.xml                             | 57 +++++++++++-----------
+ im/content/conv.xml                                | 10 ++--
+ .../en-US/chrome/instantbird/instantbird.dtd       |  6 +++
+ im/themes/blist.css                                | 22 ++++-----
+ 8 files changed, 92 insertions(+), 53 deletions(-)
+
+diff --git a/chat/themes/imtooltip.css b/chat/themes/imtooltip.css
+index c4525be..630da39 100644
+--- a/chat/themes/imtooltip.css
++++ b/chat/themes/imtooltip.css
+@@ -31,6 +31,7 @@
+ 
+ .tooltipBuddies {
+   margin-left: -3px;
++  --blist-item-height: 20px; /* 16px icon plus padding */
+ }
+ 
+ .tooltipDisplayName {
+diff --git a/im/content/blist.css b/im/content/blist.css
+index d47e4f3..15b61b1 100644
+--- a/im/content/blist.css
++++ b/im/content/blist.css
+@@ -30,15 +30,28 @@ group {
+   -moz-box-align: center;
+ }
+ 
+-/* The height is required for the animation to work. The skin can
+- * specify an additionnal min-height value if there are things of
+- * constant size (icons + padding) */
+-contact,
+-buddy,
++/* The height is required for the animation to work. */
+ group {
+   height: 1em;
+ }
+ 
++conv,
++contact,
++buddy {
++  /* Variable set from blist.js. This is necessary as CSS transitions don't
++     work with height: auto.
++     Usually 16+2+2px for the protocol icon, padding top and bottom. */
++  height: var(--blist-item-height);
++}
++
++contact[open],
++contact[aliasing],
++#buddylistbox:focus > contact[selected] {
++  /* This is fine because height transitions in this state are on the
++     buddies, and there is no transition on selection (it's instant). */
++  height: auto;
++}
++
+ /* Possible values of the |state| attribute:
+  - not set: the binding is not initialized yet,
+  - showing: during the expand animation,
+@@ -51,23 +64,24 @@ contact:not([state]),
+ buddy:not([state]) {
+   height: 0;
+ }
++
+ contact[state="showing"],
+ buddy[state="showing"] {
+   /* Should match the transition effect for contact/buddy collapsing so
+      that reordering doesn't make the whole list jump. */
+-  -moz-transition: height .2s ease-in;
++  transition: height .2s ease-in;
+ }
+ 
+ contact[state="fading"] {
+   opacity: 0;
+-  -moz-transition: opacity .4s ease-in 1s;
++  transition: opacity .4s ease-in 1s;
+ }
+ 
+ contact[state="collapsing"],
+ buddy[state="collapsing"],
+ group[collapsing="true"] {
+   height: 0;
+-  -moz-transition: height .2s ease-in;
++  transition: height .2s ease-in;
+ }
+ 
+ contact[state="collapsing"] *,
+@@ -78,6 +92,14 @@ group[collapsing="true"] * {
+   display: none;
+ }
+ 
++#dummyContact {
++  height: auto;
++}
++
++#dummylistbox {
++  visibility: hidden;
++}
++
+ tooltip[type="im"] {
+   -moz-binding: url("chrome://chat/content/imtooltip.xml#tooltip");
+ }
+diff --git a/im/content/blist.js b/im/content/blist.js
+index 9ec10e2..ce76ffc 100644
+--- a/im/content/blist.js
++++ b/im/content/blist.js
+@@ -820,6 +820,13 @@ var buddyList = {
+               .setAttribute("checked", "true");
+     }
+ 
++    // Find the correct height of a contact list item. This can vary depending
++    // on the platform font and font size.
++    let dummyContact = document.getElementById("dummyContact");
++    let contactHeight = dummyContact.getBoundingClientRect().height;
++    document.getElementById("buddyListMsg")
++            .style.setProperty("--blist-item-height", contactHeight + "px");
++
+     let blistBox = document.getElementById("buddylistbox");
+     blistBox.removeGroup = function(aGroupElt) {
+       let index = buddyList._displayedGroups.indexOf(aGroupElt);
+diff --git a/im/content/blist.xul b/im/content/blist.xul
+index f29a48b..71ee2c9 100644
+--- a/im/content/blist.xul
++++ b/im/content/blist.xul
+@@ -224,6 +224,10 @@
+                  onfocus="buddyList.buddylistboxFocus();"
+                  onselect="buddyList.listboxSelect(event);"
+                  tooltip="imTooltip"/>
++    <richlistbox id="dummylistbox">
++      <contact id="dummyContact" displayname="&dummyContact.label;"
++               state="visible" status="unknown"/>
++    </richlistbox>
+     <spacer id="listSpacer" flex="1"
+             onclick='document.getElementById("buddylistbox").focus();'/>
+   </notificationbox>
+diff --git a/im/content/contact.xml b/im/content/contact.xml
+index 5fc36dd..f2b4641 100644
+--- a/im/content/contact.xml
++++ b/im/content/contact.xml
+@@ -16,11 +16,11 @@
+ 
+   <binding id="contact" extends="chrome://global/content/bindings/richlistbox.xml#richlistitem">
+     <content>
+-      <xul:stack class="prplBuddyIcon" mousethrough="always">
+-        <xul:image class="protoIcon" xbl:inherits="src=iconPrpl,status"/>
+-        <xul:image class="statusIcon" xbl:inherits="status"/>
+-      </xul:stack>
+-      <xul:hbox flex="1" class="contact-hbox" mousethrough="always">
++      <xul:hbox flex="1" class="contact-hbox" mousethrough="always" align="center">
++        <xul:stack class="prplBuddyIcon" mousethrough="always">
++          <xul:image class="protoIcon" xbl:inherits="src=iconPrpl,status"/>
++          <xul:image class="statusIcon" xbl:inherits="status"/>
++        </xul:stack>
+         <xul:label crop="end" flex="1" mousethrough="always"
+                    anonid="displayname" class="contactDisplayName blistDisplayName"
+                    xbl:inherits="value=displayname,status"/>
+@@ -529,30 +529,29 @@
+ 
+   <binding id="contact-big" extends="chrome://instantbird/content/contact.xml#contact">
+     <content>
+-      <xul:hbox flex="1" mousethrough="always">
+-        <xul:stack class="prplBuddyIcon" mousethrough="always">
+-          <xul:image class="protoIcon" xbl:inherits="src=iconPrpl,status"/>
+-          <xul:image class="statusIcon" xbl:inherits="status"/>
+-        </xul:stack>
+-        <xul:vbox flex="1" class="contact-vbox" mousethrough="always">
+-          <xul:hbox class="contact-hbox" mousethrough="always">
+-            <xul:label crop="end" flex="1" mousethrough="always"
+-                       anonid="displayname" class="contactDisplayName blistDisplayName"
+-                       xbl:inherits="value=displayname,status"/>
+-            <xul:button anonid="startChatBubble" class="startChatBubble"
+-                        tooltiptext="&openConversationCmd.label;"/>
+-          </xul:hbox>
+-          <xul:hbox class="contact-hbox" mousethrough="always">
+-            <xul:label crop="end" flex="1" mousethrough="always"
+-                       anonid="statusText" class="contactStatusText"
+-                       xbl:inherits="value=statusText"/>
+-            <xul:button anonid="expander" class="expander-down"
+-                        tooltiptextexpand="&expandContactTooltip;"
+-                        tooltiptextcollapse="&collapseContactTooltip;"
+-                        tooltiptext="&expandContactTooltip;"/>
+-          </xul:hbox>
+-        </xul:vbox>
+-      </xul:hbox>
++      <xul:vbox flex="1" class="contact-vbox" mousethrough="always">
++        <xul:hbox flex="1" class="contact-hbox" mousethrough="always" align="center">
++          <xul:stack class="prplBuddyIcon" mousethrough="always">
++            <xul:image class="protoIcon" xbl:inherits="src=iconPrpl,status"/>
++            <xul:image class="statusIcon" xbl:inherits="status"/>
++          </xul:stack>
++          <xul:label crop="end" flex="1" mousethrough="always"
++                     anonid="displayname" class="contactDisplayName blistDisplayName"
++                     xbl:inherits="value=displayname,status"/>
++          <xul:button anonid="startChatBubble" class="startChatBubble"
++                      tooltiptext="&openConversationCmd.label;"/>
++        </xul:hbox>
++
++        <xul:hbox flex="1" class="contact-hbox" mousethrough="always" align="center">
++          <xul:label crop="end" flex="1" mousethrough="always"
++                     anonid="statusText" class="contactStatusText contactIconSpace"
++                     xbl:inherits="value=statusText"/>
++          <xul:button anonid="expander" class="expander-down"
++                      tooltiptextexpand="&expandContactTooltip;"
++                      tooltiptextcollapse="&collapseContactTooltip;"
++                      tooltiptext="&expandContactTooltip;"/>
++        </xul:hbox>
++      </xul:vbox>
+       <xul:vbox anonid="contactBuddies" class="contactBuddies">
+         <children/>
+       </xul:vbox>
+diff --git a/im/content/conv.xml b/im/content/conv.xml
+index 96a33af..c41da6f 100644
+--- a/im/content/conv.xml
++++ b/im/content/conv.xml
+@@ -16,11 +16,11 @@
+ 
+   <binding id="conv" extends="chrome://global/content/bindings/richlistbox.xml#richlistitem">
+     <content>
+-      <xul:stack class="prplBuddyIcon" mousethrough="always">
+-        <xul:image class="protoIcon" xbl:inherits="src=iconPrpl,status"/>
+-        <xul:image class="statusIcon" xbl:inherits="status"/>
+-      </xul:stack>
+-      <xul:hbox flex="1" class="conv-hbox" mousethrough="always">
++      <xul:hbox flex="1" class="conv-hbox" mousethrough="always" align="center">
++        <xul:stack class="prplBuddyIcon" mousethrough="always">
++          <xul:image class="protoIcon" xbl:inherits="src=iconPrpl,status"/>
++          <xul:image class="statusIcon" xbl:inherits="status"/>
++        </xul:stack>
+         <xul:label crop="end" flex="1" mousethrough="always"
+                    anonid="displayname" class="convDisplayName blistDisplayName"
+                    xbl:inherits="value=displayname,status"/>
+diff --git a/im/locales/en-US/chrome/instantbird/instantbird.dtd b/im/locales/en-US/chrome/instantbird/instantbird.dtd
+index 80b8948..fce965b 100644
+--- a/im/locales/en-US/chrome/instantbird/instantbird.dtd
++++ b/im/locales/en-US/chrome/instantbird/instantbird.dtd
+@@ -95,6 +95,12 @@
+ <!ENTITY userIcon.label                "Change your icon">
+ <!ENTITY contactsHeader.label          "Contacts">
+ <!ENTITY convsHeader.label             "Conversations on hold">
++<!-- LOCALIZATION NOTE (dummyContact.label):
++     This string is not displayed anywhere, but it is used to calculate
++     the height of an item in the contact list. Therefore you should
++     set it to a string which contains characters that cover all
++     vertical sizes that occur in your language. -->
++<!ENTITY dummyContact.label            "SgFyWp">
+ 
+ <!ENTITY openConversationCmd.label     "Start a conversation">
+ <!ENTITY openConversationCmd.accesskey "c">
+diff --git a/im/themes/blist.css b/im/themes/blist.css
+index 9922674..c033b51 100644
+--- a/im/themes/blist.css
++++ b/im/themes/blist.css
+@@ -100,14 +100,7 @@ group {
+   padding: 0 2px;
+ }
+ 
+-conv,
+-contact,
+-buddy {
+-  height: 20px; /* 16+2+2px for the protocol icon, padding top and bottom */
+-}
+-
+ /* The vertical padding directly on the binding would not be animated. */
+-.prplBuddyIcon,
+ group>* {
+   padding-top: 2px;
+   padding-bottom: 2px;
+@@ -153,21 +146,28 @@ contact[droptarget] > buddy[dummy] {
+   margin: 0;
+ }
+ 
++.contactDisplayName,
+ .buddyDisplayName {
+   -moz-margin-start: 2px;
+ }
+ 
++/* Used for the second line of a contact-big to add space on the left
++   where the .prplBuddyIcon sits on the first line. */
++.contactIconSpace {
++  /* .prplBuddyIcon width+margins (16+3+3) + .contactStatusText margin (2) */
++  margin-inline-start: 24px;
++}
++
+ .contact-hbox,
+ .conv-hbox {
+   margin: 2px 0;
+-  -moz-margin-start: 2px;
+   min-height: 16px;
+   overflow-x: hidden;
+ }
+ 
+ /* Avoid a strange jumping bug when hovering and the startChatBubble appears */
+ .contact-vbox {
+-  min-height: 40px;
++  min-height: calc(var(--blist-item-height) * 2);
+ }
+ 
+ .hideGroupButton,
+@@ -240,8 +240,8 @@ contact[droptarget] > buddy[dummy] {
+ .startChatBubble,
+ .expander-up,
+ .expander-down {
+-  width: 16px;
+-  height: 16px;
++  max-width: 16px;
++  max-height: 16px;
+   min-height: 16px;
+   min-width: 16px;
+ }
+-- 
+2.10.2
+
