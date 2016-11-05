@@ -1,18 +1,20 @@
 Tor Messenger 0.3.0b1 --
  * All Platforms
-   * Use the tor-browser-45.4.0esr-6.0-1 branch on tor-browser
+   * Use the tor-browser-45.4.0esr-6.0-1 branch (41f1c54a) on tor-browser
    * Use the THUNDERBIRD_45_4_0_RELEASE tag on comm-esr45
-   * Trac 16536: Investigate Tor Browser patches relevant to Tor Messenger
-   * Trac 20208: Put conversations on hold by default
-   * Properly handle incoming xmpp server messages (bugzilla 1246431)
-   * Trac 20276: Fix toggling sounds
-   * Trac 17480: Make url linkification toggleable
    * Update ctypes-otr to 00e4e80a
+   * Trac 16536: Investigate Tor Browser patches relevant to Tor Messenger
+   * Trac 17471: Investigate Tor Browser preferences relevant to Tor Messenger
+   * Trac 17480: Make url linkification toggleable
+   * Trac 19816: Build process should generate mar files
+   * Trac 20208: Put conversations on hold by default
    * Trac 20231: Remove incomplete translations
-   * Fix irc "msg is not defined" error (bugzilla 1313137)
+   * Trac 20276: Fix toggling sounds
+   * Bugzilla 1246431: Properly handle incoming xmpp server messages
+   * Bugzilla 1313137: Fix irc "msg is not defined" error
  * Mac
-   * Trac 20206: Avoid prompting to download font "Osaka" on macOS Sierra
    * Trac 20204: Windows don't drag on macOS Sierra
+   * Trac 20206: Avoid prompting to download font "Osaka" on macOS Sierra
  * Windows
    * Trac 20062: Make stripping signatures reproducible on TM .exe files
 
