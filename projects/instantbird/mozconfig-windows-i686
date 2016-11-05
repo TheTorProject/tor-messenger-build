@@ -1,33 +1,13 @@
 export CROSS_COMPILE=1
 
-no_tooltool=1
-
 ac_add_options --target=i686-w64-mingw32
 ac_add_options --enable-default-toolkit=cairo-windows
 ac_add_options --enable-strip
-
-ac_add_options --enable-application=im
-ac_add_options --enable-optimize
-
-ac_add_options --with-l10n-base=..
-
-# sandbox currently fail to build with mingw, see trac 16010
-ac_add_options --disable-sandbox
 
 # ICU seems still to have cross-compiling issues:
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1019744#c19
 ac_add_options --without-intl-api
 
-ac_add_options --with-branding=im/branding/messenger
-
-ac_add_options --disable-crashreporter
-ac_add_options --disable-maintenance-service
-ac_add_options --disable-webrtc
-ac_add_options --disable-tests
-ac_add_options --disable-debug
-
-ac_add_options --enable-tor-browser-update
-ac_add_options --enable-update-channel=release
-ac_add_options --enable-update-packaging
-ac_add_options --enable-signmar
-ac_add_options --enable-verify-mar
+# We can't build the sandbox code with mingw-w64:
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1042426
+ac_add_options --disable-sandbox

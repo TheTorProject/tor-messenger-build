@@ -84,6 +84,7 @@ input_files:
   - filename: 0020-Trac-17480-Content-sink.patch
   - filename: 0021-SASL-ECDSA-NIST256P-CHALLENGE.patch
   - filename: 0022-Bug-1313137-msg-is-not-defined-error-in-irc.js-chang.patch
+  - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - name: mozilla

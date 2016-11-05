@@ -1,6 +1,4 @@
-CROSS_COMPILE=1
-
-no_tooltool=1
+export CROSS_COMPILE=1
 
 TOOLCHAIN_PREFIX="$ccbindir/x86_64-apple-darwin10-"
 CROSS_PRIVATE_FRAMEWORKS="$sysrootdir/System/Library/PrivateFrameworks"
@@ -9,28 +7,7 @@ FLAGS="-arch x86_64 -isysroot $sysrootdir"
 CC="$ccbindir/x86_64-apple-darwin10-clang $FLAGS"
 CXX="$ccbindir/x86_64-apple-darwin10-clang++ $FLAGS"
 
-ac_add_options --enable-application=im
-ac_add_options --enable-optimize
 ac_add_options --target=x86_64-apple-darwin10
-ac_add_options --enable-strip
 ac_add_options --with-macos-private-frameworks="$CROSS_PRIVATE_FRAMEWORKS"
-# Let's not compile EME at least until we can enable ClearKey and only Clearkey.
-# (Apart from that there is no Adobe CRM module for OS X right now)
-ac_add_options --disable-eme
-
-ac_add_options --with-l10n-base=..
-
-ac_add_options --with-branding=im/branding/messenger
-
-ac_add_options --disable-maintenance-service
-ac_add_options --disable-crashreporter
-ac_add_options --disable-webrtc
-ac_add_options --disable-tests
-ac_add_options --disable-debug
-
-ac_add_options --enable-tor-browser-update
-ac_add_options --enable-update-channel=release
-ac_add_options --enable-update-packaging
-ac_add_options --enable-signmar
-ac_add_options --enable-verify-mar
 ac_add_options --enable-tor-browser-data-outside-app-dir
+ac_add_options --enable-strip
