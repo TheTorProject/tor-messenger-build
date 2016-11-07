@@ -18,6 +18,7 @@ Tor Messenger 0.3.0b1 --
  * Mac
    * Trac 20204: Windows don't drag on macOS Sierra
    * Trac 20206: Avoid prompting to download font "Osaka" on macOS Sierra
+   * Trac 20207: IB and Tor Messenger still share a notification key
  * Windows
    * Trac 20062: Make stripping signatures reproducible on TM .exe files
 
