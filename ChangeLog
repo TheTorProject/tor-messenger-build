@@ -9,6 +9,7 @@ Tor Messenger 0.3.0b1 --
    * Trac 17471: Investigate Tor Browser preferences relevant to Tor Messenger
    * Trac 17480: Make url linkification toggleable
    * Trac 19816: Build process should generate mar files
+   * Trac 20205: Support SASL ECDSA-NIST256P-CHALLENGE
    * Trac 20208: Put conversations on hold by default
    * Trac 20231: Remove incomplete translations
    * Trac 20276: Fix toggling sounds
