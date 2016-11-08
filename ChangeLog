@@ -13,6 +13,7 @@ Tor Messenger 0.3.0b1 --
    * Trac 20208: Put conversations on hold by default
    * Trac 20231: Remove incomplete translations
    * Trac 20276: Fix toggling sounds
+   * Trac 20608: Use Instantbird app version
    * Bugzilla 1246431: Properly handle incoming xmpp server messages
    * Bugzilla 1313137: Fix irc "msg is not defined" error
  * Mac
