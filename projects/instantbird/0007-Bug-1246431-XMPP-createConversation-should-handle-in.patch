@@ -1,4 +1,4 @@
-From de331fcdf0cc8a9aa02842cce5a906f55dc96000 Mon Sep 17 00:00:00 2001
+From bbb740af1dc8fd62723494efa3593b6d82bc4ffc Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 9 Oct 2016 21:57:07 -0700
 Subject: [PATCH 07/24] Bug 1246431 - XMPP createConversation should handle

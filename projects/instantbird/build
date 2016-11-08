@@ -56,8 +56,6 @@ do
   git apply -p1 < $patch
 done
 
-echo '[% c("var/tormessenger_version") %]' > im/config/version.txt
-
 cp $rootdir/mozconfig-common .mozconfig
 cat $rootdir/[% c('input_files_by_name/mozconfig') %] >> .mozconfig
 echo ac_add_options --with-tor-browser-version='[% c("var/tormessenger_version") %]' >> .mozconfig

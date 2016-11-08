@@ -1,4 +1,4 @@
-From 6d141536baa7461f99f8067a2a93fd10740569c1 Mon Sep 17 00:00:00 2001
+From 1d67d081f0a1c5c354152c5c54387403a7334946 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:48:41 -0700
 Subject: [PATCH 01/24] Set Tor Messenger preferences
@@ -8,7 +8,7 @@ Subject: [PATCH 01/24] Set Tor Messenger preferences
  1 file changed, 378 insertions(+), 21 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index b7a3970..09cfee3 100644
+index b7a3970..2d9a217 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -1,3 +1,46 @@
@@ -298,7 +298,7 @@ index b7a3970..09cfee3 100644
 +pref("general.appversion.override", "5.0 (Windows)");
 +pref("general.oscpu.override", "Windows NT 6.1");
 +pref("general.platform.override", "Win32");
-+pref("general.useragent.override", "Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Instantbird/1.5");  // TM
++pref("general.useragent.override", "Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0");
 +pref("general.productSub.override", "20100101");
 +pref("general.buildID.override", "20100101");
 +pref("browser.startup.homepage_override.buildID", "20100101");

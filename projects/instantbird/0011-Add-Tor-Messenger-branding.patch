@@ -1,4 +1,4 @@
-From da207230ff44df7db7e0591d1e87208c60a3efd9 Mon Sep 17 00:00:00 2001
+From e86eb410dfe15ffe4a5128baf41d4aa30f290070 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:56:27 -0700
 Subject: [PATCH 11/24] Add Tor Messenger branding
@@ -48,13 +48,13 @@ Subject: [PATCH 11/24] Add Tor Messenger branding
  im/branding/messenger/wizWatermark.bmp             | Bin 0 -> 154542 bytes
  im/content/aboutDialog-appUpdater.js               | 576 +++++++++++++++++++++
  im/content/aboutDialog.css                         | 105 ++--
- im/content/aboutDialog.js                          |  79 +++
+ im/content/aboutDialog.js                          |  80 +++
  im/content/aboutDialog.xul                         | 257 +++++----
  im/content/browserMountPoints.inc                  |  12 +
  im/content/jar.mn                                  |   3 +-
  .../en-US/chrome/instantbird/aboutDialog.dtd       | 139 ++++-
  im/locales/en-US/updater/updater.ini               |   2 +-
- 50 files changed, 1694 insertions(+), 160 deletions(-)
+ 50 files changed, 1695 insertions(+), 160 deletions(-)
  create mode 100644 im/branding/messenger/Makefile.in
  create mode 100644 im/branding/messenger/background.png
  create mode 100755 im/branding/messenger/branding.nsi
@@ -4573,10 +4573,10 @@ index 2507060..a065c8e 100644
 +}
 diff --git a/im/content/aboutDialog.js b/im/content/aboutDialog.js
 new file mode 100644
-index 0000000..b3ae0de
+index 0000000..e265f23
 --- /dev/null
 +++ b/im/content/aboutDialog.js
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,80 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
 + * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -4635,7 +4635,8 @@ index 0000000..b3ae0de
 +  let versionElem = document.getElementById("version");
 +  if (versionElem) {
 +    versionElem.textContent = TOR_BROWSER_VERSION +
-+                              " (based on Instantbird Nightly)";
++                              " (based on Instantbird " +
++                              version + ")";
 +  }
 +#endif
 +
