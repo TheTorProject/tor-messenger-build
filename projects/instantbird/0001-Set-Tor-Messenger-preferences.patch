@@ -1,4 +1,4 @@
-From b229ec3ed7af7f4e78b1d75a26c1ed76046ad3fe Mon Sep 17 00:00:00 2001
+From 6d141536baa7461f99f8067a2a93fd10740569c1 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:48:41 -0700
 Subject: [PATCH 01/24] Set Tor Messenger preferences
@@ -8,7 +8,7 @@ Subject: [PATCH 01/24] Set Tor Messenger preferences
  1 file changed, 378 insertions(+), 21 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index b7a3970..a4e0654 100644
+index b7a3970..09cfee3 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -1,3 +1,46 @@
@@ -352,8 +352,8 @@ index b7a3970..a4e0654 100644
 +pref("network.proxy.type", 1);
 +pref("network.security.ports.banned", "9050,9051,9150,9151");
 +pref("network.dns.disablePrefetch", true);
-+pref("network.protocol-handler.external-default", false);
-+pref("network.protocol-handler.external.mailto", false);
++//pref("network.protocol-handler.external-default", false);  // TM
++//pref("network.protocol-handler.external.mailto", false);  // TM
 +pref("network.protocol-handler.external.news", false);
 +pref("network.protocol-handler.external.nntp", false);
 +pref("network.protocol-handler.external.snews", false);

@@ -1,4 +1,4 @@
-From 33ec527a5ba77bbe3af57666c9a25b54d2d97512 Mon Sep 17 00:00:00 2001
+From 5c32bcb15c37b9b56313abda82e11920f5b2623a Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:47:48 -0700
 Subject: [PATCH 10/24] Remove search from UI
