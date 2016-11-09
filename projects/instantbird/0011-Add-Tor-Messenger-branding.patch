@@ -1,4 +1,4 @@
-From e86eb410dfe15ffe4a5128baf41d4aa30f290070 Mon Sep 17 00:00:00 2001
+From fc8bed18df09395214de807f451867d0644e76d9 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:56:27 -0700
 Subject: [PATCH 11/25] Add Tor Messenger branding

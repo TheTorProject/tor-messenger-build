@@ -1,4 +1,4 @@
-From f1e661a5b83c86b1f2d04a434f59c938d3ae1eef Mon Sep 17 00:00:00 2001
+From 0560300c21e64eef9fe43ce6beee0abb76417603 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 16 Nov 2015 20:37:53 -0800
 Subject: [PATCH 02/25] Trac 16489: Prevent account autologin

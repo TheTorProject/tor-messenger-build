@@ -1,4 +1,4 @@
-From 1f0fdd5fa6e4ad05edb9ee6424d773c3d1d3f503 Mon Sep 17 00:00:00 2001
+From 6f0ccf88c312363cf66746a2d18b8a2c2e6d024a Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 28 Aug 2016 08:57:41 -0700
 Subject: [PATCH 08/25] Bug 1298574 - Set _userVCard own property when
