@@ -1,7 +1,7 @@
 From adee8bb3ecf5d6c2358ac5795653420cd4cd906b Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:47:48 -0700
-Subject: [PATCH 10/24] Remove search from UI
+Subject: [PATCH 10/25] Remove search from UI
 
 ---
  im/content/nsContextMenu.js         | 18 +-----------------

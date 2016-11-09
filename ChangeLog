@@ -16,6 +16,7 @@ Tor Messenger 0.3.0b1 --
    * Trac 20608: Use Instantbird app version
    * Bugzilla 1246431: Properly handle incoming xmpp server messages
    * Bugzilla 1313137: Fix irc "msg is not defined" error
+   * Bugzilla 1316000: Remove old Yahoo! Messenger support
  * Mac
    * Trac 20204: Windows don't drag on macOS Sierra
    * Trac 20206: Avoid prompting to download font "Osaka" on macOS Sierra
