@@ -11,7 +11,6 @@ input_files:
   - filename: default48.png
   - filename: logo.patch
   - filename: locale-disable.patch
-  - filename: min-version.patch
   - filename: controlport.patch
     content: '[% INCLUDE controlport.patch.tmpl -%]'
     refresh_input: 1
