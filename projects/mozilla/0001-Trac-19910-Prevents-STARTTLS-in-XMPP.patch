@@ -1,4 +1,4 @@
-From 1703b578adc3d9e57358e3ad2eee08922a9d93ec Mon Sep 17 00:00:00 2001
+From d05e3b60489252ad72c367af074432ab30251b3b Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 10 Oct 2016 10:52:52 -0700
 Subject: [PATCH 1/6] Trac 19910: Prevents STARTTLS in XMPP
@@ -116,5 +116,5 @@ index 568c700..1793001 100644
  
  private:
 -- 
-2.10.1
+2.10.2
 

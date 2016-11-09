@@ -1,6 +1,6 @@
 Tor Messenger 0.3.0b1 --
  * All Platforms
-   * Use the tor-browser-45.4.0esr-6.0-1 branch (41f1c54a) on tor-browser
+   * Use the tor-browser-45.5.0esr-6.0-1 branch (e5dafab8) on tor-browser
    * Use the THUNDERBIRD_45_4_0_RELEASE tag on comm-esr45
    * Update ctypes-otr to 00e4e80a
    * Trac 16489: Only show "close" button on Windows
