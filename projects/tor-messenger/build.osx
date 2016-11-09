@@ -45,6 +45,12 @@ mv torbrowser/TorBrowser.app/Contents/Resources/TorBrowser/ $rootdir/TorMessenge
 
 mv torbrowser/TorBrowser.app/Contents/MacOS/Tor/ $rootdir/TorMessenger.app/Contents/MacOS/
 
+# Adjust the Info.plist file
+INFO_PLIST=$rootdir/TorMessenger.app/Contents/Info.plist
+mv $INFO_PLIST tmp.plist
+python fix-info-plist.py [% c("var/tormessenger_version") %] [% c("var/copyright_year") %] < tmp.plist > $INFO_PLIST
+rm -f tmp.plist
+
 mkdir dmg
 mv TorMessenger.app dmg
 cd dmg

@@ -36,6 +36,8 @@ input_files:
     enable: '[% c("var/windows") %]'
   - filename: pe_checksum_fix.py
     enable: '[% c("var/windows") %]'
+  - filename: fix-info-plist.py
+    enable: '[% c("var/osx") %]'
   - filename: cert_override.txt
   - filename: tor-messenger.ico
     enable: '[% c("var/windows") %]'
