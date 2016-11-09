@@ -2,7 +2,7 @@
 version: '[% c("abbrev") %]'
 filename: 'mozilla-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 git_url: https://git.torproject.org/tor-browser.git
-git_hash: e5dafab84b9b073bf1e510a8272c6ca35b4e396d
+git_hash: f0382d95b8145b91bae099024bce64affff34523
 input_files:
   - filename: 0001-Trac-19910-Prevents-STARTTLS-in-XMPP.patch
   - filename: 0002-Trac-16475-Block-flash-too.patch
