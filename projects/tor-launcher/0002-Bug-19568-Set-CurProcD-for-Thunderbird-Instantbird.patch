@@ -1,0 +1,42 @@
+From 44c1cc246e8736e88906c74058f2c582aa6178ed Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 4 Jul 2016 11:59:34 -0400
+Subject: [PATCH 2/2] Bug 19568: Set CurProcD for Thunderbird/Instantbird
+
+For Thunderbird/Instantbird, the CurProcD (topDir) is not browser/,
+so we need to iterate one level less than Firefox.
+---
+ src/components/tl-process.js | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/src/components/tl-process.js b/src/components/tl-process.js
+index 4f9928a..8e42feb 100644
+--- a/src/components/tl-process.js
++++ b/src/components/tl-process.js
+@@ -31,6 +31,8 @@ TorProcessService.prototype =
+ {
+   kContractID : "@torproject.org/torlauncher-process-service;1",
+   kServiceName : "Tor Launcher Process Service",
++  kThunderbirdID: "{3550f703-e582-4d05-9a08-453d09bdfdc6}",
++  kInstantbirdID: "{33cb9019-c295-46dd-be21-8c4936574bee}",
+   kClassID: Components.ID("{FE7B4CAF-BCF4-4848-8BFF-EFA66C9AFDA1}"),
+   kTorLauncherExtPath: "tor-launcher@torproject.org", // This could vary.
+ 
+@@ -873,6 +875,14 @@ TorProcessService.prototype =
+       // Because topDir points to Contents/Resources/browser on Mac OS,
+       // we need to go up 3 levels.
+       let tbbBrowserDepth = (TorLauncherUtil.isMac) ? 3 : 1;
++      if ((appInfo.ID == this.kThunderbirdID) ||
++          (appInfo.ID == this.kInstantbirdID))
++      {
++        // On Thunderbird/Instantbird, the topDir is the root dir and not
++        // browser/, so we need to iterate one level less than Firefox.
++        --tbbBrowserDepth;
++      }
++
+       while (tbbBrowserDepth > 0)
+       {
+         let didRemove = (topDir.leafName != ".");
+-- 
+2.10.2
+

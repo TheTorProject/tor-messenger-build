@@ -2,6 +2,8 @@
 set -e
 tar xvf [% project %]-[% c('version') %].tar.gz
 cd [% project %]-[% c('version') %]
+patch -p1 < ../0001-Bug-19432-Remove-special-handling-for-Instantbird-Th.patch
+patch -p1 < ../0002-Bug-19568-Set-CurProcD-for-Thunderbird-Instantbird.patch
 [% IF c("var/tor_control_port") -%]
 patch -p1 < ../controlport.patch
 [% END -%]

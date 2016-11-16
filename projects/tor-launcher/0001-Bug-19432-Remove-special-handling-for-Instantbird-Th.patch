@@ -1,0 +1,71 @@
+From 985b87cb1c6e6e0d70adb9279232423bd105eb4f Mon Sep 17 00:00:00 2001
+From: Kathy Brade <brade@pearlcrescent.com>
+Date: Fri, 24 Jun 2016 12:04:39 -0400
+Subject: [PATCH 1/2] Bug 19432: Remove special handling for
+ Instantbird/Thunderbird
+
+These applications now use the same directory structure as Tor Browser.
+---
+ src/components/tl-process.js | 39 +++++++++++++--------------------------
+ 1 file changed, 13 insertions(+), 26 deletions(-)
+
+diff --git a/src/components/tl-process.js b/src/components/tl-process.js
+index ba50310..4f9928a 100644
+--- a/src/components/tl-process.js
++++ b/src/components/tl-process.js
+@@ -32,8 +32,6 @@ TorProcessService.prototype =
+   kContractID : "@torproject.org/torlauncher-process-service;1",
+   kServiceName : "Tor Launcher Process Service",
+   kClassID: Components.ID("{FE7B4CAF-BCF4-4848-8BFF-EFA66C9AFDA1}"),
+-  kThunderbirdID: "{3550f703-e582-4d05-9a08-453d09bdfdc6}",
+-  kInstantbirdID: "{33cb9019-c295-46dd-be21-8c4936574bee}",
+   kTorLauncherExtPath: "tor-launcher@torproject.org", // This could vary.
+ 
+   kPrefPromptAtStartup: "extensions.torlauncher.prompt_at_startup",
+@@ -868,30 +866,19 @@ TorProcessService.prototype =
+                     .getService(Ci.nsIProperties).get("CurProcD", Ci.nsIFile);
+       let appInfo = Cc["@mozilla.org/xre/app-info;1"]
+                       .getService(Ci.nsIXULAppInfo);
+-      if ((appInfo.ID == this.kThunderbirdID) ||
+-          (appInfo.ID == this.kInstantbirdID))
+-      {
+-        // For TorBirdy and Tor Messenger the Tor Launcher extension
+-        // directory is returned.
+-        topDir.append("extensions");
+-        topDir.append(this.kTorLauncherExtPath);
+-      }
+-      else  // Tor Browser
+-      {
+-        // On Linux and Windows, we want to return the Browser/ directory.
+-        // Because topDir ("CurProcD") points to Browser/browser on those
+-        // platforms, we need to go up one level.
+-        // On Mac OS, we want to return the TorBrowser.app/ directory.
+-        // Because topDir points to Contents/Resources/browser on Mac OS,
+-        // we need to go up 3 levels.
+-        let tbbBrowserDepth = (TorLauncherUtil.isMac) ? 3 : 1;
+-        while (tbbBrowserDepth > 0)
+-        {
+-          let didRemove = (topDir.leafName != ".");
+-          topDir = topDir.parent;
+-          if (didRemove)
+-            tbbBrowserDepth--;
+-        }
++      // On Linux and Windows, we want to return the Browser/ directory.
++      // Because topDir ("CurProcD") points to Browser/browser on those
++      // platforms, we need to go up one level.
++      // On Mac OS, we want to return the TorBrowser.app/ directory.
++      // Because topDir points to Contents/Resources/browser on Mac OS,
++      // we need to go up 3 levels.
++      let tbbBrowserDepth = (TorLauncherUtil.isMac) ? 3 : 1;
++      while (tbbBrowserDepth > 0)
++      {
++        let didRemove = (topDir.leafName != ".");
++        topDir = topDir.parent;
++        if (didRemove)
++          tbbBrowserDepth--;
+       }
+ 
+       this.mAppDir = topDir;
+-- 
+2.10.2
+
