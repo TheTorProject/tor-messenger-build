@@ -39,5 +39,5 @@ build: |
   mv [% c('input_files_by_name/linux-i686') %]/* "$destdir"/
   mv [% c('input_files_by_name/linux-x86_64') %]/* "$destdir"/
   cd "$destdir"
-  sha256sum $(ls -1 *.exe *.tar.xz *.dmg | sort) > sha256sums-unsigned-build.txt
+  sha256sum $(ls -1 *.exe *.tar.xz *.dmg *.mar | grep -v '\.incremental\.mar$' | sort) > sha256sums-unsigned-build.txt
   cat sha256sums-unsigned-build.txt
