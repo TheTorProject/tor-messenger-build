@@ -1,0 +1,168 @@
+#!/usr/bin/perl -w
+#
+# This script converts all dmg files from the current directory and
+# listed in the sha256sums-unsigned-build.txt file to full update
+# mar files. After code signing the dmg files, this script can be used
+# to update the mar files.
+#
+# A recent version of p7zip is required to extract the dmg files, such
+# as 15.14. The version in Debian Jessie (9.20) is not recent enough.
+# It is possible to install the p7zip-full package from Debian testing,
+# or build p7zip from sources:
+#  $ p7zipdir=/some_directory/p7zip
+#  $ mkdir $p7zipdir
+#  $ cd $p7zipdir
+#  $ wget http://snapshot.debian.org/archive/debian/20160417T044336Z/pool/main/p/p7zip/p7zip_15.14.1%2Bdfsg.orig.tar.xz
+#  $ echo 'e9e696e2fa77b00445a4d85fa07506debeae01943fdc1bee1472152d7d1386af p7zip_15.14.1+dfsg.orig.tar.xz' | sha256sum -c
+#  $ wget http://snapshot.debian.org/archive/debian/20160515T161830Z/pool/main/p/p7zip/p7zip_15.14.1%2Bdfsg-2.debian.tar.xz
+#  $ echo 'f4db6803535fc30b6ae9db5aabfd9f57a851c6773d72073847ec5e3731b7af37  p7zip_15.14.1+dfsg-2.debian.tar.xz' | sha256sum -c
+#  $ tar xvf p7zip_15.14.1+dfsg-2.debian.tar.xz
+#  $ tar xvf p7zip_15.14.1+dfsg.orig.tar.xz
+#  $ cd p7zip_15.14.1/
+#  $ for patch in $(cat ../debian/patches/series ); do patch -p1 < ../debian/patches/$patch; done
+#  $ make 7z
+#  $ mkdir $p7zipdir/bin
+#  $ echo '#!/bin/sh' > $p7zipdir/bin/7z
+#  $ echo "export LD_LIBRARY_PATH=$PWD/bin" >> $p7zipdir/bin/7z
+#  $ echo "exec $PWD/bin/7z "'"$@"' >> $p7zipdir/bin/7z
+#  $ chmod +x $p7zipdir/bin/7z
+#  $ export "PATH=$p7zipdir/bin:$PATH"
+
+use strict;
+use IO::CaptureOutput qw(capture_exec);
+use File::Slurp;
+use File::Find;
+use Parallel::ForkManager;
+use Cwd;
+
+# If the application is not TorBrowser (for instance, TorMessenger)
+# set the application name in the TOR_APPNAME_BUNDLE_OSX and in
+# the TOR_APPNAME_MARFILE environment variables
+my $appname = $ENV{TOR_APPNAME_BUNDLE_OSX} // 'TorBrowser';
+my $appname_mar = $ENV{TOR_APPNAME_MARFILE} // 'tor-browser';
+
+sub exit_error {
+    print STDERR "Error: ", $_[0], "\n";
+    chdir '/';
+    exit (exists $_[1] ? $_[1] : 1);
+}
+
+sub osname {
+    my ($osname) = capture_exec('uname', '-s');
+    my ($arch) = capture_exec('uname', '-m');
+    chomp($osname, $arch);
+    if ($osname eq 'Linux' && $arch eq 'x86_64') {
+        return 'linux64';
+    }
+    if ($osname eq 'Linux' && $arch =~ m/^i.86$/) {
+        return 'linux32';
+    }
+    exit_error 'Unknown OS';
+}
+
+my $martools_tmpdir;
+sub extract_martools {
+    my $osname = osname;
+    my $marzip = getcwd . "/mar-tools-$osname.zip";
+    $martools_tmpdir = File::Temp->newdir();
+    my $old_cwd = getcwd;
+    chdir $martools_tmpdir;
+    my (undef, undef, $success) = capture_exec('unzip', $marzip);
+    chdir $old_cwd;
+    exit_error "Error extracting $marzip" unless $success;
+    $ENV{PATH} = "$martools_tmpdir/mar-tools:$ENV{PATH}";
+    if ($ENV{LD_LIBRARY_PATH}) {
+        $ENV{LD_LIBRARY_PATH} .= ":$martools_tmpdir/mar-tools";
+    } else {
+        $ENV{LD_LIBRARY_PATH} = "$martools_tmpdir/mar-tools";
+    }
+    $ENV{MAR} = "$martools_tmpdir/mar-tools/mar";
+    $ENV{MSBDIFF} = "$martools_tmpdir/mar-tools/mbsdiff";
+}
+
+sub get_nbprocs {
+    return $ENV{NUM_PROCS} if defined $ENV{NUM_PROCS};
+    if (-f '/proc/cpuinfo') {
+        return scalar grep { m/^processor\s+:\s/ } read_file '/proc/cpuinfo';
+    }
+    return 4;
+}
+
+sub get_dmg_files_from_sha256sums {
+    exit_error "Missing sha256sums-unsigned-build.txt file"
+        unless -f 'sha256sums-unsigned-build.txt';
+    my @files;
+    foreach my $line (read_file('sha256sums-unsigned-build.txt')) {
+        my (undef, $filename) = split '  ', $line;
+        chomp $filename;
+        next unless $filename =~ m/^$appname-(.+)-osx64_(.+)\.dmg$/;
+        push @files, { filename => $filename, version => $1, lang => $2 };
+    }
+    return @files;
+}
+
+sub convert_files {
+    my $pm = Parallel::ForkManager->new(get_nbprocs);
+    $pm->run_on_finish(sub { print "Finished $_[2]\n" });
+    foreach my $file (get_dmg_files_from_sha256sums) {
+        # The 'ja' locale is a special case: it is called 'ja-JP-mac'
+        # internally on OSX, but the dmg file still uses 'ja' to avoid
+        # confusing users.
+        my $mar_lang = $file->{lang} eq 'ja' ? 'ja-JP-mac' : $file->{lang};
+        my $output = "$appname_mar-osx64-$file->{version}_$mar_lang.mar";
+        my $step_name = "$file->{filename} -> $output";
+        print "Starting $step_name\n";
+        $pm->start($step_name) and next;
+        my $tmpdir = File::Temp->newdir();
+        my (undef, $err, $success) = capture_exec('7z', 'x', "-o$tmpdir",
+                                                        $file->{filename});
+        exit_error "Error extracting $file->{filename}: $err" unless $success;
+
+        # 7z does not currently extract file permissions from the dmg files
+        # so we also extract the old mar file to copy the permissions
+        # https://trac.torproject.org/projects/tor/ticket/20210
+        my $tmpdir_oldmar = File::Temp->newdir();
+        my $oldmar = getcwd . '/' . $output;
+        exit_error "Error extracting $output"
+                unless system('mar', '-C', $tmpdir_oldmar, '-x', $oldmar) == 0;
+        my $wanted = sub {
+            my $file = $File::Find::name;
+            $file =~ s{^$tmpdir/$appname\.app/}{};
+            if (-f "$tmpdir_oldmar/$file") {
+                my (undef, undef, $mode) = stat("$tmpdir_oldmar/$file");
+                chmod $mode, $File::Find::name;
+                return;
+            }
+            chmod 0644, $File::Find::name if -f $File::Find::name;
+            chmod 0755, $File::Find::name if -d $File::Find::name;
+        };
+        find($wanted, "$tmpdir/$appname.app");
+
+        unlink $output;
+        (undef, $err, $success) =  capture_exec('make_full_update.sh', '-q',
+                                        $output, "$tmpdir/$appname.app");
+        exit_error "Error updating $output: $err" unless $success;
+        $pm->finish;
+    }
+    $pm->wait_all_children;
+}
+
+sub remove_incremental_mars {
+    exit_error "Missing sha256sums-unsigned-build.incrementals.txt file"
+        unless -f 'sha256sums-unsigned-build.incrementals.txt';
+    foreach my $line (read_file('sha256sums-unsigned-build.incrementals.txt')) {
+        my (undef, $filename) = split '  ', $line;
+        chomp $filename;
+        next unless $filename =~ m/^$appname_mar-osx64.+\.incremental\.mar$/;
+        next unless -f $filename;
+        print "Removing $filename\n";
+        unlink $filename;
+    }
+}
+
+# Set LC_ALL=C to avoid reproducibility issues when creating mar files
+$ENV{LC_ALL} = 'C';
+
+extract_martools;
+convert_files;
+remove_incremental_mars;
