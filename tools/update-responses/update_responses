@@ -1,0 +1,643 @@
+#!/usr/bin/perl -w
+
+use strict;
+use feature "state";
+use English;
+use FindBin;
+use YAML qw(LoadFile);
+use File::Slurp;
+use Digest::SHA qw(sha256_hex);
+use XML::Writer;
+use Cwd;
+use File::Copy;
+use File::Temp;
+use File::Find;
+use File::Which;
+use POSIX qw(setlocale LC_ALL);
+use IO::CaptureOutput qw(capture_exec);
+use Parallel::ForkManager;
+use File::Basename;
+use XML::LibXML '1.70';
+use LWP::Simple;
+use JSON;
+
+# Set umask and locale to provide a consistent environment for MAR file
+# generation, etc.
+umask(0022);
+$ENV{"LC_ALL"} = "C";
+setlocale(LC_ALL, "C");
+
+my $htdocsdir = "$FindBin::Bin/htdocs";
+my $config = LoadFile("$FindBin::Bin/config.yml");
+my %htdocsfiles;
+my $releases_dir = $config->{releases_dir};
+$releases_dir = "$FindBin::Bin/$releases_dir" unless $releases_dir =~ m/^\//;
+my @check_errors;
+my $initPATH = $ENV{PATH};
+my $initLD_LIBRARY_PATH = $ENV{LD_LIBRARY_PATH};
+
+sub exit_error {
+    print STDERR "Error: ", $_[0], "\n";
+    chdir '/';
+    exit (exists $_[1] ? $_[1] : 1);
+}
+
+sub build_targets_by_os {
+    return ($_[0]) unless $config->{build_targets}{$_[0]};
+    my $r = $config->{build_targets}{$_[0]};
+    return ref $r eq 'ARRAY' ? @$r : ($r);
+}
+
+sub get_nbprocs {
+    return $ENV{NUM_PROCS} if defined $ENV{NUM_PROCS};
+    if (-f '/proc/cpuinfo') {
+        return scalar grep { m/^processor\s+:\s/ } read_file '/proc/cpuinfo';
+    }
+    return 4;
+}
+
+sub write_htdocs {
+    my ($channel, $file, $content) = @_;
+    mkdir $htdocsdir unless -d $htdocsdir;
+    mkdir "$htdocsdir/$channel" unless -d "$htdocsdir/$channel";
+    write_file("$htdocsdir/$channel/$file", $content);
+    $htdocsfiles{$channel}->{$file} = 1;
+}
+
+sub clean_htdocs {
+    my (@channels) = @_;
+    foreach my $channel (@channels) {
+        opendir(my $d, "$htdocsdir/$channel");
+        my @files = grep { ! $htdocsfiles{$channel}->{$_} } readdir $d;
+        closedir $d;
+        unlink map { "$htdocsdir/$channel/$_" } @files;
+    }
+}
+
+sub get_sha512_hex_of_file {
+    my ($file) = @_;
+    my $sha = Digest::SHA->new("512");
+    $sha->addfile($file);
+    return $sha->hexdigest;
+}
+
+sub get_version_files {
+    my ($config, $version) = @_;
+    return if $config->{versions}{$version}{files};
+    my $appname = $config->{appname_marfile};
+    my $files = {};
+    my $vdir = "$releases_dir/$version";
+    my $download_url = "$config->{download}{mars_url}/$version";
+    opendir(my $d, $vdir) or exit_error "Error opening directory $vdir";
+    foreach my $file (readdir $d) {
+        next unless -f "$vdir/$file";
+        if ($file =~ m/^$appname-([^-]+)-${version}_(.+)\.mar$/) {
+            my ($os, $lang) = ($1, $2);
+            $files->{$os}{$lang}{complete} = {
+                type => 'complete',
+                URL => "$download_url/$file",
+                size => -s "$vdir/$file",
+                hashFunction => 'SHA512',
+                hashValue => get_sha512_hex_of_file("$vdir/$file"),
+            };
+            next;
+        }
+        if ($file =~ m/^$appname-([^-]+)-(.+)-${version}_(.+)\.incremental\.mar$/) {
+            my ($os, $from_version, $lang) = ($1, $2, $3);
+            $files->{$os}{$lang}{partial}{$from_version} = {
+                type => 'partial',
+                URL => "$download_url/$file",
+                size => -s "$vdir/$file",
+                hashFunction => 'SHA512',
+                hashValue => get_sha512_hex_of_file("$vdir/$file"),
+            }
+        }
+    }
+    closedir $d;
+    $config->{versions}{$version}{files} = $files;
+}
+
+sub get_version_downloads {
+    my ($config, $version) = @_;
+    my $downloads = {};
+    my $vdir = "$releases_dir/$version";
+    my $download_url = "$config->{download}{bundles_url}/$version";
+    opendir(my $d, $vdir) or exit_error "Error opening directory $vdir";
+    foreach my $file (readdir $d) {
+        next unless -f "$vdir/$file";
+        my ($os, $lang);
+        if ($file =~ m/^$config->{appname_bundle_osx}-$version-osx64_(.+).dmg$/) {
+            ($os, $lang) = ('osx64', $1);
+        } elsif ($file =~ m/^$config->{appname_bundle_linux}-(linux32|linux64)-${version}_(.+).tar.xz$/) {
+            ($os, $lang) = ($1, $2);
+        } elsif ($file =~ m/^$config->{appname_bundle_win}-${version}_(.+).exe$/) {
+            ($os, $lang) = ('win32', $1);
+        } else {
+            next;
+        }
+        $downloads->{$os}{$lang} = {
+            binary => "$download_url/$file",
+            sig => "$download_url/$file.asc",
+        };
+    }
+    closedir $d;
+    $config->{versions}{$version}{downloads} = $downloads;
+}
+
+sub extract_mar {
+    my ($mar_file, $dest_dir) = @_;
+    my $old_cwd = getcwd;
+    mkdir $dest_dir;
+    chdir $dest_dir or exit_error "Cannot enter $dest_dir";
+    my $res = system('mar', '-x', $mar_file);
+    exit_error "Error extracting $mar_file" if $res;
+    my $bunzip_file = sub {
+        return unless -f $File::Find::name;
+        rename $File::Find::name, "$File::Find::name.bz2";
+        system('bunzip2', "$File::Find::name.bz2") == 0
+                || exit_error "Error decompressing $File::Find::name";
+    };
+    find($bunzip_file, $dest_dir);
+    my $manifest = -f 'updatev3.manifest' ? 'updatev3.manifest'
+                        : 'updatev2.manifest';
+    my @lines = read_file($manifest) if -f $manifest;
+    foreach my $line (@lines) {
+        if ($line =~ m/^addsymlink "(.+)" "(.+)"$/) {
+            exit_error "$mar_file: Could not create symlink $1 -> $2"
+                unless symlink $2, $1;
+        }
+    }
+    chdir $old_cwd;
+}
+
+sub mar_filename {
+    my ($appname, $version, $os, $lang) = @_;
+    "$releases_dir/$version/$appname-$os-${version}_$lang.mar";
+}
+
+sub create_incremental_mar {
+    my ($config, $pm, $from_version, $new_version, $os, $lang) = @_;
+    my $appname = $config->{appname_marfile};
+    my $mar_file = "$appname-$os-${from_version}-${new_version}_$lang.incremental.mar";
+    my $mar_file_path = "$releases_dir/$new_version/$mar_file";
+    if ($ENV{MAR_SKIP_EXISTING} && -f $mar_file_path) {
+        print "Skipping $mar_file\n";
+        return;
+    }
+    print "Starting $mar_file\n";
+    my $download_url = "$config->{download}{mars_url}/$new_version";
+    my $finished_file = sub {
+        exit_error "Error creating $mar_file" unless $_[1] == 0;
+        print "Finished $mar_file\n";
+        $config->{versions}{$new_version}{files}{$os}{$lang}{partial}{$from_version} = {
+            type => 'partial',
+            URL => "$download_url/$mar_file",
+            size => -s $mar_file_path,
+            hashFunction => 'SHA512',
+            hashValue => get_sha512_hex_of_file($mar_file_path),
+        };
+    };
+    return if $pm->start($finished_file);
+    my $tmpdir = File::Temp->newdir();
+    extract_mar(mar_filename($appname, $from_version, $os, $lang), "$tmpdir/A");
+    extract_mar(mar_filename($appname, $new_version, $os, $lang), "$tmpdir/B");
+    if ($ENV{CHECK_CODESIGNATURE_EXISTS}) {
+        unless (-f "$tmpdir/A/Contents/_CodeSignature/CodeResources"
+            && -f "$tmpdir/B/Contents/_CodeSignature/CodeResources") {
+            exit_error "Missing code signature while creating $mar_file";
+        }
+    }
+    my ($out, $err, $success) = capture_exec('make_incremental_update.sh',
+                                   $mar_file_path, "$tmpdir/A", "$tmpdir/B");
+    if (!$success) {
+        unlink $mar_file_path if -f $mar_file_path;
+        exit_error "making incremental mar:\n" . $err;
+    }
+    $pm->finish;
+}
+
+sub create_incremental_mars_for_version {
+    my ($config, $version) = @_;
+    my $pm = Parallel::ForkManager->new(get_nbprocs);
+    $pm->run_on_finish(sub { $_[2]->(@_) });
+    my $v = $config->{versions}{$version};
+    foreach my $from_version (@{$v->{incremental_from}}) {
+        $config->{versions}{$from_version} //= {};
+        get_version_files($config, $from_version);
+        my $from_v = $config->{versions}{$from_version};
+        foreach my $os (keys %{$v->{files}}) {
+            foreach my $lang (keys %{$v->{files}{$os}}) {
+                next unless defined $from_v->{files}{$os}{$lang}{complete};
+                create_incremental_mar($config, $pm, $from_version, $version, $os, $lang);
+            }
+        }
+    }
+    $pm->wait_all_children;
+}
+
+sub get_config {
+    my ($config, $version, $os, $name) = @_;
+    return $config->{versions}{$version}{$os}{$name}
+        // $config->{versions}{$version}{$name}
+        // $config->{$name};
+}
+
+sub channel_to_version {
+    my ($config, @channels) = @_;
+    return values %{$config->{channels}} unless @channels;
+    foreach my $channel (@channels) {
+        exit_error "Unknown channel $channel"
+                unless $config->{channels}{$channel};
+    }
+    return map { $config->{channels}{$_} } @channels;
+}
+
+sub get_buildinfos {
+    my ($config, $version) = @_;
+    return if exists $config->{versions}{$version}{buildID};
+    my $files = $config->{versions}{$version}{files};
+    foreach my $os (keys %$files) {
+        foreach my $lang (keys %{$files->{$os}}) {
+            next unless $files->{$os}{$lang}{complete};
+            my $tmpdir = File::Temp->newdir();
+            extract_mar(
+                mar_filename($config->{appname_marfile}, $version, $os, $lang),
+                "$tmpdir");
+            my $appfile = "$tmpdir/application.ini" if -f "$tmpdir/application.ini";
+            $appfile = "$tmpdir/Contents/Resources/application.ini"
+                                if -f "$tmpdir/Contents/Resources/application.ini";
+            exit_error "Could not find application.ini" unless $appfile;
+            foreach my $line (read_file($appfile)) {
+                if ($line =~ m/^BuildID=(.*)$/) {
+                    $config->{versions}{$version}{buildID} = $1;
+                    return;
+                }
+            }
+            exit_error "Could not extract buildID from application.ini";
+        }
+    }
+}
+
+sub get_response {
+    my ($config, $version, $os, @patches) = @_;
+    my $res;
+    my $writer = XML::Writer->new(OUTPUT => \$res, ENCODING => 'UTF-8');
+    $writer->xmlDecl;
+    $writer->startTag('updates');
+    if (get_config($config, $version, $os, 'unsupported')) {
+        $writer->startTag('update',
+            unsupported => 'true',
+            detailsURL => get_config($config, $version, $os, 'detailsURL'),
+        );
+        goto CLOSETAGS;
+    }
+    my $minversion = get_config($config, $version, $os, 'minSupportedOSVersion');
+    $writer->startTag('update',
+        type => 'minor',
+        displayVersion => $version,
+        appVersion => $version,
+        platformVersion => get_config($config, $version, $os, 'platformVersion'),
+        buildID => get_config($config, $version, $os, 'buildID'),
+        detailsURL => get_config($config, $version, $os, 'detailsURL'),
+        actions => 'showURL',
+        openURL => get_config($config, $version, $os, 'detailsURL'),
+        defined $minversion ? ( minSupportedOSVersion => $minversion ) : (),
+    );
+    foreach my $patch (@patches) {
+        my @sorted_patch = map { $_ => $patch->{$_} } sort keys %$patch;
+        $writer->startTag('patch', @sorted_patch);
+        $writer->endTag('patch');
+    }
+    CLOSETAGS:
+    $writer->endTag('update');
+    $writer->endTag('updates');
+    $writer->end;
+    return $res;
+}
+
+sub write_responses {
+    my ($config, @channels) = @_;
+    @channels = keys %{$config->{channels}} unless @channels;
+    foreach my $channel (@channels) {
+        my $version = $config->{channels}{$channel};
+        get_version_files($config, $version);
+        get_buildinfos($config, $version);
+        my $files = $config->{versions}{$version}{files};
+        my $migrate_archs = $config->{versions}{$version}{migrate_archs} // {};
+        foreach my $old_os (keys %$migrate_archs) {
+            my $new_os = $migrate_archs->{$old_os};
+            foreach my $lang (keys %{$files->{$new_os}}) {
+                $files->{$old_os}{$lang}{complete} =
+                        $files->{$new_os}{$lang}{complete};
+            }
+        }
+        foreach my $os (keys %$files) {
+            foreach my $lang (keys %{$files->{$os}}) {
+                my $resp = get_response($config, $version, $os,
+                                $files->{$os}{$lang}{complete});
+                write_htdocs($channel, "$version-$os-$lang.xml", $resp);
+                foreach my $from_version (keys %{$files->{$os}{$lang}{partial}}) {
+                    $resp = get_response($config, $version, $os,
+                                $files->{$os}{$lang}{complete},
+                                $files->{$os}{$lang}{partial}{$from_version});
+                    write_htdocs($channel, "$from_version-$version-$os-$lang.xml", $resp);
+                }
+            }
+        }
+        write_htdocs($channel, 'no-update.xml',
+            '<?xml version="1.0" encoding="UTF-8"?>'
+            . "\n<updates></updates>\n");
+    }
+}
+
+sub write_htaccess {
+    my ($config, @channels) = @_;
+    @channels = keys %{$config->{channels}} unless @channels;
+    my $flags = "[last]";
+    foreach my $channel (@channels) {
+        my $htaccess = "RewriteEngine On\n";
+        my $version = $config->{channels}{$channel};
+        my $files = $config->{versions}{$version}{files};
+        $htaccess .= "RewriteRule ^[^\/]+/$version/ no-update.xml $flags\n";
+        foreach my $os (sort keys %$files) {
+            foreach my $bt (build_targets_by_os($os)) {
+                foreach my $lang (sort keys %{$files->{$os}}) {
+                    foreach my $from_version (sort keys %{$files->{$os}{$lang}{partial}}) {
+                        $htaccess .= "RewriteRule ^$bt/$from_version/$lang "
+                                  .  "$from_version-$version-$os-$lang.xml $flags\n";
+                    }
+                    $htaccess .= "RewriteRule ^$bt/[^\/]+/$lang "
+                              .  "$version-$os-$lang.xml $flags\n";
+                }
+                $htaccess .= "RewriteRule ^$bt/ $version-$os-en-US.xml $flags\n";
+            }
+        }
+        write_htdocs($channel, '.htaccess', $htaccess);
+    }
+}
+
+sub write_downloads_json {
+    my ($config, @channels) = @_;
+    @channels = keys %{$config->{channels}} unless @channels;
+    foreach my $channel (@channels) {
+        my $version = $config->{channels}{$channel};
+        my $data = {
+            version => $version,
+            downloads => get_version_downloads($config, $version),
+        };
+        write_htdocs($channel, 'downloads.json',
+            JSON->new->utf8->canonical->encode($data));
+    }
+}
+
+sub check_deps {
+    foreach my $bin (qw(bunzip2 mar mbsdiff make_incremental_update.sh)) {
+        exit_error "Cannot find $bin in PATH" unless which($bin);
+    }
+}
+
+sub osname {
+    my ($osname) = capture_exec('uname', '-s');
+    my ($arch) = capture_exec('uname', '-m');
+    chomp($osname, $arch);
+    if ($osname eq 'Linux' && $arch eq 'x86_64') {
+        return 'linux64';
+    }
+    if ($osname eq 'Linux' && $arch =~ m/^i.86$/) {
+        return 'linux32';
+    }
+    exit_error 'Unknown OS';
+}
+
+my $martools_tmpdir;
+sub extract_martools {
+    my ($version) = @_;
+    my $osname = osname;
+    my $marzip = "$releases_dir/$version/mar-tools-$osname.zip";
+    $martools_tmpdir = File::Temp->newdir();
+    my $old_cwd = getcwd;
+    chdir $martools_tmpdir;
+    my (undef, undef, $success) = capture_exec('unzip', $marzip);
+    chdir $old_cwd;
+    exit_error "Error extracting $marzip" unless $success;
+    $ENV{PATH} = "$martools_tmpdir/mar-tools:$initPATH";
+    if ($initLD_LIBRARY_PATH) {
+        $ENV{LD_LIBRARY_PATH} = "$initLD_LIBRARY_PATH:$martools_tmpdir/mar-tools";
+    } else {
+        $ENV{LD_LIBRARY_PATH} = "$martools_tmpdir/mar-tools";
+    }
+}
+
+sub log_step {
+    my ($url, $step, $status, $details) = @_;
+    state $u;
+    if (!defined $u || $url ne $u) {
+        print "\n" if $u;
+        print "$url\n";
+        $u = $url;
+    }
+    print '  ', $step, $status ? ': OK' : ': ERROR',
+          $details ? " - $details\n" : "\n";
+    return if $status;
+    push @check_errors, { url => $url, step => $step, details => $details };
+}
+
+sub get_remote_xml {
+    my ($url) = @_;
+    my $content = get $url;
+    log_step($url, 'get', defined $content);
+    return undef unless defined $content;
+    my $dom = eval { XML::LibXML->load_xml(string => $content) };
+    log_step($url, 'parse_xml', defined $dom, $@);
+    return $dom;
+}
+
+sub check_get_version {
+    my ($dom) = @_;
+    my @updates = $dom->documentElement()->getChildrenByLocalName('update');
+    return undef unless @updates;
+    return $updates[0]->getAttribute('appVersion');
+}
+
+sub check_no_update {
+    my ($dom) = @_;
+    my @updates = $dom->documentElement()->getChildrenByLocalName('update');
+    return @updates == 0;
+}
+
+sub check_has_incremental {
+    my ($dom) = @_;
+    my @updates = $dom->documentElement()->getChildrenByLocalName('update');
+    return undef unless @updates;
+    my @patches = $updates[0]->getChildrenByLocalName('patch');
+    foreach my $patch (@patches) {
+        return 1 if $patch->getAttribute('type') eq 'partial';
+    }
+    return undef;
+}
+
+sub build_targets_list {
+    map { ref $_ eq 'ARRAY' ? @$_ : $_ } values %{$config->{build_targets}};
+}
+
+sub check_update_responses_channel {
+    my ($config, $base_url, $channel) = @_;
+    my $channel_version = $config->{channels}{$channel};
+    foreach my $build_target (build_targets_list()) {
+        foreach my $lang (qw(en-US de)) {
+            my $url = "$base_url/$channel/$build_target/1.0/$lang";
+            my $dom = get_remote_xml($url);
+            if ($dom) {
+                my $version = check_get_version($dom);
+                log_step($url, 'version', $version eq $channel_version,
+                         "expected: $channel_version received: $version");
+            }
+            $url = "$base_url/$channel/$build_target/$channel_version/$lang";
+            $dom = get_remote_xml($url);
+            log_step($url, 'no_update', check_no_update($dom)) if $dom;
+            my @inc = @{$config->{versions}{$channel_version}{incremental_from}}
+                      if $config->{versions}{$channel_version}{incremental_from};
+            foreach my $inc_from (@inc) {
+                my $url = "$base_url/$channel/$build_target/$inc_from/$lang";
+                $dom = get_remote_xml($url);
+                next unless $dom;
+                my $version = check_get_version($dom);
+                log_step($url, 'version', $version eq $channel_version,
+                         "expected: $channel_version received: $version");
+                log_step($url, 'has_incremental', check_has_incremental($dom));
+            }
+        }
+    }
+}
+
+sub download_version {
+    my ($config, $version) = @_;
+    my $tmpdir = File::Temp->newdir();
+    my $destdir = "$releases_dir/$version";
+    my $urldir = "$config->{download}{archive_url}/$version";
+    print "Downloading version $version\n";
+    foreach my $file (qw(sha256sums-unsigned-build.txt sha256sums-unsigned-build.txt.asc)) {
+        if (getstore("$urldir/$file", "$tmpdir/$file") != 200) {
+            exit_error "Error downloading $urldir/$file";
+        }
+    }
+    if (system('gpg', '--no-default-keyring', '--keyring',
+            "$FindBin::Bin/$config->{download}{gpg_keyring}", '--verify',
+            "$tmpdir/sha256sums-unsigned-build.txt.asc",
+            "$tmpdir/sha256sums-unsigned-build.txt")) {
+        exit_error "Error checking gpg signature for version $version";
+    }
+    mkdir $destdir;
+    move "$tmpdir/sha256sums-unsigned-build.txt.asc", "$destdir/sha256sums-unsigned-build.txt.asc";
+    move "$tmpdir/sha256sums-unsigned-build.txt", "$destdir/sha256sums-unsigned-build.txt";
+    my %sums = map { chomp; reverse split '  ', $_ }
+                 read_file "$destdir/sha256sums-unsigned-build.txt";
+
+    my $martools = 'mar-tools-' . osname . '.zip';
+    exit_error "Error downloading $urldir/$martools\n"
+        unless getstore("$urldir/$martools", "$tmpdir/$martools") == 200;
+    exit_error "Error downloading $urldir/$martools.asc\n"
+        unless getstore("$urldir/$martools.asc", "$tmpdir/$martools.asc") == 200;
+    if (system('gpg', '--no-default-keyring', '--keyring',
+            "$FindBin::Bin/$config->{download}{gpg_keyring}", '--verify',
+            "$tmpdir/$martools.asc", "$tmpdir/$martools")) {
+        exit_error "Error checking gpg signature for $version/$martools";
+    }
+    exit_error "Wrong checksum for $version/$martools"
+        unless $sums{$martools} eq sha256_hex(read_file("$tmpdir/$martools"));
+    move "$tmpdir/$martools", "$destdir/$martools";
+    move "$tmpdir/$martools.asc", "$destdir/$martools.asc";
+    extract_martools($version);
+
+    foreach my $file (sort grep { $_ =~ m/\.mar$/ } keys %sums) {
+        print "Downloading $file\n";
+        exit_error "Error downloading $urldir/$file\n"
+                unless getstore("$urldir/$file", "$tmpdir/$file") == 200;
+        if ($sums{$file} ne sha256_hex(read_file("$tmpdir/$file"))) {
+            exit_error "Error unsigning $file"
+                if system('signmar', '-r', "$tmpdir/$file", "$tmpdir/$file.u");
+            exit_error "Wrong checksum for $file"
+                unless $sums{$file} eq sha256_hex(read_file("$tmpdir/$file.u"));
+            move "$tmpdir/$file.u", "$tmpdir/$file";
+        }
+        move "$tmpdir/$file", "$destdir/$file";
+    }
+}
+
+sub download_missing_versions {
+    my ($config, @channels) = @_;
+    foreach my $channel (@channels) {
+        exit_error "Unknown channel $channel"
+                unless $config->{channels}{$channel};
+        my $cversion = $config->{channels}{$channel};
+        next unless $config->{versions}{$cversion}{incremental_from};
+        foreach my $version (@{$config->{versions}{$cversion}{incremental_from}}) {
+            next if -d "$releases_dir/$version";
+            download_version($config, $version);
+        }
+    }
+}
+
+sub check_update_responses {
+    my ($config) = @_;
+    exit_error "usage: $PROGRAM_NAME <base_url> [channels...]" unless @ARGV;
+    my ($base_url, @channels) = @ARGV;
+    foreach my $channel (@channels ? @channels : keys %{$config->{channels}}) {
+        check_update_responses_channel($config, $base_url, $channel);
+    }
+    if (!@check_errors) {
+        print "\n\nNo errors\n";
+        return;
+    }
+    print "\n\nErrors list:\n";
+    my $url = '';
+    foreach my $error (@check_errors) {
+        if ($url ne $error->{url}) {
+            $url = $error->{url};
+            print "$url\n";
+        }
+        print "  $error->{step}",
+              $error->{details} ? " - $error->{details}\n" : "\n";
+    }
+}
+
+my %actions = (
+    update_responses => sub {
+        my ($config) = @_;
+        my @channels = @ARGV ? @ARGV : keys %{$config->{channels}};
+        foreach my $channel (@channels) {
+            exit_error "Unknown channel $channel"
+                unless $config->{channels}{$channel};
+            $htdocsfiles{$channel} = { '.' => 1, '..' => 1 };
+        }
+        extract_martools;
+        write_responses($config, @channels);
+        write_htaccess($config, @channels);
+        write_downloads_json($config, @channels);
+        clean_htdocs(@channels);
+    },
+    gen_incrementals => sub {
+        my ($config) = @_;
+        foreach my $version (channel_to_version($config, @ARGV)) {
+            extract_martools($version);
+            get_version_files($config, $version);
+            create_incremental_mars_for_version($config, $version);
+        }
+    },
+    download_missing_versions => sub {
+        my ($config) = @_;
+        my @channels = @ARGV ? @ARGV : keys %{$config->{channels}};
+        download_missing_versions($config, @channels);
+    },
+    check_update_responses_deployement => \&check_update_responses,
+    get_channel_version => sub {
+        my ($config) = @_;
+        exit_error "Wrong arguments" unless @ARGV == 1;
+        exit_error "Unknown channel" unless $config->{channels}{$ARGV[0]};
+        print $config->{channels}{$ARGV[0]}, "\n";
+    },
+);
+
+my $action = fileparse($PROGRAM_NAME);
+exit_error "Unknown action $action" unless $actions{$action};
+$actions{$action}->($config);

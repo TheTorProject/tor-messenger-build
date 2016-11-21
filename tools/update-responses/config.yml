@@ -1,0 +1,27 @@
+---
+appname_marfile: tor-messenger
+appname_bundle_osx: TorMessenger
+appname_bundle_linux: tor-messenger
+appname_bundle_win: tormessenger-install
+releases_dir: ../../release/tor-messenger/signed
+download:
+    archive_url: https://archive.torproject.org/tor-package-archive/tormessenger
+    gpg_keyring: ../../keyring/tor-messenger.gpg
+    bundles_url: https://dist.torproject.org/tormessenger
+    mars_url: https://dist.torproject.org/tormessenger
+build_targets:
+    linux32: Linux_x86-gcc3
+    linux64: Linux_x86_64-gcc3
+    win32:
+        - WINNT_x86-gcc3
+        - WINNT_x86-gcc3-x86
+        - WINNT_x86-gcc3-x64
+    osx64: Darwin_x86_64-gcc3
+channels:
+    release: 0.3.0b1
+versions:
+    0.3.0b1:
+        platformVersion: 45.5.0
+        detailsURL: https://blog.torproject.org/blog/tor-messenger-030b1-released
+        incremental_from:
+          - 0.2.0b2
