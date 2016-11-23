@@ -255,6 +255,7 @@ sub channel_to_version {
 sub get_buildinfos {
     my ($config, $version) = @_;
     return if exists $config->{versions}{$version}{buildID};
+    extract_martools($version);
     my $files = $config->{versions}{$version}{files};
     foreach my $os (keys %$files) {
         foreach my $lang (keys %{$files->{$os}}) {
@@ -610,7 +611,6 @@ my %actions = (
                 unless $config->{channels}{$channel};
             $htdocsfiles{$channel} = { '.' => 1, '..' => 1 };
         }
-        extract_martools;
         write_responses($config, @channels);
         write_htaccess($config, @channels);
         write_downloads_json($config, @channels);
