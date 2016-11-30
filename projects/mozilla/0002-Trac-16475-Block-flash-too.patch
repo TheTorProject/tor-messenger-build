@@ -1,4 +1,4 @@
-From 05842dca95a626ccdad123be15353b00ff03a7f0 Mon Sep 17 00:00:00 2001
+From a37fd7380b807ff8e4cebaef8a5817c670816091 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 6 Oct 2016 20:13:35 -0700
 Subject: [PATCH 2/6] Trac 16475: Block flash too

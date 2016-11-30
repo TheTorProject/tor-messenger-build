@@ -1,4 +1,4 @@
-From 401acfb1085f0ac9de8628a4f87d522fccbae8b1 Mon Sep 17 00:00:00 2001
+From 39f09114b425a248516f27296a57b91978d47b81 Mon Sep 17 00:00:00 2001
 From: Jonathan Kew <jkew@mozilla.com>
 Date: Sun, 9 Oct 2016 09:18:37 -0700
 Subject: [PATCH 3/6] Trac 20206: Avoid the need to download the font Osaka

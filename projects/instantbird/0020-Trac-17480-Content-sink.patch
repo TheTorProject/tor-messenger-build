@@ -1,15 +1,15 @@
-From 2ad3442b1e51692dd0e5f7cc73f6d941a6cb5056 Mon Sep 17 00:00:00 2001
+From d8136d469553e45875c549cb94d9d6796f577968 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 5 Oct 2016 11:09:25 -0700
 Subject: [PATCH 20/25] Trac 17480: Content sink
 
 ---
- chat/modules/imContentSink.jsm     | 32 ++++++--------------------------
+ chat/modules/imContentSink.jsm     | 33 ++++++---------------------------
  im/content/preferences/content.xul |  2 +-
- 2 files changed, 7 insertions(+), 27 deletions(-)
+ 2 files changed, 7 insertions(+), 28 deletions(-)
 
 diff --git a/chat/modules/imContentSink.jsm b/chat/modules/imContentSink.jsm
-index ee067af..9f42607 100644
+index abd95fc..fa32442 100644
 --- a/chat/modules/imContentSink.jsm
 +++ b/chat/modules/imContentSink.jsm
 @@ -42,7 +42,7 @@ this.EXPORTED_SYMBOLS = [
@@ -21,18 +21,19 @@ index ee067af..9f42607 100644
  var kAllowedMozClasses =
    aClassName => aClassName == "moz-txt-underscore" ||
                  aClassName == "moz-txt-tag" ||
-@@ -59,10 +59,6 @@ var kStrictMode = {
+@@ -60,11 +60,6 @@ var kStrictMode = {
    attrs: { },
  
    tags: {
 -    'a': {
 -      'title': true,
--      'href': kAllowedURLs
+-      'href': kAllowedURLs,
+-      'class': kAllowedAnchorClasses
 -    },
      'br': true,
      'p': true
    },
-@@ -72,12 +68,9 @@ var kStrictMode = {
+@@ -74,12 +69,9 @@ var kStrictMode = {
  
  // standard mode allows basic formattings (bold, italic, underlined)
  var kStandardMode = {
@@ -45,8 +46,8 @@ index ee067af..9f42607 100644
 -    'div': true,
      'a': {
        'title': true,
-       'href': kAllowedURLs
-@@ -87,24 +80,11 @@ var kStandardMode = {
+       'href': kAllowedURLs,
+@@ -90,24 +82,11 @@ var kStandardMode = {
      'b': true,
      'i': true,
      'u': true,
@@ -72,7 +73,7 @@ index ee067af..9f42607 100644
  };
  
  // permissive mode allows about anything that isn't going to mess up the chat window
-@@ -158,7 +138,7 @@ var kPermissiveMode = {
+@@ -162,7 +141,7 @@ var kPermissiveMode = {
  };
  
  var kModePref = "messenger.options.filterMode";
@@ -81,7 +82,7 @@ index ee067af..9f42607 100644
  
  var gGlobalRuleset = null;
  
-@@ -184,8 +164,8 @@ var styleObserver = {
+@@ -188,8 +167,8 @@ var styleObserver = {
  function getModePref()
  {
    let baseNum = Services.prefs.getIntPref(kModePref);

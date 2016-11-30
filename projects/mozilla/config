@@ -1,8 +1,10 @@
 # vim: filetype=yaml sw=2
-version: '[% c("abbrev") %]'
+version: tor-browser-45.5.1esr-6.0-1-build1
 filename: 'mozilla-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 git_url: https://git.torproject.org/tor-browser.git
-git_hash: f0382d95b8145b91bae099024bce64affff34523
+git_hash: '[% c("version") %]'
+gpg_keyring: gk.gpg
+tag_gpg_id: 1
 input_files:
   - filename: 0001-Trac-19910-Prevents-STARTTLS-in-XMPP.patch
   - filename: 0002-Trac-16475-Block-flash-too.patch

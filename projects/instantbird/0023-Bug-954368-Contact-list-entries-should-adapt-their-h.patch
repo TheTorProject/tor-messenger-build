@@ -1,4 +1,4 @@
-From 90963a7e9711b4b14b6ddb977691d16f4744978c Mon Sep 17 00:00:00 2001
+From 0dc553e078f0d6f7c493baac6757b17bb6bf613b Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Thu, 12 May 2016 15:10:43 +0200
 Subject: [PATCH 23/25] Bug 954368 - Contact list entries should adapt their
