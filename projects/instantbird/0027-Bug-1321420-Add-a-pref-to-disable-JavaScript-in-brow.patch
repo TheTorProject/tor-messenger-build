@@ -1,0 +1,52 @@
+From 00e2ca60ebfa8d78824cb5e21917d9580ddf6d25 Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Thu, 1 Dec 2016 14:34:51 -0800
+Subject: [PATCH 27/27] Bug 1321420 - Add a pref to disable JavaScript in
+ browser requests
+
+---
+ chat/chat-prefs.js             | 2 ++
+ chat/content/browserRequest.js | 7 +++++++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/chat/chat-prefs.js b/chat/chat-prefs.js
+index 60b9c1e8c..90a212e5c 100644
+--- a/chat/chat-prefs.js
++++ b/chat/chat-prefs.js
+@@ -86,6 +86,8 @@ pref("chat.prpls.prpl-skype.disable", true);
+ pref("chat.prpls.prpl-facebook.disable", true);
+ // Disable Yahoo Messenger as legacy Yahoo was shut down.
+ pref("chat.prpls.prpl-yahoo.disable", true);
++// Disable JavaScript in browser requests.
++pref("chat.browserRequest.disableJavascript", false);
+ 
+ // loglevel is the minimum severity level that a libpurple message
+ // must have to be reported in the Error Console.
+diff --git a/chat/content/browserRequest.js b/chat/content/browserRequest.js
+index c52c8c637..0069219fa 100644
+--- a/chat/content/browserRequest.js
++++ b/chat/content/browserRequest.js
+@@ -2,6 +2,8 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
++Components.utils.import("resource:///modules/imServices.jsm");
++
+ var wpl = Components.interfaces.nsIWebProgressListener;
+ 
+ var reporterListener = {
+@@ -133,6 +135,11 @@ function loadRequestedUrl()
+     account.protocol.iconBaseURI + "icon48.png";
+ 
+   let browser = document.getElementById("requestFrame");
++  browser.docShell.allowPlugins = false;
++
++  if (Services.prefs.getBoolPref("chat.browserRequest.disableJavascript"))
++    browser.docShell.allowJavascript = false;
++
+   browser.addProgressListener(reporterListener,
+                               Components.interfaces.nsIWebProgress.NOTIFY_ALL);
+   let url = request.url;
+-- 
+2.11.0
+

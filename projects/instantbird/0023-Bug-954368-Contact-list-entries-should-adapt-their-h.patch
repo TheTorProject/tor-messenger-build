@@ -1,7 +1,7 @@
-From 146c625d13d61402b879381a5ce372677837dfc8 Mon Sep 17 00:00:00 2001
+From 40cd830e6d90bad7810dccadc2b944c246659e99 Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Thu, 12 May 2016 15:10:43 +0200
-Subject: [PATCH 23/26] Bug 954368 - Contact list entries should adapt their
+Subject: [PATCH 23/27] Bug 954368 - Contact list entries should adapt their
  height to the actual font size. r=florian
 
 --HG--

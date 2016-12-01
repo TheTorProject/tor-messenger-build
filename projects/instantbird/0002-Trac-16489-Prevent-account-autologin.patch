@@ -1,7 +1,7 @@
-From a4ddbd00c0a32d809a2af24f9f2eb3ce9e6734f4 Mon Sep 17 00:00:00 2001
+From 727612a3c5919be6e57c34ff064e9d047d052386 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 16 Nov 2015 20:37:53 -0800
-Subject: [PATCH 02/26] Trac 16489: Prevent account autologin
+Subject: [PATCH 02/27] Trac 16489: Prevent account autologin
 
 ---
  chat/components/src/imAccounts.js |  2 +-

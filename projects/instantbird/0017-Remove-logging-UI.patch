@@ -1,7 +1,7 @@
-From 7db01c64bbc4b4bf34316ba1cfcf4c2d13a99035 Mon Sep 17 00:00:00 2001
+From aad7c7e9e29750bfcb9ecb9b0b0072a2d47525bd Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:50:48 -0700
-Subject: [PATCH 17/26] Remove logging UI
+Subject: [PATCH 17/27] Remove logging UI
 
 ---
  im/content/preferences/privacy.xul | 20 --------------------

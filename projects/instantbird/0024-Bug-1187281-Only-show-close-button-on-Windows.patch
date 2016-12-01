@@ -1,7 +1,7 @@
-From f5d793612a6fc1aee9f85347ed92b8358e3730fd Mon Sep 17 00:00:00 2001
+From 8c8930d1d6fe933814adfe6ef828f4ef4fe76a6b Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sat, 5 Nov 2016 14:55:20 -0700
-Subject: [PATCH 24/26] Bug 1187281 - Only show "close" button on Windows
+Subject: [PATCH 24/27] Bug 1187281 - Only show "close" button on Windows
 
 ---
  im/content/accounts.xul | 2 ++

@@ -5,7 +5,8 @@ Tor Messenger 0.3.0b2 --
    * Use the THUNDERBIRD_45_5_1_RELEASE tag on comm-esr45
    * Update tor-browser to 6.0.7
    * Don't allow javascript: links in themes
-   * Disable svg and mathml in content
+   * Bugzilla 1321420: Add a pref to disable JavaScript in browser requests
+   * Bugzilla 1321641: Disable svg and mathml in content
 
 Tor Messenger 0.3.0b1 -- November 22, 2016
  * All Platforms

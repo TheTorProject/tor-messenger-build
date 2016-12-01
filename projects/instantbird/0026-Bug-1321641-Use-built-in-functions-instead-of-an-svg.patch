@@ -1,7 +1,7 @@
-From 09954cbcf1d6c769e0610718edd41c13183fcc75 Mon Sep 17 00:00:00 2001
+From d210341ceb40de88a99ac22c1714e4c01bb504af Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 1 Dec 2016 13:25:42 -0800
-Subject: [PATCH 26/26] Bug 1321641 - Use built-in functions instead of an svg
+Subject: [PATCH 26/27] Bug 1321641 - Use built-in functions instead of an svg
  for bubbles filter
 
 ---
