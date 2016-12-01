@@ -1,4 +1,4 @@
-From 86bdc8f65a2a8cc75c0b58b64f0edf3a98f1a5fd Mon Sep 17 00:00:00 2001
+From 9def66dc758ccdfb179d47b3b6cce29531a38018 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:58:31 -0700
 Subject: [PATCH 19/25] Display all traffic over Tor
@@ -9,7 +9,7 @@ Subject: [PATCH 19/25] Display all traffic over Tor
  2 files changed, 3 insertions(+)
 
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index a306906..3c3a417 100644
+index a3069061a..3c3a4179b 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -39,6 +39,8 @@
@@ -22,7 +22,7 @@ index a306906..3c3a417 100644
  
    <wizardpage id="accountprotocol" pageid="accountprotocol" next="accountusername"
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
-index c46fb2f..6b49c84 100644
+index c46fb2f95..6b49c84fa 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 @@ -6,6 +6,7 @@
@@ -34,5 +34,5 @@ index c46fb2f..6b49c84 100644
  <!ENTITY accountProtocolShowMore.label  "Show all protocols">
  <!ENTITY accountProtocolShowMore.description  "Choose from the full list of protocols">
 -- 
-2.10.2
+2.11.0
 

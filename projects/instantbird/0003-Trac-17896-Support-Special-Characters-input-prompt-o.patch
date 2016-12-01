@@ -1,4 +1,4 @@
-From d433556773d91789bd05019c64a751a8afcdd763 Mon Sep 17 00:00:00 2001
+From 7086cb8f65f506ec27767f2a2d03295b3e77b817 Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Sat, 30 Jan 2016 20:56:38 +0100
 Subject: [PATCH 03/25] Trac 17896: Support "Special Characters" input prompt
@@ -14,7 +14,7 @@ Subject: [PATCH 03/25] Trac 17896: Support "Special Characters" input prompt
  3 files changed, 25 insertions(+), 2 deletions(-)
 
 diff --git a/im/content/instantbird.xul b/im/content/instantbird.xul
-index 15a3f98..d208921 100644
+index 15a3f988b..d20892198 100644
 --- a/im/content/instantbird.xul
 +++ b/im/content/instantbird.xul
 @@ -48,7 +48,28 @@
@@ -48,7 +48,7 @@ index 15a3f98..d208921 100644
  
    <commandset id="conversationsCommands">
 diff --git a/im/content/menus.xul b/im/content/menus.xul
-index 0889ce8..894ef13 100644
+index 0889ce87d..894ef13c4 100644
 --- a/im/content/menus.xul
 +++ b/im/content/menus.xul
 @@ -43,7 +43,7 @@
@@ -61,7 +61,7 @@ index 0889ce8..894ef13 100644
          <menuitem id="addBuddyMenuItem" label="&addContact;" command="cmd_addbuddy" key="addBuddykey" accesskey="&addContact.accesskey;"/>
          <menuitem id="newTabMenuItem" label="&newtab;" command="cmd_newtab" key="newtabkey" accesskey="&newtab.accesskey;"/>
 diff --git a/im/content/menus.xul.inc b/im/content/menus.xul.inc
-index 30aeb1f..14fc9e8 100644
+index 30aeb1fc5..14fc9e8f6 100644
 --- a/im/content/menus.xul.inc
 +++ b/im/content/menus.xul.inc
 @@ -2,6 +2,8 @@
@@ -74,5 +74,5 @@ index 30aeb1f..14fc9e8 100644
    <keyset id="mainkeyset"/>
    <menubar id="blistMenubar"/>
 -- 
-2.10.2
+2.11.0
 

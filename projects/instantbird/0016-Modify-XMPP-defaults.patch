@@ -1,4 +1,4 @@
-From c326a8f3519d31ec6c1a2434a0ead4fa30d7aab0 Mon Sep 17 00:00:00 2001
+From 655f5e07585e180822e6a5a9d6d80f8cb1c4ab09 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:38:49 -0700
 Subject: [PATCH 16/25] Modify XMPP defaults
@@ -12,7 +12,7 @@ Subject: [PATCH 16/25] Modify XMPP defaults
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/chat/protocols/gtalk/gtalk.js b/chat/protocols/gtalk/gtalk.js
-index 8bce0c9..642f456 100644
+index 8bce0c9b4..642f4561d 100644
 --- a/chat/protocols/gtalk/gtalk.js
 +++ b/chat/protocols/gtalk/gtalk.js
 @@ -96,7 +96,7 @@ GTalkProtocol.prototype = {
@@ -25,7 +25,7 @@ index 8bce0c9..642f456 100644
    get chatHasTopic() { return true; },
    classID: Components.ID("{38a224c1-6748-49a9-8ab2-efc362b1000d}")
 diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
-index 265445a..a5635ca 100644
+index 265445a18..a5635cae3 100644
 --- a/chat/protocols/xmpp/xmpp.js
 +++ b/chat/protocols/xmpp/xmpp.js
 @@ -31,12 +31,12 @@ XMPPProtocol.prototype = {
@@ -44,5 +44,5 @@ index 265445a..a5635ca 100644
      connection_security: {
        get label() { return _("options.connectionSecurity"); },
 -- 
-2.10.2
+2.11.0
 

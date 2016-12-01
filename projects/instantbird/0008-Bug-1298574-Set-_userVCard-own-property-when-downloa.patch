@@ -1,4 +1,4 @@
-From c5d6eb544b71fb444fdf3b9b36965ed9a48070e8 Mon Sep 17 00:00:00 2001
+From 9866b6d2ec361d987d6bdc48014427df7139ea6c Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 28 Aug 2016 08:57:41 -0700
 Subject: [PATCH 08/25] Bug 1298574 - Set _userVCard own property when
@@ -10,7 +10,7 @@ Subject: [PATCH 08/25] Bug 1298574 - Set _userVCard own property when
  1 file changed, 14 insertions(+)
 
 diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
-index 4420a1d..71f7770 100644
+index 4420a1d17..71f777009 100644
 --- a/chat/protocols/xmpp/xmpp.jsm
 +++ b/chat/protocols/xmpp/xmpp.jsm
 @@ -2243,6 +2243,20 @@ var XMPPAccountPrototype = {
@@ -35,5 +35,5 @@ index 4420a1d..71f7770 100644
    },
  
 -- 
-2.10.2
+2.11.0
 

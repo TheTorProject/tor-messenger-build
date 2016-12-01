@@ -1,24 +1,24 @@
-From e1433d0d96a99a6382b70fffa60158b8b5efeefa Mon Sep 17 00:00:00 2001
+From 0df511dda30a868bc85824931ea0c4c56b1fbf03 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:48:41 -0700
 Subject: [PATCH 01/25] Set Tor Messenger preferences
 
 ---
- im/app/profile/all-instantbird.js | 403 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 382 insertions(+), 21 deletions(-)
+ im/app/profile/all-instantbird.js | 406 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 384 insertions(+), 22 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index b7a3970..ce25d3a 100644
+index b7a397017..6fc2c90a7 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
-@@ -1,3 +1,46 @@
+@@ -1,3 +1,47 @@
 +/**
 + * This file is divded into three section,
 + *
 + * 1) Tor Messenger prefs, not found in the next two sections;
 + * 2) The original Instantbird prefs found here, modified by TM;
-+ * 3) Tor Browser's 000-tor-browser.js, modified by TM or commented out when
-+ *    duplicating a previously declared pref.
++ * 3) Tor Browser's browser/app/profile/000-tor-browser.js, modified by TM
++ *    or commented out when duplicating a previously declared pref.
 + *
 + * The idea being that to update this file when rebasing, we'd just paste the
 + * full contents of those files over the corresponding sections and then look
@@ -26,6 +26,7 @@ index b7a3970..ce25d3a 100644
 + */
 +
 +
++// NOTE: These are mostly found in chat/chat-prefs.js
 +
 +// Disable all logging
 +pref("purple.logging.log_chats", false);
@@ -58,7 +59,7 @@ index b7a3970..ce25d3a 100644
  /* This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-@@ -28,7 +71,7 @@ pref("general.autoScroll", true);
+@@ -28,7 +72,7 @@ pref("general.autoScroll", true);
  // 0 = spellcheck nothing
  // 1 = check multi-line controls [default]
  // 2 = check multi/single line controls
@@ -67,7 +68,7 @@ index b7a3970..ce25d3a 100644
  
  pref("messenger.accounts.convertOldPasswords", true);
  pref("messenger.accounts.promptOnDelete", true);
-@@ -66,7 +109,7 @@ pref("extensions.mintrayr.singleClickRestore", false);
+@@ -66,7 +110,7 @@ pref("extensions.mintrayr.singleClickRestore", false);
  
  // Whether message related sounds should be played at all. If this is enabled
  // then the more specific prefs are checked as well.
@@ -76,7 +77,7 @@ index b7a3970..ce25d3a 100644
  // Specifies whether each message event should trigger a sound for incoming
  // and outgoing messages, or when your nickname is mentioned in a chat.
  pref("messenger.options.playSounds.outgoing", true);
-@@ -142,26 +185,23 @@ pref("app.update.staging.enabled", true);
+@@ -142,26 +186,23 @@ pref("app.update.staging.enabled", true);
  
  // Update service URL:
  // You do not need to use all the %VAR% parameters. Use what you need, %PRODUCT%,%VERSION%,%BUILD_ID%,%CHANNEL% for example
@@ -108,7 +109,7 @@ index b7a3970..ce25d3a 100644
  
  // Interval: Time before prompting the user to restart to install the latest
  //           download (in seconds) default=30 minutes
-@@ -202,7 +242,7 @@ pref("browser.search.order.1",                "chrome://instantbird/locale/regio
+@@ -202,7 +243,7 @@ pref("browser.search.order.1",                "chrome://instantbird/locale/regio
  pref("browser.search.order.2",                "chrome://instantbird/locale/region.properties");
  
  // send ping to the server to update
@@ -117,7 +118,7 @@ index b7a3970..ce25d3a 100644
  
  // disable logging for the search service update system by default
  pref("browser.search.update.log", false);
-@@ -222,10 +262,10 @@ pref("extensions.ignoreMTimeChanges", false);
+@@ -222,10 +263,10 @@ pref("extensions.ignoreMTimeChanges", false);
  pref("extensions.logging.enabled", false);
  pref("general.skins.selectedSkin", "classic/1.0");
  
@@ -130,7 +131,7 @@ index b7a3970..ce25d3a 100644
  
  // Preferences for the Get Add-ons pane
  pref("extensions.getAddons.cache.enabled", false);
-@@ -245,9 +285,9 @@ pref("extensions.getMoreEmoticonsURL", "https://add-ons.instantbird.org/%LOCALE%
+@@ -245,9 +286,9 @@ pref("extensions.getMoreEmoticonsURL", "https://add-ons.instantbird.org/%LOCALE%
  pref("extensions.getMoreProtocolsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/protocols/");
  
  // suppress external-load warning for standard browser schemes
@@ -143,8 +144,12 @@ index b7a3970..ce25d3a 100644
  
  // don't load links inside Instantbird
  pref("network.protocol-handler.expose-all", false);
-@@ -262,10 +302,10 @@ pref("network.protocol-handler.expose.https", true);
- pref("network.protocol-handler.expose.javascript", true);
+@@ -259,13 +300,13 @@ pref("network.protocol-handler.expose.https", true);
+ 
+ // expose javascript: so that message themes can use it.
+ // javascript: links inside messages are filtered out.
+-pref("network.protocol-handler.expose.javascript", true);
++pref("network.protocol-handler.expose.javascript", false);
  
  // 0-Accept, 1-dontAcceptForeign, 2-dontUse
 -pref("network.cookie.cookieBehavior", 0);
@@ -156,7 +161,7 @@ index b7a3970..ce25d3a 100644
  
  // We have an Error Console menu item by default so let's display chrome errors
  pref("javascript.options.showInConsole", true);
-@@ -300,14 +340,335 @@ pref("browser.tabs.tabClipWidth", 140);
+@@ -300,14 +341,335 @@ pref("browser.tabs.tabClipWidth", 140);
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -448,7 +453,7 @@ index b7a3970..ce25d3a 100644
 +
 +// Putting the search engine prefs into this file to fix #11236.
 +// Default search engine
-+//pref("browser.search.defaultenginename", "Disconnect");  // TM
++//pref("browser.search.defaultenginename", "DuckDuckGo");  // TM
 +// Make sure we use the same search engine regardless of locale
 +pref("browser.search.geoSpecificDefaults", false);
 +
@@ -456,7 +461,7 @@ index b7a3970..ce25d3a 100644
 +// Somewhat surprisingly we get some random behavior if we specify more than
 +// two search engines as below. See
 +// https://bugzilla.mozilla.org/show_bug.cgi?id=1126722 for details.
-+//pref("browser.search.order.extra.1", "Disconnect");  // TM
++//pref("browser.search.order.extra.1", "DuckDuckGo");  // TM
 +//pref("browser.search.order.extra.2", "YouTube");  // TM
 +
 +// Hacks/workarounds: Direct2D seems to crash w/ lots of video cards w/ MinGW?
@@ -496,5 +501,5 @@ index b7a3970..ce25d3a 100644
 +#expand pref("torbrowser.version", __TOR_BROWSER_VERSION__);
 +#endif
 -- 
-2.10.2
+2.11.0
 

@@ -1,4 +1,4 @@
-From eccb4c61667e2887f335b780dcf3f1545d03cbb3 Mon Sep 17 00:00:00 2001
+From 11b8b6e1d0a75e22558353d6faf07c705e624054 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 16 Nov 2015 20:37:53 -0800
 Subject: [PATCH 02/25] Trac 16489: Prevent account autologin
@@ -12,7 +12,7 @@ Subject: [PATCH 02/25] Trac 16489: Prevent account autologin
  5 files changed, 2 insertions(+), 35 deletions(-)
 
 diff --git a/chat/components/src/imAccounts.js b/chat/components/src/imAccounts.js
-index c13c610..5bfea57 100644
+index c13c6100d..5bfea57f2 100644
 --- a/chat/components/src/imAccounts.js
 +++ b/chat/components/src/imAccounts.js
 @@ -588,7 +588,7 @@ imAccount.prototype = {
@@ -25,7 +25,7 @@ index c13c610..5bfea57 100644
        autoLogin = this.prefBranch.getBoolPref(kPrefAccountAutoLogin);
      } catch (e) { }
 diff --git a/im/content/account.xml b/im/content/account.xml
-index e063318..78195b7 100644
+index e06331875..78195b71f 100644
 --- a/im/content/account.xml
 +++ b/im/content/account.xml
 @@ -41,10 +41,6 @@
@@ -40,7 +40,7 @@ index e063318..78195b7 100644
          <xul:hbox flex="1" class="account-buttons" anonid="buttons"
                    xbl:inherits="autologin"/>
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index 73707c9..ed3b8f0 100644
+index 73707c9e2..ed3b8f0f7 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
 @@ -442,22 +442,13 @@ var accountWizard = {
@@ -68,7 +68,7 @@ index 73707c9..ed3b8f0 100644
        let am = window.opener.gAccountManager;
        if (am)
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index 5fa5b82..9eb5352 100644
+index 5fa5b8293..9eb5352a6 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -137,8 +137,6 @@
@@ -81,7 +81,7 @@ index 5fa5b82..9eb5352 100644
  
  </wizard>
 diff --git a/im/content/preferences/main.xul b/im/content/preferences/main.xul
-index e5f7fb6..5e0024d 100644
+index e5f7fb659..5e0024d86 100644
 --- a/im/content/preferences/main.xul
 +++ b/im/content/preferences/main.xul
 @@ -20,7 +20,6 @@
@@ -117,5 +117,5 @@ index e5f7fb6..5e0024d 100644
        <caption label="&accountsMgr.label;"/>
  
 -- 
-2.10.2
+2.11.0
 

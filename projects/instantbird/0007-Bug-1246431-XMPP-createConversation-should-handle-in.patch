@@ -1,4 +1,4 @@
-From 21254cac1e256e3468bfec270ad5898b33066a8b Mon Sep 17 00:00:00 2001
+From f709123309faa68e9b243b63ac548048731db0fd Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 9 Oct 2016 21:57:07 -0700
 Subject: [PATCH 07/25] Bug 1246431 - XMPP createConversation should handle
@@ -9,7 +9,7 @@ Subject: [PATCH 07/25] Bug 1246431 - XMPP createConversation should handle
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
-index 0022be3..4420a1d 100644
+index 0022be35f..4420a1d17 100644
 --- a/chat/protocols/xmpp/xmpp.jsm
 +++ b/chat/protocols/xmpp/xmpp.jsm
 @@ -2108,7 +2108,7 @@ var XMPPAccountPrototype = {
@@ -22,5 +22,5 @@ index 0022be3..4420a1d 100644
        throw "Invalid JID";
      }
 -- 
-2.10.2
+2.11.0
 

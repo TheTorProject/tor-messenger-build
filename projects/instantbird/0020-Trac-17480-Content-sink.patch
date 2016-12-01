@@ -1,4 +1,4 @@
-From d8136d469553e45875c549cb94d9d6796f577968 Mon Sep 17 00:00:00 2001
+From 5f45a049d67f31ed6cc753ad539ddb9144ff7ddf Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 5 Oct 2016 11:09:25 -0700
 Subject: [PATCH 20/25] Trac 17480: Content sink
@@ -9,7 +9,7 @@ Subject: [PATCH 20/25] Trac 17480: Content sink
  2 files changed, 7 insertions(+), 28 deletions(-)
 
 diff --git a/chat/modules/imContentSink.jsm b/chat/modules/imContentSink.jsm
-index abd95fc..fa32442 100644
+index abd95fc71..fa32442e4 100644
 --- a/chat/modules/imContentSink.jsm
 +++ b/chat/modules/imContentSink.jsm
 @@ -42,7 +42,7 @@ this.EXPORTED_SYMBOLS = [
@@ -94,7 +94,7 @@ index abd95fc..fa32442 100644
    return kModes[baseNum];
  }
 diff --git a/im/content/preferences/content.xul b/im/content/preferences/content.xul
-index 3b8ccfa..ba41da7 100644
+index 3b8ccfa2b..ba41da76a 100644
 --- a/im/content/preferences/content.xul
 +++ b/im/content/preferences/content.xul
 @@ -35,7 +35,7 @@
@@ -107,5 +107,5 @@ index 3b8ccfa..ba41da7 100644
            <menuitem value="0" label="&filterLevelNone;"/>
          </menupopup>
 -- 
-2.10.2
+2.11.0
 
