@@ -1,4 +1,4 @@
-From fc7f9fc5c8cd7c3dc149d36d491f0e4adfc638c2 Mon Sep 17 00:00:00 2001
+From 7df4822425e825e6bdd8dc225f28e087eec7c5c8 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:56:46 -0700
 Subject: [PATCH 18/26] Cert override

@@ -1,4 +1,4 @@
-From a9bdb6d653c25a5e43e518a3120398c05cc6cefb Mon Sep 17 00:00:00 2001
+From bd4f023395241318ad8bab0f721fbccccffb8885 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 2 Feb 2016 16:04:51 -0800
 Subject: [PATCH 04/26] Trac 17494: Better error reporting for failed outgoing

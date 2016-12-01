@@ -1,4 +1,4 @@
-From 6650334d6bb7d5fad2c3519141577a359f809181 Mon Sep 17 00:00:00 2001
+From b2a074e0dd2ccf85039846f1722f22af2a86062a Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Wed, 26 Oct 2016 20:16:58 +0200
 Subject: [PATCH 22/26] Bug 1313137 - "msg is not defined" error in
