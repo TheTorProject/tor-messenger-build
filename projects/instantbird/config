@@ -87,6 +87,7 @@ input_files:
   - filename: 0023-Bug-954368-Contact-list-entries-should-adapt-their-h.patch
   - filename: 0024-Bug-1187281-Only-show-close-button-on-Windows.patch
   - filename: 0025-Bug-1316000-Remove-old-Yahoo-Messenger-support.-r-al.patch
+  - filename: 0026-Bug-1321641-Use-built-in-functions-instead-of-an-svg.patch
   - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig

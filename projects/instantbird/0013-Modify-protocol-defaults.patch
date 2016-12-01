@@ -1,7 +1,7 @@
-From a10101ffc21977f256ee4ecb7f73af71ab5d7426 Mon Sep 17 00:00:00 2001
+From 347131c4544a45138a92758b7d5e8367a1b88e53 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:25:34 -0700
-Subject: [PATCH 13/25] Modify protocol defaults
+Subject: [PATCH 13/26] Modify protocol defaults
 
  * Top protocols
 

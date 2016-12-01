@@ -1,7 +1,7 @@
-From b5c49b925dc1be8f8ae37e1f9f04c28020be7aa6 Mon Sep 17 00:00:00 2001
+From 73c0698dbb4858ec7e717c16e12e11838abc50e4 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:36:38 -0700
-Subject: [PATCH 15/25] Modify themes
+Subject: [PATCH 15/26] Modify themes
 
  * theme extension updateh
 

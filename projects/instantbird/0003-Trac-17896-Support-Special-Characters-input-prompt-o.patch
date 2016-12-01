@@ -1,7 +1,7 @@
-From 7086cb8f65f506ec27767f2a2d03295b3e77b817 Mon Sep 17 00:00:00 2001
+From db8cc660b76c6a9f005a31dbb6ab6dc33aa63d09 Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Sat, 30 Jan 2016 20:56:38 +0100
-Subject: [PATCH 03/25] Trac 17896: Support "Special Characters" input prompt
+Subject: [PATCH 03/26] Trac 17896: Support "Special Characters" input prompt
  on OS X
 
  * Bug 1151784 - Add Edit menu to the conversation window on OS X. r=nhnt11,florian

@@ -1,7 +1,7 @@
-From a8276a289236cd8691b6dece5e4e11d2de7f34b4 Mon Sep 17 00:00:00 2001
+From 0e9be1b8cbc5a83deea99e27db548a5ee7f27595 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:24:09 -0700
-Subject: [PATCH 12/25] Account picture
+Subject: [PATCH 12/26] Account picture
 
 ---
  im/content/blist.xul | 3 +--
