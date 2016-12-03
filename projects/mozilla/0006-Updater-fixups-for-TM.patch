@@ -1,7 +1,7 @@
 From 63d8e00c912bdbe1c336ecf4276e123d59c41be3 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 9 Oct 2016 09:34:38 -0700
-Subject: [PATCH 6/6] Updater fixups for TM
+Subject: [PATCH 6/7] Updater fixups for TM
 
  * Remove updater links
 
@@ -526,7 +526,7 @@ z<Hj~T<`88N3sa$~O~s4yQz$7wxFYzlvl`kV4U7(93})ejnwEPfj7PS+Eo(dWGOA)$
 lxF+BV*FuA*n)rXh{eOL`E@}ETfW-g+002ovPDHLkV1nm~vr+&6
 
 diff --git a/toolkit/mozapps/update/content/updates.js b/toolkit/mozapps/update/content/updates.js
-index 40e76c8..5565b9c 100644
+index 40e76c889234..5565b9c54f8c 100644
 --- a/toolkit/mozapps/update/content/updates.js
 +++ b/toolkit/mozapps/update/content/updates.js
 @@ -979,7 +979,7 @@ var gUpdatesFoundBasicPage = {
@@ -539,7 +539,7 @@ index 40e76c8..5565b9c 100644
        updateMoreInfoURL.hidden = true;
  
 diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update/content/updates.xul
-index 6066802..c82bc77 100644
+index 6066802a65af..c82bc77ce8a7 100644
 --- a/toolkit/mozapps/update/content/updates.xul
 +++ b/toolkit/mozapps/update/content/updates.xul
 @@ -121,8 +121,7 @@
@@ -693,7 +693,7 @@ zHAIICCiYIYSX`mIUcOp4Id^^h+f`jW<`?chRNi!yt6Nd*2j3*8u$&(cmR(l9;<#d+
 W@ahR1{w+qA19CVV{J*b~TmS$gHy@k;
 
 diff --git a/xpcom/io/TorFileUtils.cpp b/xpcom/io/TorFileUtils.cpp
-index c45961a..23d6fbe 100644
+index c45961ac54e7..23d6fbe2929a 100644
 --- a/xpcom/io/TorFileUtils.cpp
 +++ b/xpcom/io/TorFileUtils.cpp
 @@ -16,7 +16,7 @@ TorBrowser_GetUserDataDir(nsIFile *aExeFile, nsIFile** aFile)
@@ -706,5 +706,5 @@ index c45961a..23d6fbe 100644
    nsresult rv = GetAppRootDir(aExeFile, getter_AddRefs(appRootDir));
    NS_ENSURE_SUCCESS(rv, rv);
 -- 
-2.10.2
+2.11.0
 

@@ -12,3 +12,4 @@ input_files:
   - filename: 0004-Trac-18331-Update-OS-X-toolchain-to-work-with-ESR-45.patch
   - filename: 0005-OSX-package-as-tar.bz2.patch
   - filename: 0006-Updater-fixups-for-TM.patch
+  - filename: 0007-Permit-storing-exceptions-even-w-inPrivateBrowsingMo.patch

@@ -1,7 +1,7 @@
 From 074aeb6d15c5098991d0d7e652eddbf3b72f91d7 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 23 Mar 2016 19:52:07 -0700
-Subject: [PATCH 4/6] Trac 18331: Update OS X toolchain to work with ESR 45
+Subject: [PATCH 4/7] Trac 18331: Update OS X toolchain to work with ESR 45
 
  * We're reverting the patch, "Adjust atomic ops code to be more
    compatible with thread sanitizer tools."
@@ -14,7 +14,7 @@ Subject: [PATCH 4/6] Trac 18331: Update OS X toolchain to work with ESR 45
  3 files changed, 4 insertions(+), 46 deletions(-)
 
 diff --git a/intl/icu/source/common/putilimp.h b/intl/icu/source/common/putilimp.h
-index 55ec0ae..ac083b0 100644
+index 55ec0ae6ece5..ac083b0e449f 100644
 --- a/intl/icu/source/common/putilimp.h
 +++ b/intl/icu/source/common/putilimp.h
 @@ -1,7 +1,7 @@
@@ -49,7 +49,7 @@ index 55ec0ae..ac083b0 100644
  /*===========================================================================*/
  /** @{ Programs used by ICU code                                             */
 diff --git a/intl/icu/source/common/umutex.cpp b/intl/icu/source/common/umutex.cpp
-index 69eab79..dff0b47 100644
+index 69eab79ff945..dff0b4723736 100644
 --- a/intl/icu/source/common/umutex.cpp
 +++ b/intl/icu/source/common/umutex.cpp
 @@ -344,8 +344,8 @@ umtx_atomic_dec(u_atomic_int32_t *p) {
@@ -73,7 +73,7 @@ index 69eab79..dff0b47 100644
  
  U_NAMESPACE_END
 diff --git a/intl/icu/source/common/umutex.h b/intl/icu/source/common/umutex.h
-index 0e4d118..e0ad0d3 100644
+index 0e4d118523c8..e0ad0d3c0365 100644
 --- a/intl/icu/source/common/umutex.h
 +++ b/intl/icu/source/common/umutex.h
 @@ -1,6 +1,6 @@
@@ -119,5 +119,5 @@ index 0e4d118..e0ad0d3 100644
  /*
   * gcc atomic ops. These are available on several other compilers as well.
 -- 
-2.10.2
+2.11.0
 

@@ -1,7 +1,7 @@
 From bd289165bfce9d0239d67571755cee1048e9433b Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 10 Oct 2016 10:52:52 -0700
-Subject: [PATCH 1/6] Trac 19910: Prevents STARTTLS in XMPP
+Subject: [PATCH 1/7] Trac 19910: Prevents STARTTLS in XMPP
 
  * Revert "Bug #3875: Use Optimistic Data SOCKS variant."
 
@@ -13,7 +13,7 @@ This reverts commit 9064546a5e54d94054d944dd910a5db3a67032dc.
  3 files changed, 11 insertions(+), 40 deletions(-)
 
 diff --git a/netwerk/base/nsSocketTransport2.cpp b/netwerk/base/nsSocketTransport2.cpp
-index c35a587..6a758f9 100644
+index c35a587830d8..6a758f9acaad 100644
 --- a/netwerk/base/nsSocketTransport2.cpp
 +++ b/netwerk/base/nsSocketTransport2.cpp
 @@ -1887,26 +1887,8 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
@@ -86,7 +86,7 @@ index c35a587..6a758f9 100644
                  mCondition = ErrorAccordingToNSPR(code);
              }
 diff --git a/netwerk/base/nsSocketTransport2.h b/netwerk/base/nsSocketTransport2.h
-index b7fbc76..b508335 100644
+index b7fbc76a79a8..b508335c7e55 100644
 --- a/netwerk/base/nsSocketTransport2.h
 +++ b/netwerk/base/nsSocketTransport2.h
 @@ -190,9 +190,7 @@ private:
@@ -101,7 +101,7 @@ index b7fbc76..b508335 100644
  
      // Safer way to get and automatically release PRFileDesc objects.
 diff --git a/netwerk/socket/nsSOCKSIOLayer.cpp b/netwerk/socket/nsSOCKSIOLayer.cpp
-index 568c700..1793001 100644
+index 568c700e2bae..1793001df2c9 100644
 --- a/netwerk/socket/nsSOCKSIOLayer.cpp
 +++ b/netwerk/socket/nsSOCKSIOLayer.cpp
 @@ -79,9 +79,7 @@ public:
@@ -116,5 +116,5 @@ index 568c700..1793001 100644
  
  private:
 -- 
-2.10.2
+2.11.0
 

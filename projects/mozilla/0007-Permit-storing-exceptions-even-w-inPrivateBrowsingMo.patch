@@ -1,0 +1,24 @@
+From 943386570317551f9e2540e8a90ed7f5c8ce9b45 Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Sat, 3 Dec 2016 10:01:52 -0800
+Subject: [PATCH 7/7] Permit storing exceptions even w/ inPrivateBrowsingMode
+
+---
+ security/manager/pki/resources/content/exceptionDialog.js | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/security/manager/pki/resources/content/exceptionDialog.js b/security/manager/pki/resources/content/exceptionDialog.js
+index 640791f898fc..a8abfe9886c4 100644
+--- a/security/manager/pki/resources/content/exceptionDialog.js
++++ b/security/manager/pki/resources/content/exceptionDialog.js
+@@ -356,5 +356,6 @@ function addException() {
+  * Returns true if this dialog is in private browsing mode.
+  */
+ function inPrivateBrowsingMode() {
+-  return PrivateBrowsingUtils.isWindowPrivate(window);
++  // Let us store exceptions in private browsing mode.
++  return false;  // PrivateBrowsingUtils.isWindowPrivate(window);
+ }
+-- 
+2.11.0
+
