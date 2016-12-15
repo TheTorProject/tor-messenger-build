@@ -2,7 +2,7 @@ Tor Messenger 0.3.0b2 --
  * All Platforms
    * Use the tor-browser-45.6.0esr-6.0-1-build1 tag on tor-browser
    * Use the THUNDERBIRD_45_5_1_RELEASE tag on comm-esr45
-   * Update ctypes-otr to f34a5848
+   * Update ctypes-otr to 0.0.4
    * Update tor-browser to 6.0.8
    * Don't allow javascript: links in themes
    * Permit storing cert. exceptions in private browsing mode
