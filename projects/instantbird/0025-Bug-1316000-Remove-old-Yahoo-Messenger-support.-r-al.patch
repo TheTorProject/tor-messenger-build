@@ -1,4 +1,4 @@
-From fd1b3c76721f43025219f2a5f76e5f33ffa20a9e Mon Sep 17 00:00:00 2001
+From 28b6432939ad61eacfe8c1e9559b3d5382298947 Mon Sep 17 00:00:00 2001
 From: Patrick Cloke <clokep@gmail.com>
 Date: Wed, 9 Nov 2016 09:03:49 -0800
 Subject: [PATCH 25/27] Bug 1316000 - Remove old Yahoo! Messenger support.

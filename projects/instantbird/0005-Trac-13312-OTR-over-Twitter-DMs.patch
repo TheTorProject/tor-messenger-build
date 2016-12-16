@@ -1,4 +1,4 @@
-From c02d910d93b7ba9ccc2611ebea5d14ca75e23c47 Mon Sep 17 00:00:00 2001
+From 298868aee8d58055e6e210a922cf55beec70db4f Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 15 Mar 2016 17:40:42 -0700
 Subject: [PATCH 05/27] Trac 13312: OTR over Twitter DMs
