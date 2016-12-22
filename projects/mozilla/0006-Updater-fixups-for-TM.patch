@@ -1,4 +1,4 @@
-From 803f92640e5a0856a5c78ccba5c4845144b88af3 Mon Sep 17 00:00:00 2001
+From 08e87872bdf1b8b4fb643682cf33005ba335ba9b Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 9 Oct 2016 09:34:38 -0700
 Subject: [PATCH 6/7] Updater fixups for TM
@@ -8,14 +8,17 @@ Subject: [PATCH 6/7] Updater fixups for TM
  * Copy over the der's and TM update logo
 
  * Trac 20309: s/TorBrowser-Data/TorMessenger-Data/
+
+ * Patch the make_incremental_update.sh for ctypes-otr
 ---
- .../base/content/abouttbupdate/aboutTBUpdateLogo.png | Bin 23266 -> 2724 bytes
- toolkit/mozapps/update/content/updates.js            |   2 +-
- toolkit/mozapps/update/content/updates.xul           |  13 +++++--------
- toolkit/mozapps/update/updater/release_primary.der   | Bin 1229 -> 1233 bytes
- toolkit/mozapps/update/updater/release_secondary.der | Bin 1229 -> 1235 bytes
- xpcom/io/TorFileUtils.cpp                            |   2 +-
- 6 files changed, 7 insertions(+), 10 deletions(-)
+ .../content/abouttbupdate/aboutTBUpdateLogo.png    | Bin 23266 -> 2724 bytes
+ toolkit/mozapps/update/content/updates.js          |   2 +-
+ toolkit/mozapps/update/content/updates.xul         |  13 ++--
+ toolkit/mozapps/update/updater/release_primary.der | Bin 1229 -> 1233 bytes
+ .../mozapps/update/updater/release_secondary.der   | Bin 1229 -> 1235 bytes
+ tools/update-packaging/make_incremental_update.sh  |  80 +++++----------------
+ xpcom/io/TorFileUtils.cpp                          |   2 +-
+ 7 files changed, 23 insertions(+), 74 deletions(-)
 
 diff --git a/browser/base/content/abouttbupdate/aboutTBUpdateLogo.png b/browser/base/content/abouttbupdate/aboutTBUpdateLogo.png
 index be5cae93fa96ffa71b3195eb36b5d3c955be3ef4..3de3c93d1105a0220ba0922e4c9a101755b126a9 100644
@@ -692,6 +695,100 @@ zbKGzWvzA3x>-Q;}s(c?EU%K*g(yXNug*g2LUV7#omDwqM^}v1Y7{@L4?QERgdQ$to
 zHAIICCiYIYSX`mIUcOp4Id^^h+f`jW<`?chRNi!yt6Nd*2j3*8u$&(cmR(l9;<#d+
 W@ahR1{w+qA19CVV{J*b~TmS$gHy@k;
 
+diff --git a/tools/update-packaging/make_incremental_update.sh b/tools/update-packaging/make_incremental_update.sh
+index dc9097e3a8ea..5a6eac37a506 100755
+--- a/tools/update-packaging/make_incremental_update.sh
++++ b/tools/update-packaging/make_incremental_update.sh
+@@ -132,73 +132,25 @@ archivefiles="updatev2.manifest updatev3.manifest"
+ # releases, add them to the "force updates" list.
+ ext_path='TorBrowser/Data/Browser/profile.default/extensions'
+ if [ -d "$newdir/$ext_path" ]; then
+-  https_everywhere_dir='https-everywhere-eff@eff.org'
+-  https_everywhere_xpi='https-everywhere-eff@eff.org.xpi'
+-  noscript='{73a6fe31-595d-460b-a920-fcc0f8843232}.xpi'
+-
+-  # NoScript is a packed extension, so we simply compare the old and the new
+-  # .xpi files.
+-  noscript_path="$ext_path/$noscript"
+-  diff -a "$olddir/$noscript_path" "$newdir/$noscript_path" > /dev/null
++  ctypes_otr_dir='ctypes-otr@tormessenger'
++  unpacked_ctypes_otr_install_rdf="$ext_path/$ctypes_otr_dir/install.rdf"
++
++  # The new ctypes-otr extension is unpacked, and presumably the old one is
++  # too. We need to determine if any of the unpacked files have changed.
++  # Since that is messy, we simply compare the old install.rdf file to the
++  # new one.
++  diff "$olddir/$unpacked_ctypes_otr_install_rdf"     \
++        "$newdir/$unpacked_ctypes_otr_install_rdf" > /dev/null
+   rc=$?
+-  if [ $rc -gt 1 ]; then
+-    notice "Unexpected exit $rc from $noscript_path diff command"
++  if [ $rc -gt 1 -a -e "$olddir/$unpacked_ctypes_otr_install_rdf" ]; then
++    notice "Unexpected exit $rc from $unpacked_ctypes_otr_install_rdf diff command"
+     exit 2
+-  elif [ $rc -eq 1 ]; then
+-    requested_forced_updates="$requested_forced_updates $noscript_path"
+-  fi
++  elif [ $rc -ge 1 ]; then
++    requested_forced_updates="$requested_forced_updates $ext_path/$ctypes_otr_dir/*"
+ 
+-  # As of HTTPS Everywhere 5.1.0, the extension ID gained "-eff".
+-  # As of HTTPS Everywhere 5.2.2, the extension is packed (i.e., it remains
+-  # an .xpi after it is installed in the browser profile).
+-  force_https_update=0
+-  remove_unpacked_https_e_dirs=0
+-  unpacked_https_e_install_rdf="$ext_path/$https_everywhere_dir/install.rdf"
+-  packed_https_e_path="$ext_path/$https_everywhere_xpi"
+-  if [ -d "$newdir/$ext_path/$https_everywhere_dir" ]; then
+-    # The new HTTPS-E extension is unpacked, and presumably the old one is
+-    # too. We need to determine if any of the unpacked files have changed.
+-    # Since that is messy, we simply compare the old install.rdf file to the
+-    # new one.
+-    diff "$olddir/$unpacked_https_e_install_rdf"     \
+-          "$newdir/$unpacked_https_e_install_rdf" > /dev/null
+-    rc=$?
+-    if [ $rc -gt 1 -a -e "$olddir/$unpacked_https_e_install_rdf" ]; then
+-      notice "Unexpected exit $rc from $unpacked_https_e_install_rdf diff command"
+-      exit 2
+-    elif [ $rc -ge 1 ]; then
+-      force_https_update=1
+-      remove_unpacked_https_e_dirs=1
+-      # In case we still ship an unpacked HTTPS-E extension but the user has
+-      # updated to a packed one, arrange for the packed one to be removed.
+-      extra_files_to_remove="$extra_files_to_remove $packed_https_e_path"
+-    fi
+-  elif [ -d "$olddir/$ext_path/$https_everywhere_dir" ]; then
+-    # The old HTTPS-E extension is unpacked but the new one is packed.
+-    force_https_update=1
+-    remove_unpacked_https_e_dirs=1
+-  else
+-    # Both the old and new HTTPS-E extensions are packed. In this case we can
+-    # simply compare the .xpi files to determine if the extension has changed.
+-    diff -a "$olddir/$packed_https_e_path" "$newdir/$packed_https_e_path" > /dev/null
+-    rc=$?
+-    if [ $rc -gt 1 ]; then
+-      notice "Unexpected exit $rc from $packed_https_e_path diff command"
+-      exit 2
+-    elif [ $rc -eq 1 ]; then
+-      force_https_update=1
+-    fi
+-  fi
+-
+-  if [ $force_https_update -ne 0 ]; then
+-    requested_forced_updates="$requested_forced_updates $ext_path/$https_everywhere_dir/* $packed_https_e_path"
+-    if [ "$remove_unpacked_https_e_dirs" -ne 0 ]; then
+-      # The old version was unpacked, so remove the entire directory to ensure
+-      # that the replace is "clean." Also, make sure we delete the pre 5.1.0
+-      # HTTPS Everywhere as well in case it exists (the extension ID got
+-      # changed with the version bump to 5.1.0).
+-      directories_to_remove="$directories_to_remove $ext_path/https-everywhere@eff.org $ext_path/$https_everywhere_dir"
+-    fi
++    # The old version was unpacked, so remove the entire directory to ensure
++    # that the replace is "clean."
++    directories_to_remove="$directories_to_remove $ext_path/$ctypes_otr_dir"
+   fi
+ fi
+ # END TOR_BROWSER_DATA_OUTSIDE_APP_DIR removal
 diff --git a/xpcom/io/TorFileUtils.cpp b/xpcom/io/TorFileUtils.cpp
 index c45961ac54e7..23d6fbe2929a 100644
 --- a/xpcom/io/TorFileUtils.cpp
