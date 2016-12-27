@@ -1,7 +1,7 @@
 From b9d9eccfeb4d08804a02b7d09576f14526c90ff0 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 2 Oct 2016 08:46:55 -0700
-Subject: [PATCH 21/27] SASL ECDSA-NIST256P-CHALLENGE
+Subject: [PATCH 21/28] SASL ECDSA-NIST256P-CHALLENGE
 
 ---
  chat/components/src/imAccounts.js |    1 +

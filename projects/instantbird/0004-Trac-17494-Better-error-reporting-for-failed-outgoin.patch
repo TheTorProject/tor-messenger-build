@@ -1,7 +1,7 @@
 From 266389c24e1e4eb65f0c40abe414d4b4471992d3 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 2 Feb 2016 16:04:51 -0800
-Subject: [PATCH 04/27] Trac 17494: Better error reporting for failed outgoing
+Subject: [PATCH 04/28] Trac 17494: Better error reporting for failed outgoing
  messages
 
  * Bug 1245325 - Better error reporting for failed outgoing messages. r=clokep
