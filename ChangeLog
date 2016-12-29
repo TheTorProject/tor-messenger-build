@@ -1,4 +1,4 @@
-Tor Messenger 0.3.0b2 --
+Tor Messenger 0.3.0b2 -- December 29, 2016
  * All Platforms
    * Use the tor-browser-45.6.0esr-6.0-1-build1 tag on tor-browser
    * Use the THUNDERBIRD_45_6_0_RELEASE tag on comm-esr45
