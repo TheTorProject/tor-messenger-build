@@ -1,7 +1,7 @@
 From 834f9254f3d0eb39c26c430fcefb6f661f2bc2e9 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 28 Aug 2016 08:57:41 -0700
-Subject: [PATCH 08/27] Bug 1298574 - Set _userVCard own property when
+Subject: [PATCH 08/28] Bug 1298574 - Set _userVCard own property when
  downloading vCard fails. r=aleth
 
  * This prevents an infinite req / res cycle.
