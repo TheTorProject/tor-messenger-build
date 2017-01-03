@@ -18,7 +18,7 @@ build_targets:
         - WINNT_x86-gcc3-x64
     osx64: Darwin_x86_64-gcc3
 channels:
-    release: 0.3.0b2
+    release: 0.3.0b3
 versions:
     0.3.0b1:
         platformVersion: 45.5.0
