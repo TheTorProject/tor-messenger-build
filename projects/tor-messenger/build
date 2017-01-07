@@ -64,6 +64,8 @@ cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
 
 [% IF c("var/windows") -%]
 7z x ../../../../../../../[% c('input_files_by_name/tor-browser') %]
+# The version of 7z (9.02) we are using for the builds creates redundant $PLUGINSDIR which we remove.
+rm -rf \$PLUGINSDIR Browser/\$PLUGINSDIR
 mv \$_OUTDIR tor-browser_en-US
 cp -pf tor-browser_en-US/Browser/libssp-0.dll tor-browser_en-US/Browser/TorBrowser/Tor/
 
