@@ -45,7 +45,7 @@ OUTPUT_DIR = "signed"
 
 def sign_mars():
     if "NSS_DB_DIR" not in os.environ:
-        sys.exit("Please set `export NSS_DB_DIR' running this script.")
+        sys.exit("Please set `export NSS_DB_DIR' before running this script.")
     else:
         nss_dir = os.environ["NSS_DB_DIR"]
     if not os.path.isdir(nss_dir):
