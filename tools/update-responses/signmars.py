@@ -98,7 +98,7 @@ def sign_mars():
             print err
             sys.exit("Unable to run signmar to verify the signatures.")
         out = out.split('\n')[0]
-      
+
         # FIXME: This is a very poor hack to check for signatures that
         # currently works but will fail if the files are 10 or 20.
         if "0" in out:
@@ -107,7 +107,7 @@ def sign_mars():
             print " [signed] {0}".format(each)
             already_signed.append(each)
 
-    num_to_sign = len(mar_files)-len(already_signed)
+    num_to_sign = len(mar_files) - len(already_signed)
     if not num_to_sign:
         sys.exit("All MAR files are already signed.")
 
