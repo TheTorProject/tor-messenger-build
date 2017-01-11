@@ -149,7 +149,7 @@ certificates and the private keys.
 
     - gpg -abs sha256sums-signed-build.txt
 
-    - Upload the signature (*.asc) back to paganini signed/ directory.
+    - Upload the signature (*.asc) back to build machine signed/ directory.
 
 - At this stage, you have the code signed DMG and EXE, Linux builds, signed
   MAR files, the update information, and the signed sha256sum of all files.
