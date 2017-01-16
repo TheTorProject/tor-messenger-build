@@ -4,10 +4,6 @@ ac_add_options --target=i686-w64-mingw32
 ac_add_options --enable-default-toolkit=cairo-windows
 ac_add_options --enable-strip
 
-# ICU seems still to have cross-compiling issues:
-# https://bugzilla.mozilla.org/show_bug.cgi?id=1019744#c19
-ac_add_options --without-intl-api
-
 # We can't build the sandbox code with mingw-w64:
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1042426
 ac_add_options --disable-sandbox

@@ -2,6 +2,7 @@ Tor Messenger 0.3.0b3 --
  * All Platforms
  * Windows
    * Fix automatic generation of complete MAR files
+   * Trac 21231: Enable intl-api
 
 Tor Messenger 0.3.0b2 -- December 29, 2016
  * All Platforms
