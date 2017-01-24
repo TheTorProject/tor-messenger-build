@@ -1,4 +1,4 @@
-From 0f7fcd0b4dba93f3e652838f9d9f988e9e8b8726 Mon Sep 17 00:00:00 2001
+From 527afa8ed730a3287b0ae13f8e48acacb7addc4d Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 23 Mar 2016 19:52:07 -0700
 Subject: [PATCH 4/7] Trac 18331: Update OS X toolchain to work with ESR 45

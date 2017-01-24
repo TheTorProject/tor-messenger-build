@@ -1,4 +1,4 @@
-From 4c88cc660df421c77335f0d5fb73ea97430ed441 Mon Sep 17 00:00:00 2001
+From 9ba71cc32503f29cfb07204ffcdd2c2703ed0e92 Mon Sep 17 00:00:00 2001
 From: Nicolas Vigier <boklm@torproject.org>
 Date: Thu, 25 Jun 2015 12:18:43 +0200
 Subject: [PATCH 5/7] OSX: package as tar.bz2

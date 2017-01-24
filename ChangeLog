@@ -1,5 +1,9 @@
-Tor Messenger 0.3.0b3 --
+Tor Messenger 0.4.0b1 --
  * All Platforms
+   * Use the tor-browser-45.7.0esr-6.5-1-build1 tag on tor-browser
+   * Use the THUNDERBIRD_45_7_0_RELEASE tag on comm-esr45
+   * Update tor-browser to 6.5
+   * Update tor-launcher to 0.2.10.3
  * Windows
    * Fix automatic generation of complete MAR files
    * Trac 21231: Enable intl-api

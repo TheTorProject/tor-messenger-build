@@ -1,7 +1,7 @@
-From 47cb0f9b3ca87aea8dcaf0e578f4fbeab6efb9c9 Mon Sep 17 00:00:00 2001
+From bb331ed68d8150a72ee30734891f02e824c08a6d Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 9 Oct 2016 21:57:07 -0700
-Subject: [PATCH 07/27] Bug 1246431 - XMPP createConversation should handle
+Subject: [PATCH 07/26] Bug 1246431 - XMPP createConversation should handle
  incoming messages from the server properly. r=aleth
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 07/27] Bug 1246431 - XMPP createConversation should handle
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
-index 0022be35f..4420a1d17 100644
+index 282575938..71f777009 100644
 --- a/chat/protocols/xmpp/xmpp.jsm
 +++ b/chat/protocols/xmpp/xmpp.jsm
 @@ -2108,7 +2108,7 @@ var XMPPAccountPrototype = {

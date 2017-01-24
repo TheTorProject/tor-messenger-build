@@ -1,13 +1,11 @@
 # vim: filetype=yaml sw=2
-version: 0.2.9.4
+version: 0.2.10.3
 git_url: https://git.torproject.org/tor-launcher.git
 git_hash: '[% c("version") %]'
 gpg_keyring: gk.gpg
 tag_gpg_id: 1
 filename: "[% project %]-[% c('version') %]-[% c('var/build_id') %].xpi"
 input_files:
-  - filename: 0001-Bug-19432-Remove-special-handling-for-Instantbird-Th.patch
-  - filename: 0002-Bug-19568-Set-CurProcD-for-Thunderbird-Instantbird.patch
   - filename: torbirdy.png
   - filename: messenger.png
   - filename: default48.png

@@ -1,7 +1,7 @@
-From 266389c24e1e4eb65f0c40abe414d4b4471992d3 Mon Sep 17 00:00:00 2001
+From 71ced3fd410481505db5506ba0107cdd21438db7 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 2 Feb 2016 16:04:51 -0800
-Subject: [PATCH 04/27] Trac 17494: Better error reporting for failed outgoing
+Subject: [PATCH 04/26] Trac 17494: Better error reporting for failed outgoing
  messages
 
  * Bug 1245325 - Better error reporting for failed outgoing messages. r=clokep
@@ -35,7 +35,7 @@ index 7f824e534..293ab01d4 100644
  # LOCALIZATION NOTE (tooltip.*):
  #   These are the titles of lines of information that will appear in
 diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
-index 67cab7743..0022be35f 100644
+index 7c3fcd7e6..282575938 100644
 --- a/chat/protocols/xmpp/xmpp.jsm
 +++ b/chat/protocols/xmpp/xmpp.jsm
 @@ -679,11 +679,18 @@ var XMPPConversationPrototype = {
