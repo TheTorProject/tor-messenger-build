@@ -166,7 +166,10 @@ pushing the updates to the `update_2.test' directory instead of `update_2'.
 
   ! Make sure the .htaccess file is copied as well.
 
-- Copy the contents* of the signed/ directory to dist.tormessenger.org/tormessenger/$VERSION
+- ssh to `staticiforme.torproject.org:/srv/dist-master.torproject.org/htdocs/tormessenger'
+  `mkdir $VERSION` to create the directory for the new version.
+
+- Copy the contents* of the signed/ directory (MAR files) to dist.tormessenger.org/tormessenger/$VERSION
        staticiforme.torproject.org:/srv/dist-master.torproject.org/htdocs/tormessenger/$VERSION
 
   * - You can skip sha256sums-unsigned-build.txt since we don't use it.
