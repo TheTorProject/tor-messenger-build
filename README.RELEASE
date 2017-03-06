@@ -217,7 +217,7 @@ Finalizing Updates and Releasing
 
 - ssh to `staticiforme.torproject.org:/srv/aus2-master.torproject.org/htdocs/tormessenger/update_2/release`
 
-- Copy the changes from the `test' directory:
+- Delete the existing files and then copy the changes from the `test' directory:
 
     cp -R ../../update_2.test/release/. .
 
@@ -231,7 +231,8 @@ Finalizing Updates and Releasing
   update, check.)
 
 - Finalize the release process by tagging the version in
-  `tor-messenger-build.git' (run the code below):
+  `tor-messenger-build.git' (run the code below). Make sure that HEAD is the
+  commit which adds the release date to the ChangeLog.
 
     VERSION=`awk '/tormessenger_version/ {print $2}' rbm.conf | cut -d "'" -f2` 
     git tag -s v$VERSION -m "version $VERSION"
