@@ -30,3 +30,8 @@ versions:
         detailsURL: https://blog.torproject.org/blog/tor-messenger-030b2-released
         incremental_from:
           - 0.3.0b1
+    0.4.0b1:
+        platformVersion: 45.7.0
+        detailsURL: https://blog.torproject.org/blog/tor-messenger-040b1-released
+        incremental_from:
+          - 0.3.0b2
