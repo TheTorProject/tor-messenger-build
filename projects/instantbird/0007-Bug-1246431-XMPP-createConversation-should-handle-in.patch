@@ -1,4 +1,4 @@
-From bb331ed68d8150a72ee30734891f02e824c08a6d Mon Sep 17 00:00:00 2001
+From 172ba8233c54438d15e523e4d4c8e5864d06a65d Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 9 Oct 2016 21:57:07 -0700
 Subject: [PATCH 07/26] Bug 1246431 - XMPP createConversation should handle
@@ -22,5 +22,5 @@ index 282575938..71f777009 100644
        throw "Invalid JID";
      }
 -- 
-2.11.0
+2.12.0
 

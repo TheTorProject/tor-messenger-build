@@ -1,4 +1,4 @@
-From 2c8933abb0b1eec048c0205cf49729856e8c84e7 Mon Sep 17 00:00:00 2001
+From c719171fd2ec910bebc030061c4961dc79c90a46 Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Sat, 30 Jan 2016 20:56:38 +0100
 Subject: [PATCH 03/26] Trac 17896: Support "Special Characters" input prompt
@@ -74,5 +74,5 @@ index 30aeb1fc5..14fc9e8f6 100644
    <keyset id="mainkeyset"/>
    <menubar id="blistMenubar"/>
 -- 
-2.11.0
+2.12.0
 

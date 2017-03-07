@@ -18,7 +18,7 @@ build_targets:
         - WINNT_x86-gcc3-x64
     osx64: Darwin_x86_64-gcc3
 channels:
-    release: 0.4.0b1
+    release: 0.4.0b2
 versions:
     0.3.0b1:
         platformVersion: 45.5.0
@@ -35,3 +35,8 @@ versions:
         detailsURL: https://blog.torproject.org/blog/tor-messenger-040b1-released
         incremental_from:
           - 0.3.0b2
+    0.4.0b2:
+        platformVersion: 45.8.0
+        detailsURL: https://blog.torproject.org/blog/tor-messenger-040b2-released
+        incremental_from:
+          - 0.4.0b1

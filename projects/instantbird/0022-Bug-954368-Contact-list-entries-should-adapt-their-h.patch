@@ -1,4 +1,4 @@
-From 10c0e491625782ea5c2a99bfacbafa8a65406094 Mon Sep 17 00:00:00 2001
+From d10d5ffbb0bb535e2776d77fd51cbb0c26890fcc Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Thu, 12 May 2016 15:10:43 +0200
 Subject: [PATCH 22/26] Bug 954368 - Contact list entries should adapt their
@@ -318,5 +318,5 @@ index 992267405..c033b51bc 100644
    min-width: 16px;
  }
 -- 
-2.11.0
+2.12.0
 

@@ -1,4 +1,4 @@
-From 4b7b7f09dab1b90af3073304d8bcfa529ac1183b Mon Sep 17 00:00:00 2001
+From 5f5f16fa1b41dd7a35ad1da327a52c3467f3ed47 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 1 Dec 2016 13:25:42 -0800
 Subject: [PATCH 25/26] Bug 1321641 - Use built-in functions instead of an svg
@@ -53,5 +53,5 @@ index 15ba97346..4488c30bb 100644
  
  .indicator {
 -- 
-2.11.0
+2.12.0
 

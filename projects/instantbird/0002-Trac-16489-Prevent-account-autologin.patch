@@ -1,4 +1,4 @@
-From 93d819d685fa99d607a71d370c8f45f2e99d5493 Mon Sep 17 00:00:00 2001
+From 8b87a9f3db3ce327b85bd1fcb3306ae49f3c9478 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 16 Nov 2015 20:37:53 -0800
 Subject: [PATCH 02/26] Trac 16489: Prevent account autologin
@@ -117,5 +117,5 @@ index e5f7fb659..5e0024d86 100644
        <caption label="&accountsMgr.label;"/>
  
 -- 
-2.11.0
+2.12.0
 

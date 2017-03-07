@@ -1,4 +1,4 @@
-From 527afa8ed730a3287b0ae13f8e48acacb7addc4d Mon Sep 17 00:00:00 2001
+From e3d76abbb2c87689671f8cf0c685f847afa62c2b Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 23 Mar 2016 19:52:07 -0700
 Subject: [PATCH 4/7] Trac 18331: Update OS X toolchain to work with ESR 45
@@ -119,5 +119,5 @@ index 0e4d118523c8..e0ad0d3c0365 100644
  /*
   * gcc atomic ops. These are available on several other compilers as well.
 -- 
-2.11.0
+2.12.0
 

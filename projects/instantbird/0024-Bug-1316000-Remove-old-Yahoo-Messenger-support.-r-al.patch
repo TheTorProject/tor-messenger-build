@@ -1,4 +1,4 @@
-From 300fcb344de6111a6f96ebda90fe8f70a8534e00 Mon Sep 17 00:00:00 2001
+From 7f4e87091ebfc9728d8655dd5a9b6b8f646a2357 Mon Sep 17 00:00:00 2001
 From: Patrick Cloke <clokep@gmail.com>
 Date: Wed, 9 Nov 2016 09:03:49 -0800
 Subject: [PATCH 24/26] Bug 1316000 - Remove old Yahoo! Messenger support.
@@ -2394,5 +2394,5 @@ index 16c665ab4..a4b9fc638 100644
                if ("color" in style)
                  styleAttributes += " color=\"" + style.color + "\"";
 -- 
-2.11.0
+2.12.0
 
