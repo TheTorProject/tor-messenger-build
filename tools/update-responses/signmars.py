@@ -129,6 +129,7 @@ def sign_mars():
             sys.exit()
 
     print "\nStarting MAR signing for {0} files...".format(num_to_sign)
+    print "(Assuming NSS_CERT_NAME as '{0}')\n".format(NSS_CERT_NAME)
     for each in mar_files:
         if each in already_signed:
             print " [move] '{0}'".format(each)
