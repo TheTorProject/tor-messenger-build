@@ -92,6 +92,9 @@ assumes that A is the older version and B is the newer one.
                 incremental_from:
                   - A
 
+    ! Increment platformVersion if it has changed
+    ! Update detailsURL which will point to the blog post detailing the release
+
 - Now run `./gen_incrementals'. In the `signed/$VERSION' directory, you should
   see incremental MARs from A->B along with the existing complete MARs.
 
@@ -147,7 +150,7 @@ certificates and the private keys.
 
     - Copy the sha256sums-signed-build.txt to a local machine
 
-    - gpg -abs sha256sums-signed-build.txt
+        gpg -abs sha256sums-signed-build.txt
 
     - Upload the signature (*.asc) back to build machine signed/ directory.
 
