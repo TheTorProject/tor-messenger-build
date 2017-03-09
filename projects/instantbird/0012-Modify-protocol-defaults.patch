@@ -1,4 +1,4 @@
-From 26996669f40ef665317af1943ae191a131da8a64 Mon Sep 17 00:00:00 2001
+From 945f99a48e5b6c2cd3ae47c166ee81fcb80ad9b6 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:25:34 -0700
 Subject: [PATCH 12/26] Modify protocol defaults
@@ -12,7 +12,7 @@ Subject: [PATCH 12/26] Modify protocol defaults
  2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index 759f42b38..a3069061a 100644
+index de9d0d809..cce8a1ba9 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -50,7 +50,7 @@

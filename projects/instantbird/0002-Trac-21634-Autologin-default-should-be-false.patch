@@ -1,0 +1,39 @@
+From 5dc74f402183115a4d60d69c96bcd770f794c014 Mon Sep 17 00:00:00 2001
+From: Arlo Breault <arlolra@gmail.com>
+Date: Mon, 16 Nov 2015 20:37:53 -0800
+Subject: [PATCH 02/26] Trac 21634: Autologin default should be false
+
+---
+ chat/components/src/imAccounts.js | 2 +-
+ im/content/accountWizard.xul      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/chat/components/src/imAccounts.js b/chat/components/src/imAccounts.js
+index c13c6100d..5bfea57f2 100644
+--- a/chat/components/src/imAccounts.js
++++ b/chat/components/src/imAccounts.js
+@@ -588,7 +588,7 @@ imAccount.prototype = {
+   },
+ 
+   get autoLogin() {
+-    let autoLogin = true;
++    let autoLogin = false;
+     try {
+       autoLogin = this.prefBranch.getBoolPref(kPrefAccountAutoLogin);
+     } catch (e) { }
+diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
+index 5fa5b8293..f0933af7f 100644
+--- a/im/content/accountWizard.xul
++++ b/im/content/accountWizard.xul
+@@ -138,7 +138,7 @@
+       <rows id="summaryRows"/>
+     </grid>
+     <separator/>
+-    <checkbox id="connectAutomatically" label= "&accountSummary.connectAutomatically.label;" checked="true"/>
++    <checkbox id="connectAutomatically" label= "&accountSummary.connectAutomatically.label;" checked="false"/>
+   </wizardpage>
+ 
+ </wizard>
+-- 
+2.12.0
+

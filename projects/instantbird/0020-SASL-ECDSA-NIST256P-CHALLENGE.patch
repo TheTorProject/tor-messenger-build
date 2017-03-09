@@ -1,4 +1,4 @@
-From 6ae664ad609f5a10929d40af5ddfff8ae9d30a69 Mon Sep 17 00:00:00 2001
+From df852a62c5a50a1277f8ccfa7791081ccb89b8a3 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 2 Oct 2016 08:46:55 -0700
 Subject: [PATCH 20/26] SASL ECDSA-NIST256P-CHALLENGE

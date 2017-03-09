@@ -1,4 +1,4 @@
-From 56a3cfefb45ab3b7d26d64c6d2738674c824555d Mon Sep 17 00:00:00 2001
+From 6783f32dd427882b0d4208ddbfe7726d1df691ca Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:58:31 -0700
 Subject: [PATCH 18/26] Display all traffic over Tor
@@ -9,7 +9,7 @@ Subject: [PATCH 18/26] Display all traffic over Tor
  2 files changed, 3 insertions(+)
 
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index a3069061a..3c3a4179b 100644
+index cce8a1ba9..fcc5eaa01 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -39,6 +39,8 @@

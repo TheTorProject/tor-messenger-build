@@ -1,4 +1,4 @@
-From 72b0df30953c3e7cb52ecf01ca3d6009d558e326 Mon Sep 17 00:00:00 2001
+From 3c4237848553f5915a821cab2dc86ac75d7bf826 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:42:25 -0700
 Subject: [PATCH 08/26] XMPP in-band registration
@@ -150,7 +150,7 @@ index 24618ee0c..246ec2b7c 100644
          this.ERROR("Unexpected stanza " + aStanza.localName + ", expected 'features'");
          this._networkError(_("connection.error.incorrectResponse"));
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index ed3b8f0f7..7c26d0d6e 100644
+index 73707c9e2..889c06908 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
 @@ -119,6 +119,12 @@ var accountWizard = {
@@ -176,7 +176,7 @@ index ed3b8f0f7..7c26d0d6e 100644
        let option = this.prefs[i];
        let opt = option.opt;
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index 9eb5352a6..759f42b38 100644
+index f0933af7f..de9d0d809 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -65,6 +65,7 @@

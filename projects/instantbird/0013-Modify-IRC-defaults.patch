@@ -1,4 +1,4 @@
-From f325d825f3193abd400864d6b7878f92ff3e6083 Mon Sep 17 00:00:00 2001
+From 50e63aa0881f5c7b53d4df031c1634d78d5a52b8 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:31:58 -0700
 Subject: [PATCH 13/26] Modify IRC defaults

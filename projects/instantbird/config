@@ -63,7 +63,7 @@ targets:
         - sqlite3
 input_files:
   - filename: 0001-Set-Tor-Messenger-preferences.patch
-  - filename: 0002-Trac-16489-Prevent-account-autologin.patch
+  - filename: 0002-Trac-21634-Autologin-default-should-be-false.patch
   - filename: 0003-Trac-17896-Support-Special-Characters-input-prompt-o.patch
   - filename: 0004-Trac-17494-Better-error-reporting-for-failed-outgoin.patch
   - filename: 0005-Trac-13312-OTR-over-Twitter-DMs.patch

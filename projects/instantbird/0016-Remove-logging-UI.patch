@@ -1,4 +1,4 @@
-From 6cf79bd3bd255f6020ff00e62a1f38509d46dfa0 Mon Sep 17 00:00:00 2001
+From addbd96ff280d076cc33cd2684351e3953261ac8 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:50:48 -0700
 Subject: [PATCH 16/26] Remove logging UI
