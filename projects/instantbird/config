@@ -88,6 +88,7 @@ input_files:
   - filename: 0024-Bug-1316000-Remove-old-Yahoo-Messenger-support.-r-al.patch
   - filename: 0025-Bug-1321641-Use-built-in-functions-instead-of-an-svg.patch
   - filename: 0026-Bug-1321420-Add-a-pref-to-disable-JavaScript-in-brow.patch
+  - filename: 0027-Trac-17517-Use-different-color-for-Add-Exception.patch
   - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig

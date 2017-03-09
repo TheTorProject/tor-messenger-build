@@ -1,7 +1,7 @@
 From 3c4237848553f5915a821cab2dc86ac75d7bf826 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:42:25 -0700
-Subject: [PATCH 08/26] XMPP in-band registration
+Subject: [PATCH 08/27] XMPP in-band registration
 
 ---
  chat/locales/en-US/xmpp.properties                 |   5 +

@@ -1,7 +1,7 @@
 From 0663d5a36f26573f57492f59212dd3838eeb202d Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:56:46 -0700
-Subject: [PATCH 17/26] Cert override
+Subject: [PATCH 17/27] Cert override
 
 ---
  im/app/profile/cert_override.txt | 3 +++
