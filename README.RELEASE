@@ -17,6 +17,8 @@ Building
 - Ensure `HEAD' on the build machines matches the `master' of
   `tor-messenger-build.git' repository.
 
+- Run `make fetch' before the next step.
+
 - Run `make tor-messenger-release'. The builds will be in the
   `release/$VERSION' directory, along with the MAR files. This will also
   output the `sha256sum' of the files.
