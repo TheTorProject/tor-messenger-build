@@ -17,6 +17,8 @@ The sources are downloaded using git and mercurial which need to be
 installed.
 
 You also need a few perl modules installed:
+
+```
 - YAML::XS
 - File::Basename
 - Getopt::Long
@@ -31,29 +33,31 @@ You also need a few perl modules installed:
 - Digest::SHA
 - Data::UUID
 - Data::Dump
+```
 
 If you are running Debian or Ubuntu, you can install them with:
 
+```
 # apt-get install libyaml-libyaml-perl libtemplate-perl \
                   libio-handle-util-perl libio-all-perl \
                   libio-captureoutput-perl libfile-slurp-perl \
                   libstring-shellquote-perl libsort-versions-perl \
                   libdigest-sha-perl libdata-uuid-perl libdata-dump-perl \
                   git mercurial
-
+```
 
 Starting a build
 ----------------
 
-To start a build, simply run "make all" in the directory to build all
+To start a build, simply run `make all` in the directory to build all
 currently supported architectures.
 
 If you want to build only one architecture, you can run something like
-"make tor-messenger-linux-x86_64".
+`make tor-messenger-linux-x86_64`.
 
 The resulting builds are stored in the out/tor-messenger directory.
 
-You can also run "make tor-messenger-release" to build it for all
+You can also run `make tor-messenger-release` to build it for all
 architectures, rename files to their final name and generate an
 sha256sums.txt file in the directory release/$version.
 
@@ -61,14 +65,14 @@ sha256sums.txt file in the directory release/$version.
 Updating git and hg sources
 ---------------------------
 
-You can run "make fetch" to fetch the latest sources from git and
+You can run `make fetch` to fetch the latest sources from git and
 mercurial for all components included in Tor Messenger.
 
 
 Cleaning obsolete files and containers images
 ---------------------------------------------
 
-To clean obsolete files and containers images, you can run "make clean-old".
+To clean obsolete files and containers images, you can run `make clean-old`.
 
 This command will remove any intermediate build files and containers
 that are no longer used in the current builds. Because it needs to
