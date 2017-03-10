@@ -46,6 +46,17 @@ If you are running Debian or Ubuntu, you can install them with:
                   git mercurial
 ```
 
+If you are running Fedora (24 or later), you can install them with:
+
+```
+# dnf install 'perl(YAML::XS)' 'perl(File::Basename)' 'perl(Getopt::Long)' \
+              'perl(Template)' 'perl(IO::Handle)' 'perl(IO::CaptureOutput)' \
+              'perl(File::Temp)' 'perl(File::Slurp)' 'perl(File::Path)' \
+              'perl(String::ShellQuote)' 'perl(Sort::Versions)' \
+              'perl(Digest::SHA)' 'perl(Data::UUID)' 'perl(Data::Dump)' \
+              git mercurial
+```
+
 Starting a build
 ----------------
 
