@@ -1,13 +1,14 @@
-From 8021b15b4da53e14b9b595d370dd0a2b24306d31 Mon Sep 17 00:00:00 2001
+From c683744608becc6e1cb8086f64f878db4b03b293 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 15 Mar 2016 17:40:42 -0700
 Subject: [PATCH 05/27] Trac 13312: OTR over Twitter DMs
 
 ---
  chat/components/src/imConversations.js |   3 +-
+ chat/locales/en-US/twitter.properties  |   4 +
  chat/modules/imContentSink.jsm         |  10 +-
  chat/protocols/twitter/twitter.js      | 484 +++++++++++++++++++--------------
- 3 files changed, 289 insertions(+), 208 deletions(-)
+ 4 files changed, 293 insertions(+), 208 deletions(-)
 
 diff --git a/chat/components/src/imConversations.js b/chat/components/src/imConversations.js
 index 6fc5d0d24..2a53a2c86 100644
@@ -23,6 +24,28 @@ index 6fc5d0d24..2a53a2c86 100644
  
        this._messages.push(aSubject);
        ++this._unreadMessageCount;
+diff --git a/chat/locales/en-US/twitter.properties b/chat/locales/en-US/twitter.properties
+index 759eaa79c..8f0701aa7 100644
+--- a/chat/locales/en-US/twitter.properties
++++ b/chat/locales/en-US/twitter.properties
+@@ -17,6 +17,8 @@ error.tooLong=Status is over 140 characters.
+ error.general=An error %1$S occurred while sending: %2$S
+ error.retweet=An error %1$S occurred while retweeting: %2$S
+ error.delete=An error %1$S occurred while deleting: %2$S
++error.like=An error %1$S occured while liking: %2$S
++error.unlike=An error %1$S occured while unliking: %2$S
+ # LOCALIZATION NOTE (error.descriptionTooLong)
+ #   %S is the truncated string that was sent to the server.
+ error.descriptionTooLong=Description is over the maximum length (160 characters), it was automatically truncated to: %S.
+@@ -36,6 +38,8 @@ action.delete=Delete
+ #  %S will be replaced by the screen name of a twitter user.
+ action.follow=Follow %S
+ action.stopFollowing=Stop following %S
++action.like=Like
++action.unlike=Remove Like
+ 
+ # LOCALIZATION NOTE (event.follow, event.unfollow, event.followed):
+ #  This will be displayed in system messages inside the timeline conversation.
 diff --git a/chat/modules/imContentSink.jsm b/chat/modules/imContentSink.jsm
 index ee067afdf..abd95fc71 100644
 --- a/chat/modules/imContentSink.jsm
@@ -739,5 +762,5 @@ index 59f60cc22..4d8e04c02 100644
  };
  
 -- 
-2.12.0
+2.12.2
 

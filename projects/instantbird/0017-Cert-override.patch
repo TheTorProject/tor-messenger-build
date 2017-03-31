@@ -1,4 +1,4 @@
-From 0663d5a36f26573f57492f59212dd3838eeb202d Mon Sep 17 00:00:00 2001
+From d58eea036a12d99f43f0c1f27482a6da93853d72 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:56:46 -0700
 Subject: [PATCH 17/27] Cert override
@@ -60,5 +60,5 @@ index 1174b3dfd..3e35a2e1b 100644
  #ifdef XP_MACOSX
  @RESPATH@/components/ibDockBadge.js
 -- 
-2.12.0
+2.12.2
 

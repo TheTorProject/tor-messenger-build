@@ -1,4 +1,4 @@
-From 366268d208bacf04880fce5c01d4edaa611c1694 Mon Sep 17 00:00:00 2001
+From 87fd1c478b2bd75333c68a3082d02fd2ac8ef03f Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Tue, 27 Dec 2016 08:31:36 +0700
 Subject: [PATCH 27/27] Trac 17517 - Use different color for Add Exception
@@ -21,5 +21,5 @@ index 7820b5aaf..bc555acce 100644
 +}
 \ No newline at end of file
 -- 
-2.12.0
+2.12.2
 

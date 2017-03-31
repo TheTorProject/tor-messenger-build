@@ -1,4 +1,4 @@
-From 3202882e5ae047c5492f45d3d2ec40e965e21bf2 Mon Sep 17 00:00:00 2001
+From c841f414adabbe759f9aa2b3c99c306480958cc2 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sat, 5 Nov 2016 14:55:20 -0700
 Subject: [PATCH 23/27] Bug 1187281 - Only show "close" button on Windows
@@ -21,5 +21,5 @@ index f3f1c6bbb..d683562cb 100644
    </windowdragbox>
  </window>
 -- 
-2.12.0
+2.12.2
 

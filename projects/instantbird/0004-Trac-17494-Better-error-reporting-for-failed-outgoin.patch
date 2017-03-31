@@ -63,5 +63,5 @@ index 7c3fcd7e6..282575938 100644
        else if (this._isMucParticipant && muc && !muc.left &&
                 error.condition == "item-not-found") {
 -- 
-2.12.0
+2.12.2
 

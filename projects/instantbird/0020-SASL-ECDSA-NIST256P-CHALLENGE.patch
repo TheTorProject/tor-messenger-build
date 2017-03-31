@@ -1,4 +1,4 @@
-From df852a62c5a50a1277f8ccfa7791081ccb89b8a3 Mon Sep 17 00:00:00 2001
+From 95c1c1ae542c19accfcfb8e00a4053d427e7116a Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 2 Oct 2016 08:46:55 -0700
 Subject: [PATCH 20/27] SASL ECDSA-NIST256P-CHALLENGE
@@ -8915,5 +8915,5 @@ index bc2539687..e46815dfe 100644
      'ircCAP.jsm',
      'ircCommands.jsm',
 -- 
-2.12.0
+2.12.2
 

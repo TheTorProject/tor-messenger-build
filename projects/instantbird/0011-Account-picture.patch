@@ -1,4 +1,4 @@
-From c11815bef7688c982eba290aeb4243cd90157bf1 Mon Sep 17 00:00:00 2001
+From 479dd68a7f055242dd6aa3a16d800b4700bd8bc3 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:24:09 -0700
 Subject: [PATCH 11/27] Account picture
@@ -22,5 +22,5 @@ index b90fddadb..f29a48b99 100644
          <panel id="changeUserIconPanel"
                 type="arrow" align="center"
 -- 
-2.12.0
+2.12.2
 

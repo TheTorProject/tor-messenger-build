@@ -521,5 +521,5 @@ index b7a397017..7b91410f9 100644
 +#expand pref("torbrowser.version", __TOR_BROWSER_VERSION__);
 +#endif
 -- 
-2.12.0
+2.12.2
 

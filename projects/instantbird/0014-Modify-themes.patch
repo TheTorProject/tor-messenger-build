@@ -1,4 +1,4 @@
-From 5dbad67d76f4aa17773d84ebb4d9b275ecde5696 Mon Sep 17 00:00:00 2001
+From 9901bceb26952e7680ae3c43561e69e08bbe0791 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:36:38 -0700
 Subject: [PATCH 14/27] Modify themes
@@ -74,5 +74,5 @@ index 454e36696..18ba1f95c 100644
            <separator class="thin"/>
            <description>&emoticonsPreview.description;</description>
 -- 
-2.12.0
+2.12.2
 

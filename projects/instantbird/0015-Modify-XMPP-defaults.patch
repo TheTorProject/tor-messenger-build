@@ -1,4 +1,4 @@
-From 615a33df16f01fb31edda347f0da1189c6ab2275 Mon Sep 17 00:00:00 2001
+From 95f97927c7c987e597aaaf7896b372672a7d635d Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:38:49 -0700
 Subject: [PATCH 15/27] Modify XMPP defaults
@@ -44,5 +44,5 @@ index 265445a18..a5635cae3 100644
      connection_security: {
        get label() { return _("options.connectionSecurity"); },
 -- 
-2.12.0
+2.12.2
 

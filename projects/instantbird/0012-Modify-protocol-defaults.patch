@@ -1,4 +1,4 @@
-From 945f99a48e5b6c2cd3ae47c166ee81fcb80ad9b6 Mon Sep 17 00:00:00 2001
+From a79fddb0057e69473da02837b057f4ae57aba915 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:25:34 -0700
 Subject: [PATCH 12/27] Modify protocol defaults
@@ -44,5 +44,5 @@ index d552a232b..7d371bd21 100644
  topProtocol.prpl-twitter.description=Stay up to date with your Twitter timeline
  topProtocol.prpl-aim.description=Chat with your buddies on AOL Instant Messenger
 -- 
-2.12.0
+2.12.2
 

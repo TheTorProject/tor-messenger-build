@@ -1,4 +1,4 @@
-From 50e63aa0881f5c7b53d4df031c1634d78d5a52b8 Mon Sep 17 00:00:00 2001
+From 0c3d7d55604044a29f03084b70b20945ae116c0f Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:31:58 -0700
 Subject: [PATCH 13/27] Modify IRC defaults
@@ -61,5 +61,5 @@ index 28eb374f4..120be10ee 100644
                   ". Sending TIME response: \"" + now + "\".");
          this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now);
 -- 
-2.12.0
+2.12.2
 
