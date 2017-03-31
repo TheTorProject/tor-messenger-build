@@ -1,4 +1,4 @@
-Tor Messenger 0.4.0b2 --
+Tor Messenger 0.4.0b2 -- March 31, 2017
  * All Platforms
    * Use the tor-browser-45.8.0esr-6.5-2-build1 tag on tor-browser
    * Use the THUNDERBIRD_45_8_0_RELEASE tag on comm-esr45
