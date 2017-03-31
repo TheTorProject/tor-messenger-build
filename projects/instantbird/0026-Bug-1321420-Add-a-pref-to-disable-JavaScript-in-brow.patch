@@ -1,7 +1,7 @@
-From 1535a81698fffa329e15c285c4feb433c134434b Mon Sep 17 00:00:00 2001
+From c3d0c1e82812698d6da4a5890860fd1b43e7fcbd Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 1 Dec 2016 14:34:51 -0800
-Subject: [PATCH 26/27] Bug 1321420 - Add a pref to disable JavaScript in
+Subject: [PATCH 26/28] Bug 1321420 - Add a pref to disable JavaScript in
  browser requests
 
 ---

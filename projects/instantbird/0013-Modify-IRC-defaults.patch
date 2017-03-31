@@ -1,7 +1,7 @@
-From 0c3d7d55604044a29f03084b70b20945ae116c0f Mon Sep 17 00:00:00 2001
+From 37f684af18a7d1926960090bb3148d520312abbd Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:31:58 -0700
-Subject: [PATCH 13/27] Modify IRC defaults
+Subject: [PATCH 13/28] Modify IRC defaults
 
  * ctcp ping
 

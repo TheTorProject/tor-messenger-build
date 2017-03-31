@@ -1,7 +1,7 @@
-From 53631ac27f28be5098056a37adb490471dc1140c Mon Sep 17 00:00:00 2001
+From 22d64ca4c9ec08609cdcf78ed6b969522217c256 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 9 Oct 2016 21:57:07 -0700
-Subject: [PATCH 07/27] Bug 1246431 - XMPP createConversation should handle
+Subject: [PATCH 07/28] Bug 1246431 - XMPP createConversation should handle
  incoming messages from the server properly. r=aleth
 
 ---

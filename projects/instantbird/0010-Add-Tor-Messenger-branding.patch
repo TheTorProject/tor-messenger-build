@@ -1,7 +1,7 @@
-From 420c326c8c91fd204cbd530c522a94b8849cdc30 Mon Sep 17 00:00:00 2001
+From 1368d7678fbfb6dc5fbd09a70dbf328f847d5e1d Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:56:27 -0700
-Subject: [PATCH 10/27] Add Tor Messenger branding
+Subject: [PATCH 10/28] Add Tor Messenger branding
 
 ---
  im/app/macbuild/Contents/Info.plist.in             |   2 +-

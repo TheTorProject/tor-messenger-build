@@ -1,17 +1,17 @@
-From fb5f313361c15285152d6e3f25a428e60f8d1679 Mon Sep 17 00:00:00 2001
+From 8db9ea380fb0d2b54bb3dd6d6003532d13d2c2bf Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:48:41 -0700
-Subject: [PATCH 01/27] Set Tor Messenger preferences
+Subject: [PATCH 01/28] Set Tor Messenger preferences
 
 ---
- im/app/profile/all-instantbird.js | 425 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 403 insertions(+), 22 deletions(-)
+ im/app/profile/all-instantbird.js | 424 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 402 insertions(+), 22 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index b7a397017..7b91410f9 100644
+index b7a397017..89593abeb 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
-@@ -1,3 +1,54 @@
+@@ -1,3 +1,53 @@
 +/**
 + * This file is divded into three section,
 + *
@@ -62,11 +62,10 @@ index b7a397017..7b91410f9 100644
 +pref("app.update.download.backgroundInterval", 60);
 +
 +
-+
  /* This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-@@ -28,7 +79,7 @@ pref("general.autoScroll", true);
+@@ -28,7 +78,7 @@ pref("general.autoScroll", true);
  // 0 = spellcheck nothing
  // 1 = check multi-line controls [default]
  // 2 = check multi/single line controls
@@ -75,7 +74,7 @@ index b7a397017..7b91410f9 100644
  
  pref("messenger.accounts.convertOldPasswords", true);
  pref("messenger.accounts.promptOnDelete", true);
-@@ -66,7 +117,7 @@ pref("extensions.mintrayr.singleClickRestore", false);
+@@ -66,7 +116,7 @@ pref("extensions.mintrayr.singleClickRestore", false);
  
  // Whether message related sounds should be played at all. If this is enabled
  // then the more specific prefs are checked as well.
@@ -84,7 +83,7 @@ index b7a397017..7b91410f9 100644
  // Specifies whether each message event should trigger a sound for incoming
  // and outgoing messages, or when your nickname is mentioned in a chat.
  pref("messenger.options.playSounds.outgoing", true);
-@@ -142,26 +193,23 @@ pref("app.update.staging.enabled", true);
+@@ -142,26 +192,23 @@ pref("app.update.staging.enabled", true);
  
  // Update service URL:
  // You do not need to use all the %VAR% parameters. Use what you need, %PRODUCT%,%VERSION%,%BUILD_ID%,%CHANNEL% for example
@@ -116,7 +115,7 @@ index b7a397017..7b91410f9 100644
  
  // Interval: Time before prompting the user to restart to install the latest
  //           download (in seconds) default=30 minutes
-@@ -202,7 +250,7 @@ pref("browser.search.order.1",                "chrome://instantbird/locale/regio
+@@ -202,7 +249,7 @@ pref("browser.search.order.1",                "chrome://instantbird/locale/regio
  pref("browser.search.order.2",                "chrome://instantbird/locale/region.properties");
  
  // send ping to the server to update
@@ -125,7 +124,7 @@ index b7a397017..7b91410f9 100644
  
  // disable logging for the search service update system by default
  pref("browser.search.update.log", false);
-@@ -222,10 +270,10 @@ pref("extensions.ignoreMTimeChanges", false);
+@@ -222,10 +269,10 @@ pref("extensions.ignoreMTimeChanges", false);
  pref("extensions.logging.enabled", false);
  pref("general.skins.selectedSkin", "classic/1.0");
  
@@ -138,7 +137,7 @@ index b7a397017..7b91410f9 100644
  
  // Preferences for the Get Add-ons pane
  pref("extensions.getAddons.cache.enabled", false);
-@@ -244,10 +292,24 @@ pref("extensions.getMoreMessageStylesURL", "https://add-ons.instantbird.org/%LOC
+@@ -244,10 +291,24 @@ pref("extensions.getMoreMessageStylesURL", "https://add-ons.instantbird.org/%LOC
  pref("extensions.getMoreEmoticonsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/emoticons/");
  pref("extensions.getMoreProtocolsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/protocols/");
  
@@ -166,7 +165,7 @@ index b7a397017..7b91410f9 100644
  
  // don't load links inside Instantbird
  pref("network.protocol-handler.expose-all", false);
-@@ -259,13 +321,13 @@ pref("network.protocol-handler.expose.https", true);
+@@ -259,13 +320,13 @@ pref("network.protocol-handler.expose.https", true);
  
  // expose javascript: so that message themes can use it.
  // javascript: links inside messages are filtered out.
@@ -183,7 +182,7 @@ index b7a397017..7b91410f9 100644
  
  // We have an Error Console menu item by default so let's display chrome errors
  pref("javascript.options.showInConsole", true);
-@@ -300,14 +362,333 @@ pref("browser.tabs.tabClipWidth", 140);
+@@ -300,14 +361,333 @@ pref("browser.tabs.tabClipWidth", 140);
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -353,7 +352,7 @@ index b7a397017..7b91410f9 100644
 +// bug 18950 for more details.
 +pref("browser.reader.detectedFirstArticle", true);
 +pref("reader.parse-on-load.enabled", false);
-+pref("privacy.use_utc_timezone", true);
++pref("privacy.use_utc_timezone", false);  // TM
 +
 +// Third party stuff
 +//pref("network.cookie.cookieBehavior", 1);  // TM

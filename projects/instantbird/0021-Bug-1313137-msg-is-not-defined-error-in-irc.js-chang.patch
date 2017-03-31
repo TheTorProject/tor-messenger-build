@@ -1,7 +1,7 @@
-From a4506bc5184ef5b27fc0fe6cf563cf4ae4e60d76 Mon Sep 17 00:00:00 2001
+From 57df7563fb512450b491f743a7cf070caaf63e6f Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Wed, 26 Oct 2016 20:16:58 +0200
-Subject: [PATCH 21/27] Bug 1313137 - "msg is not defined" error in
+Subject: [PATCH 21/28] Bug 1313137 - "msg is not defined" error in
  irc.js:changeBuddyNick. r=clokep
 
 --HG--

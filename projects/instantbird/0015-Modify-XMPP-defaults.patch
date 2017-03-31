@@ -1,7 +1,7 @@
-From 95f97927c7c987e597aaaf7896b372672a7d635d Mon Sep 17 00:00:00 2001
+From 7c0ab255fb151bf52479c6b4a6f9fe8d423155ac Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:38:49 -0700
-Subject: [PATCH 15/27] Modify XMPP defaults
+Subject: [PATCH 15/28] Modify XMPP defaults
 
  * xmpp-default-domain
 

@@ -1,0 +1,64 @@
+From ef9ba3773fa442dd6b0d1b60056a2f07940cdc6c Mon Sep 17 00:00:00 2001
+From: Vu Quoc Huy <huyvq.c633@gmail.com>
+Date: Sun, 2 Apr 2017 13:07:09 -0400
+Subject: [PATCH 28/28] Trac 21736 - Hide account/timestamp from message
+
+---
+ chat/modules/imThemes.jsm         | 9 ++++-----
+ im/app/profile/all-instantbird.js | 5 +++++
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/chat/modules/imThemes.jsm b/chat/modules/imThemes.jsm
+index be6026c07..ad822cd86 100644
+--- a/chat/modules/imThemes.jsm
++++ b/chat/modules/imThemes.jsm
+@@ -892,8 +892,7 @@ SelectedMessage.prototype = {
+       try {
+         let prefBranch =
+           Services.prefs.getBranch("messenger.conversations.selections.");
+-        return prefBranch.getComplexValue(aName,
+-                                          Ci.nsIPrefLocalizedString).data;
++        return prefBranch.getCharPref(aName);
+       } catch(e) {
+         return aDefault;
+       }
+@@ -902,17 +901,17 @@ SelectedMessage.prototype = {
+     if (msg.system) {
+       replacements = statusReplacements;
+       html = getLocalizedPrefWithDefault("systemMessagesTemplate",
+-                                         "%time% - %message%");
++                                         "");
+     }
+     else {
+       replacements = messageReplacements;
+       if (/^(<[^>]+>)*\/me /.test(msg.displayMessage)) {
+         html = getLocalizedPrefWithDefault("actionMessagesTemplate",
+-                                           "%time% * %sender% %message%");
++                                           "");
+       }
+       else {
+         html = getLocalizedPrefWithDefault("contentMessagesTemplate",
+-                                           "%time% - %sender%: %message%");
++                                           "");
+       }
+     }
+ 
+diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
+index 89593abeb..3b31c61ee 100644
+--- a/im/app/profile/all-instantbird.js
++++ b/im/app/profile/all-instantbird.js
+@@ -47,6 +47,11 @@ pref("extensions.systemAddon.update.url", "");
+ // background (in seconds)
+ pref("app.update.download.backgroundInterval", 60);
+ 
++// Hide the timestamp and account from message selection templates
++pref("messenger.conversations.selections.actionMessagesTemplate", "%message%");
++pref("messenger.conversations.selections.contentMessagesTemplate", "%message%");
++pref("messenger.conversations.selections.systemMessagesTemplate", "%message%");
++
+ 
+ /* This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+-- 
+2.12.2
+
