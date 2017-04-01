@@ -1,7 +1,7 @@
-From 75174e806cd046a2c975ecbae8ad6f7fdae8fba9 Mon Sep 17 00:00:00 2001
+From 8a60a75d2124bdf328f77bc2335bcd476d878882 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:42:25 -0700
-Subject: [PATCH 08/27] XMPP in-band registration
+Subject: [PATCH 08/28] XMPP in-band registration
 
 ---
  chat/locales/en-US/xmpp.properties                 |   5 +
@@ -17,7 +17,7 @@ Subject: [PATCH 08/27] XMPP in-band registration
  create mode 100644 im/content/xmppRegister.xul
 
 diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.properties
-index 293ab01d4..237d20c92 100644
+index 293ab01..237d20c 100644
 --- a/chat/locales/en-US/xmpp.properties
 +++ b/chat/locales/en-US/xmpp.properties
 @@ -13,6 +13,9 @@ connection.initializingEncryption=Initializing encryption
@@ -40,7 +40,7 @@ index 293ab01d4..237d20c92 100644
  
  # LOCALIZATION NOTE (conversation.error.notDelivered):
 diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-session.jsm
-index 24618ee0c..246ec2b7c 100644
+index 24618ee..246ec2b 100644
 --- a/chat/protocols/xmpp/xmpp-session.jsm
 +++ b/chat/protocols/xmpp/xmpp-session.jsm
 @@ -11,6 +11,8 @@ Cu.import("resource:///modules/socket.jsm");
@@ -150,7 +150,7 @@ index 24618ee0c..246ec2b7c 100644
          this.ERROR("Unexpected stanza " + aStanza.localName + ", expected 'features'");
          this._networkError(_("connection.error.incorrectResponse"));
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index 73707c9e2..889c06908 100644
+index 73707c9..889c069 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
 @@ -119,6 +119,12 @@ var accountWizard = {
@@ -176,7 +176,7 @@ index 73707c9e2..889c06908 100644
        let option = this.prefs[i];
        let opt = option.opt;
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index f0933af7f..de9d0d809 100644
+index f0933af..de9d0d8 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -65,6 +65,7 @@
@@ -188,7 +188,7 @@ index f0933af7f..de9d0d809 100644
  
    <wizardpage id="accountpassword" pageid="accountpassword" next="accountadvanced"
 diff --git a/im/content/jar.mn b/im/content/jar.mn
-index 98d9a09a9..20ea9dce7 100644
+index 98d9a09..20ea9dc 100644
 --- a/im/content/jar.mn
 +++ b/im/content/jar.mn
 @@ -61,6 +61,8 @@ instantbird.jar:
@@ -202,7 +202,7 @@ index 98d9a09a9..20ea9dce7 100644
  	content/instantbird/menus-mac.xul
 diff --git a/im/content/xmppRegister.js b/im/content/xmppRegister.js
 new file mode 100644
-index 000000000..52852f045
+index 0000000..52852f0
 --- /dev/null
 +++ b/im/content/xmppRegister.js
 @@ -0,0 +1,142 @@
@@ -350,7 +350,7 @@ index 000000000..52852f045
 +}
 diff --git a/im/content/xmppRegister.xul b/im/content/xmppRegister.xul
 new file mode 100644
-index 000000000..e2bd36750
+index 0000000..e2bd367
 --- /dev/null
 +++ b/im/content/xmppRegister.xul
 @@ -0,0 +1,27 @@
@@ -382,7 +382,7 @@ index 000000000..e2bd36750
 +
 +</dialog>
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
-index 43d0f19e3..c46fb2f95 100644
+index 43d0f19..c46fb2f 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 @@ -31,3 +31,5 @@
@@ -392,5 +392,5 @@ index 43d0f19e3..c46fb2f95 100644
 +
 +<!ENTITY registerXMPP.label "Create this new account on the server">
 -- 
-2.12.2
+2.7.4
 

@@ -1,0 +1,70 @@
+From b44aab4b546d03a1550c96464aefc390b5fc75c1 Mon Sep 17 00:00:00 2001
+From: Vu Quoc Huy <huyvq.c633@gmail.com>
+Date: Sun, 2 Apr 2017 01:01:05 +0700
+Subject: [PATCH 28/28] Trac 21376: Hide account/timestamp from message
+ selections
+
+---
+ chat/locales/en-US/conversations.properties | 6 +++---
+ chat/modules/imThemes.jsm                   | 6 +++---
+ im/app/profile/all-instantbird.js           | 5 ++++-
+ 3 files changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/chat/locales/en-US/conversations.properties b/chat/locales/en-US/conversations.properties
+index 1a5564a..43365ca 100644
+--- a/chat/locales/en-US/conversations.properties
++++ b/chat/locales/en-US/conversations.properties
+@@ -75,6 +75,6 @@ messenger.conversations.selections.ellipsis=[…]
+ #  These 3 templates are used to format selected messages before copying them.
+ #  Do not translate the texts between % characters, but feel free to adjust
+ #  whitespace and separators to make them fit your locale.
+-messenger.conversations.selections.systemMessagesTemplate=%time% - %message%
+-messenger.conversations.selections.contentMessagesTemplate=%time% - %sender%: %message%
+-messenger.conversations.selections.actionMessagesTemplate=%time% * %sender% %message%
++messenger.conversations.selections.systemMessagesTemplate=%message%
++messenger.conversations.selections.contentMessagesTemplate=%message%
++messenger.conversations.selections.actionMessagesTemplate=%message%
+diff --git a/chat/modules/imThemes.jsm b/chat/modules/imThemes.jsm
+index be6026c..f4f85bb 100644
+--- a/chat/modules/imThemes.jsm
++++ b/chat/modules/imThemes.jsm
+@@ -902,17 +902,17 @@ SelectedMessage.prototype = {
+     if (msg.system) {
+       replacements = statusReplacements;
+       html = getLocalizedPrefWithDefault("systemMessagesTemplate",
+-                                         "%time% - %message%");
++                                         "%message%");
+     }
+     else {
+       replacements = messageReplacements;
+       if (/^(<[^>]+>)*\/me /.test(msg.displayMessage)) {
+         html = getLocalizedPrefWithDefault("actionMessagesTemplate",
+-                                           "%time% * %sender% %message%");
++                                           "%message%");
+       }
+       else {
+         html = getLocalizedPrefWithDefault("contentMessagesTemplate",
+-                                           "%time% - %sender%: %message%");
++                                           "%message%");
+       }
+     }
+ 
+diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
+index 7b91410..5ca35a5 100644
+--- a/im/app/profile/all-instantbird.js
++++ b/im/app/profile/all-instantbird.js
+@@ -47,7 +47,10 @@ pref("extensions.systemAddon.update.url", "");
+ // background (in seconds)
+ pref("app.update.download.backgroundInterval", 60);
+ 
+-
++// Hide the timestamp and account from message selection templates
++pref("messenger.conversations.selections.actionMessagesTemplate", "%message%");
++pref("messenger.conversations.selections.contentMessagesTemplate", "%message%");
++pref("messenger.conversations.selections.systemMessagesTemplate", "%message%");
+ 
+ /* This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+-- 
+2.7.4
+

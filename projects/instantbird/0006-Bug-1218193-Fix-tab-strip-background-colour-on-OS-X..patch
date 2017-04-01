@@ -1,7 +1,7 @@
-From d704d7f249b75e419b967087364ff360fd634762 Mon Sep 17 00:00:00 2001
+From a177bda2346cebccc5417a7ed65befbd17472a29 Mon Sep 17 00:00:00 2001
 From: Nihanth Subramanya <nhnt11@gmail.com>
 Date: Sun, 9 Oct 2016 21:53:04 -0700
-Subject: [PATCH 06/27] Bug 1218193 - Fix tab strip background colour on OS X.
+Subject: [PATCH 06/28] Bug 1218193 - Fix tab strip background colour on OS X.
  r=aleth
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 06/27] Bug 1218193 - Fix tab strip background colour on OS X.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/im/themes/tabbrowser-pinstripe/tabbrowser.css b/im/themes/tabbrowser-pinstripe/tabbrowser.css
-index 76c5094e3..291545039 100644
+index 76c5094..2915450 100644
 --- a/im/themes/tabbrowser-pinstripe/tabbrowser.css
 +++ b/im/themes/tabbrowser-pinstripe/tabbrowser.css
 @@ -208,7 +208,7 @@ statusbarpanel#statusbar-display {
@@ -22,5 +22,5 @@ index 76c5094e3..291545039 100644
    background-repeat: repeat-x;
  }
 -- 
-2.12.2
+2.7.4
 

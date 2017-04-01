@@ -1,14 +1,14 @@
-From c841f414adabbe759f9aa2b3c99c306480958cc2 Mon Sep 17 00:00:00 2001
+From 146f9fc186c1327a0d94692a2ff8352344be45cd Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sat, 5 Nov 2016 14:55:20 -0700
-Subject: [PATCH 23/27] Bug 1187281 - Only show "close" button on Windows
+Subject: [PATCH 23/28] Bug 1187281 - Only show "close" button on Windows
 
 ---
  im/content/accounts.xul | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/im/content/accounts.xul b/im/content/accounts.xul
-index f3f1c6bbb..d683562cb 100644
+index f3f1c6b..d683562 100644
 --- a/im/content/accounts.xul
 +++ b/im/content/accounts.xul
 @@ -142,6 +142,8 @@
@@ -21,5 +21,5 @@ index f3f1c6bbb..d683562cb 100644
    </windowdragbox>
  </window>
 -- 
-2.12.2
+2.7.4
 

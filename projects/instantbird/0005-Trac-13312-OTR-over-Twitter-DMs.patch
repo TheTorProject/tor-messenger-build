@@ -1,7 +1,7 @@
-From c683744608becc6e1cb8086f64f878db4b03b293 Mon Sep 17 00:00:00 2001
+From dae25707741f7c11c8cd0d58a460bd53306837e0 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 15 Mar 2016 17:40:42 -0700
-Subject: [PATCH 05/27] Trac 13312: OTR over Twitter DMs
+Subject: [PATCH 05/28] Trac 13312: OTR over Twitter DMs
 
 ---
  chat/components/src/imConversations.js |   3 +-
@@ -11,7 +11,7 @@ Subject: [PATCH 05/27] Trac 13312: OTR over Twitter DMs
  4 files changed, 293 insertions(+), 208 deletions(-)
 
 diff --git a/chat/components/src/imConversations.js b/chat/components/src/imConversations.js
-index 6fc5d0d24..2a53a2c86 100644
+index 6fc5d0d..2a53a2c 100644
 --- a/chat/components/src/imConversations.js
 +++ b/chat/components/src/imConversations.js
 @@ -414,7 +414,8 @@ UIConversation.prototype = {
@@ -25,7 +25,7 @@ index 6fc5d0d24..2a53a2c86 100644
        this._messages.push(aSubject);
        ++this._unreadMessageCount;
 diff --git a/chat/locales/en-US/twitter.properties b/chat/locales/en-US/twitter.properties
-index 759eaa79c..8f0701aa7 100644
+index 759eaa7..8f0701a 100644
 --- a/chat/locales/en-US/twitter.properties
 +++ b/chat/locales/en-US/twitter.properties
 @@ -17,6 +17,8 @@ error.tooLong=Status is over 140 characters.
@@ -47,7 +47,7 @@ index 759eaa79c..8f0701aa7 100644
  # LOCALIZATION NOTE (event.follow, event.unfollow, event.followed):
  #  This will be displayed in system messages inside the timeline conversation.
 diff --git a/chat/modules/imContentSink.jsm b/chat/modules/imContentSink.jsm
-index ee067afdf..abd95fc71 100644
+index ee067af..abd95fc 100644
 --- a/chat/modules/imContentSink.jsm
 +++ b/chat/modules/imContentSink.jsm
 @@ -47,6 +47,7 @@ var kAllowedMozClasses =
@@ -89,7 +89,7 @@ index ee067afdf..abd95fc71 100644
      'font': {
        'face': true,
 diff --git a/chat/protocols/twitter/twitter.js b/chat/protocols/twitter/twitter.js
-index 59f60cc22..4d8e04c02 100644
+index 59f60cc..4d8e04c 100644
 --- a/chat/protocols/twitter/twitter.js
 +++ b/chat/protocols/twitter/twitter.js
 @@ -36,8 +36,11 @@ ChatBuddy.prototype = {
@@ -762,5 +762,5 @@ index 59f60cc22..4d8e04c02 100644
  };
  
 -- 
-2.12.2
+2.7.4
 

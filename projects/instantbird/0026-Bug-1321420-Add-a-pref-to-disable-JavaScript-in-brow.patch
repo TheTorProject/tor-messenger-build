@@ -1,7 +1,7 @@
-From 1535a81698fffa329e15c285c4feb433c134434b Mon Sep 17 00:00:00 2001
+From f275e312c736f291aa9ae3959989a277dcbf88a8 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 1 Dec 2016 14:34:51 -0800
-Subject: [PATCH 26/27] Bug 1321420 - Add a pref to disable JavaScript in
+Subject: [PATCH 26/28] Bug 1321420 - Add a pref to disable JavaScript in
  browser requests
 
 ---
@@ -10,7 +10,7 @@ Subject: [PATCH 26/27] Bug 1321420 - Add a pref to disable JavaScript in
  2 files changed, 9 insertions(+)
 
 diff --git a/chat/chat-prefs.js b/chat/chat-prefs.js
-index 60b9c1e8c..90a212e5c 100644
+index 60b9c1e..90a212e 100644
 --- a/chat/chat-prefs.js
 +++ b/chat/chat-prefs.js
 @@ -86,6 +86,8 @@ pref("chat.prpls.prpl-skype.disable", true);
@@ -23,7 +23,7 @@ index 60b9c1e8c..90a212e5c 100644
  // loglevel is the minimum severity level that a libpurple message
  // must have to be reported in the Error Console.
 diff --git a/chat/content/browserRequest.js b/chat/content/browserRequest.js
-index c52c8c637..0069219fa 100644
+index c52c8c6..0069219 100644
 --- a/chat/content/browserRequest.js
 +++ b/chat/content/browserRequest.js
 @@ -2,6 +2,8 @@
@@ -48,5 +48,5 @@ index c52c8c637..0069219fa 100644
                                Components.interfaces.nsIWebProgress.NOTIFY_ALL);
    let url = request.url;
 -- 
-2.12.2
+2.7.4
 

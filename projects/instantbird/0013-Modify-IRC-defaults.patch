@@ -1,7 +1,7 @@
-From 0c3d7d55604044a29f03084b70b20945ae116c0f Mon Sep 17 00:00:00 2001
+From 719838a6d07f23445be28bc94fe79bc8ce26c4a6 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:31:58 -0700
-Subject: [PATCH 13/27] Modify IRC defaults
+Subject: [PATCH 13/28] Modify IRC defaults
 
  * ctcp ping
 
@@ -14,7 +14,7 @@ Subject: [PATCH 13/27] Modify IRC defaults
  2 files changed, 3 insertions(+), 15 deletions(-)
 
 diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
-index 35165e9a9..c2167a5ec 100644
+index 35165e9..c2167a5 100644
 --- a/chat/protocols/irc/irc.js
 +++ b/chat/protocols/irc/irc.js
 @@ -1931,7 +1931,7 @@ ircProtocol.prototype = {
@@ -27,7 +27,7 @@ index 35165e9a9..c2167a5ec 100644
  
    options: {
 diff --git a/chat/protocols/irc/ircCTCP.jsm b/chat/protocols/irc/ircCTCP.jsm
-index 28eb374f4..120be10ee 100644
+index 28eb374..120be10 100644
 --- a/chat/protocols/irc/ircCTCP.jsm
 +++ b/chat/protocols/irc/ircCTCP.jsm
 @@ -167,19 +167,7 @@ var ctcpBase = {
@@ -61,5 +61,5 @@ index 28eb374f4..120be10ee 100644
                   ". Sending TIME response: \"" + now + "\".");
          this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now);
 -- 
-2.12.2
+2.7.4
 
