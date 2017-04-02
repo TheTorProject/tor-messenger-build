@@ -1,7 +1,7 @@
-From a79fddb0057e69473da02837b057f4ae57aba915 Mon Sep 17 00:00:00 2001
+From 61fc1da6b6970c149cb1a13640b97c28b81c95b5 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:25:34 -0700
-Subject: [PATCH 12/27] Modify protocol defaults
+Subject: [PATCH 12/28] Modify protocol defaults
 
  * Top protocols
 
@@ -12,7 +12,7 @@ Subject: [PATCH 12/27] Modify protocol defaults
  2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index de9d0d809..cce8a1ba9 100644
+index de9d0d8..cce8a1b 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -50,7 +50,7 @@
@@ -25,7 +25,7 @@ index de9d0d809..cce8a1ba9 100644
      </hbox>
    </wizardpage>
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
-index d552a232b..7d371bd21 100644
+index d552a23..7d371bd 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
 @@ -8,11 +8,13 @@
@@ -44,5 +44,5 @@ index d552a232b..7d371bd21 100644
  topProtocol.prpl-twitter.description=Stay up to date with your Twitter timeline
  topProtocol.prpl-aim.description=Chat with your buddies on AOL Instant Messenger
 -- 
-2.12.2
+2.7.4
 

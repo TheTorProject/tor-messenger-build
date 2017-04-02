@@ -1,7 +1,7 @@
-From a4506bc5184ef5b27fc0fe6cf563cf4ae4e60d76 Mon Sep 17 00:00:00 2001
+From 918936106c9b85e90e4412b9838386fc27eebe82 Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Wed, 26 Oct 2016 20:16:58 +0200
-Subject: [PATCH 21/27] Bug 1313137 - "msg is not defined" error in
+Subject: [PATCH 21/28] Bug 1313137 - "msg is not defined" error in
  irc.js:changeBuddyNick. r=clokep
 
 --HG--
@@ -11,7 +11,7 @@ extra : rebase_source : 5752a69059ecd48b947809ef12de177ccab8528f
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
-index c2167a5ec..b58c2c2eb 100644
+index c2167a5..b58c2c2 100644
 --- a/chat/protocols/irc/irc.js
 +++ b/chat/protocols/irc/irc.js
 @@ -1289,7 +1289,8 @@ ircAccount.prototype = {
@@ -25,5 +25,5 @@ index c2167a5ec..b58c2c2eb 100644
    },
  
 -- 
-2.12.2
+2.7.4
 

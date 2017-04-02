@@ -1,14 +1,14 @@
-From cecec905070c50b4a1a659154e5e241e47081734 Mon Sep 17 00:00:00 2001
+From 1d6505b3cbe38855dc4048bdc7ab854e4d59d748 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:50:48 -0700
-Subject: [PATCH 16/27] Remove logging UI
+Subject: [PATCH 16/28] Remove logging UI
 
 ---
  im/content/preferences/privacy.xul | 20 --------------------
  1 file changed, 20 deletions(-)
 
 diff --git a/im/content/preferences/privacy.xul b/im/content/preferences/privacy.xul
-index 7c9db1cdd..2d7b2701e 100644
+index 7c9db1c..2d7b270 100644
 --- a/im/content/preferences/privacy.xul
 +++ b/im/content/preferences/privacy.xul
 @@ -66,26 +66,6 @@
@@ -39,5 +39,5 @@ index 7c9db1cdd..2d7b2701e 100644
      <groupbox id="passwordsGroup" orient="vertical">
        <caption label="&passwords.label;"/>
 -- 
-2.12.2
+2.7.4
 

@@ -1,7 +1,7 @@
-From 31c4a6075ae676f0e2600efe20aad0ca79228d29 Mon Sep 17 00:00:00 2001
+From 4310155a555416a3878ad7bc3a51edb1f31f6c2b Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 2 Feb 2016 16:04:51 -0800
-Subject: [PATCH 04/27] Trac 17494: Better error reporting for failed outgoing
+Subject: [PATCH 04/28] Trac 17494: Better error reporting for failed outgoing
  messages
 
  * Bug 1245325 - Better error reporting for failed outgoing messages. r=clokep
@@ -11,7 +11,7 @@ Subject: [PATCH 04/27] Trac 17494: Better error reporting for failed outgoing
  2 files changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.properties
-index 7f824e534..293ab01d4 100644
+index 7f824e5..293ab01 100644
 --- a/chat/locales/en-US/xmpp.properties
 +++ b/chat/locales/en-US/xmpp.properties
 @@ -66,7 +66,10 @@ conversation.error.sendFailedAsNotInRoom=Message could not be sent to %1$S as yo
@@ -35,7 +35,7 @@ index 7f824e534..293ab01d4 100644
  # LOCALIZATION NOTE (tooltip.*):
  #   These are the titles of lines of information that will appear in
 diff --git a/chat/protocols/xmpp/xmpp.jsm b/chat/protocols/xmpp/xmpp.jsm
-index 7c3fcd7e6..282575938 100644
+index 7c3fcd7..2825759 100644
 --- a/chat/protocols/xmpp/xmpp.jsm
 +++ b/chat/protocols/xmpp/xmpp.jsm
 @@ -679,11 +679,18 @@ var XMPPConversationPrototype = {
@@ -63,5 +63,5 @@ index 7c3fcd7e6..282575938 100644
        else if (this._isMucParticipant && muc && !muc.left &&
                 error.condition == "item-not-found") {
 -- 
-2.12.2
+2.7.4
 

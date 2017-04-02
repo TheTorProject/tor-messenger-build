@@ -1,7 +1,7 @@
-From fb88d4775ad60abac118db70b550329e5a50aaf6 Mon Sep 17 00:00:00 2001
+From c92db4a956e803282aeb40fcc5a282251f8fac0f Mon Sep 17 00:00:00 2001
 From: aleth <aleth@instantbird.org>
 Date: Thu, 12 May 2016 15:10:43 +0200
-Subject: [PATCH 22/27] Bug 954368 - Contact list entries should adapt their
+Subject: [PATCH 22/28] Bug 954368 - Contact list entries should adapt their
  height to the actual font size. r=florian
 
 --HG--
@@ -18,7 +18,7 @@ extra : rebase_source : 9820f3a68794f98260f3ac406772da6d176d02ec
  8 files changed, 92 insertions(+), 53 deletions(-)
 
 diff --git a/chat/themes/imtooltip.css b/chat/themes/imtooltip.css
-index c4525beb5..630da3983 100644
+index c4525be..630da39 100644
 --- a/chat/themes/imtooltip.css
 +++ b/chat/themes/imtooltip.css
 @@ -31,6 +31,7 @@
@@ -30,7 +30,7 @@ index c4525beb5..630da3983 100644
  
  .tooltipDisplayName {
 diff --git a/im/content/blist.css b/im/content/blist.css
-index d47e4f356..15b61b103 100644
+index d47e4f3..15b61b1 100644
 --- a/im/content/blist.css
 +++ b/im/content/blist.css
 @@ -30,15 +30,28 @@ group {
@@ -111,7 +111,7 @@ index d47e4f356..15b61b103 100644
    -moz-binding: url("chrome://chat/content/imtooltip.xml#tooltip");
  }
 diff --git a/im/content/blist.js b/im/content/blist.js
-index 9ec10e25c..ce76ffcd7 100644
+index 9ec10e2..ce76ffc 100644
 --- a/im/content/blist.js
 +++ b/im/content/blist.js
 @@ -820,6 +820,13 @@ var buddyList = {
@@ -129,7 +129,7 @@ index 9ec10e25c..ce76ffcd7 100644
      blistBox.removeGroup = function(aGroupElt) {
        let index = buddyList._displayedGroups.indexOf(aGroupElt);
 diff --git a/im/content/blist.xul b/im/content/blist.xul
-index f29a48b99..71ee2c9ef 100644
+index f29a48b..71ee2c9 100644
 --- a/im/content/blist.xul
 +++ b/im/content/blist.xul
 @@ -224,6 +224,10 @@
@@ -144,7 +144,7 @@ index f29a48b99..71ee2c9ef 100644
              onclick='document.getElementById("buddylistbox").focus();'/>
    </notificationbox>
 diff --git a/im/content/contact.xml b/im/content/contact.xml
-index 5fc36dd6e..f2b464182 100644
+index 5fc36dd..f2b4641 100644
 --- a/im/content/contact.xml
 +++ b/im/content/contact.xml
 @@ -16,11 +16,11 @@
@@ -219,7 +219,7 @@ index 5fc36dd6e..f2b464182 100644
          <children/>
        </xul:vbox>
 diff --git a/im/content/conv.xml b/im/content/conv.xml
-index 96a33af64..c41da6fb4 100644
+index 96a33af..c41da6f 100644
 --- a/im/content/conv.xml
 +++ b/im/content/conv.xml
 @@ -16,11 +16,11 @@
@@ -240,7 +240,7 @@ index 96a33af64..c41da6fb4 100644
                     anonid="displayname" class="convDisplayName blistDisplayName"
                     xbl:inherits="value=displayname,status"/>
 diff --git a/im/locales/en-US/chrome/instantbird/instantbird.dtd b/im/locales/en-US/chrome/instantbird/instantbird.dtd
-index 80b894862..fce965bb1 100644
+index 80b8948..fce965b 100644
 --- a/im/locales/en-US/chrome/instantbird/instantbird.dtd
 +++ b/im/locales/en-US/chrome/instantbird/instantbird.dtd
 @@ -95,6 +95,12 @@
@@ -257,7 +257,7 @@ index 80b894862..fce965bb1 100644
  <!ENTITY openConversationCmd.label     "Start a conversation">
  <!ENTITY openConversationCmd.accesskey "c">
 diff --git a/im/themes/blist.css b/im/themes/blist.css
-index 992267405..c033b51bc 100644
+index 9922674..c033b51 100644
 --- a/im/themes/blist.css
 +++ b/im/themes/blist.css
 @@ -100,14 +100,7 @@ group {
@@ -318,5 +318,5 @@ index 992267405..c033b51bc 100644
    min-width: 16px;
  }
 -- 
-2.12.2
+2.7.4
 

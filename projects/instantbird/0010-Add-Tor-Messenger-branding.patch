@@ -1,7 +1,7 @@
-From 420c326c8c91fd204cbd530c522a94b8849cdc30 Mon Sep 17 00:00:00 2001
+From e77d1384097b007d54ad59ef6e187aca9019367e Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:56:27 -0700
-Subject: [PATCH 10/27] Add Tor Messenger branding
+Subject: [PATCH 10/28] Add Tor Messenger branding
 
 ---
  im/app/macbuild/Contents/Info.plist.in             |   2 +-
@@ -101,7 +101,7 @@ Subject: [PATCH 10/27] Add Tor Messenger branding
  create mode 100644 im/content/browserMountPoints.inc
 
 diff --git a/im/app/macbuild/Contents/Info.plist.in b/im/app/macbuild/Contents/Info.plist.in
-index 615e4e6b8..ac61e6134 100644
+index 615e4e6..ac61e61 100644
 --- a/im/app/macbuild/Contents/Info.plist.in
 +++ b/im/app/macbuild/Contents/Info.plist.in
 @@ -11,7 +11,7 @@
@@ -115,7 +115,7 @@ index 615e4e6b8..ac61e6134 100644
  	<key>CFBundleName</key>
 diff --git a/im/branding/messenger/Makefile.in b/im/branding/messenger/Makefile.in
 new file mode 100644
-index 000000000..b4309568e
+index 0000000..b430956
 --- /dev/null
 +++ b/im/branding/messenger/Makefile.in
 @@ -0,0 +1,49 @@
@@ -183,7 +183,7 @@ HcmV?d00001
 
 diff --git a/im/branding/messenger/branding.nsi b/im/branding/messenger/branding.nsi
 new file mode 100755
-index 000000000..4683827fa
+index 0000000..4683827
 --- /dev/null
 +++ b/im/branding/messenger/branding.nsi
 @@ -0,0 +1,13 @@
@@ -202,7 +202,7 @@ index 000000000..4683827fa
 +
 diff --git a/im/branding/messenger/configure.sh b/im/branding/messenger/configure.sh
 new file mode 100644
-index 000000000..7e580518b
+index 0000000..7e58051
 --- /dev/null
 +++ b/im/branding/messenger/configure.sh
 @@ -0,0 +1,5 @@
@@ -1218,7 +1218,7 @@ HcmV?d00001
 
 diff --git a/im/branding/messenger/content/aboutDialog.css b/im/branding/messenger/content/aboutDialog.css
 new file mode 100644
-index 000000000..9a3c04eb3
+index 0000000..9a3c04e
 --- /dev/null
 +++ b/im/branding/messenger/content/aboutDialog.css
 @@ -0,0 +1,48 @@
@@ -2197,7 +2197,7 @@ HcmV?d00001
 
 diff --git a/im/branding/messenger/jar.mn b/im/branding/messenger/jar.mn
 new file mode 100644
-index 000000000..929e7c998
+index 0000000..929e7c9
 --- /dev/null
 +++ b/im/branding/messenger/jar.mn
 @@ -0,0 +1,14 @@
@@ -2217,7 +2217,7 @@ index 000000000..929e7c998
 +	content/branding/about-wordmark.png	(content/about-wordmark.png)
 diff --git a/im/branding/messenger/locales/en-US/brand.dtd b/im/branding/messenger/locales/en-US/brand.dtd
 new file mode 100644
-index 000000000..4dc69f244
+index 0000000..4dc69f2
 --- /dev/null
 +++ b/im/branding/messenger/locales/en-US/brand.dtd
 @@ -0,0 +1,10 @@
@@ -2233,7 +2233,7 @@ index 000000000..4dc69f244
 +<!ENTITY  vendorShortName       "Tor Project">
 diff --git a/im/branding/messenger/locales/en-US/brand.properties b/im/branding/messenger/locales/en-US/brand.properties
 new file mode 100644
-index 000000000..c09000fdb
+index 0000000..c09000f
 --- /dev/null
 +++ b/im/branding/messenger/locales/en-US/brand.properties
 @@ -0,0 +1,7 @@
@@ -2246,7 +2246,7 @@ index 000000000..c09000fdb
 +vendorShortName=Tor Project
 diff --git a/im/branding/messenger/locales/jar.mn b/im/branding/messenger/locales/jar.mn
 new file mode 100755
-index 000000000..4fb707f30
+index 0000000..4fb707f
 --- /dev/null
 +++ b/im/branding/messenger/locales/jar.mn
 @@ -0,0 +1,10 @@
@@ -2262,7 +2262,7 @@ index 000000000..4fb707f30
 +	locale/@AB_CD@/branding/brand.properties	(%brand.properties)
 diff --git a/im/branding/messenger/locales/moz.build b/im/branding/messenger/locales/moz.build
 new file mode 100644
-index 000000000..e59008d87
+index 0000000..e59008d
 --- /dev/null
 +++ b/im/branding/messenger/locales/moz.build
 @@ -0,0 +1,8 @@
@@ -2276,7 +2276,7 @@ index 000000000..e59008d87
 +DEFINES['MOZ_DISTRIBUTION_ID_UNQUOTED'] = CONFIG['MOZ_DISTRIBUTION_ID']
 diff --git a/im/branding/messenger/moz.build b/im/branding/messenger/moz.build
 new file mode 100644
-index 000000000..bd8ad850b
+index 0000000..bd8ad85
 --- /dev/null
 +++ b/im/branding/messenger/moz.build
 @@ -0,0 +1,8 @@
@@ -2624,7 +2624,7 @@ HcmV?d00001
 
 diff --git a/im/branding/messenger/mozicon16.xpm b/im/branding/messenger/mozicon16.xpm
 new file mode 100644
-index 000000000..3434739f6
+index 0000000..3434739
 --- /dev/null
 +++ b/im/branding/messenger/mozicon16.xpm
 @@ -0,0 +1,193 @@
@@ -2823,7 +2823,7 @@ index 000000000..3434739f6
 +};
 diff --git a/im/branding/messenger/mozicon50.xpm b/im/branding/messenger/mozicon50.xpm
 new file mode 100644
-index 000000000..76e799c60
+index 0000000..76e799c
 --- /dev/null
 +++ b/im/branding/messenger/mozicon50.xpm
 @@ -0,0 +1,314 @@
@@ -3855,7 +3855,7 @@ HcmV?d00001
 
 diff --git a/im/content/aboutDialog-appUpdater.js b/im/content/aboutDialog-appUpdater.js
 new file mode 100644
-index 000000000..f223f061e
+index 0000000..f223f06
 --- /dev/null
 +++ b/im/content/aboutDialog-appUpdater.js
 @@ -0,0 +1,576 @@
@@ -4436,7 +4436,7 @@ index 000000000..f223f061e
 +  }
 +};
 diff --git a/im/content/aboutDialog.css b/im/content/aboutDialog.css
-index 25070608b..a065c8e88 100644
+index 2507060..a065c8e 100644
 --- a/im/content/aboutDialog.css
 +++ b/im/content/aboutDialog.css
 @@ -1,66 +1,91 @@
@@ -4573,7 +4573,7 @@ index 25070608b..a065c8e88 100644
 +}
 diff --git a/im/content/aboutDialog.js b/im/content/aboutDialog.js
 new file mode 100644
-index 000000000..e265f239c
+index 0000000..e265f23
 --- /dev/null
 +++ b/im/content/aboutDialog.js
 @@ -0,0 +1,80 @@
@@ -4658,7 +4658,7 @@ index 000000000..e265f239c
 +  }
 +}
 diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
-index aa3b80ec9..ba924b9ad 100644
+index aa3b80e..ba924b9 100644
 --- a/im/content/aboutDialog.xul
 +++ b/im/content/aboutDialog.xul
 @@ -1,130 +1,173 @@
@@ -4944,7 +4944,7 @@ index aa3b80ec9..ba924b9ad 100644
 +</window>
 diff --git a/im/content/browserMountPoints.inc b/im/content/browserMountPoints.inc
 new file mode 100644
-index 000000000..e4315b04a
+index 0000000..e4315b0
 --- /dev/null
 +++ b/im/content/browserMountPoints.inc
 @@ -0,0 +1,12 @@
@@ -4962,7 +4962,7 @@ index 000000000..e4315b04a
 +<menubar id="main-menubar"/>
 \ No newline at end of file
 diff --git a/im/content/jar.mn b/im/content/jar.mn
-index 20ea9dce7..b3d9e492f 100644
+index 20ea9dc..b3d9e49 100644
 --- a/im/content/jar.mn
 +++ b/im/content/jar.mn
 @@ -10,7 +10,8 @@ instantbird.jar:
@@ -4976,7 +4976,7 @@ index 20ea9dce7..b3d9e492f 100644
  	content/instantbird/accounts.css
  	content/instantbird/accounts.js
 diff --git a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd b/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
-index ecd8d9d24..187cf5c3e 100644
+index ecd8d9d..187cf5c 100644
 --- a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
 +++ b/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
 @@ -1,10 +1,129 @@
@@ -5120,7 +5120,7 @@ index ecd8d9d24..187cf5c3e 100644
 +<!ENTITY bottomLinks.license  "Licensing Information">
 +<!ENTITY tor.TrademarkStatement   "'Tor' and the 'Onion Logo' are registered trademarks of the Tor Project, Inc.">
 diff --git a/im/locales/en-US/updater/updater.ini b/im/locales/en-US/updater/updater.ini
-index 15ec569c1..4a2d35d8a 100644
+index 15ec569..4a2d35d 100644
 --- a/im/locales/en-US/updater/updater.ini
 +++ b/im/locales/en-US/updater/updater.ini
 @@ -5,4 +5,4 @@
@@ -5130,5 +5130,5 @@ index 15ec569c1..4a2d35d8a 100644
 -Info=Instantbird is installing your updates and will start in a few moments…
 +Info=Tor Messenger is installing your updates and will start in a few moments…
 -- 
-2.12.2
+2.7.4
 

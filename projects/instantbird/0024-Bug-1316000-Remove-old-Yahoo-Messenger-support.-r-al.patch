@@ -1,7 +1,7 @@
-From 88cf8f20c8e2fc88c1ccad38ce0d829f2b32bf96 Mon Sep 17 00:00:00 2001
+From 5336f46b84239cbc9f9b7f79265d4928e4f53925 Mon Sep 17 00:00:00 2001
 From: Patrick Cloke <clokep@gmail.com>
 Date: Wed, 9 Nov 2016 09:03:49 -0800
-Subject: [PATCH 24/27] Bug 1316000 - Remove old Yahoo! Messenger support.
+Subject: [PATCH 24/28] Bug 1316000 - Remove old Yahoo! Messenger support.
  r=aleth
 
 ---
@@ -28,7 +28,7 @@ Subject: [PATCH 24/27] Bug 1316000 - Remove old Yahoo! Messenger support.
  delete mode 100644 chat/protocols/yahoo/yahoo-session.jsm
 
 diff --git a/chat/chat-prefs.js b/chat/chat-prefs.js
-index fb769163d..60b9c1e8c 100644
+index fb76916..60b9c1e 100644
 --- a/chat/chat-prefs.js
 +++ b/chat/chat-prefs.js
 @@ -84,6 +84,8 @@ pref("chat.irc.automaticList", true);
@@ -41,7 +41,7 @@ index fb769163d..60b9c1e8c 100644
  // loglevel is the minimum severity level that a libpurple message
  // must have to be reported in the Error Console.
 diff --git a/chat/locales/en-US/facebook.properties b/chat/locales/en-US/facebook.properties
-index aaf7cdc9c..2e00cbcb2 100644
+index aaf7cdc..2e00cbc 100644
 --- a/chat/locales/en-US/facebook.properties
 +++ b/chat/locales/en-US/facebook.properties
 @@ -2,6 +2,5 @@
@@ -53,7 +53,7 @@ index aaf7cdc9c..2e00cbcb2 100644
  facebook.chat.name=Facebook Chat
 +facebook.disabled=Facebook Chat is no longer supported due to Facebook disabling their XMPP gateway.
 diff --git a/chat/locales/en-US/yahoo.properties b/chat/locales/en-US/yahoo.properties
-index 727faa6ee..89ee0093c 100644
+index 727faa6..89ee009 100644
 --- a/chat/locales/en-US/yahoo.properties
 +++ b/chat/locales/en-US/yahoo.properties
 @@ -2,36 +2,4 @@
@@ -95,7 +95,7 @@ index 727faa6ee..89ee0093c 100644
 -command.feedback.invite=You have invited %S to the conference.
 +yahoo.disabled=Yahoo Messenger is no longer supported due to Yahoo disabling their legacy protocol.
 diff --git a/chat/protocols/facebook/facebook.js b/chat/protocols/facebook/facebook.js
-index 7b5b3b86e..9d90eacdb 100644
+index 7b5b3b8..9d90eac 100644
 --- a/chat/protocols/facebook/facebook.js
 +++ b/chat/protocols/facebook/facebook.js
 @@ -6,33 +6,26 @@ var {interfaces: Ci, utils: Cu} = Components;
@@ -136,7 +136,7 @@ index 7b5b3b86e..9d90eacdb 100644
    __proto__: GenericProtocolPrototype,
    get normalizedName() { return "facebook"; },
 diff --git a/chat/protocols/yahoo/moz.build b/chat/protocols/yahoo/moz.build
-index f14434732..ea378535a 100644
+index f144347..ea37853 100644
 --- a/chat/protocols/yahoo/moz.build
 +++ b/chat/protocols/yahoo/moz.build
 @@ -3,15 +3,9 @@
@@ -157,7 +157,7 @@ index f14434732..ea378535a 100644
  JAR_MANIFESTS += ['jar.mn']
 diff --git a/chat/protocols/yahoo/test/test_yahooAccount.js b/chat/protocols/yahoo/test/test_yahooAccount.js
 deleted file mode 100644
-index 51df00bb9..000000000
+index 51df00b..0000000
 --- a/chat/protocols/yahoo/test/test_yahooAccount.js
 +++ /dev/null
 @@ -1,98 +0,0 @@
@@ -261,7 +261,7 @@ index 51df00bb9..000000000
 -}
 diff --git a/chat/protocols/yahoo/test/test_yahooLoginHelper.js b/chat/protocols/yahoo/test/test_yahooLoginHelper.js
 deleted file mode 100644
-index e4d8bc1b8..000000000
+index e4d8bc1..0000000
 --- a/chat/protocols/yahoo/test/test_yahooLoginHelper.js
 +++ /dev/null
 @@ -1,89 +0,0 @@
@@ -356,7 +356,7 @@ index e4d8bc1b8..000000000
 -}
 diff --git a/chat/protocols/yahoo/test/test_yahoopacket.js b/chat/protocols/yahoo/test/test_yahoopacket.js
 deleted file mode 100644
-index 7908c4429..000000000
+index 7908c44..0000000
 --- a/chat/protocols/yahoo/test/test_yahoopacket.js
 +++ /dev/null
 @@ -1,217 +0,0 @@
@@ -579,7 +579,7 @@ index 7908c4429..000000000
 -}
 diff --git a/chat/protocols/yahoo/test/xpcshell.ini b/chat/protocols/yahoo/test/xpcshell.ini
 deleted file mode 100644
-index f4b464e61..000000000
+index f4b464e..0000000
 --- a/chat/protocols/yahoo/test/xpcshell.ini
 +++ /dev/null
 @@ -1,7 +0,0 @@
@@ -592,7 +592,7 @@ index f4b464e61..000000000
 -[test_yahoopacket.js]
 diff --git a/chat/protocols/yahoo/yahoo-session.jsm b/chat/protocols/yahoo/yahoo-session.jsm
 deleted file mode 100644
-index cc9612036..000000000
+index cc96120..0000000
 --- a/chat/protocols/yahoo/yahoo-session.jsm
 +++ /dev/null
 @@ -1,1156 +0,0 @@
@@ -1753,7 +1753,7 @@ index cc9612036..000000000
 -  }
 -};
 diff --git a/chat/protocols/yahoo/yahoo.js b/chat/protocols/yahoo/yahoo.js
-index 8beadb504..86a258969 100644
+index 8beadb5..86a2589 100644
 --- a/chat/protocols/yahoo/yahoo.js
 +++ b/chat/protocols/yahoo/yahoo.js
 @@ -2,575 +2,39 @@
@@ -2341,7 +2341,7 @@ index 8beadb504..86a258969 100644
    classID: Components.ID("{50ea817e-5d79-4657-91ae-aa0a52bdb98c}")
  };
 diff --git a/im/content/conversation.xml b/im/content/conversation.xml
-index 6f00c8d39..c93dab00f 100644
+index 6f00c8d..c93dab0 100644
 --- a/im/content/conversation.xml
 +++ b/im/content/conversation.xml
 @@ -342,8 +342,7 @@
@@ -2355,7 +2355,7 @@ index 6f00c8d39..c93dab00f 100644
                  if ("color" in style)
                    styleAttributes += " color=\"" + style.color + "\"";
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
-index 7d371bd21..1d6fd48e1 100644
+index 7d371bd..1d6fd48 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
 @@ -14,9 +14,8 @@ topProtocol.list=prpl-irc,prpl-jabber,prpl-twitter,prpl-gtalk
@@ -2370,7 +2370,7 @@ index 7d371bd21..1d6fd48e1 100644
  topProtocol.prpl-irc.description=Join IRC channels
 +topProtocol.prpl-jabber.description=Chat using the open Jabber/XMPP protocol
 diff --git a/im/test/xpcshell.ini b/im/test/xpcshell.ini
-index 5f7dd70fc..578122a2a 100644
+index 5f7dd70..578122a 100644
 --- a/im/test/xpcshell.ini
 +++ b/im/test/xpcshell.ini
 @@ -6,5 +6,4 @@
@@ -2380,7 +2380,7 @@ index 5f7dd70fc..578122a2a 100644
 -[include:chat/protocols/yahoo/test/xpcshell.ini]
  #[include:extensions/purple/purplexpcom/src/test/xpcshell.ini]
 diff --git a/mail/components/im/content/imconversation.xml b/mail/components/im/content/imconversation.xml
-index 16c665ab4..a4b9fc638 100644
+index 16c665a..a4b9fc6 100644
 --- a/mail/components/im/content/imconversation.xml
 +++ b/mail/components/im/content/imconversation.xml
 @@ -285,8 +285,7 @@
@@ -2394,5 +2394,5 @@ index 16c665ab4..a4b9fc638 100644
                if ("color" in style)
                  styleAttributes += " color=\"" + style.color + "\"";
 -- 
-2.12.2
+2.7.4
 

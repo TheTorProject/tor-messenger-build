@@ -1,14 +1,14 @@
-From 479dd68a7f055242dd6aa3a16d800b4700bd8bc3 Mon Sep 17 00:00:00 2001
+From 93c3b8158754d3b057c3b47895a9037ff6cb1b98 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:24:09 -0700
-Subject: [PATCH 11/27] Account picture
+Subject: [PATCH 11/28] Account picture
 
 ---
  im/content/blist.xul | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/im/content/blist.xul b/im/content/blist.xul
-index b90fddadb..f29a48b99 100644
+index b90fdda..f29a48b 100644
 --- a/im/content/blist.xul
 +++ b/im/content/blist.xul
 @@ -114,8 +114,7 @@
@@ -22,5 +22,5 @@ index b90fddadb..f29a48b99 100644
          <panel id="changeUserIconPanel"
                 type="arrow" align="center"
 -- 
-2.12.2
+2.7.4
 

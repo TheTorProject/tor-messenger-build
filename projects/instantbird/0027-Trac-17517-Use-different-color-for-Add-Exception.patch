@@ -1,14 +1,14 @@
-From 87fd1c478b2bd75333c68a3082d02fd2ac8ef03f Mon Sep 17 00:00:00 2001
+From abceee85796da04fcdac422a16e3e083bfd8758b Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Tue, 27 Dec 2016 08:31:36 +0700
-Subject: [PATCH 27/27] Trac 17517 - Use different color for Add Exception
+Subject: [PATCH 27/28] Trac 17517 - Use different color for Add Exception
 
 ---
  im/content/accounts.css | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/im/content/accounts.css b/im/content/accounts.css
-index 7820b5aaf..bc555acce 100644
+index 7820b5a..bc555ac 100644
 --- a/im/content/accounts.css
 +++ b/im/content/accounts.css
 @@ -31,3 +31,7 @@ richlistitem:not([reconnectPending="true"]) description[anonid="reconnect"]
@@ -21,5 +21,5 @@ index 7820b5aaf..bc555acce 100644
 +}
 \ No newline at end of file
 -- 
-2.12.2
+2.7.4
 

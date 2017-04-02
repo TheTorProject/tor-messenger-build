@@ -1,7 +1,7 @@
-From 5dc74f402183115a4d60d69c96bcd770f794c014 Mon Sep 17 00:00:00 2001
+From e3524962a6b093dc8bff2b55bad2de660aa20136 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 16 Nov 2015 20:37:53 -0800
-Subject: [PATCH 02/27] Trac 21634: Autologin default should be false
+Subject: [PATCH 02/28] Trac 21634: Autologin default should be false
 
 ---
  chat/components/src/imAccounts.js | 2 +-
@@ -9,7 +9,7 @@ Subject: [PATCH 02/27] Trac 21634: Autologin default should be false
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/chat/components/src/imAccounts.js b/chat/components/src/imAccounts.js
-index c13c6100d..5bfea57f2 100644
+index c13c610..5bfea57 100644
 --- a/chat/components/src/imAccounts.js
 +++ b/chat/components/src/imAccounts.js
 @@ -588,7 +588,7 @@ imAccount.prototype = {
@@ -22,7 +22,7 @@ index c13c6100d..5bfea57f2 100644
        autoLogin = this.prefBranch.getBoolPref(kPrefAccountAutoLogin);
      } catch (e) { }
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index 5fa5b8293..f0933af7f 100644
+index 5fa5b82..f0933af 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
 @@ -138,7 +138,7 @@
@@ -35,5 +35,5 @@ index 5fa5b8293..f0933af7f 100644
  
  </wizard>
 -- 
-2.12.2
+2.7.4
 

@@ -1,0 +1,43 @@
+From 95d023522ff29a25f9121c28178823fa6db2f8d4 Mon Sep 17 00:00:00 2001
+From: Vu Quoc Huy <huyvq.c633@gmail.com>
+Date: Sun, 2 Apr 2017 22:20:16 +0700
+Subject: [PATCH 28/28] Trac 21376: Hide account/timestamp from message
+ selections
+
+---
+ chat/modules/imThemes.jsm         | 3 +--
+ im/app/profile/all-instantbird.js | 4 ++++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/chat/modules/imThemes.jsm b/chat/modules/imThemes.jsm
+index be6026c..eaed125 100644
+--- a/chat/modules/imThemes.jsm
++++ b/chat/modules/imThemes.jsm
+@@ -892,8 +892,7 @@ SelectedMessage.prototype = {
+       try {
+         let prefBranch =
+           Services.prefs.getBranch("messenger.conversations.selections.");
+-        return prefBranch.getComplexValue(aName,
+-                                          Ci.nsIPrefLocalizedString).data;
++        return prefBranch.getCharPref(aName).data;
+       } catch(e) {
+         return aDefault;
+       }
+diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
+index 7b91410..f408e625 100644
+--- a/im/app/profile/all-instantbird.js
++++ b/im/app/profile/all-instantbird.js
+@@ -47,6 +47,10 @@ pref("extensions.systemAddon.update.url", "");
+ // background (in seconds)
+ pref("app.update.download.backgroundInterval", 60);
+ 
++// Hide the timestamp and account from message selection templates
++pref("messenger.conversations.selections.actionMessagesTemplate", "%message%");
++pref("messenger.conversations.selections.contentMessagesTemplate", "%message%");
++pref("messenger.conversations.selections.systemMessagesTemplate", "%message%");
+ 
+ 
+ /* This Source Code Form is subject to the terms of the Mozilla Public
+-- 
+2.7.4
+

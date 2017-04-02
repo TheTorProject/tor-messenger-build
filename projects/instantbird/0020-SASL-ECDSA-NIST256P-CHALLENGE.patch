@@ -1,7 +1,7 @@
-From 95c1c1ae542c19accfcfb8e00a4053d427e7116a Mon Sep 17 00:00:00 2001
+From f69ce8c15a7578d80cc6afbfbd8fc94511f9c2ce Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sun, 2 Oct 2016 08:46:55 -0700
-Subject: [PATCH 20/27] SASL ECDSA-NIST256P-CHALLENGE
+Subject: [PATCH 20/28] SASL ECDSA-NIST256P-CHALLENGE
 
 ---
  chat/components/src/imAccounts.js |    1 +
@@ -12,7 +12,7 @@ Subject: [PATCH 20/27] SASL ECDSA-NIST256P-CHALLENGE
  create mode 100644 chat/protocols/irc/elliptic.jsm
 
 diff --git a/chat/components/src/imAccounts.js b/chat/components/src/imAccounts.js
-index 5bfea57f2..da8525ffd 100644
+index 5bfea57..da8525f 100644
 --- a/chat/components/src/imAccounts.js
 +++ b/chat/components/src/imAccounts.js
 @@ -193,6 +193,7 @@ function imAccount(aKey, aName, aPrplId)
@@ -25,7 +25,7 @@ index 5bfea57f2..da8525ffd 100644
    id: "",
 diff --git a/chat/protocols/irc/elliptic.jsm b/chat/protocols/irc/elliptic.jsm
 new file mode 100644
-index 000000000..bccab018c
+index 0000000..bccab01
 --- /dev/null
 +++ b/chat/protocols/irc/elliptic.jsm
 @@ -0,0 +1,8748 @@
@@ -8779,7 +8779,7 @@ index 000000000..bccab018c
 +var elliptic = window.elliptic;
 \ No newline at end of file
 diff --git a/chat/protocols/irc/ircSASL.jsm b/chat/protocols/irc/ircSASL.jsm
-index 561f055e0..8a2bd70aa 100644
+index 561f055..8a2bd70 100644
 --- a/chat/protocols/irc/ircSASL.jsm
 +++ b/chat/protocols/irc/ircSASL.jsm
 @@ -14,6 +14,43 @@ var Cu = Components.utils;
@@ -8903,7 +8903,7 @@ index 561f055e0..8a2bd70aa 100644
  
        return true;
 diff --git a/chat/protocols/irc/moz.build b/chat/protocols/irc/moz.build
-index bc2539687..e46815dfe 100644
+index bc25396..e46815d 100644
 --- a/chat/protocols/irc/moz.build
 +++ b/chat/protocols/irc/moz.build
 @@ -11,6 +11,7 @@ EXTRA_COMPONENTS += [
@@ -8915,5 +8915,5 @@ index bc2539687..e46815dfe 100644
      'ircCAP.jsm',
      'ircCommands.jsm',
 -- 
-2.12.2
+2.7.4
 

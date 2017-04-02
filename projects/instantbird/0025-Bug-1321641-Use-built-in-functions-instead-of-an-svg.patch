@@ -1,7 +1,7 @@
-From 64be3bc7ee42bf7579da76f42b5f4d3c069e77bf Mon Sep 17 00:00:00 2001
+From 044575d6ab6b85dd1b2d3696b9c137019e431c93 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 1 Dec 2016 13:25:42 -0800
-Subject: [PATCH 25/27] Bug 1321641 - Use built-in functions instead of an svg
+Subject: [PATCH 25/28] Bug 1321641 - Use built-in functions instead of an svg
  for bubbles filter
 
 ---
@@ -12,7 +12,7 @@ Subject: [PATCH 25/27] Bug 1321641 - Use built-in functions instead of an svg
  delete mode 100644 im/themes/messages/bubbles/bubbles.svg
 
 diff --git a/im/themes/jar.mn b/im/themes/jar.mn
-index e422619d4..e39f5dcd8 100644
+index e422619..e39f5dc 100644
 --- a/im/themes/jar.mn
 +++ b/im/themes/jar.mn
 @@ -268,7 +268,6 @@ instantbird.jar:
@@ -25,7 +25,7 @@ index e422619d4..e39f5dcd8 100644
  	skin/classic/instantbird/messages/bubbles/Incoming/Context.html         (messages/bubbles/Incoming/Context.html)
 diff --git a/im/themes/messages/bubbles/bubbles.svg b/im/themes/messages/bubbles/bubbles.svg
 deleted file mode 100644
-index 963521eca..000000000
+index 963521e..0000000
 --- a/im/themes/messages/bubbles/bubbles.svg
 +++ /dev/null
 @@ -1,10 +0,0 @@
@@ -40,7 +40,7 @@ index 963521eca..000000000
 -  </filter>
 -</svg>
 diff --git a/im/themes/messages/bubbles/main.css b/im/themes/messages/bubbles/main.css
-index 15ba97346..4488c30bb 100644
+index 15ba973..4488c30 100644
 --- a/im/themes/messages/bubbles/main.css
 +++ b/im/themes/messages/bubbles/main.css
 @@ -40,7 +40,7 @@ p {
@@ -53,5 +53,5 @@ index 15ba97346..4488c30bb 100644
  
  .indicator {
 -- 
-2.12.2
+2.7.4
 
