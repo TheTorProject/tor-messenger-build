@@ -1,4 +1,4 @@
-From 146f9fc186c1327a0d94692a2ff8352344be45cd Mon Sep 17 00:00:00 2001
+From 95ee595e38dc54ec1dd43a11e6d54796620a5185 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sat, 5 Nov 2016 14:55:20 -0700
 Subject: [PATCH 23/28] Bug 1187281 - Only show "close" button on Windows
