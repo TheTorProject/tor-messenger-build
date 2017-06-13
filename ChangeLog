@@ -1,4 +1,4 @@
-Tor Messenger 0.4.0b3 --
+Tor Messenger 0.4.0b3 -- June 13, 2017
  * All Platforms
    * Use the tor-browser-45.9.0esr-6.5-1-build3 tag on tor-browser
    * Update tor-browser to 6.5.2
