@@ -228,7 +228,8 @@ Finalizing Updates and Releasing
 ================================
 
 - Publish the blog post on blog.torproject.org. The URL should follow the same
-  format as described in the `config.yml` file for $VERSION
+  format as described in the `config.yml` file for $VERSION. This is usually
+  done automatically by the blog platform.
 
 - ssh to `staticiforme.torproject.org:/srv/aus2-master.torproject.org/htdocs/tormessenger/update_2/release`
 
@@ -245,12 +246,18 @@ Finalizing Updates and Releasing
   Messenger tests in the previous section. (Install older version, force
   update, check.)
 
+- Add the date to the ChangeLog file and commit it with the message `Release
+  version $VERSION`.
+
 - Finalize the release process by tagging the version in
   `tor-messenger-build.git` (run the code below). Make sure that HEAD is the
   commit which adds the release date to the ChangeLog.
 
         VERSION=`awk '/tormessenger_version/ {print $2}' rbm.conf | cut -d "'" -f2` 
         git tag -s v$VERSION -m "version $VERSION"
+
+  Verify the tag and then push it to the remote:
+
         git push --tags
 
 - This completes the release process.
