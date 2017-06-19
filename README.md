@@ -10,8 +10,11 @@ The Docker package is usually named docker.io or docker-io.
 On Debian jessie, the docker.io package is available in backports.
 
 Your user account should have access to the docker command without using
-sudo, so it should be in the docker group. The docker daemon should
-also be running.
+sudo, so it should be in the docker group.
+
+    sudo usermod -aG docker $(whoami)
+
+The docker daemon should also be running.
 
 The sources are downloaded using git and mercurial which need to be
 installed.
