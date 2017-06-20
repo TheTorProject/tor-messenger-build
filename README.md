@@ -46,7 +46,7 @@ If you are running Debian or Ubuntu, you can install them with:
                   libio-captureoutput-perl libfile-slurp-perl \
                   libstring-shellquote-perl libsort-versions-perl \
                   libdigest-sha-perl libdata-uuid-perl libdata-dump-perl \
-                  git mercurial
+                  git mercurial zip
 ```
 
 If you are running Fedora (24 or later), you can install them with:
@@ -57,7 +57,7 @@ If you are running Fedora (24 or later), you can install them with:
               'perl(File::Temp)' 'perl(File::Slurp)' 'perl(File::Path)' \
               'perl(String::ShellQuote)' 'perl(Sort::Versions)' \
               'perl(Digest::SHA)' 'perl(Data::UUID)' 'perl(Data::Dump)' \
-              git mercurial
+              git mercurial zip
 ```
 
 Starting a build
