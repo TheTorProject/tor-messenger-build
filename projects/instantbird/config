@@ -37,6 +37,7 @@ targets:
         - libgstreamer-plugins-base0.10-dev
         - libpulse-dev
         - libxt-dev
+        - libx11-xcb-dev
   linux-i686:
     var:
       martools_filename: mar-tools-linux32.zip
