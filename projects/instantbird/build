@@ -75,7 +75,7 @@ cp -p obj-*/dist/host/bin/mbsdiff $MARTOOLS/
 [% IF c("var/linux") -%]
 cp -p obj-*/modules/libmar/tool/signmar $MARTOOLS/
 cp -p obj-*/security/nss/cmd/certutil/certutil $MARTOOLS/
-NSS_LIBS="libfreebl3.so libmozsqlite3.so libnss3.so libnssdbm3.so libnssutil3.so libsmime3.so libsoftokn3.so libssl3.so"
+NSS_LIBS="libfreeblpriv3.so libmozsqlite3.so libnss3.so libnssdbm3.so libnssutil3.so libsmime3.so libsoftokn3.so libssl3.so"
 NSPR_LIBS="libnspr4.so libplc4.so libplds4.so"
 for LIB in $NSS_LIBS $NSPR_LIBS; do
     cp -p obj-*/dist/bin/$LIB $MARTOOLS/
