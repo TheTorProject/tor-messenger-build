@@ -4,3 +4,6 @@
 [submodule "tools/version-control-tools"]
 	path = tools/version-control-tools
 	url = https://github.com/mozilla/version-control-tools
+[submodule "tor-browser-build"]
+	path = tor-browser-build
+	url = https://git.torproject.org/builders/tor-browser-build.git
