@@ -20,9 +20,8 @@ targets:
     var:
       martools_filename: mar-tools-win32.zip
       archive_suffix: zip
-  linux-x86_64:
+  linux:
     var:
-      martools_filename: mar-tools-linux64.zip
       arch_deps:
         - libgconf2-dev
         - libgtk2.0-dev
@@ -32,28 +31,16 @@ targets:
         - libdbus-glib-1-dev
         - libasound2-dev
         - libgstreamer-plugins-base0.10-dev
+        - hardening-wrapper
         - libpulse-dev
         - libxt-dev
         - libx11-xcb-dev
-        - hardening-wrapper
+  linux-x86_64:
+    var:
+      martools_filename: mar-tools-linux64.zip
   linux-i686:
     var:
       martools_filename: mar-tools-linux32.zip
-      arch_deps:
-        - libc6-dev-i386
-        - ia32-libs
-        - lib32z1-dev
-        - lib32asound2-dev
-        - libgconf2-dev:i386
-        - libgtk2.0-dev:i386
-        - libxml2-dev:i386
-        - mesa-common-dev:i386
-        - libdbus-1-dev:i386
-        - libdbus-glib-1-dev:i386
-        - libasound2-dev:i386
-        - libgstreamer-plugins-base0.10-dev:i386
-        - libpulse-dev:i386
-        - libxt-dev:i386
   osx-x86_64:
     var:
       martools_filename: mar-tools-mac64.zip
