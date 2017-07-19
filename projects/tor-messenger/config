@@ -77,8 +77,6 @@ targets:
     var:
       bundle_filename: 'tor-messenger-linux32-[% c("version") %]_en-US.tar.xz'
       mar_osname: linux32
-      arch_deps:
-        - libc6-i386
   linux-x86_64:
     var:
       bundle_filename: 'tor-messenger-linux64-[% c("version") %]_en-US.tar.xz'
