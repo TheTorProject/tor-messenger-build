@@ -1,48 +1,50 @@
-#!/bin/sh
-set -e
-rootdir=$(pwd)
+#!/bin/bash
+[% c("var/setarch") -%]
+[% c("var/set_default_env") -%]
 
-export SHELL=/bin/sh
-export HOME=$rootdir
-export MOZ_BUILD_DATE=$(date -d @[% c('timestamp') %] +%Y%m%d%H%M%S)
-export SOURCE_DATE_EPOCH=[% c('timestamp') %]
+[% IF c("var/windows") -%]
+  mkdir -p /var/tmp/dist
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/gcc') %]
+  hgccdir=/var/tmp/dist/gcc
+  # We need a link to our GCC, otherwise the system cc gets used which points to
+  # /usr/bin/gcc.
+  ln -s gcc $hgccdir/bin/cc
+  # Make sure our GCC (as host compiler) get used. We do that before
+  # compiler setup so that mingw is first in the PATH.
+  export LD_LIBRARY_PATH=$hgccdir/lib64
+  export PATH=$hgccdir/bin:$PATH
 
-[% IF c('var/osx') -%]
-[% pc('gcc', 'var/setup', { compiler_tarfile => c('input_files_by_name/gcchost') }) %]
-ln -s /var/tmp/dist/gcc/bin/gcc /var/tmp/dist/gcc/bin/cc
+  # Firefox ESR52 needs Yasm >= 1.2.0 which Ubuntu Precise does not ship.
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/yasm') %]
+  export PATH="/var/tmp/dist/yasm/bin:$PATH"
 [% END -%]
-
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
+distdir=/var/tmp/dist/[% project %]
+mkdir -p /var/tmp/build
 
-mkdir -p /var/tmp/dist
-cd /var/tmp/dist
-
-[% IF c("var/linux") -%]
-tar xf $rootdir/[% c('input_files_by_name/python') %]
-export PATH="/var/tmp/dist/python/bin:$PATH"
-tar xf $rootdir/[% c('input_files_by_name/binutils') %]
-export PATH="/var/tmp/dist/binutils/bin:$PATH"
+[% IF c("var/linux") %]
+  mkdir -p /var/tmp/dist
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/binutils') %]
+  export PATH="/var/tmp/dist/binutils/bin:$PATH"
 [% END -%]
 
-# LD_BIND_NOW needed to avoid this error:
-# undefined symbol: _ZNSt14error_categoryD2Ev
-export LD_BIND_NOW=1
+tar -C /var/tmp/build -xf [% project %]-[% c('version') %].tar.gz
+
+[% IF c("var/osx") %]
+  mkdir -p $distdir/TorBrowser.app/Contents/MacOS
+[% ELSE %]
+  mkdir -p $distdir/Browser
+[% END %]
+
+[% IF c("var/linux") %]
+  mkdir -p $distdir/Debug/Browser/
+[% END %]
 
 [% IF c("var/osname") == "linux-i686" -%]
 export LDFLAGS=-m32
 export CFLAGS=-m32
 export CC='gcc -m32'
 [% END -%]
-
-[% IF c("var/linux") -%]
-mkdir -p /var/tmp/dist/yasm/bin
-ln -s /usr/bin/yasm-1 /var/tmp/dist/yasm/bin/yasm
-export PATH="/var/tmp/dist/yasm/bin:$PATH"
-[% END -%]
-
-cd $rootdir
-mkdir /var/tmp/build
-tar -C /var/tmp/build -xf [% project %]-[% c('version') %].tar.[% c('compress_tar') %]
 
 mkdir moz
 cd moz
@@ -73,13 +75,13 @@ cp -p mozilla/tools/update-packaging/*.sh $MARTOOLS/
 cp -p obj-*/dist/host/bin/mar $MARTOOLS/
 cp -p obj-*/dist/host/bin/mbsdiff $MARTOOLS/
 [% IF c("var/linux") -%]
-cp -p obj-*/modules/libmar/tool/signmar $MARTOOLS/
-cp -p obj-*/security/nss/cmd/certutil/certutil $MARTOOLS/
-NSS_LIBS="libfreeblpriv3.so libmozsqlite3.so libnss3.so libnssdbm3.so libnssutil3.so libsmime3.so libsoftokn3.so libssl3.so"
-NSPR_LIBS="libnspr4.so libplc4.so libplds4.so"
-for LIB in $NSS_LIBS $NSPR_LIBS; do
-    cp -p obj-*/dist/bin/$LIB $MARTOOLS/
-done
+  cp -p obj-*/modules/libmar/tool/signmar $MARTOOLS/
+  cp -p obj-*/security/nss/cmd/certutil/certutil $MARTOOLS/
+  NSS_LIBS="libfreeblpriv3.so libmozsqlite3.so libnss3.so libnssdbm3.so libnssutil3.so libsmime3.so libsoftokn3.so libssl3.so"
+  NSPR_LIBS="libnspr4.so libplc4.so libplds4.so"
+  for LIB in $NSS_LIBS $NSPR_LIBS; do
+      cp -p obj-*/dist/bin/$LIB $MARTOOLS/
+  done
 [% END -%]
 
 cd /var/tmp/dist
