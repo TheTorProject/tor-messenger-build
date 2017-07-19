@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 rootdir=$(pwd)
 distdir="/var/tmp/dist/[% project %]"

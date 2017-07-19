@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 rootdir=$(pwd)
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]

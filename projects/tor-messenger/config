@@ -44,15 +44,16 @@ input_files:
   - project: libdmg-hfsplus
     name: libdmg
     enable: '[% c("var/osx") %]'
-  - project: docker-image
+  - project: container-image
 
-remote_docker: 1
 distribution: Debian-7.11
 var:
   deps:
     - p7zip-full
     - bzip2
     - python
+  container:
+    use_container: 1
 targets:
   windows-i686:
     distribution: Ubuntu-14.10

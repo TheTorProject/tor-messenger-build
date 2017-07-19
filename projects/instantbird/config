@@ -3,21 +3,18 @@ version: '[% c("abbrev") %]'
 hg_url: https://hg.mozilla.org/releases/comm-esr52/
 hg_hash: THUNDERBIRD_52_2_1_RELEASE
 filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %]"
-remote_docker: 1
+
 var:
   archive_suffix: tar.bz2
   deps:
     - build-essential
-    - libmpc-dev
-    - autoconf2.13
-    - python
+    - unzip
     - zip
-    - libidl-dev
-    - uuid-runtime
-    - imagemagick
-    - ccache
+    - autoconf2.13
     - yasm
-    - git-core
+    - python
+  container:
+    use_container: 1
 targets:
   windows-i686:
     var:
@@ -38,6 +35,7 @@ targets:
         - libpulse-dev
         - libxt-dev
         - libx11-xcb-dev
+        - hardening-wrapper
   linux-i686:
     var:
       martools_filename: mar-tools-linux32.zip
@@ -95,17 +93,17 @@ input_files:
   - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
+  - project: container-image
+  - name: '[% c("var/compiler") %]'
+    project: '[% c("var/compiler") %]'
   - name: mozilla
     project: mozilla
-  - name: python
-    project: python
-    enable: '[% c("var/linux") %]'
   - name: binutils
     project: binutils
     enable: '[% c("var/linux") %]'
-  - name: gcchost
-    project: gcc
-    enable: '[% c("var/osx") %]'
-  - name: '[% c("var/compiler") %]'
-    project: '[% c("var/compiler") %]'
-  - project: docker-image
+  - project: gcc
+    name: gcc
+    enable: '[% c("var/windows") %]'
+  - project: yasm
+    name: yasm
+    enable: '[% c("var/windows") %]'

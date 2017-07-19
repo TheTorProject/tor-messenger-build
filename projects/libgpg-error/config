@@ -1,11 +1,13 @@
 # vim: filetype=yaml sw=2
 filename: '[% project %]-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 version: 1.20
-remote_docker: 1
 var:
   deps:
     - build-essential
     - libmpc-dev
+    - hardening-wrapper
+  container:
+      use_container: 1
 targets:
   windows-i686:
     var:
@@ -24,4 +26,4 @@ input_files:
     enable: '[% c("var/osx") %]'
   - name: '[% c("var/compiler") %]'
     project: '[% c("var/compiler") %]'
-  - project: docker-image
+  - project: container-image
