@@ -13,6 +13,7 @@ var:
     - autoconf2.13
     - yasm
     - python
+    - git
   container:
     use_container: 1
 targets:
