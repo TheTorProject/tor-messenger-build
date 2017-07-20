@@ -1,13 +1,34 @@
-export CROSS_COMPILE=1
+# ld needs libLTO.so from llvm
+mk_add_options "export LD_LIBRARY_PATH=/var/tmp/dist/macosx-toolchain/clang/lib"
 
-TOOLCHAIN_PREFIX="$ccbindir/x86_64-apple-darwin10-"
-CROSS_PRIVATE_FRAMEWORKS="$sysrootdir/System/Library/PrivateFrameworks"
+TOOLCHAIN_DIR=/var/tmp/dist/macosx-toolchain
+CROSS_CCTOOLS_PATH=$TOOLCHAIN_DIR/cctools
+CROSS_SYSROOT=$TOOLCHAIN_DIR/SDK
+CROSS_PRIVATE_FRAMEWORKS=$CROSS_SYSROOT/System/Library/PrivateFrameworks
+FLAGS="-target x86_64-apple-darwin10 -mlinker-version=136 -B $CROSS_CCTOOLS_PATH/bin -isysroot $CROSS_SYSROOT"
 
-FLAGS="-arch x86_64 -isysroot $sysrootdir"
-CC="$ccbindir/x86_64-apple-darwin10-clang $FLAGS"
-CXX="$ccbindir/x86_64-apple-darwin10-clang++ $FLAGS"
+export CC="$TOOLCHAIN_DIR/clang/bin/clang $FLAGS"
+export CXX="$TOOLCHAIN_DIR/clang/bin/clang++ $FLAGS"
+export CPP="$TOOLCHAIN_DIR/clang/bin/clang $FLAGS -E"
+export LLVMCONFIG=$TOOLCHAIN_DIR/clang/bin/llvm-config
+export LDFLAGS="-Wl,-syslibroot,$CROSS_SYSROOT -Wl,-dead_strip -Wl,-pie"
+export TOOLCHAIN_PREFIX=$CROSS_CCTOOLS_PATH/bin/x86_64-apple-darwin10-
+#TODO: bug 1184202 - would be nice if these could be detected with TOOLCHAIN_PREFIX automatically
+export AR=${TOOLCHAIN_PREFIX}ar
+export RANLIB=${TOOLCHAIN_PREFIX}ranlib
+export STRIP=${TOOLCHAIN_PREFIX}strip
+export OTOOL=${TOOLCHAIN_PREFIX}otool
+export DSYMUTIL="$TOOLCHAIN_DIR/clang/bin/llvm-dsymutil"
 
-ac_add_options --target=x86_64-apple-darwin10
-ac_add_options --with-macos-private-frameworks="$CROSS_PRIVATE_FRAMEWORKS"
+export HOST_CC="$TOOLCHAIN_DIR/clang/bin/clang"
+export HOST_CXX="$TOOLCHAIN_DIR/clang/bin/clang++"
+export HOST_CPP="$TOOLCHAIN_DIR/clang/bin/clang -E"
+export HOST_CFLAGS="-g"
+export HOST_CXXFLAGS="-g"
+export HOST_LDFLAGS="-g"
+
+ac_add_options --target=x86_64-apple-darwin
+ac_add_options --with-macos-private-frameworks=$CROSS_PRIVATE_FRAMEWORKS
+
 ac_add_options --enable-tor-browser-data-outside-app-dir
 ac_add_options --enable-strip
