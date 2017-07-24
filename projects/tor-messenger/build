@@ -46,7 +46,7 @@ mv start-tor-messenger bundle/Browser/
 mv execdesktop bundle/Browser/
 
 mkdir -p bundle/Browser/lib
-cp -L gcc/lib[% c('arch') == 'x86_64' ? '64' : '32' %]/libstdc++.so.6 bundle/Browser/lib/
+cp -L gcc/lib/libstdc++.so.6 bundle/Browser/lib/
 [% END %]
 
 cp cert_override.txt bundle/Browser/TorBrowser/Data/Browser/profile.default/
