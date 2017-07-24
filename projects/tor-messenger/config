@@ -26,14 +26,6 @@ input_files:
     enable: '[% c("var/osx") %]'
   - filename: tor-messenger.nsi
     enable: '[% c("var/windows") %]'
-  - name: python-future
-    URL: https://pypi.python.org/packages/00/2b/8d082ddfed935f3608cc61140df6dcbf0edea1bc3ab52fb6c29ae3e81e85/future-0.16.0.tar.gz
-    sha256sum: e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb
-    enable: '[% c("var/windows") %]'
-  - name: python-pefile
-    URL: https://pypi.python.org/packages/92/c0/8589ce9734ffdba258bd3e5acd4afb2e3586c121fe73402f686288b684b0/pefile-2016.3.28.tar.gz
-    sha256sum: f24021085b5c3ef7b0898bb1f1d93eecd3839e03512769e22b0c5a10d9095f7b
-    enable: '[% c("var/windows") %]'
   - filename: pe_checksum_fix.py
     enable: '[% c("var/windows") %]'
   - filename: fix-info-plist.py
@@ -63,6 +55,7 @@ targets:
         - python
         - python-dev
         - build-essential
+        - python-pefile
   osx-x86_64:
     var:
       bundle_filename: 'TorMessenger-[% c("version") %]-osx64_en-US.dmg'

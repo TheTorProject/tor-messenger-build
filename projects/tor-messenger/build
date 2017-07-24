@@ -112,16 +112,6 @@ MAR=$MARTOOLS/mar MBSDIFF=$MARTOOLS/mbsdiff[% IF c("var/windows") %].exe[% END %
 [% IF c('var/windows') -%]
 makensis tor-messenger.nsi
 
-tar xf $rootdir/[% c('input_files_by_name/python-future') %]
-cd $(echo [% c('input_files_by_name/python-future') %] | sed s/\.tar\.gz$//)
-python setup.py install --user
-cd ..
-
-tar xf $rootdir/[% c('input_files_by_name/python-pefile') %]
-cd $(echo [% c('input_files_by_name/python-pefile') %] | sed s/\.tar\.gz$//)
-python setup.py install --user
-cd ..
-
 mv tor-messenger-install.exe tor-messenger-install-tmp.exe
 python pe_checksum_fix.py
 mv tor-messenger-install-tmp2.exe tor-messenger-install.exe
