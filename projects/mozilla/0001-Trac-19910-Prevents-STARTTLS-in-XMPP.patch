@@ -108,7 +108,7 @@ index a21dfa4a5a11..e3f4ff3b5694 100644
      int16_t GetPollFlags() const;
 -    bool IsConnected() const { return (mState == SOCKS_CONNECTED ||
 -                                       mState == SOCKS5_READ_CONNECT_RESPONSE_TOP); }
-+    bool IsConnected() const { return (mState == SOCKS_CONNECTED; }
++    bool IsConnected() const { return mState == SOCKS_CONNECTED; }
      void ForgetFD() { mFD = nullptr; }
      void SetNamedPipeFD(PRFileDesc *fd) { mFD = fd; }
  
