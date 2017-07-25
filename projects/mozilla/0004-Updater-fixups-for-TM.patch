@@ -8,6 +8,8 @@ Subject: [PATCH 4/5] Updater fixups for TM
  * Copy over the der's and TM update logo
 
  * Trac 20309: s/TorBrowser-Data/TorMessenger-Data/
+
+ * Patch the make_incremental_update.sh for ctypes-otr
 ---
  .../content/abouttbupdate/aboutTBUpdateLogo.png    | Bin 23266 -> 2724 bytes
  toolkit/mozapps/update/content/updates.js          |   2 +-
