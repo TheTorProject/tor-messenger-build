@@ -36,6 +36,9 @@ input_files:
   - project: libdmg-hfsplus
     name: libdmg
     enable: '[% c("var/osx") %]'
+  - project: nsis
+    name: nsis
+    enable: '[% c("var/windows") %]'
   - project: container-image
 
 var:

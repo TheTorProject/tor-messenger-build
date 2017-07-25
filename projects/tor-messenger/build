@@ -109,6 +109,11 @@ MAR=$MARTOOLS/mar MBSDIFF=$MARTOOLS/mbsdiff[% IF c("var/windows") %].exe[% END %
     $MARTOOLS/make_full_update.sh \
     -q $OUTDIR/$MAR_FILE tor-messenger/Browser
 
+[% IF c("var/windows") %]
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/nsis') %]
+  export PATH="/var/tmp/dist/nsis/bin:$PATH"
+[% END %]
+
 [% IF c('var/windows') -%]
 makensis tor-messenger.nsi
 
