@@ -1,27 +1,23 @@
-From 3d87efd8e803a273e823fb614279dce106c6e025 Mon Sep 17 00:00:00 2001
+From 8129cc5724b13b90ec13fdd3fbe249176fdc578d Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
-Date: Mon, 10 Oct 2016 10:52:52 -0700
-Subject: [PATCH 1/7] Trac 19910: Prevents STARTTLS in XMPP
+Date: Tue, 25 Jul 2017 12:17:24 -0400
+Subject: [PATCH] Trac 19910: Prevents STARTTLS in XMPP
 
  * Revert "Bug #3875: Use Optimistic Data SOCKS variant."
-
-This reverts commit 9064546a5e54d94054d944dd910a5db3a67032dc.
 ---
- netwerk/base/nsSocketTransport2.cpp | 43 ++++++++-----------------------------
+ netwerk/base/nsSocketTransport2.cpp | 44 ++++++++-----------------------------
  netwerk/base/nsSocketTransport2.h   |  4 +---
- netwerk/socket/nsSOCKSIOLayer.cpp   |  4 +---
+ netwerk/socket/nsSOCKSIOLayer.cpp   |  3 +--
  3 files changed, 11 insertions(+), 40 deletions(-)
 
 diff --git a/netwerk/base/nsSocketTransport2.cpp b/netwerk/base/nsSocketTransport2.cpp
-index c35a587830d8..6a758f9acaad 100644
+index f200b6899d97..cd57ca43aa5c 100644
 --- a/netwerk/base/nsSocketTransport2.cpp
 +++ b/netwerk/base/nsSocketTransport2.cpp
-@@ -1887,26 +1887,8 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+@@ -1975,26 +1975,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
          // Update poll timeout in case it was changed
          mPollTimeout = mTimeouts[TIMEOUT_READ_WRITE];
      }
-+    else if (mState == STATE_CONNECTING) {
- 
 -    // Tor 3875: Use optimistic data with SOCKS.
 -    // To accomplish this, two new states were added that are only used with
 -    // SOCKS connections:
@@ -40,11 +36,13 @@ index c35a587830d8..6a758f9acaad 100644
 -        mPollFlags = (PR_POLL_EXCEPT | PR_POLL_READ);
 -        mState = STATE_SENTGET;  // Wait for SOCKS handshake response.
 -    }
--    else if (mState == STATE_CONNECTING || mState == STATE_SENTGET) {
-         // We use PRIntervalTime here because we need
-         // nsIOService::LastOfflineStateChange time and
-         // nsIOService::LastConectivityChange time to be atomic.
-@@ -1926,14 +1908,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+-    else if (((mState == STATE_CONNECTING) || (mState = STATE_SENTGET)) &&
+-             !gIOService->IsNetTearingDown()) {
++    else if (mState == STATE_CONNECTING) {
+         // We do not need to do PR_ConnectContinue when we are already
+         // shutting down.
+ 
+@@ -2018,14 +1999,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
                  Telemetry::PRCONNECTCONTINUE_BLOCKING_TIME_OFFLINE);
          }
  
@@ -60,7 +58,7 @@ index c35a587830d8..6a758f9acaad 100644
              //
              // we are connected!
              //
-@@ -1960,17 +1935,17 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+@@ -2052,17 +2026,17 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
              // If the connect is still not ready, then continue polling...
              //
              if ((PR_WOULD_BLOCK_ERROR == code) || (PR_IN_PROGRESS_ERROR == code)) {
@@ -86,10 +84,10 @@ index c35a587830d8..6a758f9acaad 100644
                  mCondition = ErrorAccordingToNSPR(code);
              }
 diff --git a/netwerk/base/nsSocketTransport2.h b/netwerk/base/nsSocketTransport2.h
-index b7fbc76a79a8..b508335c7e55 100644
+index 8f3fa87161a1..34e20e586aad 100644
 --- a/netwerk/base/nsSocketTransport2.h
 +++ b/netwerk/base/nsSocketTransport2.h
-@@ -190,9 +190,7 @@ private:
+@@ -201,9 +201,7 @@ private:
          STATE_IDLE,
          STATE_RESOLVING,
          STATE_CONNECTING,
@@ -101,20 +99,19 @@ index b7fbc76a79a8..b508335c7e55 100644
  
      // Safer way to get and automatically release PRFileDesc objects.
 diff --git a/netwerk/socket/nsSOCKSIOLayer.cpp b/netwerk/socket/nsSOCKSIOLayer.cpp
-index 568c700e2bae..1793001df2c9 100644
+index a21dfa4a5a11..e3f4ff3b5694 100644
 --- a/netwerk/socket/nsSOCKSIOLayer.cpp
 +++ b/netwerk/socket/nsSOCKSIOLayer.cpp
-@@ -79,9 +79,7 @@ public:
+@@ -83,8 +83,7 @@ public:
      void SetConnectTimeout(PRIntervalTime to);
      PRStatus DoHandshake(PRFileDesc *fd, int16_t oflags = -1);
      int16_t GetPollFlags() const;
 -    bool IsConnected() const { return (mState == SOCKS_CONNECTED ||
 -                                       mState == SOCKS5_READ_CONNECT_RESPONSE_TOP); }
--
-+    bool IsConnected() const { return mState == SOCKS_CONNECTED; }
++    bool IsConnected() const { return (mState == SOCKS_CONNECTED; }
      void ForgetFD() { mFD = nullptr; }
+     void SetNamedPipeFD(PRFileDesc *fd) { mFD = fd; }
  
- private:
 -- 
-2.12.2
+2.11.0
 
