@@ -78,6 +78,7 @@ input_files:
   - filename: 0027-Trac-17517-Use-different-color-for-Add-Exception.patch
   - filename: 0028-Trac-21736-Hide-account-timestamp-from-message.patch
   - filename: 0029-Add-duplicated-files-to-allowed-dupes.mn.patch
+    enable: '[% c("var/linux") %]'
   - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
