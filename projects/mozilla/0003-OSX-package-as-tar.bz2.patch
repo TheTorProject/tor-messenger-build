@@ -1,14 +1,14 @@
-From f6c4d4176d03a8b528bfc5342f538506c02f01c6 Mon Sep 17 00:00:00 2001
+From 86db5ef4a59fb21e3dae75d2f0ceefece74d1f6c Mon Sep 17 00:00:00 2001
 From: Nicolas Vigier <boklm@torproject.org>
-Date: Thu, 25 Jun 2015 12:18:43 +0200
-Subject: [PATCH 5/7] OSX: package as tar.bz2
+Date: Tue, 25 Jul 2017 16:17:08 -0400
+Subject: [PATCH 3/5] OSX: package as tar.bz2
 
 ---
  toolkit/mozapps/installer/upload-files.mk | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/toolkit/mozapps/installer/upload-files.mk b/toolkit/mozapps/installer/upload-files.mk
-index 5c11ed2ef2ec..0c7bf282baab 100644
+index 51633178226c..64584f579390 100644
 --- a/toolkit/mozapps/installer/upload-files.mk
 +++ b/toolkit/mozapps/installer/upload-files.mk
 @@ -4,7 +4,7 @@
@@ -21,5 +21,5 @@ index 5c11ed2ef2ec..0c7bf282baab 100644
  ifeq (,$(filter-out WINNT, $(OS_ARCH)))
  MOZ_PKG_FORMAT  = ZIP
 -- 
-2.12.2
+2.11.0
 

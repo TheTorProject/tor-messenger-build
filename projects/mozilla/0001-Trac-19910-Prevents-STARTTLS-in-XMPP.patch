@@ -1,7 +1,7 @@
-From 8129cc5724b13b90ec13fdd3fbe249176fdc578d Mon Sep 17 00:00:00 2001
+From 47866985426887345c52a66f100f6562a77b6036 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
-Date: Tue, 25 Jul 2017 12:17:24 -0400
-Subject: [PATCH] Trac 19910: Prevents STARTTLS in XMPP
+Date: Tue, 25 Jul 2017 15:51:22 -0400
+Subject: [PATCH 1/5] Trac 19910: Prevents STARTTLS in XMPP
 
  * Revert "Bug #3875: Use Optimistic Data SOCKS variant."
 ---
@@ -99,7 +99,7 @@ index 8f3fa87161a1..34e20e586aad 100644
  
      // Safer way to get and automatically release PRFileDesc objects.
 diff --git a/netwerk/socket/nsSOCKSIOLayer.cpp b/netwerk/socket/nsSOCKSIOLayer.cpp
-index a21dfa4a5a11..e3f4ff3b5694 100644
+index a21dfa4a5a11..5429637c1c3a 100644
 --- a/netwerk/socket/nsSOCKSIOLayer.cpp
 +++ b/netwerk/socket/nsSOCKSIOLayer.cpp
 @@ -83,8 +83,7 @@ public:

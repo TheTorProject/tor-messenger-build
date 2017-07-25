@@ -1,7 +1,7 @@
-From bfa290a2ec4dfaac469082c4039f3f3fb40c01ea Mon Sep 17 00:00:00 2001
+From 9511ebe130412f96508d5f87eee3e3f97581022c Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
-Date: Thu, 6 Oct 2016 20:13:35 -0700
-Subject: [PATCH 2/7] Trac 16475: Block flash too
+Date: Tue, 25 Jul 2017 15:52:29 -0400
+Subject: [PATCH 2/5] Trac 16475: Block flash too
 
  * Builds on "Bug #3547: Block all plugins except flash."
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 2/7] Trac 16475: Block flash too
  1 file changed, 9 deletions(-)
 
 diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.cpp
-index 5345ce7c8764..15692365ee63 100644
+index cd1707beaf5f..d014832e0595 100644
 --- a/dom/plugins/base/nsPluginHost.cpp
 +++ b/dom/plugins/base/nsPluginHost.cpp
-@@ -2081,15 +2081,6 @@ PRBool nsPluginHost::GhettoBlacklist(nsIFile *pluginFile)
+@@ -2074,15 +2074,6 @@ PRBool nsPluginHost::GhettoBlacklist(nsIFile *pluginFile)
      return PR_TRUE; // fuck 'em. blacklist.
    }
  
@@ -29,5 +29,5 @@ index 5345ce7c8764..15692365ee63 100644
  }
  
 -- 
-2.12.2
+2.11.0
 

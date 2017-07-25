@@ -1,15 +1,13 @@
-From d45245d692854faa9574014cab658e935e8537e1 Mon Sep 17 00:00:00 2001
+From cf9b262ca725395db496066c6b301ea0aa3869f4 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
-Date: Sun, 9 Oct 2016 09:34:38 -0700
-Subject: [PATCH 6/7] Updater fixups for TM
+Date: Tue, 25 Jul 2017 16:20:49 -0400
+Subject: [PATCH 4/5] Updater fixups for TM
 
  * Remove updater links
 
  * Copy over the der's and TM update logo
 
  * Trac 20309: s/TorBrowser-Data/TorMessenger-Data/
-
- * Patch the make_incremental_update.sh for ctypes-otr
 ---
  .../content/abouttbupdate/aboutTBUpdateLogo.png    | Bin 23266 -> 2724 bytes
  toolkit/mozapps/update/content/updates.js          |   2 +-
@@ -529,10 +527,10 @@ z<Hj~T<`88N3sa$~O~s4yQz$7wxFYzlvl`kV4U7(93})ejnwEPfj7PS+Eo(dWGOA)$
 lxF+BV*FuA*n)rXh{eOL`E@}ETfW-g+002ovPDHLkV1nm~vr+&6
 
 diff --git a/toolkit/mozapps/update/content/updates.js b/toolkit/mozapps/update/content/updates.js
-index 40e76c889234..5565b9c54f8c 100644
+index 6e8de7275ab3..824fa4910724 100644
 --- a/toolkit/mozapps/update/content/updates.js
 +++ b/toolkit/mozapps/update/content/updates.js
-@@ -979,7 +979,7 @@ var gUpdatesFoundBasicPage = {
+@@ -679,7 +679,7 @@ var gUpdatesFoundBasicPage = {
  
      var updateMoreInfoURL = document.getElementById("updateMoreInfoURL");
      if (update.detailsURL)
@@ -542,10 +540,10 @@ index 40e76c889234..5565b9c54f8c 100644
        updateMoreInfoURL.hidden = true;
  
 diff --git a/toolkit/mozapps/update/content/updates.xul b/toolkit/mozapps/update/content/updates.xul
-index 6066802a65af..c82bc77ce8a7 100644
+index e4cdc7a49907..6282749be049 100644
 --- a/toolkit/mozapps/update/content/updates.xul
 +++ b/toolkit/mozapps/update/content/updates.xul
-@@ -121,8 +121,7 @@
+@@ -99,8 +99,7 @@
        <separator id="upgradeEvangelismSep" flex="1"/>
        <vbox flex="1">
          <hbox id="moreInfoURL">
@@ -555,7 +553,7 @@ index 6066802a65af..c82bc77ce8a7 100644
          </hbox>
        </vbox>
      </vbox>
-@@ -205,8 +204,7 @@
+@@ -139,8 +138,7 @@
        <separator/>
        <label id="errorManual">&errorManual.label;</label>
        <hbox>
@@ -565,17 +563,17 @@ index 6066802a65af..c82bc77ce8a7 100644
        </hbox>
      </vbox>
    </wizardpage>
-@@ -223,8 +221,7 @@
-       <label id="genericBackgroundErrorLabel"
-              hidden="true">&genericBackgroundError.label;</label>
+@@ -152,8 +150,7 @@
+     <vbox class="update-content" flex="1">
+       <label id="bgErrorLabel">&genericBackgroundError.label;</label>
        <hbox>
--        <label id="errorExtraLinkLabel" class="text-link" hidden="true"
+-        <label id="errorExtraLinkLabel" class="text-link"
 -               value="" onclick="openUpdateURL(event);"/>
 +        <label id="errorExtraLinkLabel" hidden="true" value="" />
        </hbox>
      </vbox>
    </wizardpage>
-@@ -257,8 +254,8 @@
+@@ -187,8 +184,8 @@
        <hbox align="center">
          <label>&finishedBackground.name;</label>
          <label id="updateFinishedName" flex="1" crop="right" value=""/>
@@ -587,61 +585,62 @@ index 6066802a65af..c82bc77ce8a7 100644
        <spacer flex="1"/>
        <label id="finishedBackgroundMore">&finishedBackground.more;</label>
 diff --git a/toolkit/mozapps/update/updater/release_primary.der b/toolkit/mozapps/update/updater/release_primary.der
-index 542fb24f552661aba4229d57024bc3ef14856ff9..5f98d361c5529fee52c0677e701f93e1f3d7258c 100644
+index 49a7c0185f1c1cb89553cc2343986519fc711ec7..5f98d361c5529fee52c0677e701f93e1f3d7258c 100644
 GIT binary patch
-delta 1184
-zcmV;R1Yi5j3DF5VFoFclFoFWLpaTK{0s;j9r!uD=FbxI?Duzgg_YDC74Fv!&C^055
-zBnAUj1OpQtRBv)1O=WX)Wo~DYffF|#7Y#8sFgP$cGB7eWF*I5i4KX$`F)%nXFfukV
-zG+HnyF(xo11_M<D0}~xoZ*m|_Wpi_7ZfB8!Gk?_AadB1@>Z-Otj9oL<@T2!iv(ND^
-zCbjy#1*bRqQRnm7sAMw+@wFnpu3@BXw6-0gu%ihyn3(rHk_LB!>gIkx6r75&K*I}f
-zR56o?5nywOF~m!iGwL9sKq3Ub1wKV(T&C)h^b5Wo%6@Z*Yw%ELfci<cKw6`#THXw8
-zTYnbp#GfzQK$+RRGHY@Nfno=)TCshAnf*x*-*yAJp~~3o73cs8L@lM$19*}L|F~ZQ
-z^@3=9sc=#%mI%IG9&}M9!kR~T7uA<Sbvqc23g{a1mb<7T6E7kj`Sxrgm!y?JJCIOP
-z9kd)vs*H{}z!ALpLSkW`tIXE`+eT5-e18ow`D8n1?E=SQ{wov<?H7wOEEEQR&#Sm{
-zX`D$NK;7PBv5FUimAfo?ksWAXT?*wvlS!H>zxh#a!uP&z?T&!!`ZvjcZQ^iUYQx-y
-zWal3E-8w!GA5us+EL1owXo#RREJ_*KGi_j3=WlLG10}6m-ui;dnSivr$SW+5P=Col
-z9#k<i9QGmlfp_V%D=i#KE@+&a=riQd<8Er9e4`}1!>%VPzN)Qix;9Ouhjs4sU;Gu(
-z^uA!A-gK2f#jk}gFc3_3GTa|Iv$WuM`7Eixl(Spt%(yVAT%)LD+q;I{25vm8gd9j@
-ziXB*-E~lhwo!+o{0D#ZM@lV#Cu75PptIq-h0RRCo4F(A+hDe6@4FLfS1potr0s#Qb
-z{gVE)D9YKz{W0D6dAADICC)_UbvPe8QO2ON`VX-(EI!wds1c2PslN?2L%6k6eJFy+
-z9JRgv<XfttARwNjaTxWzxAcDZQp`pSp0_XSSsj&aFRer%3+2W+dK+<v#DDN1sC8y5
-z)8gb>^wi#qgx#iGH$9H7Scn!5Kb6JgD-aa(Rl6j`18m{@mVI(eFB!c^5UE{NNHXDq
-zPu)@z>LqR_FFL)5rQHuRY|`6>{||wZlK-V;*n%kr!2m-6Ipuh$3QWs0Q%er<BsdIa
-zQ-8n#jiKbd#`Bsp;%C*^S${fM(~#f7PZ!p|W4QoX>JEnvmJk(}tn~43R@-*?h!52Q
-z2M7$jTk-C8*4$z4<n-}Sl^P1Qc2%7-0-gF`B-agEL>SnTLRF8$TA=tfeAS4twwu|{
-zNp*}4B){4Gt;<NZ<HM%Q;$_B43<nzi&$TtS4i@dhQOM(0+~s2=34fetDXY))j}O<R
-z&88G>4VkJUA&bdeOpW-eL~#bGVG*5XhF@=LN6=9R$U8b$3`C^3ga{*oM#^zP`-BGb
-znoY}xK->^-RzUzWC-ye1HDUF7>|)s1VuQT+WZ#2P1)opEmK=Rc{wr45DA~SKM82&3
-y%(|U={k0Dk^aD>-%OO?_v%C|caJ}5^ShHf?u^u}iFnM5{>s%3iNFJZv>e?DlOd#_B
+delta 1208
+zcmV;p1V{VL3DF6EFoFclFoFWLpaTK{0s;j9r!uD=FbxI?Duzgg_YDC74Fv!&C^055
+zBnAUj1OpQtRBv)1O=WX)Wo~C>av)7XQXq3_XKrb3XCP~3c`zOq4KX$_I50ReFfukV
+zG+Gx8F*Y$VFgP+WGBz<ZS}-UvCNLxh162eA6CG4<av)6(Wpi_7Zf9k3AWcD1Aajw4
+zD}U72adB1@>Z-Otj9oL<@T2!iv(ND^Cbjy#1*bRqQRnm7sAMw+@wFnpu3@BXw6-0g
+zu%ihyn3(rHk_LB!>gIkx6r75&K*I}fR56o?5nywOF~m!iGwL9sKq3Ub1wKV(T&C)h
+z^b5Wo%6@Z*Yw%ELfci<cKw6`#THXw8TYnbp#GfzQK$+RRGHY@Nfno=)TCshAnf*x*
+z-*yAJp~~3o73cs8L@lM$19*}L|F~ZQ^@3=9sc=#%mI%IG9&}M9!kR~T7uA<Sbvqc2
+z3g{a1mb<7T6E7kj`Sxrgm!y?JJCIOP9kd)vs*H{}z!ALpLSkW`tIXE`+eT5-e18ow
+z`D8n1?E=SQ{wov<?H7wOEEEQR&#Sm{X`D$NK;7PBv5FUimAfo?ksWAXT?*wvlS!H>
+zzxh#a!uP&z?T&!!`ZvjcZQ^iUYQx-yWal3E-8w!GA5us+EL1owXo#RREJ_*KGi_j3
+z=WlLG10}6m-ui;dnSivr$SW+5P=Col9#k<i9QGmlfp_V%D=i#KE@+&a=riQd<8Er9
+ze4`}1!>%VPzN)Qix;9Ouhjs4sU;Gu(^uA!A-gK2f#jk}gFc3_3GTa|Iv$WuM`7Eix
+zl(Spt%(yVAT%)LD+q;I{25vm8gd9j@iXB*-E~lhwo!+o{0D#ZM@lV#Cu75PptIq-h
+z0RRCo4F(A+hDe6@4FLfS1potr0s#Qb{gVE)D9YKz{W0D6dAADICC)_UbvPe8QO2ON
+z`VX-(EI!wds1c2PslN?2L%6k6eJFy+9JRgv<XfttARwNjaTxWzxAcDZQp`pSp0_XS
+zSsj&aFRer%3+2W+dK+<v#DDN1sC8y5)8gb>^wi#qgx#iGH$9H7Scn!5Kb6JgD-aa(
+zRl6j`18m{@mVI(eFB!c^5UE{NNHXDqPu)@z>LqR_FFL)5rQHuRY|`6>{||wZlK-V;
+z*n%kr!2m-6Ipuh$3QWs0Q%er<BsdIaQ-8n#jiKbd#`Bsp;%C*^S${fM(~#f7PZ!p|
+zW4QoX>JEnvmJk(}tn~43R@-*?h!52Q2M7$jTk-C8*4$z4<n-}Sl^P1Qc2%7-0-gF`
+zB-agEL>SnTLRF8$TA=tfeAS4twwu|{Np*}4B){4Gt;<NZ<HM%Q;$_B43<nzi&$TtS
+z4i@dhQOM(0+~s2=34fetDXY))j}O<R&88G>4VkJUA&bdeOpW-eL~#bGVG*5XhF@=L
+zN6=9R$U8b$3`C^3ga{*oM#^zP`-BGbnoY}xK->^-RzUzWC-ye1HDUF7>|)s1VuQT+
+zWZ#2P1)opEmK=Rc{wr45DA~SKM82&3%(|U={k0Dk^aD>-%OO?_v%C|caJ}5^ShHf?
+Wu^u}iFnM5{>s%3iNFJZv>e?EUp(xS-
 
-delta 1196
-zcmV;d1XKIb3C#(AFoFchFoFWHpaTK{0s;j9p-)g`FbxI?Duzgg_YDC74Fv!&CNU&1
-zA_fCh1OpQrRBv)1LUM0+b7gWMO+iv1b7^O8X>MmAYh`&b9v2NUG%+$UI50UiF)%b*
-z7Y#8rFf%bYFgZ0bFf>{)CNU&1A_fCh1OpQrRBv)1LUL~ccXN@2Gk@1Dd^v#SLpT2L
-zWptt)Yu66L*(jmr(TG<0ztDW>j5--${BJ!WtfAf;RiRi1Be1t@TcYPSJ+5#WCps{2
-z^~ft-%DZM0uRdd&YMERstJ6DAK$yrvtP6>p^We{k=JUP2CM>xYbfrV#Hnx5Zo+8z9
-z*$zw5yjtsorBqM#i+@5vrc@5ZW(0^;BV9j(!yA3xba^e!9b&FX8X0S}`Y>{~X1@~X
-z6sBlt4h~a|)LF3%fn(YwJ5(cFs$M6PK*(GO=rm<~QN1N&9<LCu0WIA9e)pFJWps>9
-zr5bXxO$MfN4qTMT{Bv9Js?}vNN^`Uuf-YZZvlv2^^w3}TuYdaxkg2&0Yp=0NgPeRo
-z@*GjI>uw`;)`#M^vZE9ak=p}3H>2lh6CbSBkG3r9bWt0B0(l_iuAFs)41ggP-h;J{
-zY{4%4|E_RpFI~JtWD+pT?<;6ehLcBXp+5j>-V#A`&pe_7*V*GYaIbT`o$moveN1BH
-zijD*zr_8$|H-9uF3LdNtni$=Aydk>=>@1+9Co^$b);v#jlwxlewTLU<gV8iH00q81
-zcf<+=EYkBTpNeTObUNbsEE3UyKN=X7LGBRF87)P0ObI(A=pGPBj&U>X<%E*(+{|ra
-zW@7Wx;yaDK%~BJtGx+v{A}{M0Swdk6bGss{ihSphaevKFv^N3+0RRCo4F(A+hDe6@
-z4FLfS1potr0s#QQp&oY%1_q{dLa{KQUG^S?Ar0WvwBdQa_y^<RK5&lRgSOC$ioS0d
-zBPiE%VsF^r&>nyr)@{B3q{FwbS)qA^K;<#o*(@hG<GiE+lKfHT$(qt9bb_#`@*3n|
-z8YLkkF@Nv{oPu(1C1WngZxLhFlxO!s9uQnNV8$iH)PSQgK=L1fR)@OOapj-wPl1US
-zdLp(&kIHI>ApfYA@kKA+xywcImGypVH%!rzP8j{#&@_-+*yh~cu9kN7&)?iNAIq!E
-z&ud2Vl!x10?*E!fYak_)G}zrR*#CSLOGBd@(tjHaCMG{KV`+;?u|+^L#1K!TAG6;T
-z!>9)TWbuXDziZJfsEGqAF;HNQ<PG%vLSxmzv7EoC1X3LpboW<G8o*Ljd#aOaDDT}a
-zedB2<K9EF5#K`!tjNv1501~4IfBeyt;_q05nHJWqJ@@~iVn`eZNzhL~m{==r=ng>x
-zz<-X3ST~^%hcj}oB(5Q_%IayTI++jF#G}3l3>KAKrKr&v9wHPBy?yTnz(!x02$8Tz
-z`MfQ$VUF05wz;0;6FuMFa>*IsOv2@x!4hkHeJ|62liS=T(gsI|Q+$EDGz*E$4Pv2S
-zanfe{lNKM1LeU@^2)Clt2GE-!pkq}@U?DSF|7tk%q+=T~5#w3r!PlWL^8Xqj)MSp`
-K7=8K4Y^8H%(iqMF
+delta 1204
+zcmV;l1WWtT3C#(AFoFchFoFWHpaTK{0s;j9r86t7FbxI?Duzgg_YDC74Fv!&CNU&1
+zA_fCh1OpQrRBv)1LUM0+b7gWMO+iv1Q)y>zX>MmAYh`&b9v2NUHZU<UI599ZFf%k-
+z7Y#8sFf=hZF)%bRGc;N-CNU&1A_fCh1OpQrRBv)1LUL~kcXMTOAWcD1AXAZzD}Ta7
+zhz$`$>v8p0YXpsZl$*%MijAyxwgy`86S5H+#iAH1>=J{0DN(4b5FX*I;gh3G&`UTW
+zvj;_(^`^l-bQQCIJm)9s1s5(m8dQ~DW9ls7@Un%H<Q9gxzR8g+%tan=_NF#*C$HkU
+zs|F?LR)&3khq>%%h~zVlMfHb+uz$81oczr$obrKcjXrpvPDm^QA(fZ(EDrWJu-u*I
+z^hLjo%}`|qX*CL>Z-=wGF=ZdX1ZUQ;Zqj4%prrC{7Pm2i*{DkH1cH-RnlFKERfh5v
+zX88fKfo2TFHAg+E5Rz7&wbH4RHP$5U{>K@p2p#1HCF@`!M-HTM6V)S&YkwYmFJt|q
+zvEc}+S*xkKjflf)EN&`DBuf+bu}y6M<NQ#Qd-I_4M(x<HslTFqZ5ua=x*HY%O5br?
+z@BB89W-2`7?2_|RXI=x6wNu0W4HV?)q|fc&Hno#eGSjIw8KRE&3ze#q7RR9h(Y!6+
+ztkeFCZ|01P8V~Hy*B7Ii#(#}8Ux*KoWbBL0oeVJgeLfZ63}>@tp&qXg)15bE24H#s
+zsy+mXIjJ(@mUN(VF|iA|Ky*GR6Vm0eRT?DyZ&-TQM2v(as((zXRvjdXVBmnnUJhzh
+z+EuPv2BZui)M@*Ga~xkV1}QCcAiy)))RhAGQreF2mVO?v%d2aT(0`}n>&F5E0RRCo
+z4F(A+hDe6@4FLfS1potr0s#OZ4wqif#xu7_>5BW1lzP;c7mKnzhRz_}@zSjciRLrK
+zL|ZA3W`8#dv&9JaAx+2%CTe3yrmPlnpoMJri~AzVneH)@>26Lv=xXh3S*iGkK}g3K
+z@ja0>@z3mmC>|Hj;D2Q)N}VO&>_-w+ZX-9T*Yd>ERNVGZP4R675DyS73`k|71fku5
+zq7BX<Q4IEeY7xys=%><AZhX?mIf{UWPL?E=pYEqlSv3#uNH!L7J+^~fyTWFtpB$!6
+zxQY_8w*oO+|5u;T54j@zNzc`BkugOw6x<0$a0`g-he}QBM1QOE%9tt2iGUI;vAjtk
+zBu4@GXi+6;WU+La>B#^tH;;kU8(DQ;3s8*V7NGEWP0U)+Pvl<iO~h^VV|qu?-=0_!
+z7H5qr?ILewCB!KVc6(l*A(Pop^{fm9|1kUsP3!@ye{%L_30`Qr&d4kF2;0To4JN|J
+zDZOgzl?&Q6Cx62ccl!En(o`EaW*<m~5TUc5#Afkx1&FId67A<-bs`K5wDcjpy&pZr
+z5^-US$1#)xDmZF|_mr}FP2$I;sncSbrI8W|P7vuyZp9qA8`Z$yD_lXeKZgbhi!K_z
+z_JCVg5n+v!IHPziuOE9YV{NZr?W&3lH_+YTBeKN`iy;>H4w6DvZ1~`&(<9VDsIC*M
+SkO)tNGSg6O2tZHwsu`eAy&I_j
 
 diff --git a/toolkit/mozapps/update/updater/release_secondary.der b/toolkit/mozapps/update/updater/release_secondary.der
-index 49a7c0185f1c1cb89553cc2343986519fc711ec7..a7370bdc99b17d2fb1df31f3620de654715dc0ed 100644
+index cce786025698342d82f521cd38df663e69fef590..a7370bdc99b17d2fb1df31f3620de654715dc0ed 100644
 GIT binary patch
 delta 1220
 zcmX@hd6~1`po!(YK@-#V1<Xv0OiZi{%T2{R40zc%wc0$|zVk9N^0G1*Xd0>;sIoDK
@@ -670,36 +669,36 @@ z63?j-AT+Bozx?{icM+dj%$@CxIrX=^_PjDLv2N|PiHRMGA!p9lsM)tTsa06rJN_j;
 W+%Wltn`GU2)yA(?zFh5_B~k%*V<2?^
 
 delta 1214
-zcmcc2d6u)@po!(AK@-!)1<Xv0OiZi{OO3VH8t}4lYPET^edlFl<Yi?rP%~69P-0^a
-zWnmVU4#_W4a4O0#FHS8|@O2DQ2+mB;%gjqx$WE;^kQ3)MG&3+Xv@kR<F)%iX0&`8^
-zTx{luU^8gqOvU;`E*-prF0Tu}hG(<%R!^CI;&@l@nzC(dQ6Gdi2}&JZB%%FAsJT`%
-zaK#z{xrb{WPG0PD!P`P{GrQ}IugebFm56Sxw|TDqid9_CS}J5}T=FZOhaWbzPI@BN
-zwsYUfi8^Oo<?_ERGb>bI|7hoGHq{qlZMAjnJKtn<JTdNb{o3BVp?;gxoIhvv=6q_*
-z>b0ww@8_Yzq&Ri@7ahKD<{R$JefGt5fA86VRJKf0u0{Fnn|B$e${%1!zqTRoQu4<I
-zOFrd^Z8vPXxx(umOVi}AS^AB+p>3Z;(|$5;YE0ufYU*ygQeaZpysej3PBy)!^7h|x
-z$rT*3PuWyoCn&k|Eh!Yfs@$DjFIS_V{CDxjha9USSFhaF+i^HcCr`^m#asCMM&F$O
-zkN*TruKv8>v)kJn>sIbxRGTYp-nC0wjKS-EVf6byW)sr1Y@WQC^f@R!j(O77;KP4;
-zMV`D^a{ldov#pbZjV`Y=m0Z;KoqOu4$zsPBGG5%Hdw<R4e?9rndb*|f-(0vZzIf)b
-z`d*Xx4*m%#Z@SOU<uUkGYbSc2Cw+73Lb>$<m*<+NvL#e8tg>V2v|MTQXj;jFV#AHx
-zI~_{wG=wib-54sR@;5)C>bgr$i^{5cpH*S9DxC=r8ji&AWrf@dT^Gf+gh$~@=I@4L
-znRo*>P2CcO1ID+mOlA5JbgS>fv^u#Br&nk9U#MUH`1NrnW<~}^w8Y5V#Kg#;z&Aba
-z{4wM09xuCoPnc45Wx9CxCfl}i3U@zVTFcq_%=oBFv}S)=y*bzBqa5EAeNS+yWhHwo
-zTO(Gqpf%@v_iv?BGv66bewpWI`y%UYPUOlT?T#MDB|h3tH2rw~O{0dK`1uF*shVDM
-zRqwxX7YfZ&HeY%D(~-*|cfJMqe#~VR;1|&4@km|7vhZ%>BHnWffjr;pvINgMy;y!J
-zFt6s)am%iTHos{q)8@Zh?iXpw|K7t)tjKm-bIk5TY0Kx!Ec4sZCA4WflVSA#@c9?`
-zcPjnyJb$%tqM@si$Q@3%0`88t?OwjGUFuhVJ~c!0RA+;b&c;2SiYo4mKQaPUGgCH}
-z%zSy0LC?Iu@v3xWX&iSz&qJ{VA1Zv$L|ycM68FycNbZ;9D))=`=S2vKrT1#RRmx9Q
-zJ)+4|RvkBAaq><7uWNW%{~P?_^nJs)y1wXJ8fRR_u5%}}zj53?dY4!2&~eSZS+A#Z
-z-!fINKP*`O>sQ{T5NY!?d5<=Mg`4LeN&8sL+OgVM=<W0PQY9XqEngJ(?v=MaDpZ)*
-zbKGzWvzA3x>-Q;}s(c?EU%K*g(yXNug*g2LUV7#omDwqM^}v1Y7{@L4?QERgdQ$to
-zHAIICCiYIYSX`mIUcOp4Id^^h+f`jW<`?chRNi!yt6Nd*2j3*8u$&(cmR(l9;<#d+
-W@ahR1{w+qA19CVV{J*b~TmS$gHy@k;
+zcmcc2d6u)@po!(AK@-!)1<Xv0OiZi{EA|9%8}PDmYPET^edlFl<Yi?rP%~69P-0^a
+zWnmVU4#_W4a4O0#FHS8|@O2DQD9%jJ%gjqx$WE;^kQ3)MG&e9bG%~O>F)%TY0&`8^
+zTx{luU^8gqOvU<bo4>_+PhnemM{2^aCpT@6z0L|;r|-1qnd?WvSy@GmPWuDWrCfGB
+znCGt`;9?#4>c!`_{@7JZtpDn%vv}J5|K$5|J?rK-{D-ronr}x>ohb4z>6-BdMUm;t
+zJTrZM?Wlal!yDkyT6912a*pJw1jBznDpG!^9brs$JQmcux~=<dd;PR&A>sb_-(KiA
+zu3&m1d`J8z=9V3E#Mw+$ALJdoP<^}N^7hYH9$gc0U-#<M51X4;nck}gwOmh`dE*k>
+zQ9VhkvyXf)**@9CyT{V>x523ur{-;67<C{no^ztmze)2Cdd3~FU|+W^`=m#og!Q#^
+zb<aB7CR^IBJ{skI+|0N>b%l~~dHtSqv%_@-=H3XHyZq(;zY7GOJqWwVZK~DoXXu_F
+zYRYTnTx{6Jt~(=2=wpY>^QEnRsiltVmpPl~dw+U&e$W5?h7T&Z*w#hP-gYo;W$Vej
+zs|S_{IOipw&G>7^p6U7G=b4PR|5hG({KIG8l!DcdXZoJ~ve1DypuIh!@71g$E?aAO
+z>VG7etVxlc>3VkO;)^V%)#+C5A(Dzb$9t;TS4~;9d`{=X-K8b#(_HNI4{)$oYBK$+
+zYY8@8@za#!*|!_j9n6sqS6H16c|CcPQhMj<o8>bd`lC3m%s+H~l}g;Ik9~>?_uos1
+zNyywg5p+xMBMWol=IyG#M3O&tuAaZW&T=E8Z}zhK0~?>sWnyMzU_?ud%uP&;3<(eB
+zNq3uz>b5Of{hCMMcf%AHO%H|T+FxCHn!b7G_^R*nX+HhveY!+J%2eKvDBu1)^W=^?
+zE12~C+FhNHxBjiyY$J!aQU9!UYd8+faG$b%S649Sf#s%QveMrz5|~pKOI+SlUs<Zt
+zet9z=V~nVY=q|h1w&~~Nd9;(~9?+Zipjr3+%6-<MZj1ImGW*c*$&H28&tmHTS!c3Y
+zdn7i^nz|$U*QI1_rkEW^rB$D5xSDWyo_<&;bmFJ`W?{v>_kQ?El&-k?c;cg0;YaI3
+zugr9AtTEcT(jj1en?kEQQ`3(lXVuMEH|f`(d-+f`{K?i`mFZmzdOJ0Rx*|&y7gZ>#
+z{8~9hBKCmD^4YZ-1u}=kHJ2ywOj6qwsy)r*6odUa<4TW1bN`Fwq|NVNksa{#az*yK
+z<Mj)?I+J=H{IR=Hpw(TY!o4<FQamcK>G5f|AM-8=87(yT%v?~z!FlZAY9r(1eHux7
+zPHf>mRL_{wc%s7k;rFbc{v6ZAuQtq&Fbeo>FtN~GH~(4G!X0eh?!RpM_-2Q^sxAGp
+zDBW1`#zdRiSAyL_2hM5hJ^B6Rit77+8OyR>UVksY*Klc`X~W6;VbW|8o1fYFn+Cm8
+z+|V-N`PXHkx9fRt)ckuUu;%46kGkWhB0fD>c&H%AT4eT3#n`Fcjqc&cS+Wg7YV29w
+Y-dULK`0>-5XMbF;{ku??J5z500A%?tOaK4?
 
 diff --git a/tools/update-packaging/make_incremental_update.sh b/tools/update-packaging/make_incremental_update.sh
-index dc9097e3a8ea..5a6eac37a506 100755
+index 622ae7f382c8..53afd8f2271f 100755
 --- a/tools/update-packaging/make_incremental_update.sh
 +++ b/tools/update-packaging/make_incremental_update.sh
-@@ -132,73 +132,25 @@ archivefiles="updatev2.manifest updatev3.manifest"
+@@ -142,73 +142,25 @@ archivefiles="updatev2.manifest updatev3.manifest"
  # releases, add them to the "force updates" list.
  ext_path='TorBrowser/Data/Browser/profile.default/extensions'
  if [ -d "$newdir/$ext_path" ]; then
@@ -803,5 +802,5 @@ index c45961ac54e7..23d6fbe2929a 100644
    nsresult rv = GetAppRootDir(aExeFile, getter_AddRefs(appRootDir));
    NS_ENSURE_SUCCESS(rv, rv);
 -- 
-2.12.2
+2.11.0
 
