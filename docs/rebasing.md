@@ -20,15 +20,12 @@ This isn't strictly necessary but the author of this document prefers working
 in git.  You'll need to install [fast-export](https://github.com/frej/fast-export)
 
 ```
-hg clone https://hg.mozilla.org/releases/comm-esr45/
+hg clone https://hg.mozilla.org/releases/comm-esr52/
 mkdir tor-messenger
 cd tor-messenger
 git init
-hg-fast-export -r ../comm-esr45
+hg-fast-export -r ../comm-esr52 --force
 ```
-
-Note, this is going to complain about detached heads in mercurial.
-Just `--force` it.
 
 Now you have a git repo sync'd w/ hg
 
@@ -43,7 +40,7 @@ from the time this document was originally written.  Obviously, update it as
 necessary.
 
 ```
-export TAG=THUNDERBIRD_45_8_0_RELEASE
+export TAG=THUNDERBIRD_52_2_1_RELEASE
 
 # We're still in "tor-messenger" from above
 git checkout -b tm-base $TAG
