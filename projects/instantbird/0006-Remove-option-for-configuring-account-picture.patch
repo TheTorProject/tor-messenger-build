@@ -1,14 +1,14 @@
-From 70b53480506595d02d5b0ede56501ef9ec48919f Mon Sep 17 00:00:00 2001
+From 1e652fd4e70fd6ffce2dec9be8ed2826b2607406 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:24:09 -0700
-Subject: [PATCH 11/28] Account picture
+Subject: [PATCH 06/20] Remove option for configuring account picture
 
 ---
  im/content/blist.xul | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/im/content/blist.xul b/im/content/blist.xul
-index b90fddadb..f29a48b99 100644
+index 843f1eef57..71ee2c9ef8 100644
 --- a/im/content/blist.xul
 +++ b/im/content/blist.xul
 @@ -114,8 +114,7 @@
@@ -22,5 +22,5 @@ index b90fddadb..f29a48b99 100644
          <panel id="changeUserIconPanel"
                 type="arrow" align="center"
 -- 
-2.12.2
+2.13.3
 

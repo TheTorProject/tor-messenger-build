@@ -1,0 +1,25 @@
+From 8a766e365c6dca55dec95cae000f6c30054b8467 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Fri, 28 Jul 2017 12:11:57 -0400
+Subject: [PATCH 09/20] Do not set default XMPP server
+
+---
+ chat/protocols/xmpp/xmpp.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chat/protocols/xmpp/xmpp.js b/chat/protocols/xmpp/xmpp.js
+index 2afb15f059..1d2c167d3e 100644
+--- a/chat/protocols/xmpp/xmpp.js
++++ b/chat/protocols/xmpp/xmpp.js
+@@ -31,7 +31,7 @@ XMPPProtocol.prototype = {
+ 
+   usernameSplits: [
+     {get label() { return _("options.domain"); }, separator: "@",
+-     defaultValue: "jabber.org", reverse: true}
++     defaultValue: "", reverse: true}
+   ],
+ 
+   options: {
+-- 
+2.13.3
+

@@ -51,34 +51,24 @@ targets:
 input_files:
   - filename: 0001-Set-Tor-Messenger-preferences.patch
   - filename: 0002-Trac-21634-Autologin-default-should-be-false.patch
-  - filename: 0003-Trac-17896-Support-Special-Characters-input-prompt-o.patch
-  - filename: 0004-Trac-17494-Better-error-reporting-for-failed-outgoin.patch
-  - filename: 0005-Trac-13312-OTR-over-Twitter-DMs.patch
-  - filename: 0006-Bug-1218193-Fix-tab-strip-background-colour-on-OS-X..patch
-  - filename: 0007-Bug-1246431-XMPP-createConversation-should-handle-in.patch
-  - filename: 0008-XMPP-in-band-registration.patch
-  - filename: 0009-Remove-search-from-UI.patch
-  - filename: 0010-Add-Tor-Messenger-branding.patch
-  - filename: 0011-Account-picture.patch
-  - filename: 0012-Modify-protocol-defaults.patch
-  - filename: 0013-Modify-IRC-defaults.patch
-  - filename: 0014-Modify-themes.patch
-  - filename: 0015-Modify-XMPP-defaults.patch
-  - filename: 0016-Remove-logging-UI.patch
-  - filename: 0017-Cert-override.patch
-  - filename: 0018-Display-all-traffic-over-Tor.patch
-  - filename: 0019-Trac-17480-Content-sink.patch
-  - filename: 0020-SASL-ECDSA-NIST256P-CHALLENGE.patch
-  - filename: 0021-Bug-1313137-msg-is-not-defined-error-in-irc.js-chang.patch
-  - filename: 0022-Bug-954368-Contact-list-entries-should-adapt-their-h.patch
-  - filename: 0023-Bug-1187281-Only-show-close-button-on-Windows.patch
-  - filename: 0024-Bug-1316000-Remove-old-Yahoo-Messenger-support.-r-al.patch
-  - filename: 0025-Bug-1321641-Use-built-in-functions-instead-of-an-svg.patch
-  - filename: 0026-Bug-1321420-Add-a-pref-to-disable-JavaScript-in-brow.patch
-  - filename: 0027-Trac-17517-Use-different-color-for-Add-Exception.patch
-  - filename: 0028-Trac-21736-Hide-account-timestamp-from-message.patch
-  - filename: 0029-Add-duplicated-files-to-allowed-dupes.mn.patch
-    enable: '[% c("var/linux") %]'
+  - filename: 0003-XMPP-in-band-registration.patch
+  - filename: 0004-Remove-search-from-UI.patch
+  - filename: 0005-Add-Tor-Messenger-branding.patch
+  - filename: 0006-Remove-option-for-configuring-account-picture.patch
+  - filename: 0007-Modify-top-protocol-defaults.patch
+  - filename: 0008-Modify-IRC-defaults.patch
+  - filename: 0009-Do-not-set-default-XMPP-server.patch
+  - filename: 0010-Modify-themes.patch
+  - filename: 0011-Remove-logging-UI.patch
+  - filename: 0012-Cert-override.patch
+  - filename: 0013-Display-all-traffic-over-Tor.patch
+  - filename: 0014-Trac-17480-Content-sink.patch
+  - filename: 0015-SASL-ECDSA-NIST256P-CHALLENGE.patch
+  - filename: 0016-Bug-1321641-Use-built-in-functions-instead-of-an-svg.patch
+  - filename: 0017-Bug-1321420-Add-a-pref-to-disable-JavaScript-in-brow.patch
+  - filename: 0018-Trac-17517-Use-different-color-for-Add-Exception.patch
+  - filename: 0019-Trac-21736-Hide-account-timestamp-from-message.patch
+  - filename: 0020-Update-allowed-duplicated-files-for-Windows-and-Linu.patch
   - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig

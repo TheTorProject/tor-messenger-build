@@ -1,19 +1,19 @@
-From 8db9ea380fb0d2b54bb3dd6d6003532d13d2c2bf Mon Sep 17 00:00:00 2001
+From 54583578a3e2753cd5fee169596325fa761d5554 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
-Date: Mon, 10 Oct 2016 19:48:41 -0700
-Subject: [PATCH 01/28] Set Tor Messenger preferences
+Date: Wed, 26 Jul 2017 14:30:41 -0400
+Subject: [PATCH 01/20] Set Tor Messenger preferences
 
 ---
- im/app/profile/all-instantbird.js | 424 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 402 insertions(+), 22 deletions(-)
+ im/app/profile/all-instantbird.js | 451 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 429 insertions(+), 22 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index b7a397017..89593abeb 100644
+index 127c86a662..454ca7ea1b 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -1,3 +1,53 @@
 +/**
-+ * This file is divded into three section,
++ * This file is divided into three section,
 + *
 + * 1) Tor Messenger prefs, not found in the next two sections;
 + * 2) The original Instantbird prefs found here, modified by TM;
@@ -115,7 +115,7 @@ index b7a397017..89593abeb 100644
  
  // Interval: Time before prompting the user to restart to install the latest
  //           download (in seconds) default=30 minutes
-@@ -202,7 +249,7 @@ pref("browser.search.order.1",                "chrome://instantbird/locale/regio
+@@ -195,7 +242,7 @@ pref("browser.search.order.1",                "chrome://instantbird/locale/regio
  pref("browser.search.order.2",                "chrome://instantbird/locale/region.properties");
  
  // send ping to the server to update
@@ -124,7 +124,7 @@ index b7a397017..89593abeb 100644
  
  // disable logging for the search service update system by default
  pref("browser.search.update.log", false);
-@@ -222,10 +269,10 @@ pref("extensions.ignoreMTimeChanges", false);
+@@ -235,10 +282,10 @@ pref("extensions.ignoreMTimeChanges", false);
  pref("extensions.logging.enabled", false);
  pref("general.skins.selectedSkin", "classic/1.0");
  
@@ -137,24 +137,17 @@ index b7a397017..89593abeb 100644
  
  // Preferences for the Get Add-ons pane
  pref("extensions.getAddons.cache.enabled", false);
-@@ -244,10 +291,24 @@ pref("extensions.getMoreMessageStylesURL", "https://add-ons.instantbird.org/%LOC
- pref("extensions.getMoreEmoticonsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/emoticons/");
- pref("extensions.getMoreProtocolsURL", "https://add-ons.instantbird.org/%LOCALE%/%APP%/%VERSION%/protocols/");
+@@ -265,16 +312,16 @@ pref("plugins.click_to_play", false);
+ pref("plugin.default.state", 0);
  
-+// Click-to-play has not been ported yet, see bug 814168.
-+// The default plugin state should be changed to "ask to activate" when this
-+// has been done.
-+pref("plugins.click_to_play", false);
-+// Disable by default.
-+pref("plugin.default.state", 0);
-+
-+// Plugins bundled in XPIs are enabled by default.
+ // Plugins bundled in XPIs are enabled by default.
+-pref("plugin.defaultXpi.state", 2);
 +pref("plugin.defaultXpi.state", 0);
-+
-+// Flash and Java disabled by default.
-+pref("plugin.state.flash", 0);
-+pref("plugin.state.java", 0);
-+
+ 
+ // Flash and Java disabled by default.
+ pref("plugin.state.flash", 0);
+ pref("plugin.state.java", 0);
+ 
  // suppress external-load warning for standard browser schemes
 -pref("network.protocol-handler.warn-external.http", false);
 -pref("network.protocol-handler.warn-external.https", false);
@@ -165,7 +158,7 @@ index b7a397017..89593abeb 100644
  
  // don't load links inside Instantbird
  pref("network.protocol-handler.expose-all", false);
-@@ -259,13 +320,13 @@ pref("network.protocol-handler.expose.https", true);
+@@ -286,13 +333,13 @@ pref("network.protocol-handler.expose.https", true);
  
  // expose javascript: so that message themes can use it.
  // javascript: links inside messages are filtered out.
@@ -182,7 +175,7 @@ index b7a397017..89593abeb 100644
  
  // We have an Error Console menu item by default so let's display chrome errors
  pref("javascript.options.showInConsole", true);
-@@ -300,14 +361,333 @@ pref("browser.tabs.tabClipWidth", 140);
+@@ -327,7 +374,7 @@ pref("browser.tabs.tabClipWidth", 140);
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -191,11 +184,8 @@ index b7a397017..89593abeb 100644
  
  pref("chat.twitter.consumerKey", "TSuyS1ieRAkB3qWv8yyEw");
  pref("chat.twitter.consumerSecret", "DKtKaSf5a7pBNhdBsSZHTnI5Y03hRlPFYWmb4xXBlkU");
- 
- // Comma separated list of prpl ids that should use libpurple even if there is
- // a JS implementation. This is used to land JS-prpls pref'ed off in nightlies.
--pref("chat.prpls.forcePurple", "prpl-jabber");
-+pref("chat.prpls.forcePurple", "");
+@@ -337,4 +384,364 @@ pref("chat.twitter.consumerSecret", "DKtKaSf5a7pBNhdBsSZHTnI5Y03hRlPFYWmb4xXBlkU
+ pref("chat.prpls.forcePurple", "");
  
  // Whether to parse log files for conversation statistics.
 -pref("statsService.parseLogsForStats", true);
@@ -210,7 +200,7 @@ index b7a397017..89593abeb 100644
 +// Please maintain unit tests at ./tbb-tests/browser_tor_TB4.js
 +
 +// Disable initial homepage notifications
-+//pref("browser.search.update", false);  // TM
++//pref("browser.search.update", false); // TM
 +pref("browser.rights.3.shown", true);
 +pref("startup.homepage_welcome_url", "");
 +pref("startup.homepage_welcome_url.additional", "");
@@ -234,6 +224,10 @@ index b7a397017..89593abeb 100644
 +pref("app.update.staging.enabled", false);
 +#endif
 +
++// No need to contact the Kinto-based blocklist system in addition to the old
++// one which is still used, see bug 22071.
++pref("services.blocklist.update_enabled", false);
++
 +// Disable "Slow startup" warnings and associated disk history
 +// (bug #13346)
 +pref("browser.slowStartup.notificationDisabled", true);
@@ -251,7 +245,7 @@ index b7a397017..89593abeb 100644
 +pref("permissions.memory_only", true);
 +pref("network.cookie.lifetimePolicy", 2);
 +pref("browser.download.manager.retention", 1);
-+pref("security.nocertdb", false);  // TM
++pref("security.nocertdb", false); // TM
 +
 +// Disk activity: TBB Directory Isolation
 +pref("browser.download.useDownloadDir", false);
@@ -272,6 +266,17 @@ index b7a397017..89593abeb 100644
 +pref("browser.search.suggest.enabled", false);
 +pref("browser.safebrowsing.enabled", false);
 +pref("browser.safebrowsing.malware.enabled", false);
++pref("browser.safebrowsing.phishing.enabled", false);
++pref("browser.safebrowsing.downloads.enabled", false);
++pref("browser.safebrowsing.downloads.remote.enabled", false);
++pref("browser.safebrowsing.blockedURIs.enabled", false);
++pref("browser.safebrowsing.downloads.remote.url", "");
++pref("browser.safebrowsing.provider.google.updateURL", "");
++pref("browser.safebrowsing.provider.google.gethashURL", "");
++pref("browser.safebrowsing.provider.google4.updateURL", "");
++pref("browser.safebrowsing.provider.google4.gethashURL", "");
++pref("browser.safebrowsing.provider.mozilla.updateURL", "");
++pref("browser.safebrowsing.provider.mozilla.gethashURL", "");
 +pref("browser.download.manager.scanWhenDone", false); // prevents AV remote reporting of downloads
 +pref("extensions.ui.lastCategory", "addons://list/extension");
 +pref("datareporting.healthreport.service.enabled", false); // Yes, all three of these must be set
@@ -285,10 +290,11 @@ index b7a397017..89593abeb 100644
 +pref("browser.selfsupport.enabled", false);
 +pref("browser.selfsupport.url", "");
 +pref("toolkit.telemetry.unified", false);
++// No experiments, use Tor Browser. See 21797.
++pref("experiments.enabled", false);
 +// Disable the UITour backend so there is no chance that a remote page
 +// can use it to confuse Tor Browser users.
 +pref("browser.uitour.enabled", false);
-+pref("security.mixed_content.block_active_content", false); // Disable until https://bugzilla.mozilla.org/show_bug.cgi?id=878890 is patched
 +pref("browser.syncPromoViewsLeftMap", "{\"addons\":0, \"passwords\":0, \"bookmarks\":0}"); // Don't promote sync
 +pref("services.sync.engine.prefs", false); // Never sync prefs, addons, or tabs with other browsers
 +pref("services.sync.engine.addons", false);
@@ -300,6 +306,7 @@ index b7a397017..89593abeb 100644
 +pref("browser.newtabpage.enhanced", false); // Bug 16316 - Avoid potential confusion over tiles for now.
 +pref("browser.newtabpage.introShown", true); // Bug 16316 - Avoid potential confusion over tiles for now.
 +pref("browser.newtabpage.preload", false); // Bug 16316 - Avoid potential confusion over tiles for now.
++pref("browser.newtabpage.remote", false); // Bug 21685: Disable remote new tab pages
 +pref("browser.search.countryCode", "US"); // The next three prefs disable GeoIP search lookups (#16254)
 +pref("browser.search.region", "US");
 +pref("browser.search.geoip.url", "");
@@ -310,19 +317,28 @@ index b7a397017..89593abeb 100644
 +pref("browser.pocket.enabled", false);
 +pref("browser.pocket.api", "");
 +pref("browser.pocket.site", "");
++pref("network.http.referer.hideOnionSource", true);
++
++// Disable Social API and related stuff (Bug #13612)
++pref("social.directories", "");
++pref("social.remote-install.enabled", false);
++pref("social.share.activationPanelEnabled", false);
++pref("social.shareDirectory", "");
++pref("social.toast-notifications.enabled", false);
++pref("social.whitelist", "");
 +
 +// Fingerprinting
 +pref("webgl.min_capability_mode", true);
 +pref("webgl.disable-extensions", true);
 +pref("webgl.disable-fail-if-major-performance-caveat", true);
-+pref("dom.battery.enabled", false); // fingerprinting due to differing OS implementations
++pref("webgl.enable-webgl2", false);
 +pref("dom.network.enabled",false); // fingerprinting due to differing OS implementations
 +pref("gfx.downloadable_fonts.fallback_delay", -1);
 +pref("general.appname.override", "Netscape");
 +pref("general.appversion.override", "5.0 (Windows)");
 +pref("general.oscpu.override", "Windows NT 6.1");
 +pref("general.platform.override", "Win32");
-+pref("general.useragent.override", "Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0");
++pref("general.useragent.override", "Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0");
 +pref("general.productSub.override", "20100101");
 +pref("general.buildID.override", "20100101");
 +pref("browser.startup.homepage_override.buildID", "20100101");
@@ -353,15 +369,19 @@ index b7a397017..89593abeb 100644
 +pref("browser.reader.detectedFirstArticle", true);
 +pref("reader.parse-on-load.enabled", false);
 +pref("privacy.use_utc_timezone", false);  // TM
++pref("media.webspeech.synth.enabled", false); // Bug 10283: Disable SpeechSynthesis API
++pref("dom.webaudio.enabled", false); // Bug 13017: Disable Web Audio API
++pref("dom.maxHardwareConcurrency", 1); // Bug 21675: Spoof single-core cpu
++pref("dom.w3c_touch_events.enabled", 0); // Bug 10286: Always disable Touch API
 +
 +// Third party stuff
-+//pref("network.cookie.cookieBehavior", 1);  // TM
++//pref("network.cookie.cookieBehavior", 1); // TM
 +pref("security.enable_tls_session_tickets", false);
 +pref("network.http.spdy.enabled", false); // Stores state and may have keepalive issues (both fixable)
 +pref("network.http.spdy.enabled.v2", false); // Seems redundant, but just in case
 +pref("network.http.spdy.enabled.v3", false); // Seems redundant, but just in case
 +pref("network.http.spdy.enabled.v3-1", false); // Seems redundant, but just in case
-+pref("privacy.thirdparty.isolate", 0); // Always enforce third party isolation  // TM
++pref("privacy.firstparty.isolate", true); // Always enforce first party isolation
 +pref("network.http.spdy.enabled.http2", false); // Temporarily disabled pending implementation review
 +pref("network.http.spdy.enabled.http2draft", false); // Temporarily disabled pending implementation review
 +pref("network.predictor.enabled", false); // Temporarily disabled. See https://bugs.torproject.org/16633
@@ -370,14 +390,14 @@ index b7a397017..89593abeb 100644
 +
 +// Proxy and proxy security
 +pref("network.proxy.socks", "127.0.0.1");
-+pref("network.proxy.socks_port", 9152);  // TM
++pref("network.proxy.socks_port", 9152);   // TM
 +pref("network.proxy.socks_version", 5);  // TM
 +pref("network.proxy.socks_remote_dns", true);
 +pref("network.proxy.no_proxies_on", ""); // For fingerprinting and local service vulns (#10419)
 +pref("network.proxy.type", 1);
 +pref("network.security.ports.banned", "9050,9051,9150,9151");
 +pref("network.dns.disablePrefetch", true);
-+//pref("network.protocol-handler.external-default", false);  // TM
++//pref("network.protocol-handler.external-default", false); // TM
 +//pref("network.protocol-handler.external.mailto", false);  // TM
 +pref("network.protocol-handler.external.news", false);
 +pref("network.protocol-handler.external.nntp", false);
@@ -400,12 +420,19 @@ index b7a397017..89593abeb 100644
 +// clever solution for https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=769716.
 +pref("media.gmp-provider.enabled", false);
 +pref("media.gmp-manager.url.override", "data:text/plain,");
-+// EME prefs: Strictly speaking these prefs don't need to be set as we are
-+// using the --disable-eme compile flag. However, in order to not confuse users,
-+// who might stumble upon them while looking into about:config, we set them to
-+// 'false' communicating that EME is really disabled.
++// Since ESR52 it is not enough anymore to block pinging the GMP update/download
++// server. There is a local fallback that must be blocked now as well. See:
++// https://bugzilla.mozilla.org/show_bug.cgi?id=1267495.
++pref("media.gmp-manager.updateEnabled", false);
++// Mozilla is relying on preferences to make sure no DRM blob is downloaded and
++// run. Even though those prefs should be set correctly by specifying
++// --disable-eme (which we do), we disable all of them here as well for defense
++// in depth.
 +pref("browser.eme.ui.enabled", false);
++pref("media.gmp-eme-adobe.visible", false);
 +pref("media.gmp-eme-adobe.enabled", false);
++pref("media.gmp-widevinecdm.visible", false);
++pref("media.gmp-widevinecdm.enabled", false);
 +pref("media.eme.enabled", false);
 +pref("media.eme.apiVisible", false);
 +// WebIDE can bypass proxy settings for remote debugging. It also downloads
@@ -418,10 +445,6 @@ index b7a397017..89593abeb 100644
 +// restrictive DNS look-up policy. We use "127.0.0.1" instead of "localhost" as
 +// a workaround. See bug 16523 for more details.
 +pref("devtools.debugger.chrome-debugging-host", "127.0.0.1");
-+// Don't show the "Open with" option on the download dialog if the preference
-+// is |true|. This helps to avoid confusion e.g. in case the browser is
-+// sandboxed. See bug 17502 for details.
-+pref("browser.download.forbid_open_with", false);
 +// Disable mozTCPSocket for sure (bug 18863)
 +pref("dom.mozTCPSocket.enabled", false);
 +
@@ -431,6 +454,9 @@ index b7a397017..89593abeb 100644
 +// Until we address at least the linkability concerns in #19417 let's disable
 +// asmjs.
 +pref("javascript.options.asmjs", false);
++// Mozilla keeps still finding critical bugs in Graphite code. Disable it for
++// now, see bug 21726.
++pref("gfx.font_rendering.graphite.enabled", false);
 +
 +// Network and performance
 +pref("network.http.pipelining", true);
@@ -447,11 +473,8 @@ index b7a397017..89593abeb 100644
 +pref("network.http.pipelining.max-optimistic-requests", 3);
 +pref("security.ssl.disable_session_identifiers", true);
 +pref("network.manage-offline-status", false);
-+
-+// Disable Xrender as it causes serious performance regressions on some machines
-+// and is disabled in Firefox >= 47 anyway.
-+pref("gfx.xrender.enabled",false);
-+
++// No need to leak things to Mozilla, see bug 21790
++pref("network.captive-portal-service.enabled", false);
 +// As a "defense in depth" measure, configure an empty push server URL (the
 +// DOM Push features are disabled by default via other prefs).
 +pref("dom.push.serverURL", "");
@@ -473,7 +496,7 @@ index b7a397017..89593abeb 100644
 +
 +// Putting the search engine prefs into this file to fix #11236.
 +// Default search engine
-+//pref("browser.search.defaultenginename", "DuckDuckGo");  // TM
++//pref("browser.search.defaultenginename", "data:text/plain,browser.search.defaultenginename=DuckDuckGo");  // TM
 +// Make sure we use the same search engine regardless of locale
 +pref("browser.search.geoSpecificDefaults", false);
 +
@@ -482,7 +505,7 @@ index b7a397017..89593abeb 100644
 +// two search engines as below. See
 +// https://bugzilla.mozilla.org/show_bug.cgi?id=1126722 for details.
 +//pref("browser.search.order.extra.1", "DuckDuckGo");  // TM
-+//pref("browser.search.order.extra.2", "YouTube");  // TM
++//pref("browser.search.order.extra.2", "YouTube"); // TM
 +
 +// Hacks/workarounds: Direct2D seems to crash w/ lots of video cards w/ MinGW?
 +// Nvida cards also experience crashes without the second pref set to disabled
@@ -508,8 +531,16 @@ index b7a397017..89593abeb 100644
 +// Enforce certificate pinning, see: https://bugs.torproject.org/16206
 +pref("security.cert_pinning.enforcement_level", 2);
 +
++// Don't allow MitM via Microsoft Family Safety, see bug 21686
++pref("security.family_safety.mode", 0);
++
 +// Enforce SHA1 deprecation, see: bug 18042.
 +pref("security.pki.sha1_enforcement_level", 2);
++
++// Avoid report TLS errors to Mozilla. We might want to repurpose this feature
++// one day to help detecting bad relays (which is bug 19119). For now we just
++// hide the checkbox, see bug 22072.
++pref("security.ssl.errorReporting.enabled", false);
 +
 +// Workaround for https://bugs.torproject.org/13579. Progress on
 +// `about:downloads` is only shown if the following preference is set to `true`
@@ -520,5 +551,5 @@ index b7a397017..89593abeb 100644
 +#expand pref("torbrowser.version", __TOR_BROWSER_VERSION__);
 +#endif
 -- 
-2.12.2
+2.13.3
 

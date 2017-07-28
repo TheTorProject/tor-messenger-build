@@ -1,7 +1,7 @@
-From a1de4a4aaedf227494a80f91bfa8edbf15547e49 Mon Sep 17 00:00:00 2001
+From d4e57e5009a5c14ddec53518352862d0fbc5aeb9 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
-Date: Mon, 10 Oct 2016 18:42:25 -0700
-Subject: [PATCH 08/28] XMPP in-band registration
+Date: Wed, 26 Jul 2017 15:09:40 -0400
+Subject: [PATCH 03/20] XMPP in-band registration
 
 ---
  chat/locales/en-US/xmpp.properties                 |   5 +
@@ -17,7 +17,7 @@ Subject: [PATCH 08/28] XMPP in-band registration
  create mode 100644 im/content/xmppRegister.xul
 
 diff --git a/chat/locales/en-US/xmpp.properties b/chat/locales/en-US/xmpp.properties
-index 293ab01d4..237d20c92 100644
+index a53be368bd..5192e24d1e 100644
 --- a/chat/locales/en-US/xmpp.properties
 +++ b/chat/locales/en-US/xmpp.properties
 @@ -13,6 +13,9 @@ connection.initializingEncryption=Initializing encryption
@@ -27,23 +27,23 @@ index 293ab01d4..237d20c92 100644
 +connection.registering=Registering new account
 +connection.gettingRegistration=Getting registration form
 +connection.onRegistrationSuccess=Account registered
+ connection.srvLookup=Looking up the SRV record
  
  # LOCALIZATION NOTE (connection.error.*)
- #   These will show in the account manager if an error occurs during the
-@@ -33,6 +36,8 @@ connection.error.notSendingPasswordInClear=The server only supports authenticati
+@@ -34,6 +37,8 @@ connection.error.notSendingPasswordInClear=The server only supports authenticati
  connection.error.authenticationFailure=Authentication failure
  connection.error.notAuthorized=Not authorized (Did you enter the wrong password?)
  connection.error.failedToGetAResource=Failed to get a resource
 +connection.error.noRegistrationSupport=The server does not support in-band registration
 +connection.error.registrationCancel=Registration canceled
- 
- 
- # LOCALIZATION NOTE (conversation.error.notDelivered):
+ connection.error.failedMaxResourceLimit=This account is connected from too many places at the same time.
+ connection.error.failedResourceNotValid=Resource is not valid.
+ connection.error.XMPPNotSupported=This server does not support XMPP
 diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-session.jsm
-index 24618ee0c..246ec2b7c 100644
+index f61d6c5634..1c001064bd 100644
 --- a/chat/protocols/xmpp/xmpp-session.jsm
 +++ b/chat/protocols/xmpp/xmpp-session.jsm
-@@ -11,6 +11,8 @@ Cu.import("resource:///modules/socket.jsm");
+@@ -13,6 +13,8 @@ Cu.import("resource:///modules/socket.jsm");
  Cu.import("resource:///modules/xmpp-xml.jsm");
  Cu.import("resource:///modules/xmpp-authmechs.jsm");
  
@@ -52,7 +52,7 @@ index 24618ee0c..246ec2b7c 100644
  XPCOMUtils.defineLazyGetter(this, "_", () =>
    l10nHelper("chrome://chat/locale/xmpp.properties")
  );
-@@ -68,6 +70,7 @@ XMPPSession.prototype = {
+@@ -101,6 +103,7 @@ XMPPSession.prototype = {
                                Stanza.node("ping", Stanza.NS.ping)),
                      this.cancelDisconnectTimer, this);
    },
@@ -60,7 +60,7 @@ index 24618ee0c..246ec2b7c 100644
    _lastReceiveTime: 0,
    _lastSendTime: 0,
    checkPingTimer(aJustSentSomething = false) {
-@@ -271,6 +274,69 @@ XMPPSession.prototype = {
+@@ -370,6 +373,69 @@ XMPPSession.prototype = {
        this.onXmppStanza = this.stanzaListeners.startAuth;
        this.onXmppStanza(aStanza);
      },
@@ -130,7 +130,7 @@ index 24618ee0c..246ec2b7c 100644
      startTLS: function(aStanza) {
        if (aStanza.localName != "proceed") {
          this._networkError(_("connection.error.failedToStartTLS"));
-@@ -283,6 +349,18 @@ XMPPSession.prototype = {
+@@ -382,6 +448,18 @@ XMPPSession.prototype = {
        this.onXmppStanza = this.stanzaListeners.startAuth;
      },
      startAuth: function(aStanza) {
@@ -150,7 +150,7 @@ index 24618ee0c..246ec2b7c 100644
          this.ERROR("Unexpected stanza " + aStanza.localName + ", expected 'features'");
          this._networkError(_("connection.error.incorrectResponse"));
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index 73707c9e2..889c06908 100644
+index 8092621c4f..2ca9ba3b0e 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
 @@ -119,6 +119,12 @@ var accountWizard = {
@@ -166,7 +166,7 @@ index 73707c9e2..889c06908 100644
      let bundle = document.getElementById("accountsBundle");
      let usernameInfo;
      let emptyText = this.proto.usernameEmptyText;
-@@ -424,6 +430,8 @@ var accountWizard = {
+@@ -348,6 +354,8 @@ var accountWizard = {
        acc.alias = this.alias;
      //FIXME: newMailNotification
  
@@ -176,10 +176,10 @@ index 73707c9e2..889c06908 100644
        let option = this.prefs[i];
        let opt = option.opt;
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index f0933af7f..de9d0d809 100644
+index 904d22ba57..135b68386c 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
-@@ -65,6 +65,7 @@
+@@ -66,6 +66,7 @@
      <vbox id="userNameBox"/>
      <separator/>
      <description id="duplicateAccount" hidden="true">&accountUsernameDuplicate.label;</description>
@@ -188,10 +188,10 @@ index f0933af7f..de9d0d809 100644
  
    <wizardpage id="accountpassword" pageid="accountpassword" next="accountadvanced"
 diff --git a/im/content/jar.mn b/im/content/jar.mn
-index 98d9a09a9..20ea9dce7 100644
+index 1d05a9c744..88662ff437 100644
 --- a/im/content/jar.mn
 +++ b/im/content/jar.mn
-@@ -61,6 +61,8 @@ instantbird.jar:
+@@ -59,6 +59,8 @@ instantbird.jar:
  *	content/instantbird/viewlog.xul
  	content/instantbird/viewlog.js
  	content/instantbird/viewlog.css
@@ -202,7 +202,7 @@ index 98d9a09a9..20ea9dce7 100644
  	content/instantbird/menus-mac.xul
 diff --git a/im/content/xmppRegister.js b/im/content/xmppRegister.js
 new file mode 100644
-index 000000000..52852f045
+index 0000000000..52852f045c
 --- /dev/null
 +++ b/im/content/xmppRegister.js
 @@ -0,0 +1,142 @@
@@ -350,7 +350,7 @@ index 000000000..52852f045
 +}
 diff --git a/im/content/xmppRegister.xul b/im/content/xmppRegister.xul
 new file mode 100644
-index 000000000..e2bd36750
+index 0000000000..e2bd36750a
 --- /dev/null
 +++ b/im/content/xmppRegister.xul
 @@ -0,0 +1,27 @@
@@ -382,7 +382,7 @@ index 000000000..e2bd36750
 +
 +</dialog>
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
-index 43d0f19e3..c46fb2f95 100644
+index 43d0f19e3f..c46fb2f956 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 @@ -31,3 +31,5 @@
@@ -392,5 +392,5 @@ index 43d0f19e3..c46fb2f95 100644
 +
 +<!ENTITY registerXMPP.label "Create this new account on the server">
 -- 
-2.12.2
+2.13.3
 

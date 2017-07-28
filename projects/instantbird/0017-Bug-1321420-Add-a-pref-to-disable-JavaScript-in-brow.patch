@@ -1,7 +1,7 @@
-From c3d0c1e82812698d6da4a5890860fd1b43e7fcbd Mon Sep 17 00:00:00 2001
+From be3edcf0ba689d39099053416d696312f09dc89e Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
-Date: Thu, 1 Dec 2016 14:34:51 -0800
-Subject: [PATCH 26/28] Bug 1321420 - Add a pref to disable JavaScript in
+Date: Wed, 26 Jul 2017 16:35:33 -0400
+Subject: [PATCH 17/20] Bug 1321420 - Add a pref to disable JavaScript in
  browser requests
 
 ---
@@ -10,20 +10,20 @@ Subject: [PATCH 26/28] Bug 1321420 - Add a pref to disable JavaScript in
  2 files changed, 9 insertions(+)
 
 diff --git a/chat/chat-prefs.js b/chat/chat-prefs.js
-index 60b9c1e8c..90a212e5c 100644
+index d6911dd9e9..4dc439b2f7 100644
 --- a/chat/chat-prefs.js
 +++ b/chat/chat-prefs.js
-@@ -86,6 +86,8 @@ pref("chat.prpls.prpl-skype.disable", true);
+@@ -88,6 +88,8 @@ pref("chat.prpls.prpl-skype.disable", true);
  pref("chat.prpls.prpl-facebook.disable", true);
  // Disable Yahoo Messenger as legacy Yahoo was shut down.
  pref("chat.prpls.prpl-yahoo.disable", true);
 +// Disable JavaScript in browser requests.
 +pref("chat.browserRequest.disableJavascript", false);
+ // Whether to disable SRV lookups that use the system DNS library.
+ pref("chat.dns.srv.disable", false);
  
- // loglevel is the minimum severity level that a libpurple message
- // must have to be reported in the Error Console.
 diff --git a/chat/content/browserRequest.js b/chat/content/browserRequest.js
-index c52c8c637..0069219fa 100644
+index c52c8c637d..0069219fa6 100644
 --- a/chat/content/browserRequest.js
 +++ b/chat/content/browserRequest.js
 @@ -2,6 +2,8 @@
@@ -48,5 +48,5 @@ index c52c8c637..0069219fa 100644
                                Components.interfaces.nsIWebProgress.NOTIFY_ALL);
    let url = request.url;
 -- 
-2.12.2
+2.13.3
 

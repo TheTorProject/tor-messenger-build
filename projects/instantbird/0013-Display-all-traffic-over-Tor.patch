@@ -1,7 +1,7 @@
-From d5874c98daf8d4e7304876cd6fa6083c54c0c644 Mon Sep 17 00:00:00 2001
+From c128779e0d663506a06d15550597f4d52e45eda5 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:58:31 -0700
-Subject: [PATCH 18/28] Display all traffic over Tor
+Subject: [PATCH 13/20] Display all traffic over Tor
 
 ---
  im/content/accountWizard.xul                          | 2 ++
@@ -9,10 +9,10 @@ Subject: [PATCH 18/28] Display all traffic over Tor
  2 files changed, 3 insertions(+)
 
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index cce8a1ba9..fcc5eaa01 100644
+index 356321dbcc..73c9d93777 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
-@@ -39,6 +39,8 @@
+@@ -40,6 +40,8 @@
          <description class="top-proto-description" value="&accountProtocolShowMore.description;"/>
        </richlistitem>
      </richlistbox>
@@ -22,7 +22,7 @@ index cce8a1ba9..fcc5eaa01 100644
  
    <wizardpage id="accountprotocol" pageid="accountprotocol" next="accountusername"
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
-index c46fb2f95..6b49c84fa 100644
+index c46fb2f956..6b49c84fad 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
 @@ -6,6 +6,7 @@
@@ -34,5 +34,5 @@ index c46fb2f95..6b49c84fa 100644
  <!ENTITY accountProtocolShowMore.label  "Show all protocols">
  <!ENTITY accountProtocolShowMore.description  "Choose from the full list of protocols">
 -- 
-2.12.2
+2.13.3
 

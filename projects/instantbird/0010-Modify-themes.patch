@@ -1,9 +1,9 @@
-From 4fb4d944d10666356408cbb222b38344496dc71a Mon Sep 17 00:00:00 2001
+From bc8f0f3298a6c69f381ae1640ae93e770259e65a Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:36:38 -0700
-Subject: [PATCH 14/28] Modify themes
+Subject: [PATCH 10/20] Modify themes
 
- * theme extension updateh
+ * theme extension update
 
  * themes remove links
 ---
@@ -13,7 +13,7 @@ Subject: [PATCH 14/28] Modify themes
  3 files changed, 2 insertions(+), 19 deletions(-)
 
 diff --git a/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf b/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
-index a7e38bba4..c5c781a97 100644
+index a7e38bba47..c5c781a973 100644
 --- a/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
 +++ b/im/app/profile/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
 @@ -26,6 +26,8 @@
@@ -26,7 +26,7 @@ index a7e38bba4..c5c781a97 100644
      <!-- EXTENSION AUTHORS!
           DO NOT COPY THIS PROPERTY INTO YOUR INSTALL RDF FILES
 diff --git a/im/content/preferences/themes.js b/im/content/preferences/themes.js
-index 5c5d594cb..4a9d6afd0 100644
+index 5c5d594cb5..4a9d6afd09 100644
 --- a/im/content/preferences/themes.js
 +++ b/im/content/preferences/themes.js
 @@ -31,21 +31,6 @@ var gThemePane = {
@@ -52,7 +52,7 @@ index 5c5d594cb..4a9d6afd0 100644
  
    /* Create the drop down list for emoticons and messagestyles;
 diff --git a/im/content/preferences/themes.xul b/im/content/preferences/themes.xul
-index 454e36696..18ba1f95c 100644
+index 454e366960..18ba1f95cc 100644
 --- a/im/content/preferences/themes.xul
 +++ b/im/content/preferences/themes.xul
 @@ -65,8 +65,6 @@
@@ -74,5 +74,5 @@ index 454e36696..18ba1f95c 100644
            <separator class="thin"/>
            <description>&emoticonsPreview.description;</description>
 -- 
-2.12.2
+2.13.3
 

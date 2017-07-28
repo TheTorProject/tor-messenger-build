@@ -1,0 +1,98 @@
+From b1714145c3e94877a6d0b6bf6a4592e1d3466745 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Thu, 27 Jul 2017 15:16:54 -0400
+Subject: [PATCH 20/20] Update allowed duplicated files for Windows and Linux
+ builds
+
+---
+ im/installer/allowed-dupes.mn | 74 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
+
+diff --git a/im/installer/allowed-dupes.mn b/im/installer/allowed-dupes.mn
+index 988dc2d35a..940418bc9d 100644
+--- a/im/installer/allowed-dupes.mn
++++ b/im/installer/allowed-dupes.mn
+@@ -10,6 +10,80 @@ chrome/instantbird/skin/classic/instantbird/messages/simple/Variants/Normal.css
+ chrome/instantbird/skin/classic/instantbird/messages/simple/Incoming/Context.html
+ chrome/instantbird/skin/classic/instantbird/messages/simple/Incoming/NextContext.html
+ chrome/chat/content/chat/conv.html
++chrome/instantbird/skin/classic/aero/instantbird/engineManager.css
++chrome/instantbird/skin/classic/instantbird/engineManager.css
++chrome/instantbird/skin/classic/aero/instantbird/tabbrowser/tab-overflow-border.png
++chrome/instantbird/skin/classic/instantbird/tabbrowser/tab-overflow-border.png
++chrome/instantbird/skin/classic/aero/instantbird/alert.css
++chrome/instantbird/skin/classic/instantbird/alert.css
++chrome/instantbird/skin/classic/aero/instantbird/tabbrowser/tab.png
++chrome/instantbird/skin/classic/instantbird/tabbrowser/tab.png
++chrome/instantbird/skin/classic/aero/instantbird/collapse.png
++chrome/instantbird/skin/classic/aero/instantbird/expand.png
++chrome/instantbird/skin/classic/aero/instantbird/menus.css
++chrome/instantbird/skin/classic/instantbird/menus.css
++chrome/instantbird/skin/classic/aero/instantbird/menulist.css
++chrome/instantbird/skin/classic/instantbird/menulist.css
++chrome/instantbird/skin/classic/aero/instantbird/richlistbox.css
++chrome/instantbird/skin/classic/instantbird/richlistbox.css
++chrome/instantbird/skin/classic/aero/instantbird/debugLogPanel.css
++chrome/instantbird/skin/classic/instantbird/debugLogPanel.css
++chrome/instantbird/skin/classic/aero/instantbird/newConversation.png
++chrome/instantbird/skin/classic/instantbird/newConversation.png
++chrome/instantbird/skin/classic/aero/instantbird/debugLog.css
++chrome/instantbird/skin/classic/instantbird/debugLog.css
++chrome/instantbird/skin/classic/aero/instantbird/tabbrowser/tab-arrow-left.png
++chrome/instantbird/skin/classic/instantbird/tabbrowser/tab-arrow-left.png
++chrome/instantbird/skin/classic/aero/instantbird/actionicon-tab.png
++chrome/instantbird/skin/classic/instantbird/actionicon-tab.png
++chrome/instantbird/skin/classic/aero/instantbird/viewlog.css
++chrome/instantbird/skin/classic/instantbird/viewlog.css
++chrome/instantbird/skin/classic/aero/instantbird/userIcon.svg
++chrome/instantbird/skin/classic/instantbird/userIcon.svg
++chrome/instantbird/skin/classic/aero/instantbird/tabbrowser/mainwindow-dropdown-arrow.png
++chrome/instantbird/skin/classic/instantbird/tabbrowser/mainwindow-dropdown-arrow.png
++chrome/instantbird/skin/classic/aero/instantbird/webcam.png
++chrome/instantbird/skin/classic/instantbird/webcam.png
++chrome/instantbird/skin/classic/aero/instantbird/select-file.png
++chrome/instantbird/skin/classic/instantbird/select-file.png
++chrome/instantbird/skin/classic/aero/instantbird/preferences/applications.css
++chrome/instantbird/skin/classic/instantbird/preferences/applications.css
++chrome/instantbird/skin/classic/aero/instantbird/tabbrowser/newtab.png
++chrome/instantbird/skin/classic/instantbird/tabbrowser/newtab.png
++chrome/instantbird/skin/classic/aero/instantbird/founder.png
++chrome/instantbird/skin/classic/instantbird/founder.png
++chrome/instantbird/skin/classic/aero/instantbird/half-operator.png
++chrome/instantbird/skin/classic/instantbird/half-operator.png
++chrome/instantbird/skin/classic/aero/instantbird/userIcon.png
++chrome/instantbird/skin/classic/instantbird/userIcon.png
++chrome/instantbird/skin/classic/aero/instantbird/accountWizard.css
++chrome/instantbird/skin/classic/instantbird/accountWizard.css
++chrome/instantbird/skin/classic/aero/instantbird/operator.png
++chrome/instantbird/skin/classic/instantbird/operator.png
++chrome/instantbird/skin/classic/aero/instantbird/voice.png
++chrome/instantbird/skin/classic/instantbird/voice.png
++chrome/instantbird/skin/classic/aero/instantbird/newtab.css
++chrome/instantbird/skin/classic/instantbird/newtab.css
++chrome/instantbird/skin/classic/aero/instantbird/preferences/preferences.css
++chrome/instantbird/skin/classic/instantbird/preferences/preferences.css
++chrome/instantbird/skin/classic/aero/instantbird/newMessage.png
++chrome/instantbird/skin/classic/instantbird/newMessage.png
++chrome/instantbird/skin/classic/aero/instantbird/tabbrowser.css
++chrome/instantbird/skin/classic/instantbird/tabbrowser.css
++chrome/instantbird/skin/classic/aero/instantbird/tabbrowser/tabDragIndicator.png
++chrome/instantbird/skin/classic/instantbird/tabbrowser/tabDragIndicator.png
++chrome/instantbird/skin/classic/aero/instantbird/multiUserIcon.png
++chrome/instantbird/skin/classic/instantbird/multiUserIcon.png
++chrome/toolkit/skin/classic/global/icons/collapse.png
++chrome/instantbird/skin/classic/instantbird/collapse.png
++chrome/toolkit/skin/classic/global/icons/expand.png
++chrome/instantbird/skin/classic/instantbird/expand.png
++chrome/toolkit/skin/classic/global/icons/collapse.png
++chrome/instantbird/skin/classic/instantbird/collapse.png
++chrome/toolkit/skin/classic/global/icons/expand.png
++chrome/instantbird/skin/classic/instantbird/expand.png
++chrome/icons/default/default16.png
++icons/default16.png
+ 
+ # Variants of paths in mozilla/browser/installer/allowed-dupes.mn
+ # and mail/installer/allowed-dupes.mn:
+-- 
+2.13.3
+

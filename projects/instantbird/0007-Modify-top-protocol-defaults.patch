@@ -1,21 +1,18 @@
-From 2d8c5549ba5c0aa71a166bc504c431edab8f755f Mon Sep 17 00:00:00 2001
+From 38a38fc162111ed0a9983ceefccbdbac81e73bcc Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
-Date: Mon, 10 Oct 2016 19:25:34 -0700
-Subject: [PATCH 12/28] Modify protocol defaults
+Date: Wed, 26 Jul 2017 16:16:09 -0400
+Subject: [PATCH 07/20] Modify top protocol defaults
 
- * Top protocols
-
- * Hide get protocols
 ---
  im/content/accountWizard.xul                                 | 2 +-
- im/locales/en-US/chrome/instantbird/accountWizard.properties | 4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ im/locales/en-US/chrome/instantbird/accountWizard.properties | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
-index de9d0d809..cce8a1ba9 100644
+index 135b68386c..356321dbcc 100644
 --- a/im/content/accountWizard.xul
 +++ b/im/content/accountWizard.xul
-@@ -50,7 +50,7 @@
+@@ -51,7 +51,7 @@
      <listbox flex="1" id="protolist"
               ondblclick="document.getElementById('accountWizard').advance();"/>
      <hbox pack="end">
@@ -25,16 +22,10 @@ index de9d0d809..cce8a1ba9 100644
      </hbox>
    </wizardpage>
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
-index d552a232b..7d371bd21 100644
+index efb0b77aee..83f807181f 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
-@@ -8,11 +8,13 @@
- # Exceeding 4 protocols may cause scrolling. A list of the
- # available protocols can be found at
- #     https://wiki.instantbird.org/Protocol_Identifiers
--topProtocol.list=prpl-gtalk,prpl-twitter,prpl-aim,prpl-yahoo,prpl-irc
-+topProtocol.list=prpl-irc,prpl-jabber,prpl-twitter,prpl-gtalk
- 
+@@ -13,6 +13,8 @@ topProtocol.list=prpl-gtalk,prpl-twitter,prpl-aim,prpl-irc,prpl-jabber
  # LOCALIZATION NOTE
  # These are the descriptions of the top protocols specified above.
  # A description should be provided for each protocol ID listed above.
@@ -44,5 +35,5 @@ index d552a232b..7d371bd21 100644
  topProtocol.prpl-twitter.description=Stay up to date with your Twitter timeline
  topProtocol.prpl-aim.description=Chat with your buddies on AOL Instant Messenger
 -- 
-2.12.2
+2.13.3
 

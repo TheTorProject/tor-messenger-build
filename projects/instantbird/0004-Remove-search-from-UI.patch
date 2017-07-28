@@ -1,7 +1,7 @@
-From 1416efe7c0d089fa0782f8234c66096f5d5e9520 Mon Sep 17 00:00:00 2001
+From 7ecf693b9af472fce841b2bf10ea332967e5de91 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:47:48 -0700
-Subject: [PATCH 09/28] Remove search from UI
+Subject: [PATCH 04/20] Remove search from UI
 
 ---
  im/content/nsContextMenu.js         | 18 +-----------------
@@ -9,7 +9,7 @@ Subject: [PATCH 09/28] Remove search from UI
  2 files changed, 1 insertion(+), 28 deletions(-)
 
 diff --git a/im/content/nsContextMenu.js b/im/content/nsContextMenu.js
-index 5261b793f..f667793be 100644
+index 5261b793fc..f667793be0 100644
 --- a/im/content/nsContextMenu.js
 +++ b/im/content/nsContextMenu.js
 @@ -468,23 +468,7 @@ nsContextMenu.prototype = {
@@ -38,7 +38,7 @@ index 5261b793f..f667793be 100644
  
    // Returns true if anything is selected.
 diff --git a/im/content/preferences/advanced.xul b/im/content/preferences/advanced.xul
-index fad67c190..cfe2405ea 100644
+index fad67c190b..cfe2405ea3 100644
 --- a/im/content/preferences/advanced.xul
 +++ b/im/content/preferences/advanced.xul
 @@ -143,17 +143,6 @@
@@ -60,5 +60,5 @@ index fad67c190..cfe2405ea 100644
            <groupbox>
              <caption label="&configEditDesc.label;"/>
 -- 
-2.12.2
+2.13.3
 

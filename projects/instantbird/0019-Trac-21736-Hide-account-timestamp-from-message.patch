@@ -1,7 +1,7 @@
-From ef9ba3773fa442dd6b0d1b60056a2f07940cdc6c Mon Sep 17 00:00:00 2001
+From 9227ec7506dee6230c95f0f04d99fe694e2f8672 Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Sun, 2 Apr 2017 13:07:09 -0400
-Subject: [PATCH 28/28] Trac 21736 - Hide account/timestamp from message
+Subject: [PATCH 19/20] Trac 21736 - Hide account/timestamp from message
 
 ---
  chat/modules/imThemes.jsm         | 9 ++++-----
@@ -9,7 +9,7 @@ Subject: [PATCH 28/28] Trac 21736 - Hide account/timestamp from message
  2 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/chat/modules/imThemes.jsm b/chat/modules/imThemes.jsm
-index be6026c07..ad822cd86 100644
+index a723d742bf..95d917f0d7 100644
 --- a/chat/modules/imThemes.jsm
 +++ b/chat/modules/imThemes.jsm
 @@ -892,8 +892,7 @@ SelectedMessage.prototype = {
@@ -44,7 +44,7 @@ index be6026c07..ad822cd86 100644
      }
  
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index 89593abeb..3b31c61ee 100644
+index 454ca7ea1b..e23c93a4b3 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -47,6 +47,11 @@ pref("extensions.systemAddon.update.url", "");
@@ -60,5 +60,5 @@ index 89593abeb..3b31c61ee 100644
  /* This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
 -- 
-2.12.2
+2.13.3
 

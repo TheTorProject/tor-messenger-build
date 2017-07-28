@@ -1,0 +1,23 @@
+From 18dbc6d30ed1707c89859aca360b59edf429169e Mon Sep 17 00:00:00 2001
+From: Vu Quoc Huy <huyvq.c633@gmail.com>
+Date: Wed, 26 Jul 2017 16:38:19 -0400
+Subject: [PATCH 18/20] Trac 17517 - Use different color for Add Exception
+
+---
+ chat/content/accounts.css | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/chat/content/accounts.css b/chat/content/accounts.css
+index 807184209b..8ce7f9ad81 100644
+--- a/chat/content/accounts.css
++++ b/chat/content/accounts.css
+@@ -31,3 +31,6 @@ richlistitem:not([reconnectPending="true"]) description[anonid="reconnect"]
+ {
+   display: none;
+ }
++richlistitem[selected="true"] .addException {
++  color: #fff;
++}
+-- 
+2.13.3
+
