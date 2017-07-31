@@ -46,7 +46,8 @@ If you are running Debian or Ubuntu, you can install them with:
                   libio-captureoutput-perl libfile-slurp-perl \
                   libstring-shellquote-perl libsort-versions-perl \
                   libdigest-sha-perl libdata-uuid-perl libdata-dump-perl \
-                  git mercurial zip
+                  libfile-copy-recursive-perl git libgtk2.0-dev curl runc \
+                  mercurial
 ```
 
 If you are running Fedora (24 or later), you can install them with:
