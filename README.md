@@ -20,9 +20,9 @@ files to and from containers.
 The sources are downloaded using git and mercurial which need to be
 installed.
 
-```
 If you are running Debian or Ubuntu, you can install the build dependencies
 with the following command:
+
 ```
 # apt-get install libyaml-libyaml-perl libtemplate-perl \
                   libio-handle-util-perl libio-all-perl \
