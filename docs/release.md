@@ -92,7 +92,7 @@ assumes that A is the older version and B is the newer one.
             channels:
                 release: B
             B:
-                platformVersion: 45.6.0
+                platformVersion: 52.2.0
                 detailsURL: https://blog.torproject.org/blog/tor-messenger-B-released
                 incremental_from:
                   - A
