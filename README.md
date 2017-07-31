@@ -4,42 +4,25 @@ Tor Messenger Build
 Installing build dependencies
 -----------------------------
 
-To build Tor Messenger, you need a Linux distribution that has support
-for Docker (such as Debian jessie, Ubuntu 14.04, Fedora 20, etc ...).
-The Docker package is usually named docker.io or docker-io.
-On Debian jessie, the docker.io package is available in backports.
+To build Tor Messenger, you need a Linux distribution that has support for
+runc (such as Debian jessie, Ubuntu 14.04, Fedora 20, etc ...).
 
-Your user account should have access to the docker command without using
-sudo, so it should be in the docker group.
+On Debian jessie, the runc package is available in backports. On Debian
+stretch, the runc package is available in the main repository.
+Version 0.1.1 of runc is required (which is the version available in
+Debian stretch and jessie-backports). It is not yet working with runc
+version 1.0.0: https://trac.torproject.org/projects/tor/ticket/23039
 
-    sudo usermod -aG docker $(whoami)
-
-The docker daemon should also be running.
+Your user account should have access sudo access, which is required to
+be able to extract container file systems, start containers and copy
+files to and from containers.
 
 The sources are downloaded using git and mercurial which need to be
 installed.
 
-You also need a few perl modules installed:
-
 ```
-- YAML::XS
-- File::Basename
-- Getopt::Long
-- Template
-- IO::Handle
-- IO::CaptureOutput
-- File::Temp
-- File::Slurp
-- File::Path
-- String::ShellQuote
-- Sort::Versions
-- Digest::SHA
-- Data::UUID
-- Data::Dump
-```
-
-If you are running Debian or Ubuntu, you can install them with:
-
+If you are running Debian or Ubuntu, you can install the build dependencies
+with the following command:
 ```
 # apt-get install libyaml-libyaml-perl libtemplate-perl \
                   libio-handle-util-perl libio-all-perl \
@@ -48,17 +31,6 @@ If you are running Debian or Ubuntu, you can install them with:
                   libdigest-sha-perl libdata-uuid-perl libdata-dump-perl \
                   libfile-copy-recursive-perl git libgtk2.0-dev curl runc \
                   mercurial
-```
-
-If you are running Fedora (24 or later), you can install them with:
-
-```
-# dnf install 'perl(YAML::XS)' 'perl(File::Basename)' 'perl(Getopt::Long)' \
-              'perl(Template)' 'perl(IO::Handle)' 'perl(IO::CaptureOutput)' \
-              'perl(File::Temp)' 'perl(File::Slurp)' 'perl(File::Path)' \
-              'perl(String::ShellQuote)' 'perl(Sort::Versions)' \
-              'perl(Digest::SHA)' 'perl(Data::UUID)' 'perl(Data::Dump)' \
-              git mercurial zip
 ```
 
 Starting a build
