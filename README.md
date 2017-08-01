@@ -5,7 +5,7 @@ Installing build dependencies
 -----------------------------
 
 To build Tor Messenger, you need a Linux distribution that has support for
-runc (such as Debian jessie, Ubuntu 14.04, Fedora 20, etc ...).
+runc (such as Debian jessie, Ubuntu 16.04, Fedora 20, etc ...).
 
 On Debian jessie, the runc package is available in backports. On Debian
 stretch, the runc package is available in the main repository.
