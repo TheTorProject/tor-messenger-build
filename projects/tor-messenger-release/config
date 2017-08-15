@@ -2,42 +2,47 @@
 version: '[% c("var/tormessenger_version") %]'
 output_dir: 'release'
 
+targets:
+  tormessenger-all:
+    - tormessenger-linux-x86_64
+    - tormessenger-linux-i686
+    - tormessenger-windows-i686
+    - tormessenger-osx-x86_64
+  tormessenger-linux-x86_64:
+    var:
+      tormessenger-linux-x86_64: 1
+  tormessenger-linux-i686:
+    var:
+      tormessenger-linux-i686: 1
+  tormessenger-windows-i686:
+    var:
+      tormessenger-windows-i686: 1
+  tormessenger-osx-x86_64:
+    var:
+      tormessenger-osx-x86_64: 1
+
 input_files:
 
  - name: linux-x86_64
    project: tor-messenger
+   enable: '[% c("var/tormessenger-linux-x86_64") %]'
    target:
-     - tor-messenger
-     - linux-x86_64
+     - tormessenger-linux-x86_64
 
  - name: linux-i686
    project: tor-messenger
+   enable: '[% c("var/tormessenger-linux-x86_64") %]'
    target:
-     - tor-messenger
-     - linux-i686
+     - tormessenger-linux-i686
 
  - name: windows-i686
    project: tor-messenger
+   enable: '[% c("var/tormessenger-windows-i686") %]'
    target:
-     - tor-messenger
-     - windows-i686
+     - tormessenger-windows-i686
 
  - name: osx-x86_64
    project: tor-messenger
+   enable: '[% c("var/tormessenger-osx-x86_64") %]'
    target:
-     - tor-messenger
-     - osx-x86_64
-
-build: |
-  #!/bin/sh
-  set -e
-  export LC_ALL=C
-  destdir="[% dest_dir _ '/' _ c("version") %]"
-  mkdir -p "$destdir"
-  mv [% c('input_files_by_name/windows-i686') %]/* "$destdir"/
-  mv [% c('input_files_by_name/osx-x86_64') %]/* "$destdir"/
-  mv [% c('input_files_by_name/linux-i686') %]/* "$destdir"/
-  mv [% c('input_files_by_name/linux-x86_64') %]/* "$destdir"/
-  cd "$destdir"
-  sha256sum $(ls -1 *.exe *.tar.xz *.dmg *.mar | grep -v '\.incremental\.mar$' | sort) > sha256sums-unsigned-build.txt
-  cat sha256sums-unsigned-build.txt
+     - tormessenger-osx-x86_64

@@ -1,0 +1,23 @@
+#!/bin/sh
+[% c("var/set_default_env") -%]
+[% IF ENV.HOME %]export HOME="[% ENV.HOME %]"[% END %]
+destdir="[% dest_dir _ '/' _ c("version") %]"
+mkdir -p "$destdir"
+[% IF c("var/tormessenger-windows-i686") -%]
+mv [% c('input_files_by_name/windows-i686') %]/* "$destdir"/
+[% END -%]
+[% IF c("var/tormessenger-osx-x86_64") -%]
+mv [% c('input_files_by_name/osx-x86_64') %]/* "$destdir"/
+[% END -%]
+[% IF c("var/tormessenger-linux-i686") -%]
+mv [% c('input_files_by_name/linux-i686') %]/* "$destdir"/
+[% END -%]
+[% IF c("var/tormessenger-linux-x86_64") -%]
+mv [% c('input_files_by_name/linux-x86_64') %]/* "$destdir"/
+[% END -%]
+cd "$destdir"
+sha256sum $(ls -1 *.exe *.tar.xz *.dmg *.mar *.zip | grep -v '\.incremental\.mar$' | sort) > sha256sums-unsigned-build.txt
+[% IF c("var/sign_build") -%]
+gpg -abs [% c("var/sign_build_gpg_opts") %] sha256sums-unsigned-build.txt
+[% END -%]
+cat sha256sums-unsigned-build.txt
