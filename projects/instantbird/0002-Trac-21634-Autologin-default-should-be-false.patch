@@ -1,7 +1,7 @@
-From d6d5054c6dd1aaa01d14729ebcbd423dec2146b7 Mon Sep 17 00:00:00 2001
+From 7e93084b924a4a3ffdaf6576b1e948f96ae4bcc5 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 16 Nov 2015 20:37:53 -0800
-Subject: [PATCH 02/20] Trac 21634: Autologin default should be false
+Subject: [PATCH 02/21] Trac 21634: Autologin default should be false
 
 ---
  chat/components/src/imAccounts.js | 2 +-
@@ -35,5 +35,5 @@ index d51df3225c..904d22ba57 100644
  
  </wizard>
 -- 
-2.13.3
+2.14.1
 

@@ -1,0 +1,143 @@
+From 5dc03a0202fc8fefef5eb3956d417a36edc26010 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Tue, 15 Aug 2017 16:40:33 -0400
+Subject: [PATCH 21/21] Bug 13855: Use known onions for XMPP servers
+
+---
+ im/content/accountWizard.js                        | 42 +++++++++++++++++++++-
+ im/content/accountWizard.xul                       |  6 ++--
+ .../chrome/instantbird/accountWizard.properties    |  2 ++
+ 3 files changed, 47 insertions(+), 3 deletions(-)
+
+diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
+index 2ca9ba3b0e..e6e895ec72 100644
+--- a/im/content/accountWizard.js
++++ b/im/content/accountWizard.js
+@@ -7,6 +7,14 @@ Cu.import("resource:///modules/imServices.jsm");
+ 
+ var PREF_EXTENSIONS_GETMOREPROTOCOLSURL = "extensions.getMoreProtocolsURL";
+ 
++// Borrowed and inspired by xmpp-client.
++var kServerOnions = {
++  "riseup.net":                "4cjw6cwpeaeppfqz.onion",
++  "jabber.ccc.de":             "okj7xc6j2szr2y75.onion",
++  "jabber.otr.im":             "5rgdtlawqkcplz75.onion",
++  "jabber.calyxinstitute.org": "ijeeynrc6x2uy5ob.onion",
++}
++
+ var accountWizard = {
+   onload: function aw_onload() {
+     let topProtoList = document.getElementById("topprotolist");
+@@ -112,6 +120,21 @@ var accountWizard = {
+     return textbox;
+   },
+ 
++  insertOnionAddress: function aw_insertOnionAddress() {
++    // Currently, we only use onion addresses for XMPP.
++    if (this.proto.id == "prpl-jabber") {
++      // If the value of the domain is one for which there exists a
++      // hidden service, replace the address with the onion address.
++      this.jabberDomain = document.getElementById("username-split-0");
++      if (this.jabberDomain.value in kServerOnions) {
++        this.onionAddress = kServerOnions[this.jabberDomain.value];
++      }
++      else {
++        this.onionAddress = "";
++      }
++    }
++  },
++
+   showUsernamePage: function aw_showUsernamePage() {
+     let proto = this.proto.id;
+     if ("userNameBoxes" in this && this.userNameProto == proto) {
+@@ -173,11 +196,19 @@ var accountWizard = {
+     document.getElementById("accountusername").next = next;
+   },
+ 
++  setOnionAddress: function aw_setOnionAddress() {
++    if (this.proto.id == "prpl-jabber") {
++      document.getElementById("prpl-jabber-server").value = this.onionAddress;
++    }
++  },
++
+   showAdvanced: function aw_showAdvanced() {
+     // ensure we don't destroy user data if it's not necessary
+     let id = this.proto.id;
+-    if ("protoSpecOptId" in this && this.protoSpecOptId == id)
++    if ("protoSpecOptId" in this && this.protoSpecOptId == id) {
++      this.setOnionAddress();
+       return;
++    }
+     this.protoSpecOptId = id;
+ 
+ /* FIXME
+@@ -185,6 +216,7 @@ var accountWizard = {
+       !this.proto.newMailNotification;
+ */
+     this.populateProtoSpecificBox();
++    this.setOnionAddress();
+ 
+     let proxyVisible = this.proto.usePurpleProxy;
+     if (proxyVisible) {
+@@ -344,8 +376,16 @@ var accountWizard = {
+       let label = bundle.getFormattedString("accountColon", [opt.opt.label]);
+       rows.appendChild(this.createSummaryRow(label, opt.value));
+     }
++
++    if (this.onionAddress) {
++      let onionLabel = document.getElementById("topProtocolsBundle");
++      let onion = document.getElementById("onionAddress");
++      onion.value = onionLabel.getFormattedString("onionAddress.label",
++                                  [this.onionAddress, this.jabberDomain.value]);
++    }
+   },
+ 
++
+   createAccount: function aw_createAccount() {
+     let acc = Services.accounts.createAccount(this.username, this.proto.id);
+     if (!this.proto.noPassword && this.password)
+diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
+index 73c9d93777..26b0bfa91c 100644
+--- a/im/content/accountWizard.xul
++++ b/im/content/accountWizard.xul
+@@ -62,7 +62,8 @@
+               label="&accountUsernameTitle.label;"
+               onpageshow="accountWizard.showUsernamePage();"
+               onpagehide="accountWizard.hideUsernamePage();"
+-              onpagerewound="return accountWizard.rewindFromUsernamePage();">
++              onpagerewound="return accountWizard.rewindFromUsernamePage();"
++              onpageadvanced="return accountWizard.insertOnionAddress();">
+     <description id="usernameInfo"/>
+     <separator/>
+     <vbox id="userNameBox"/>
+@@ -102,7 +103,7 @@
+     <checkbox id="newMailNotification"
+               label="&accountAdvanced.newMailNotification.label;" hidden="true"/>
+ 
+-    <groupbox id="protoSpecificGroupbox" class="collapsable" closed="true"
++    <groupbox id="protoSpecificGroupbox" class="collapsable" closed="false"
+               onkeypress="accountWizard.onGroupboxKeypress(event)">
+       <caption id="protoSpecificCaption"
+                onclick="accountWizard.toggleGroupbox('protoSpecificGroupbox')"/>
+@@ -141,6 +142,7 @@
+       </columns>
+       <rows id="summaryRows"/>
+     </grid>
++    <description id="onionAddress" />
+     <separator/>
+     <checkbox id="connectAutomatically" label= "&accountSummary.connectAutomatically.label;" checked="false"/>
+   </wizardpage>
+diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
+index 83f807181f..60c00f9acb 100644
+--- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
++++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
+@@ -20,3 +20,5 @@ topProtocol.prpl-twitter.description=Stay up to date with your Twitter timeline
+ topProtocol.prpl-aim.description=Chat with your buddies on AOL Instant Messenger
+ topProtocol.prpl-irc.description=Join IRC channels
+ topProtocol.prpl-jabber.description=Chat using the open Jabber/XMPP protocol
++
++onionAddress.label=%S is %S's onion address.
+
+-- 
+2.14.1
+

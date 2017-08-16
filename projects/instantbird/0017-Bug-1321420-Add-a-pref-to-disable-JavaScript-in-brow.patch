@@ -1,7 +1,7 @@
-From be3edcf0ba689d39099053416d696312f09dc89e Mon Sep 17 00:00:00 2001
+From 5d57ad7cc87c2121ff23c9f8ab2f846e18218afe Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 26 Jul 2017 16:35:33 -0400
-Subject: [PATCH 17/20] Bug 1321420 - Add a pref to disable JavaScript in
+Subject: [PATCH 17/21] Bug 1321420 - Add a pref to disable JavaScript in
  browser requests
 
 ---
@@ -48,5 +48,5 @@ index c52c8c637d..0069219fa6 100644
                                Components.interfaces.nsIWebProgress.NOTIFY_ALL);
    let url = request.url;
 -- 
-2.13.3
+2.14.1
 

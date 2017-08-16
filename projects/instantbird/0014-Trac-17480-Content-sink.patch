@@ -1,7 +1,7 @@
-From 9e6b44bf88fc19991a927b93e57997dfb8265bd2 Mon Sep 17 00:00:00 2001
+From 8f39e0c901880909232c40929b6c4c16550a6f1c Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 5 Oct 2016 11:09:25 -0700
-Subject: [PATCH 14/20] Trac 17480: Content sink
+Subject: [PATCH 14/21] Trac 17480: Content sink
 
 ---
  chat/modules/imContentSink.jsm     | 33 ++++++---------------------------
@@ -107,5 +107,5 @@ index 3b8ccfa2b3..ba41da76aa 100644
            <menuitem value="0" label="&filterLevelNone;"/>
          </menupopup>
 -- 
-2.13.3
+2.14.1
 

@@ -1,7 +1,7 @@
-From b1714145c3e94877a6d0b6bf6a4592e1d3466745 Mon Sep 17 00:00:00 2001
+From 07ebd648ddf5b9002d8c7beffcaf19339c0fc2ef Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Thu, 27 Jul 2017 15:16:54 -0400
-Subject: [PATCH 20/20] Update allowed duplicated files for Windows and Linux
+Subject: [PATCH 20/21] Update allowed duplicated files for Windows and Linux
  builds
 
 ---
@@ -94,5 +94,5 @@ index 988dc2d35a..940418bc9d 100644
  # Variants of paths in mozilla/browser/installer/allowed-dupes.mn
  # and mail/installer/allowed-dupes.mn:
 -- 
-2.13.3
+2.14.1
 

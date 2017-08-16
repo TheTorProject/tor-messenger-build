@@ -1,7 +1,7 @@
-From a6b4c0169258cdbac8efe64456ac8d9fbe6bb468 Mon Sep 17 00:00:00 2001
+From 7a406cd69822b331fed519f85cd80845d66fb054 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:31:58 -0700
-Subject: [PATCH 08/20] Modify IRC defaults
+Subject: [PATCH 08/21] Modify IRC defaults
 
  * ctcp ping
 
@@ -61,5 +61,5 @@ index 43ed2ced4b..c2f16bee84 100644
                   ". Sending TIME response: \"" + now + "\".");
          this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now);
 -- 
-2.13.3
+2.14.1
 

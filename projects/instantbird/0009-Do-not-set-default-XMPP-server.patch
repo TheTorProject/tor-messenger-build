@@ -1,7 +1,7 @@
-From 8a766e365c6dca55dec95cae000f6c30054b8467 Mon Sep 17 00:00:00 2001
+From 715152543027e0c8b2e0bf8a96777855ee6b244c Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Fri, 28 Jul 2017 12:11:57 -0400
-Subject: [PATCH 09/20] Do not set default XMPP server
+Subject: [PATCH 09/21] Do not set default XMPP server
 
 ---
  chat/protocols/xmpp/xmpp.js | 2 +-
@@ -21,5 +21,5 @@ index 2afb15f059..1d2c167d3e 100644
  
    options: {
 -- 
-2.13.3
+2.14.1
 

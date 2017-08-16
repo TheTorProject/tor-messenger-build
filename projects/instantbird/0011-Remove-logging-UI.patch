@@ -1,7 +1,7 @@
-From 866ec2d04c3026066fca270667d4e3eba2e6ae88 Mon Sep 17 00:00:00 2001
+From d8dc3bfb1ed8c540fa39f809ae2b9c908ecd94ea Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:50:48 -0700
-Subject: [PATCH 11/20] Remove logging UI
+Subject: [PATCH 11/21] Remove logging UI
 
 ---
  im/content/preferences/privacy.xul | 20 --------------------
@@ -39,5 +39,5 @@ index 7c9db1cdd8..2d7b2701ea 100644
      <groupbox id="passwordsGroup" orient="vertical">
        <caption label="&passwords.label;"/>
 -- 
-2.13.3
+2.14.1
 

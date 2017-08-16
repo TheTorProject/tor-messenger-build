@@ -1,13 +1,13 @@
-From c763e4771c903d78ed5168fe4746b9d035d56d85 Mon Sep 17 00:00:00 2001
+From 58f6a00e81e0d20cfe61d7c6dd230190f3e33a89 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 15:46:51 -0400
-Subject: [PATCH 05/20] Add Tor Messenger branding
+Subject: [PATCH 05/21] Add Tor Messenger branding
 
 ---
  im/app/macbuild/Contents/Info.plist.in             |   2 +-
  im/branding/messenger/Makefile.in                  |  49 ++
  im/branding/messenger/background.png               | Bin 0 -> 1143 bytes
- im/branding/messenger/branding.nsi                 |  13 +
+ im/branding/messenger/branding.nsi                 |  12 +
  im/branding/messenger/configure.sh                 |   5 +
  im/branding/messenger/content/about-credits.png    | Bin 0 -> 15182 bytes
  im/branding/messenger/content/about-footer.png     | Bin 0 -> 764 bytes
@@ -54,7 +54,7 @@ Subject: [PATCH 05/20] Add Tor Messenger branding
  im/content/jar.mn                                  |   3 +-
  .../en-US/chrome/instantbird/aboutDialog.dtd       | 139 ++++-
  im/locales/en-US/updater/updater.ini               |   2 +-
- 50 files changed, 1691 insertions(+), 160 deletions(-)
+ 50 files changed, 1690 insertions(+), 160 deletions(-)
  create mode 100644 im/branding/messenger/Makefile.in
  create mode 100644 im/branding/messenger/background.png
  create mode 100755 im/branding/messenger/branding.nsi
@@ -183,10 +183,10 @@ HcmV?d00001
 
 diff --git a/im/branding/messenger/branding.nsi b/im/branding/messenger/branding.nsi
 new file mode 100755
-index 0000000000..4683827fae
+index 0000000000..57a3e4b314
 --- /dev/null
 +++ b/im/branding/messenger/branding.nsi
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,12 @@
 +# This Source Code Form is subject to the terms of the Mozilla Public
 +# License, v. 2.0. If a copy of the MPL was not distributed with this
 +# file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -199,7 +199,6 @@ index 0000000000..4683827fae
 +!define CompanyName           "Tor Project"
 +!define URLInfoAbout          "https://www.torproject.org"
 +!define URLUpdateInfo         "https://www.torproject.org"
-+
 diff --git a/im/branding/messenger/configure.sh b/im/branding/messenger/configure.sh
 new file mode 100644
 index 0000000000..7e580518b9
@@ -4658,7 +4657,7 @@ index 0000000000..e265f239c7
 +  }
 +}
 diff --git a/im/content/aboutDialog.xul b/im/content/aboutDialog.xul
-index c20b4f7add..4fd375d1ad 100644
+index c20b4f7add..edbff07aa4 100644
 --- a/im/content/aboutDialog.xul
 +++ b/im/content/aboutDialog.xul
 @@ -5,126 +5,165 @@
@@ -4922,7 +4921,7 @@ index c20b4f7add..4fd375d1ad 100644
 +    </description>
 +
 +  </vbox>
-+  
++
 +  <keyset>
 +    <key keycode="VK_ESCAPE" oncommand="window.close();"/>
 +  </keyset>
@@ -4968,7 +4967,7 @@ index 88662ff437..5d40350089 100644
  	content/instantbird/accounts.js
  *	content/instantbird/accounts.xul
 diff --git a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd b/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
-index ecd8d9d248..187cf5c3e1 100644
+index ecd8d9d248..5d4285d5ab 100644
 --- a/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
 +++ b/im/locales/en-US/chrome/instantbird/aboutDialog.dtd
 @@ -1,10 +1,129 @@
@@ -5074,7 +5073,7 @@ index ecd8d9d248..187cf5c3e1 100644
 +<!ENTITY update.unsupported.linkText "Learn more">
 +<!ENTITY update.unsupported.end      "">
 +
-+<!-- LOCALIZATION NOTE (update.downloading.start,update.downloading.end): update.downloading.start and 
++<!-- LOCALIZATION NOTE (update.downloading.start,update.downloading.end): update.downloading.start and
 +     update.downloading.end all go into one line, with the amount downloaded inserted in between. As this
 +     is all in one line, try to make the localized text short (see bug 596813 for screenshots). The — is
 +     the "em dash" (long dash).
@@ -5122,5 +5121,5 @@ index 15ec569c11..4a2d35d8a1 100644
 -Info=Instantbird is installing your updates and will start in a few moments…
 +Info=Tor Messenger is installing your updates and will start in a few moments…
 -- 
-2.13.3
+2.14.1
 

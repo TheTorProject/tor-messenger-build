@@ -1,7 +1,7 @@
-From bc8f0f3298a6c69f381ae1640ae93e770259e65a Mon Sep 17 00:00:00 2001
+From 1867c1d9e13691424ab7b688a3c9e2247b92196c Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:36:38 -0700
-Subject: [PATCH 10/20] Modify themes
+Subject: [PATCH 10/21] Modify themes
 
  * theme extension update
 
@@ -74,5 +74,5 @@ index 454e366960..18ba1f95cc 100644
            <separator class="thin"/>
            <description>&emoticonsPreview.description;</description>
 -- 
-2.13.3
+2.14.1
 
