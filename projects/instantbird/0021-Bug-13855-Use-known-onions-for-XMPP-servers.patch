@@ -1,7 +1,7 @@
-From 5dc03a0202fc8fefef5eb3956d417a36edc26010 Mon Sep 17 00:00:00 2001
+From 13d28415441e3c6b481d9eed98658a6ee16784bf Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Tue, 15 Aug 2017 16:40:33 -0400
-Subject: [PATCH 21/21] Bug 13855: Use known onions for XMPP servers
+Subject: [PATCH 21/22] Bug 13855: Use known onions for XMPP servers
 
 ---
  im/content/accountWizard.js                        | 42 +++++++++++++++++++++-
@@ -10,7 +10,7 @@ Subject: [PATCH 21/21] Bug 13855: Use known onions for XMPP servers
  3 files changed, 47 insertions(+), 3 deletions(-)
 
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index 2ca9ba3b0e..e6e895ec72 100644
+index 2ca9ba3b0e..7efedd5ed5 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
 @@ -7,6 +7,14 @@ Cu.import("resource:///modules/imServices.jsm");
@@ -128,7 +128,7 @@ index 73c9d93777..26b0bfa91c 100644
      <checkbox id="connectAutomatically" label= "&accountSummary.connectAutomatically.label;" checked="false"/>
    </wizardpage>
 diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
-index 83f807181f..60c00f9acb 100644
+index 83f807181f..7137dd2db4 100644
 --- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
 +++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
 @@ -20,3 +20,5 @@ topProtocol.prpl-twitter.description=Stay up to date with your Twitter timeline
@@ -137,7 +137,6 @@ index 83f807181f..60c00f9acb 100644
  topProtocol.prpl-jabber.description=Chat using the open Jabber/XMPP protocol
 +
 +onionAddress.label=%S is %S's onion address.
-
 -- 
 2.14.1
 

@@ -1,7 +1,7 @@
-From abca165ac3a238cf896444ef1062dd3413ab7003 Mon Sep 17 00:00:00 2001
+From 7e5fbd59826780777c7b92379d78862d8bd05612 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 16:16:09 -0400
-Subject: [PATCH 07/21] Modify top protocol defaults
+Subject: [PATCH 07/22] Modify top protocol defaults
 
 ---
  im/content/accountWizard.xul                                 | 2 +-

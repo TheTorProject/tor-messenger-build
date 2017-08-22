@@ -1,7 +1,7 @@
-From 8f39e0c901880909232c40929b6c4c16550a6f1c Mon Sep 17 00:00:00 2001
+From 41d1a9ba1370706db0e3ac0be00e696234e557a7 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 5 Oct 2016 11:09:25 -0700
-Subject: [PATCH 14/21] Trac 17480: Content sink
+Subject: [PATCH 14/22] Trac 17480: Content sink
 
 ---
  chat/modules/imContentSink.jsm     | 33 ++++++---------------------------

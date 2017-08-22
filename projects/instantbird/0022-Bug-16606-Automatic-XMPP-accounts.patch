@@ -1,0 +1,158 @@
+From 8a8329f53e3ae6eaaec67fb698a4ab6f0a50d1e6 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Mon, 21 Aug 2017 23:00:07 -0400
+Subject: [PATCH 22/22] Bug 16606: Automatic XMPP accounts
+
+Add support for "temporary" XMPP accounts for which the username and
+password are randomly generated and in-band registration is performed
+automatically. This can also be used for throwaway accounts.
+---
+ chat/protocols/xmpp/xmpp-session.jsm               | 39 +++++++++++++---------
+ im/content/accountWizard.js                        | 34 +++++++++++++++++++
+ im/content/accountWizard.xul                       |  1 +
+ .../en-US/chrome/instantbird/accountWizard.dtd     |  1 +
+ 4 files changed, 59 insertions(+), 16 deletions(-)
+
+diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-session.jsm
+index 1c001064bd..b5b9fde11e 100644
+--- a/chat/protocols/xmpp/xmpp-session.jsm
++++ b/chat/protocols/xmpp/xmpp-session.jsm
+@@ -401,23 +401,30 @@ XMPPSession.prototype = {
+ 
+       this._account.reportConnecting(_("connection.gettingRegistration"));
+       let registerStanza = aStanza.getChildrenByNS(Stanza.NS.register)[0];
+-      // If we get registration data, show the form, else quit.
+-      if (registerStanza.getElement(["x"])) {
+-        this.nodes["username"] = this._jid.node;
+-        registerStanza.wrappedJSObject = registerStanza;
+-        let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
+-                   .getService(Ci.nsIWindowWatcher);
+-        let win = ww.openWindow(null, registerWindow, "",
+-                                "centerscreen,chrome,modal,minimizable=no", registerStanza);
+-      } else {
+-        this.onError(null, _("connection.error.noRegistrationSupport"));
+-        return;
+-      }
+ 
+-      // If the user cancelled the form, we should stop the registration.
+-      if (this.nodes["cancel"]) {
+-        this.onError(null, _("connection.error.registrationCancel"));
+-        return;
++      // For automatic XMPP registration, manually populate the fields.
++      if (this._account.getBool("tempRegister")) {
++            this.nodes["username"] = this._jid.node;
++            this.nodes["password"] = this._password;
++      }
++      else {
++        // If we get registration data, show the form, else quit.
++        if (registerStanza.getElement(["x"])) {
++          this.nodes["username"] = this._jid.node;
++          registerStanza.wrappedJSObject = registerStanza;
++          let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
++                     .getService(Ci.nsIWindowWatcher);
++          let win = ww.openWindow(null, registerWindow, "",
++                                  "centerscreen,chrome,modal,minimizable=no", registerStanza);
++        } else {
++          this.onError(null, _("connection.error.noRegistrationSupport"));
++          return;
++        }
++        // If the user cancelled the form, we should stop the registration.
++        if (this.nodes["cancel"]) {
++          this.onError(null, _("connection.error.registrationCancel"));
++          return;
++        }
+       }
+ 
+       let xml = '<?xml version="1.0"?>';
+diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
+index 7efedd5ed5..f68767f1c8 100644
+--- a/im/content/accountWizard.js
++++ b/im/content/accountWizard.js
+@@ -133,6 +133,10 @@ var accountWizard = {
+         this.onionAddress = "";
+       }
+     }
++    if (document.getElementById("tempXMPP").checked) {
++      document.getElementById("password").value = this.getRandomString(10);
++      document.getElementById("accountWizard").goTo("accountsummary");
++    }
+   },
+ 
+   showUsernamePage: function aw_showUsernamePage() {
+@@ -144,8 +148,10 @@ var accountWizard = {
+ 
+     if (this.proto.id == "prpl-jabber") {
+       document.getElementById("registerXMPP").hidden = false;
++      document.getElementById("tempXMPP").hidden = false;
+     } else {
+       document.getElementById("registerXMPP").hidden = true;
++      document.getElementById("tempXMPP").hidden = true;
+     }
+ 
+     let bundle = document.getElementById("accountsBundle");
+@@ -395,6 +401,7 @@ var accountWizard = {
+     //FIXME: newMailNotification
+ 
+     acc.setBool("register", document.getElementById("registerXMPP").checked);
++    acc.setBool("tempRegister", document.getElementById("tempXMPP").checked);
+ 
+     for (let i = 0; i < this.prefs.length; ++i) {
+       let option = this.prefs[i];
+@@ -499,6 +506,33 @@ var accountWizard = {
+     this.displayProxyDescription();
+   },
+ 
++  getRandomString: function aw_getRandomString(len) {
++    return Math.random().toString(36).substr(2, len);
++  },
++
++  createTempXMPP: function aw_createTempXMPP() {
++    let domain = document.getElementById("username-split-0");
++    let registerXMPP = document.getElementById("registerXMPP");
++    if (document.getElementById("tempXMPP").checked) {
++      domain.disabled = true;
++      domain.value = "jabber.otr.im";
++      registerXMPP.disabled = true;
++      registerXMPP.checked = true;
++      this.userNameBoxes[0].disabled = true;
++      this.userNameBoxes[0].value = this.getRandomString(7);
++      document.getElementById("accountWizard").canAdvance = true;
++    }
++    else {
++      domain.disabled = false;
++      domain.value = "";
++      registerXMPP.disabled = false;
++      registerXMPP.checked = false;
++      this.userNameBoxes[0].disabled = false;
++      this.userNameBoxes[0].value = "";
++      document.getElementById("accountWizard").canAdvance = false;
++    }
++  },
++
+   /* Check for correctness and set URL for the "Get more protocols..."-link
+    *  Stripped down code from preferences/themes.js
+    */
+diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
+index 26b0bfa91c..de7dafe6e1 100644
+--- a/im/content/accountWizard.xul
++++ b/im/content/accountWizard.xul
+@@ -69,6 +69,7 @@
+     <vbox id="userNameBox"/>
+     <separator/>
+     <description id="duplicateAccount" hidden="true">&accountUsernameDuplicate.label;</description>
++    <checkbox id="tempXMPP" label="&tempXMPP.label;" hidden="true" oncommand="accountWizard.createTempXMPP();"/>
+     <checkbox id="registerXMPP" label="&registerXMPP.label;" hidden="true" />
+   </wizardpage>
+ 
+diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.dtd b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
+index 6b49c84fad..de7fe8ed11 100644
+--- a/im/locales/en-US/chrome/instantbird/accountWizard.dtd
++++ b/im/locales/en-US/chrome/instantbird/accountWizard.dtd
+@@ -34,3 +34,4 @@
+ <!ENTITY accountSummary.connectAutomatically.label "Connect this account automatically.">
+ 
+ <!ENTITY registerXMPP.label "Create this new account on the server">
++<!ENTITY tempXMPP.label "Create a temporary account automatically">
+-- 
+2.14.1
+
