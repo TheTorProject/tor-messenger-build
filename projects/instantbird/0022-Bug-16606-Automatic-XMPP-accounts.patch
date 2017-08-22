@@ -1,4 +1,4 @@
-From 8a8329f53e3ae6eaaec67fb698a4ab6f0a50d1e6 Mon Sep 17 00:00:00 2001
+From f0e0efda610e24a5e191ac5e6fd583a5b6c99724 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 21 Aug 2017 23:00:07 -0400
 Subject: [PATCH 22/22] Bug 16606: Automatic XMPP accounts
@@ -8,10 +8,10 @@ password are randomly generated and in-band registration is performed
 automatically. This can also be used for throwaway accounts.
 ---
  chat/protocols/xmpp/xmpp-session.jsm               | 39 +++++++++++++---------
- im/content/accountWizard.js                        | 34 +++++++++++++++++++
+ im/content/accountWizard.js                        | 39 ++++++++++++++++++++++
  im/content/accountWizard.xul                       |  1 +
  .../en-US/chrome/instantbird/accountWizard.dtd     |  1 +
- 4 files changed, 59 insertions(+), 16 deletions(-)
+ 4 files changed, 64 insertions(+), 16 deletions(-)
 
 diff --git a/chat/protocols/xmpp/xmpp-session.jsm b/chat/protocols/xmpp/xmpp-session.jsm
 index 1c001064bd..b5b9fde11e 100644
@@ -65,7 +65,7 @@ index 1c001064bd..b5b9fde11e 100644
  
        let xml = '<?xml version="1.0"?>';
 diff --git a/im/content/accountWizard.js b/im/content/accountWizard.js
-index 7efedd5ed5..f68767f1c8 100644
+index 7efedd5ed5..e0300bf6c4 100644
 --- a/im/content/accountWizard.js
 +++ b/im/content/accountWizard.js
 @@ -133,6 +133,10 @@ var accountWizard = {
@@ -90,7 +90,17 @@ index 7efedd5ed5..f68767f1c8 100644
      }
  
      let bundle = document.getElementById("accountsBundle");
-@@ -395,6 +401,7 @@ var accountWizard = {
+@@ -307,6 +313,9 @@ var accountWizard = {
+   },
+ 
+   showSummary: function aw_showSummary() {
++    if (this.register) {
++      document.getElementById("connectAutomatically").checked = true;
++    }
+     let rows = document.getElementById("summaryRows");
+     let bundle = document.getElementById("accountsBundle");
+     let child;
+@@ -395,6 +404,7 @@ var accountWizard = {
      //FIXME: newMailNotification
  
      acc.setBool("register", document.getElementById("registerXMPP").checked);
@@ -98,7 +108,7 @@ index 7efedd5ed5..f68767f1c8 100644
  
      for (let i = 0; i < this.prefs.length; ++i) {
        let option = this.prefs[i];
-@@ -499,6 +506,33 @@ var accountWizard = {
+@@ -499,6 +509,35 @@ var accountWizard = {
      this.displayProxyDescription();
    },
  
@@ -117,6 +127,7 @@ index 7efedd5ed5..f68767f1c8 100644
 +      this.userNameBoxes[0].disabled = true;
 +      this.userNameBoxes[0].value = this.getRandomString(7);
 +      document.getElementById("accountWizard").canAdvance = true;
++      this.register = true;
 +    }
 +    else {
 +      domain.disabled = false;
@@ -126,6 +137,7 @@ index 7efedd5ed5..f68767f1c8 100644
 +      this.userNameBoxes[0].disabled = false;
 +      this.userNameBoxes[0].value = "";
 +      document.getElementById("accountWizard").canAdvance = false;
++      this.register = false;
 +    }
 +  },
 +
