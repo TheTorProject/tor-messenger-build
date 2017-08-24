@@ -30,7 +30,7 @@ with the following command:
                   libstring-shellquote-perl libsort-versions-perl \
                   libdigest-sha-perl libdata-uuid-perl libdata-dump-perl \
                   libfile-copy-recursive-perl git libgtk2.0-dev curl runc \
-                  mercurial
+                  mercurial zip
 ```
 
 Starting a build
