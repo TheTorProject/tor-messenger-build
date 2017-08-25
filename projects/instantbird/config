@@ -71,6 +71,7 @@ input_files:
   - filename: 0020-Update-allowed-duplicated-files-for-Windows-and-Linu.patch
   - filename: 0021-Bug-13855-Use-known-onions-for-XMPP-servers.patch
   - filename: 0022-Bug-16606-Automatic-XMPP-accounts.patch
+  - filename: get-moz-build-date
   - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
