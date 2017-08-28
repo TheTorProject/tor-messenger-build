@@ -1,6 +1,6 @@
 #!/bin/bash
-set -e
-rootdir=$(pwd)
+[% c("var/set_default_env") -%]
+
 [% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
 mkdir -p /var/tmp/dist
 cd /var/tmp/dist

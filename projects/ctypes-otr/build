@@ -1,5 +1,6 @@
-#!/bin/sh
-set -e
+#!/bin/bash
+[% c("var/set_default_env") -%]
+
 tar xf [% project %]-[% c('version') %].tar.gz
 tar xf [% c('input_files_by_name/libotr') %]
 mv libotr/[% c('var/lib_glob') %] [% project %]-[% c('version') %]/chrome/content/
