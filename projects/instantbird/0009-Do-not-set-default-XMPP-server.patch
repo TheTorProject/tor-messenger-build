@@ -1,4 +1,4 @@
-From e95333af34cbd0b25deb34eb30ad91a249f1273d Mon Sep 17 00:00:00 2001
+From 9ea7c5e3a1bc12ced843b1d4e19b67f333b47f10 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Fri, 28 Jul 2017 12:11:57 -0400
 Subject: [PATCH 09/22] Do not set default XMPP server

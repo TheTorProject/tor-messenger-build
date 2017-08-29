@@ -1,4 +1,4 @@
-From 630a3e4368eff760c8a8445f3743a15796facd19 Mon Sep 17 00:00:00 2001
+From 6234ea255a9e81a93287eab492733ffd8c03424f Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Sun, 2 Apr 2017 13:07:09 -0400
 Subject: [PATCH 19/22] Trac 21736 - Hide account/timestamp from message
@@ -44,7 +44,7 @@ index a723d742bf..95d917f0d7 100644
      }
  
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index 454ca7ea1b..e23c93a4b3 100644
+index fd95a1e6b1..fbc540bc5e 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -47,6 +47,11 @@ pref("extensions.systemAddon.update.url", "");

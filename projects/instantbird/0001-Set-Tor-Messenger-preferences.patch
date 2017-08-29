@@ -1,14 +1,14 @@
-From 945f92e09e833c6e6a86d2abdea5eac0da6f21a2 Mon Sep 17 00:00:00 2001
+From 730e73eb45eb1bd60f48b887e08fea837eb2fb40 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 14:30:41 -0400
 Subject: [PATCH 01/22] Set Tor Messenger preferences
 
 ---
- im/app/profile/all-instantbird.js | 451 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 429 insertions(+), 22 deletions(-)
+ im/app/profile/all-instantbird.js | 455 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 431 insertions(+), 24 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index 127c86a662..454ca7ea1b 100644
+index 127c86a662..fd95a1e6b1 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -1,3 +1,53 @@
@@ -124,6 +124,17 @@ index 127c86a662..454ca7ea1b 100644
  
  // disable logging for the search service update system by default
  pref("browser.search.update.log", false);
+@@ -220,8 +267,8 @@ pref("services.kinto.update_enabled", false);
+ // Block insecure active content on https pages
+ pref("security.mixed_content.block_active_content", true);
+ 
+-// 1 = allow MITM for certificate pinning checks.
+-pref("security.cert_pinning.enforcement_level", 1);
++// 2 = Enforce strict cert pinning.
++pref("security.cert_pinning.enforcement_level", 2);
+ 
+ /* Extension manager */
+ pref("xpinstall.dialog.confirm", "chrome://mozapps/content/xpinstall/xpinstallConfirm.xul");
 @@ -235,10 +282,10 @@ pref("extensions.ignoreMTimeChanges", false);
  pref("extensions.logging.enabled", false);
  pref("general.skins.selectedSkin", "classic/1.0");
@@ -529,7 +540,7 @@ index 127c86a662..454ca7ea1b 100644
 +pref("security.tls.unrestricted_rc4_fallback", false);
 +
 +// Enforce certificate pinning, see: https://bugs.torproject.org/16206
-+pref("security.cert_pinning.enforcement_level", 2);
++// pref("security.cert_pinning.enforcement_level", 2); // TM
 +
 +// Don't allow MitM via Microsoft Family Safety, see bug 21686
 +pref("security.family_safety.mode", 0);
