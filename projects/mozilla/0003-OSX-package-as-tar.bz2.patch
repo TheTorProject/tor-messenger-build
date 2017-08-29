@@ -1,4 +1,4 @@
-From 86db5ef4a59fb21e3dae75d2f0ceefece74d1f6c Mon Sep 17 00:00:00 2001
+From bc3be7cdeaee5a30282c4ef42e99a2c38b3709f1 Mon Sep 17 00:00:00 2001
 From: Nicolas Vigier <boklm@torproject.org>
 Date: Tue, 25 Jul 2017 16:17:08 -0400
 Subject: [PATCH 3/5] OSX: package as tar.bz2
@@ -21,5 +21,5 @@ index 51633178226c..64584f579390 100644
  ifeq (,$(filter-out WINNT, $(OS_ARCH)))
  MOZ_PKG_FORMAT  = ZIP
 -- 
-2.11.0
+2.14.1
 

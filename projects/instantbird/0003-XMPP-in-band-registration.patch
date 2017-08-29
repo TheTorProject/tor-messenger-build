@@ -1,4 +1,4 @@
-From 9c7ed538de969fdaef7de441d275d4c2cd294d9a Mon Sep 17 00:00:00 2001
+From c67cae1deee24e2b440c967d720d033e176e5b8d Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 15:09:40 -0400
 Subject: [PATCH 03/22] XMPP in-band registration

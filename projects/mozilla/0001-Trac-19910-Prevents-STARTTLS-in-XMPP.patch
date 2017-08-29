@@ -1,4 +1,4 @@
-From 47866985426887345c52a66f100f6562a77b6036 Mon Sep 17 00:00:00 2001
+From 517e61f71f911bc2b2fbed5ccdd5acce1f39f1f6 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 25 Jul 2017 15:51:22 -0400
 Subject: [PATCH 1/5] Trac 19910: Prevents STARTTLS in XMPP
@@ -11,10 +11,10 @@ Subject: [PATCH 1/5] Trac 19910: Prevents STARTTLS in XMPP
  3 files changed, 11 insertions(+), 40 deletions(-)
 
 diff --git a/netwerk/base/nsSocketTransport2.cpp b/netwerk/base/nsSocketTransport2.cpp
-index f200b6899d97..cd57ca43aa5c 100644
+index 4399465fe534..a5df391fb7d5 100644
 --- a/netwerk/base/nsSocketTransport2.cpp
 +++ b/netwerk/base/nsSocketTransport2.cpp
-@@ -1975,26 +1975,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+@@ -1983,26 +1983,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
          // Update poll timeout in case it was changed
          mPollTimeout = mTimeouts[TIMEOUT_READ_WRITE];
      }
@@ -42,7 +42,7 @@ index f200b6899d97..cd57ca43aa5c 100644
          // We do not need to do PR_ConnectContinue when we are already
          // shutting down.
  
-@@ -2018,14 +1999,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+@@ -2026,14 +2007,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
                  Telemetry::PRCONNECTCONTINUE_BLOCKING_TIME_OFFLINE);
          }
  
@@ -58,7 +58,7 @@ index f200b6899d97..cd57ca43aa5c 100644
              //
              // we are connected!
              //
-@@ -2052,17 +2026,17 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
+@@ -2060,17 +2034,17 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
              // If the connect is still not ready, then continue polling...
              //
              if ((PR_WOULD_BLOCK_ERROR == code) || (PR_IN_PROGRESS_ERROR == code)) {
@@ -84,7 +84,7 @@ index f200b6899d97..cd57ca43aa5c 100644
                  mCondition = ErrorAccordingToNSPR(code);
              }
 diff --git a/netwerk/base/nsSocketTransport2.h b/netwerk/base/nsSocketTransport2.h
-index 8f3fa87161a1..34e20e586aad 100644
+index b4baed233ff1..7c85ccdc409f 100644
 --- a/netwerk/base/nsSocketTransport2.h
 +++ b/netwerk/base/nsSocketTransport2.h
 @@ -201,9 +201,7 @@ private:
@@ -113,5 +113,5 @@ index a21dfa4a5a11..5429637c1c3a 100644
      void SetNamedPipeFD(PRFileDesc *fd) { mFD = fd; }
  
 -- 
-2.11.0
+2.14.1
 

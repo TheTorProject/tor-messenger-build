@@ -1,4 +1,4 @@
-From 730e73eb45eb1bd60f48b887e08fea837eb2fb40 Mon Sep 17 00:00:00 2001
+From 44eadb31b5f73252cf991328b014b9cb64bde155 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 14:30:41 -0400
 Subject: [PATCH 01/22] Set Tor Messenger preferences

@@ -1,4 +1,4 @@
-From c73ff7051711ba1c44b8d3efc158930ee57b2b73 Mon Sep 17 00:00:00 2001
+From eaf813e223ec20118a82ed81f08598cfaf7a81ef Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Thu, 27 Jul 2017 15:16:54 -0400
 Subject: [PATCH 20/22] Update allowed duplicated files for Windows and Linux

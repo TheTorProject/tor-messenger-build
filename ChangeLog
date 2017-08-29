@@ -1,3 +1,10 @@
+Tor Messenger 0.5.0b1 --
+ * All Platforms
+   * Use the tor-browser-52.3.0esr-7.0-1-build1 tag on tor-browser
+   * Use the THUNDERBIRD_52_3_0_RELEASE tag on comm-esr52
+   * Update tor-browser to 7.0.4
+   * Update tor-launcher to 0.2.12.3
+
 Tor Messenger 0.4.0b3 -- June 13, 2017
  * All Platforms
    * Use the tor-browser-45.9.0esr-6.5-1-build3 tag on tor-browser

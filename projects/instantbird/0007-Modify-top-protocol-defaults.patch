@@ -1,4 +1,4 @@
-From e0736b7a8ca7cea1720015c47552b6b7d7175085 Mon Sep 17 00:00:00 2001
+From a3ebacee503fb025e13110a5838645f3f9b250c9 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 16:16:09 -0400
 Subject: [PATCH 07/22] Modify top protocol defaults
