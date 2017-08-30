@@ -1,4 +1,4 @@
-From e27529ddb8f28889416f6ec829d4f13c05ec1b53 Mon Sep 17 00:00:00 2001
+From 08785730b9ccc353900cc8807b4b2cd5ae348337 Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Wed, 26 Jul 2017 16:38:19 -0400
 Subject: [PATCH 18/22] Trac 17517 - Use different color for Add Exception

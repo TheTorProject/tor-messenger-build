@@ -1,4 +1,4 @@
-From eeef298b165b6c91bcb7da7c288d332e1805e823 Mon Sep 17 00:00:00 2001
+From ab5dabcf6221b83733482587c6ccdb3975b30b46 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 16 Nov 2015 20:37:53 -0800
 Subject: [PATCH 02/22] Trac 21634: Autologin default should be false

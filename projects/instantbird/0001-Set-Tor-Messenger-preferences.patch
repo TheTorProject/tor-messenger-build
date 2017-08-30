@@ -1,17 +1,17 @@
-From 44eadb31b5f73252cf991328b014b9cb64bde155 Mon Sep 17 00:00:00 2001
+From 3aef7c8034e706afa8f0b3e31ecd03c8f9017ab4 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 14:30:41 -0400
 Subject: [PATCH 01/22] Set Tor Messenger preferences
 
 ---
- im/app/profile/all-instantbird.js | 455 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 431 insertions(+), 24 deletions(-)
+ im/app/profile/all-instantbird.js | 458 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 434 insertions(+), 24 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index 127c86a662..fd95a1e6b1 100644
+index 127c86a662..31b3744c63 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
-@@ -1,3 +1,53 @@
+@@ -1,3 +1,56 @@
 +/**
 + * This file is divided into three section,
 + *
@@ -53,6 +53,9 @@ index 127c86a662..fd95a1e6b1 100644
 +// Disable JavaScript in browser requests
 +pref("chat.browserRequest.disableJavascript", true);
 +
++// Whether to disable SRV lookups that use the system DNS library.
++pref("chat.dns.srv.disable", true);
++
 +// No AUS check for system add-on updates for Tor Browser users.
 +// This pref is taken from the TB diff of browser/app/profile/firefox.js
 +pref("extensions.systemAddon.update.url", "");
@@ -65,7 +68,7 @@ index 127c86a662..fd95a1e6b1 100644
  /* This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-@@ -28,7 +78,7 @@ pref("general.autoScroll", true);
+@@ -28,7 +81,7 @@ pref("general.autoScroll", true);
  // 0 = spellcheck nothing
  // 1 = check multi-line controls [default]
  // 2 = check multi/single line controls
@@ -74,7 +77,7 @@ index 127c86a662..fd95a1e6b1 100644
  
  pref("messenger.accounts.convertOldPasswords", true);
  pref("messenger.accounts.promptOnDelete", true);
-@@ -66,7 +116,7 @@ pref("extensions.mintrayr.singleClickRestore", false);
+@@ -66,7 +119,7 @@ pref("extensions.mintrayr.singleClickRestore", false);
  
  // Whether message related sounds should be played at all. If this is enabled
  // then the more specific prefs are checked as well.
@@ -83,7 +86,7 @@ index 127c86a662..fd95a1e6b1 100644
  // Specifies whether each message event should trigger a sound for incoming
  // and outgoing messages, or when your nickname is mentioned in a chat.
  pref("messenger.options.playSounds.outgoing", true);
-@@ -142,26 +192,23 @@ pref("app.update.staging.enabled", true);
+@@ -142,26 +195,23 @@ pref("app.update.staging.enabled", true);
  
  // Update service URL:
  // You do not need to use all the %VAR% parameters. Use what you need, %PRODUCT%,%VERSION%,%BUILD_ID%,%CHANNEL% for example
@@ -115,7 +118,7 @@ index 127c86a662..fd95a1e6b1 100644
  
  // Interval: Time before prompting the user to restart to install the latest
  //           download (in seconds) default=30 minutes
-@@ -195,7 +242,7 @@ pref("browser.search.order.1",                "chrome://instantbird/locale/regio
+@@ -195,7 +245,7 @@ pref("browser.search.order.1",                "chrome://instantbird/locale/regio
  pref("browser.search.order.2",                "chrome://instantbird/locale/region.properties");
  
  // send ping to the server to update
@@ -124,7 +127,7 @@ index 127c86a662..fd95a1e6b1 100644
  
  // disable logging for the search service update system by default
  pref("browser.search.update.log", false);
-@@ -220,8 +267,8 @@ pref("services.kinto.update_enabled", false);
+@@ -220,8 +270,8 @@ pref("services.kinto.update_enabled", false);
  // Block insecure active content on https pages
  pref("security.mixed_content.block_active_content", true);
  
@@ -135,7 +138,7 @@ index 127c86a662..fd95a1e6b1 100644
  
  /* Extension manager */
  pref("xpinstall.dialog.confirm", "chrome://mozapps/content/xpinstall/xpinstallConfirm.xul");
-@@ -235,10 +282,10 @@ pref("extensions.ignoreMTimeChanges", false);
+@@ -235,10 +285,10 @@ pref("extensions.ignoreMTimeChanges", false);
  pref("extensions.logging.enabled", false);
  pref("general.skins.selectedSkin", "classic/1.0");
  
@@ -148,7 +151,7 @@ index 127c86a662..fd95a1e6b1 100644
  
  // Preferences for the Get Add-ons pane
  pref("extensions.getAddons.cache.enabled", false);
-@@ -265,16 +312,16 @@ pref("plugins.click_to_play", false);
+@@ -265,16 +315,16 @@ pref("plugins.click_to_play", false);
  pref("plugin.default.state", 0);
  
  // Plugins bundled in XPIs are enabled by default.
@@ -169,7 +172,7 @@ index 127c86a662..fd95a1e6b1 100644
  
  // don't load links inside Instantbird
  pref("network.protocol-handler.expose-all", false);
-@@ -286,13 +333,13 @@ pref("network.protocol-handler.expose.https", true);
+@@ -286,13 +336,13 @@ pref("network.protocol-handler.expose.https", true);
  
  // expose javascript: so that message themes can use it.
  // javascript: links inside messages are filtered out.
@@ -186,7 +189,7 @@ index 127c86a662..fd95a1e6b1 100644
  
  // We have an Error Console menu item by default so let's display chrome errors
  pref("javascript.options.showInConsole", true);
-@@ -327,7 +374,7 @@ pref("browser.tabs.tabClipWidth", 140);
+@@ -327,7 +377,7 @@ pref("browser.tabs.tabClipWidth", 140);
  // 3  at the end of the tabstrip
  pref("browser.tabs.closeButtons", 1);
  
@@ -195,7 +198,7 @@ index 127c86a662..fd95a1e6b1 100644
  
  pref("chat.twitter.consumerKey", "TSuyS1ieRAkB3qWv8yyEw");
  pref("chat.twitter.consumerSecret", "DKtKaSf5a7pBNhdBsSZHTnI5Y03hRlPFYWmb4xXBlkU");
-@@ -337,4 +384,364 @@ pref("chat.twitter.consumerSecret", "DKtKaSf5a7pBNhdBsSZHTnI5Y03hRlPFYWmb4xXBlkU
+@@ -337,4 +387,364 @@ pref("chat.twitter.consumerSecret", "DKtKaSf5a7pBNhdBsSZHTnI5Y03hRlPFYWmb4xXBlkU
  pref("chat.prpls.forcePurple", "");
  
  // Whether to parse log files for conversation statistics.
