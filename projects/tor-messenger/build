@@ -16,6 +16,10 @@ mkdir bundle
 [% IF c("var/windows") -%]
 7z x -y -obundle [% c('input_files_by_name/instantbird') %]/instantbird.zip
 mv bundle/instantbird bundle/Browser
+
+cp -a $rootdir/msvcr100.dll bundle/Browser
+cp -a [% c('input_files_by_name/instantbird') %]/libssp-0.dll bundle/Browser
+
 [% ELSE -%]
 mkdir bundle/Browser
 tar xf [% c('input_files_by_name/instantbird') %]/instantbird.tar.bz2 -C bundle/Browser --strip 1
@@ -122,6 +126,7 @@ python pe_checksum_fix.py
 mv tor-messenger-install-tmp2.exe tor-messenger-install.exe
 rm tor-messenger-install-tmp.exe
 mv tor-messenger-install.exe $OUTDIR/[% c('var/bundle_filename') %]
+
 [% ELSE -%]
 [% c('tar', {
         tar_src => [ 'tor-messenger' ],

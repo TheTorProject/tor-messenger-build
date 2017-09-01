@@ -39,6 +39,9 @@ input_files:
   - project: nsis
     name: nsis
     enable: '[% c("var/windows") %]'
+  - URL: https://people.torproject.org/~mikeperry/mirrors/sources/msvcr100.dll
+    sha256sum: 1221a09484964a6f38af5e34ee292b9afefccb3dc6e55435fd3aaf7c235d9067
+    enable: '[% c("var/windows") %]'
   - project: container-image
 
 var:

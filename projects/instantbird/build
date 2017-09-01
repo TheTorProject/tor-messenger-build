@@ -61,6 +61,24 @@ then
 fi
 
 [% IF c("var/windows") %]
+  # FIXME
+  # Ideally, using LDFLAGS (and e.g. DLLFLAGS for NSS) would be enough to get
+  # all Firefox libraries linked against msvcr100. Alas, this does not hold for
+  # NSPR. Without patching it we get a "missing entry points for _strcmpi in
+  # msvcr100.dll". Now, this should be fixed in rev>=6179 as the def file there
+  # contains a proper patch according to the mingw-w64 developers.
+  # However, even with this patch the _strcmpi issue is still popping up,
+  # probably due to a bug in our current linking setup. The small patch below
+  # is therefore just a workaround which should get fixed but is at least
+  # justified as the signature of _strcmpi and _stricmp is the same, see:
+  # http://msdn.microsoft.com/en-us/library/k59z8dwe.aspx.
+  sed 's/strcmpi/stricmp/' -i mozilla/nsprpub/pr/src/linking/prlink.c
+  export HOST_LDFLAGS=" "
+  export LDFLAGS="-specs=/var/tmp/dist/mingw-w64/msvcr100.spec"
+  # Our flags don't get passed to NSS. We need to do that manually using an
+  # obscure one.
+  export DLLFLAGS="-specs=/var/tmp/dist/mingw-w64/msvcr100.spec"
+
   # Make sure widl is not inserting random timestamps, see #21837.
   export WIDL_TIME_OVERRIDE="0"
 [% END %]
@@ -78,7 +96,12 @@ echo ac_add_options --with-tor-browser-version='[% c("var/tormessenger_version")
 ./mozilla/mach package
 
 mkdir -p [% dest_dir _ '/' _ c('filename') %]
+
 mv obj-*/dist/instantbird-*.[% c('var/archive_suffix') %] [% dest_dir _ '/' _ c('filename') %]/instantbird.[% c('var/archive_suffix') %]
+
+[% IF c("var/windows") %]
+  cp -a $gcclibs/libssp-0.dll [% dest_dir _ '/' _ c('filename') %]/
+[% END %]
 
 MARTOOLS=/var/tmp/dist/mar-tools
 mkdir -p $MARTOOLS
@@ -97,6 +120,7 @@ cp -p obj-*/dist/host/bin/mbsdiff $MARTOOLS/
 [% END -%]
 
 cd /var/tmp/dist
+
 [% c('zip', {
         zip_src => [ 'mar-tools' ],
         zip_args => dest_dir _ '/' _ c('filename') _ '/' _ c('var/martools_filename'),
