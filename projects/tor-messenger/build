@@ -119,6 +119,7 @@ MAR=$MARTOOLS/mar MBSDIFF=$MARTOOLS/mbsdiff[% IF c("var/windows") %].exe[% END %
 [% END %]
 
 [% IF c('var/windows') -%]
+find tor-messenger -exec [% c("var/touch") %] {} \;
 makensis tor-messenger.nsi
 
 mv tor-messenger-install.exe tor-messenger-install-tmp.exe
