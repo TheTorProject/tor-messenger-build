@@ -4,6 +4,13 @@ Tor Messenger 0.5.0b1 --
    * Use the THUNDERBIRD_52_3_0_RELEASE tag on comm-esr52
    * Update tor-browser to 7.0.4
    * Update tor-launcher to 0.2.12.3
+   * Trac 22005: Move to ESR 52
+   * Trac 16606: Temporary XMPP accounts
+   * Trac 13855: Use known onions for XMPP servers
+ * Mac
+   * Trac 20316: Update OS X toolchain
+ * Windows
+   * Trac 17469: Tor Messenger is not working on Windows XP
 
 Tor Messenger 0.4.0b3 -- June 13, 2017
  * All Platforms
