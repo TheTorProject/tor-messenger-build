@@ -1,4 +1,4 @@
-From a9bb56bdb91d98709d66036b09bb39ad05436651 Mon Sep 17 00:00:00 2001
+From 5589e17c4747a3c30edc3e5a980f80abac92c744 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Tue, 29 Aug 2017 14:45:29 -0400
 Subject: [PATCH 16/22] Bug 1321641 - Use built-in functions instead of an svg

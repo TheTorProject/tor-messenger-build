@@ -1,4 +1,4 @@
-From 44fc8b702b71754b1f86e38b0085f784777298d8 Mon Sep 17 00:00:00 2001
+From e3150c2c9018a68b1582a2c30c7e6821ea223c64 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 21 Aug 2017 23:00:07 -0400
 Subject: [PATCH 22/22] Bug 16606: Automatic XMPP accounts

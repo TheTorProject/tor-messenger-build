@@ -1,12 +1,11 @@
-From 4273f5eaed18c4454e2e44abcf65934e2c36b403 Mon Sep 17 00:00:00 2001
+From 293de6a98f59314906fb493931e4da08c145edb9 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 16:16:09 -0400
 Subject: [PATCH 07/22] Modify top protocol defaults
 
 ---
- im/content/accountWizard.xul                                 | 2 +-
- im/locales/en-US/chrome/instantbird/accountWizard.properties | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ im/content/accountWizard.xul | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/im/content/accountWizard.xul b/im/content/accountWizard.xul
 index 135b68386c..356321dbcc 100644
@@ -21,19 +20,6 @@ index 135b68386c..356321dbcc 100644
               onclick="if (event.button == 0) { accountWizard.openURL(this.getAttribute('getMoreURL')); }"/>
      </hbox>
    </wizardpage>
-diff --git a/im/locales/en-US/chrome/instantbird/accountWizard.properties b/im/locales/en-US/chrome/instantbird/accountWizard.properties
-index efb0b77aee..83f807181f 100644
---- a/im/locales/en-US/chrome/instantbird/accountWizard.properties
-+++ b/im/locales/en-US/chrome/instantbird/accountWizard.properties
-@@ -13,6 +13,8 @@ topProtocol.list=prpl-gtalk,prpl-twitter,prpl-aim,prpl-irc,prpl-jabber
- # LOCALIZATION NOTE
- # These are the descriptions of the top protocols specified above.
- # A description should be provided for each protocol ID listed above.
-+topProtocol.prpl-irc.description=Connect to your favourite IRC network
-+topProtocol.prpl-jabber.description=Chat with friends using XMPP
- topProtocol.prpl-gtalk.description=Talk to your Gmail contacts
- topProtocol.prpl-twitter.description=Stay up to date with your Twitter timeline
- topProtocol.prpl-aim.description=Chat with your buddies on AOL Instant Messenger
 -- 
 2.14.1
 
