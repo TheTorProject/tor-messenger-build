@@ -68,6 +68,7 @@ targets:
       mar_osname: osx64
       arch_deps:
         - genisoimage
+        - faketime
         - bsdtar
   linux-i686:
     var:

@@ -72,6 +72,9 @@ find . ! -executable -exec chmod 644 {} \;
 find . -type f | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" > ../filelist.txt
 find . -type l | sed -e 's/^\.\///' | sort | xargs -i echo "{}={}" >> ../filelist.txt
 
+export LD_PRELOAD=[% c("var/faketime_path") %]
+export FAKETIME="[% USE date; GET date.format(c('timestamp'), format = '%Y-%m-%d %H:%M:%S') %]"
+
 genisoimage -D -V "Tor Messenger" -no-pad -R -apple -o ../TorMessenger-uncompressed.dmg -path-list ../filelist.txt -graft-points -gid 20 -dir-mode 0755 -new-dir-mode 0755
 cd ..
 OUTDIR='[% dest_dir _ "/" _ c("filename") %]'
