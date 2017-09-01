@@ -14,8 +14,15 @@ cd /var/tmp/build/[% project %]-[% c('version') %]
 sed -i 's/^BUILD_TIMESTAMP=.*/BUILD_TIMESTAMP=2000-01-01T00:00+0000/' configure
 export SOURCE_DATE_EPOCH=$(stat -c %Y ChangeLog)
 ./configure --prefix=$distdir [% c("var/configure_opt") %][% IF c('var/windows') or c('var/osx') %] --enable-static --disable-shared[% END %]
+[% IF c("var/osx") -%]
+  export LD_PRELOAD=[% c("var/faketime_path") %]
+  export FAKETIME="[% USE date; GET date.format(c('timestamp'), format = '%Y-%m-%d %H:%M:%S') %]"
+[% END -%]
 make -j4
 make prefix=$distdir install
+[% IF c("var/osx") -%]
+  unset LD_PRELOAD
+[% END -%]
 cd /var/tmp/dist
 [% c('tar', {
         tar_src => [ project ],

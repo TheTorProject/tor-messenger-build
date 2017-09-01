@@ -13,6 +13,10 @@ targets:
     var:
       arch_deps:
         - gettext
+  osx-x86_64:
+    var:
+      arch_deps:
+        - faketime
 input_files:
   - URL: 'ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-[% c("version") %].tar.bz2'
     sig_ext: sig

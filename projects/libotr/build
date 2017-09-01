@@ -15,8 +15,15 @@ tar -C /var/tmp/build -xf libotr-[% c('version') %].tar.gz
 cd /var/tmp/build/libotr-[% c('version') %]
 export SOURCE_DATE_EPOCH=$(stat -c %Y ChangeLog)
 ./configure --prefix=$distdir [% c("var/configure_opt") %]
+[% IF c("var/osx") -%]
+  export LD_PRELOAD=[% c("var/faketime_path") %]
+  export FAKETIME="[% USE date; GET date.format(c('timestamp'), format = '%Y-%m-%d %H:%M:%S') %]"
+[% END -%]
 make -j4 [% IF c("var/windows") %]LDFLAGS='-no-undefined -lssp'[% END %]
 make prefix=$distdir install
+[% IF c("var/osx") -%]
+  unset LD_PRELOAD
+[% END -%]
 cd /var/tmp/dist
 [% c('tar', {
         tar_src => [ project ],

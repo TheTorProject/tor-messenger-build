@@ -17,6 +17,10 @@ targets:
       configure_opt: '--host=i686-w64-mingw32 CFLAGS="[% c("var/CFLAGS_otr") %]" LDFLAGS="[% c("var/LDFLAGS_otr") %]" CC="i686-w64-mingw32-gcc -static-libgcc"'
       CFLAGS_otr: '[% c("var/CFLAGS") %] -Wl,-Bstatic,-L/var/tmp/dist/libgcrypt/lib,-lgcrypt,-L/var/tmp/dist/libgpg-error/lib,-lgpg-error,-Bdynamic'
       LDFLAGS_otr: '[% c("var/LDFLAGS") %] -Wl,-Bstatic,-L/var/tmp/dist/libgcrypt/lib,-lgcrypt,-L/var/tmp/dist/libgpg-error/lib,-lgpg-error,-Bdynamic'
+  osx-x86_64:
+    var:
+      arch_deps:
+        - faketime
 input_files:
   - filename: 'libotr-[% c("version") %].tar.gz'
     URL: 'https://otr.cypherpunks.ca/libotr-[% c("version") %].tar.gz'
