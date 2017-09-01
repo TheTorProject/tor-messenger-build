@@ -1,9 +1,11 @@
-From 517e61f71f911bc2b2fbed5ccdd5acce1f39f1f6 Mon Sep 17 00:00:00 2001
+From c0d3a7d4edcba39a098e5025271f7b7d59344304 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
-Date: Tue, 25 Jul 2017 15:51:22 -0400
+Date: Fri, 1 Sep 2017 17:39:04 -0400
 Subject: [PATCH 1/5] Trac 19910: Prevents STARTTLS in XMPP
 
- * Revert "Bug #3875: Use Optimistic Data SOCKS variant."
+ * Revert "Bug 3875: Use Optimistic Data SOCKS variant."
+
+This reverts commit 9b0df5bf5da258439fb0a697f81e903882c315a9.
 ---
  netwerk/base/nsSocketTransport2.cpp | 44 ++++++++-----------------------------
  netwerk/base/nsSocketTransport2.h   |  4 +---
@@ -11,7 +13,7 @@ Subject: [PATCH 1/5] Trac 19910: Prevents STARTTLS in XMPP
  3 files changed, 11 insertions(+), 40 deletions(-)
 
 diff --git a/netwerk/base/nsSocketTransport2.cpp b/netwerk/base/nsSocketTransport2.cpp
-index 4399465fe534..a5df391fb7d5 100644
+index 4399465fe534..1bfd1fc91525 100644
 --- a/netwerk/base/nsSocketTransport2.cpp
 +++ b/netwerk/base/nsSocketTransport2.cpp
 @@ -1983,26 +1983,7 @@ nsSocketTransport::OnSocketReady(PRFileDesc *fd, int16_t outFlags)
@@ -38,7 +40,7 @@ index 4399465fe534..a5df391fb7d5 100644
 -    }
 -    else if (((mState == STATE_CONNECTING) || (mState = STATE_SENTGET)) &&
 -             !gIOService->IsNetTearingDown()) {
-+    else if (mState == STATE_CONNECTING) {
++    else if ((mState == STATE_CONNECTING) && !gIOService->IsNetTearingDown()) {
          // We do not need to do PR_ConnectContinue when we are already
          // shutting down.
  

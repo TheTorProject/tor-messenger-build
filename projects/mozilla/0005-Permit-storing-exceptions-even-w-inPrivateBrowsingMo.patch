@@ -1,6 +1,6 @@
-From 0de194c75c3667d40ba6c48496c7b710efde2b19 Mon Sep 17 00:00:00 2001
+From 013421c4b0d74bc94fb3b460e7d3bcc0293f9c0f Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
-Date: Tue, 25 Jul 2017 16:24:25 -0400
+Date: Sat, 3 Dec 2016 10:01:52 -0800
 Subject: [PATCH 5/5] Permit storing exceptions even w/ inPrivateBrowsingMode
 
 ---

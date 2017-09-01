@@ -1,6 +1,6 @@
-From 5f2d3904f8d068bb9b48e521d609bc971f34fee3 Mon Sep 17 00:00:00 2001
+From cfc8d680995fed12cc63633699dc28b40bb124a3 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
-Date: Tue, 25 Jul 2017 16:20:49 -0400
+Date: Fri, 1 Sep 2017 17:45:40 -0400
 Subject: [PATCH 4/5] Updater fixups for TM
 
  * Remove updater links
