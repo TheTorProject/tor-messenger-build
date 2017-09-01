@@ -12,6 +12,7 @@ Tor Messenger 0.5.0b1 --
    * Trac 10942: Deterministic builds for Instantbird
  * Windows
    * Trac 17469: Tor Messenger is not working on Windows XP
+   * Trac 10942: Deterministic builds for Instantbird
 
 Tor Messenger 0.4.0b3 -- June 13, 2017
  * All Platforms
