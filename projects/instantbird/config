@@ -83,6 +83,9 @@ input_files:
   - name: binutils
     project: binutils
     enable: '[% c("var/linux") %]'
+  - project: selfrando
+    name: selfrando
+    enable: '[% c("var/linux") %]'
   - project: gcc
     name: gcc
     enable: '[% c("var/windows") %]'

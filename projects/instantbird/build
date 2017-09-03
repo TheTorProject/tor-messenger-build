@@ -28,6 +28,14 @@ mkdir -p /var/tmp/build
   export PATH="/var/tmp/dist/binutils/bin:$PATH"
 [% END -%]
 
+[% IF c("var/linux") -%]
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/selfrando') %]
+  # Selfrando wrapper
+  export PATH="/var/tmp/dist/selfrando/Tools/TorBrowser/tc-wrapper/:$PATH"
+  # We need to avoid the shuffling while building as this breaks compilation
+  export SELFRANDO_skip_shuffle=
+[% END -%]
+
 tar -C /var/tmp/build -xf [% project %]-[% c('version') %].tar.gz
 
 [% IF c("var/osx") %]
