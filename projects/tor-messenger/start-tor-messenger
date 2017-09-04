@@ -272,6 +272,7 @@ fi
 
 LD_LIBRARY_PATH="${HOME}/TorBrowser/Tor/:${HOME}/TorBrowser/Data/Browser/profile.default/extensions/ctypes-otr@tormessenger/chrome/content"
 export LD_LIBRARY_PATH
+export SELFRANDO_write_layout_file=
 
 function setControlPortPasswd() {
     local ctrlPasswd=$1
