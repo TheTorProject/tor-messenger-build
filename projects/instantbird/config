@@ -56,7 +56,7 @@ input_files:
   - filename: 0005-Add-Tor-Messenger-branding.patch
   - filename: 0006-Remove-option-for-configuring-account-picture.patch
   - filename: 0007-Modify-top-protocol-defaults.patch
-  - filename: 0008-Modify-IRC-defaults.patch
+  - filename: 0008-Set-default-IRC-server.patch
   - filename: 0009-Do-not-set-default-XMPP-server.patch
   - filename: 0010-Modify-themes.patch
   - filename: 0011-Remove-logging-UI.patch
