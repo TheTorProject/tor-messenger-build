@@ -1,0 +1,25 @@
+From 26d577feaf868898af32ecc3402b579ba964cf41 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Wed, 6 Sep 2017 09:44:42 -0400
+Subject: [PATCH 08/23] Set default IRC server
+
+---
+ chat/protocols/irc/irc.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
+index 4f056274bd..d7d5db4a99 100644
+--- a/chat/protocols/irc/irc.js
++++ b/chat/protocols/irc/irc.js
+@@ -1953,7 +1953,7 @@ ircProtocol.prototype = {
+ 
+   usernameSplits: [
+     {get label() { return _("options.server"); }, separator: "@",
+-     defaultValue: "chat.freenode.net", reverse: true}
++     defaultValue: "", reverse: true}
+   ],
+ 
+   options: {
+-- 
+2.14.1
+

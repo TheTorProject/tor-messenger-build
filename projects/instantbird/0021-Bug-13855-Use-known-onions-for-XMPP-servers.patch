@@ -1,7 +1,7 @@
-From 3420f52e84a8902eee7394e98474781fd02014ce Mon Sep 17 00:00:00 2001
+From 59e7ff55e9a1cd5646c3d51c6088f4e0aa5503bf Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Tue, 15 Aug 2017 16:40:33 -0400
-Subject: [PATCH 21/22] Bug 13855: Use known onions for XMPP servers
+Subject: [PATCH 21/23] Bug 13855: Use known onions for XMPP servers
 
 ---
  im/content/accountWizard.js                        | 42 +++++++++++++++++++++-

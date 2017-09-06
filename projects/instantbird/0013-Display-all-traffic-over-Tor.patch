@@ -1,7 +1,7 @@
-From ccb6940299d87e001b392c10d028dfc3ac5b9516 Mon Sep 17 00:00:00 2001
+From c48da8076030ac22a45b586bdd7b87beae8b619a Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:58:31 -0700
-Subject: [PATCH 13/22] Display all traffic over Tor
+Subject: [PATCH 13/23] Display all traffic over Tor
 
 ---
  im/content/accountWizard.xul                          | 2 ++

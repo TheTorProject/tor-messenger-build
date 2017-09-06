@@ -1,0 +1,57 @@
+From 722cde31f73f3b8137d1dcb7bb15140e79e4a483 Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Wed, 6 Sep 2017 09:47:41 -0400
+Subject: [PATCH 23/23] Handle CTCP requests
+
+- CTCP TIME returns the time in UTC instead of the local time with the
+seconds timer stripped to prevent detailed time resolution.
+
+- CTCP PING is disabled.
+---
+ chat/protocols/irc/ircCTCP.jsm | 22 ++++++----------------
+ 1 file changed, 6 insertions(+), 16 deletions(-)
+
+diff --git a/chat/protocols/irc/ircCTCP.jsm b/chat/protocols/irc/ircCTCP.jsm
+index 43ed2ced4b..dd9c92f2bb 100644
+--- a/chat/protocols/irc/ircCTCP.jsm
++++ b/chat/protocols/irc/ircCTCP.jsm
+@@ -167,19 +167,7 @@ var ctcpBase = {
+     },
+ 
+     // Used to measure the delay of the IRC network between clients.
+-    "PING": function(aMessage) {
+-      // PING timestamp
+-      if (aMessage.command == "PRIVMSG") {
+-        // Received PING request, send PING response.
+-        this.LOG("Received PING request from " + aMessage.origin +
+-                 ". Sending PING response: \"" + aMessage.ctcp.param + "\".");
+-        this.sendCTCPMessage(aMessage.origin, true, "PING",
+-                             aMessage.ctcp.param);
+-        return true;
+-      }
+-      else
+-        return this.handlePingReply(aMessage.origin, aMessage.ctcp.param);
+-    },
++    // "PING": function(aMessage) {
+ 
+     // These are commented out since CLIENTINFO automatically returns the
+     // supported CTCP parameters and this is not supported.
+@@ -195,10 +183,12 @@ var ctcpBase = {
+       if (aMessage.command == "PRIVMSG") {
+         // TIME
+         // Received a TIME request, send a human readable response.
+-        let now = (new Date()).toString();
++        let now = new Date();
++        // Strip the seconds.
++        now.setSeconds(0);
+         this.LOG("Received TIME request from " + aMessage.origin +
+-                 ". Sending TIME response: \"" + now + "\".");
+-        this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now);
++                 ". Sending TIME response: \"" + now.toUTCString() + "\".");
++        this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now.toUTCString());
+       }
+       else {
+         // TIME :<human-readable-time-string>
+-- 
+2.14.1
+

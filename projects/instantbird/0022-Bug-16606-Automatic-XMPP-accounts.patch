@@ -1,7 +1,7 @@
-From e3150c2c9018a68b1582a2c30c7e6821ea223c64 Mon Sep 17 00:00:00 2001
+From 76df7e308d3220430e85be0e2e4cc521295ddd96 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 21 Aug 2017 23:00:07 -0400
-Subject: [PATCH 22/22] Bug 16606: Automatic XMPP accounts
+Subject: [PATCH 22/23] Bug 16606: Automatic XMPP accounts
 
 Add support for "temporary" XMPP accounts for which the username and
 password are randomly generated and in-band registration is performed
