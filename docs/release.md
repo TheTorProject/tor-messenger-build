@@ -149,9 +149,14 @@ Offline Steps End
 - Back to the build machine: navigate to tools/update-responses/. Run
   `./update_responses` to generate the update manifest.
 
+- cd back to the releases/tor-messenger/signed/$VERSION/ directory.
+
 - Generate the checksums for the builds:
 
         sha256sum `ls -I "*.zip" -I "*.txt"` > sha256sums-signed-build.txt
+
+- Ensure that the sha256sums-signed-build.txt contains only the relevant
+  files.
 
 - GPG sign the sha256sums-signed-build.txt file:
 
