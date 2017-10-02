@@ -1,0 +1,5 @@
+build-sunet-b ansible_ssh_user=root ansible_ssh_host=build-sunet-b.torproject.net
+
+[tm-build]
+build-sunet-b
+

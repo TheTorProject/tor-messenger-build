@@ -1,0 +1,9 @@
+---
+
+- hosts: tm-build
+  roles:
+      - role: tbb-builder
+      - role: useful-packages
+      - role: tm-team
+      - role: mta
+      - role: unattended-upgrades

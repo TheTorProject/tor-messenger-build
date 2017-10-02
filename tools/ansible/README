@@ -1,0 +1,13 @@
+This directory contains some ansible script that we use to setup some
+machines that we use for Tor Messenger development.
+
+To deploy some changes you need the ansible package to be installed on
+your machine, and be able to log in with ssh as root on the machine(s)
+where the changes need to be deployed.
+
+You can then use one of the following makefile targets:
+
+ansible-tm-build:
+  Deploy changes to the machine used by Tor Messenger team members to do
+  some Tor Messenger builds.
+
