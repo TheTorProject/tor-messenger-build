@@ -12,3 +12,4 @@
       - torsocks
       - screen
       - mercurial
+      - genisoimage
