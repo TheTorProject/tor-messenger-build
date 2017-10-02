@@ -1,0 +1,14 @@
+---
+
+- name: Install some useful packages
+  apt:
+      name: "{{ item }}"
+      state: present
+  with_items:
+      - locales
+      - vim-nox
+      - tmux
+      - tor
+      - torsocks
+      - screen
+      - mercurial
