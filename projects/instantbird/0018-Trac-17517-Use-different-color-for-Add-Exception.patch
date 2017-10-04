@@ -1,7 +1,7 @@
-From baeb48bfa3e1185a533b3576c6c1afd653d963cf Mon Sep 17 00:00:00 2001
+From b723d4de0d05219342e0c25353c29f1863a9df5a Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Wed, 26 Jul 2017 16:38:19 -0400
-Subject: [PATCH 18/22] Trac 17517 - Use different color for Add Exception
+Subject: [PATCH 18/23] Trac 17517 - Use different color for Add Exception
 
 ---
  chat/content/accounts.css | 3 +++

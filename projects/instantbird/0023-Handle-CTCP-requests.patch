@@ -1,33 +1,18 @@
-From 5c4c225ebc5b63e6a4701bfa52857caf2ab0461d Mon Sep 17 00:00:00 2001
+From 722cde31f73f3b8137d1dcb7bb15140e79e4a483 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
-Date: Mon, 10 Oct 2016 19:31:58 -0700
-Subject: [PATCH 08/22] Modify IRC defaults
+Date: Wed, 6 Sep 2017 09:47:41 -0400
+Subject: [PATCH 23/23] Handle CTCP requests
 
- * ctcp ping
+- CTCP TIME returns the time in UTC instead of the local time with the
+seconds timer stripped to prevent detailed time resolution.
 
- * ctcp time
-
- * irc default server
+- CTCP PING is disabled.
 ---
- chat/protocols/irc/irc.js      |  2 +-
- chat/protocols/irc/ircCTCP.jsm | 16 ++--------------
- 2 files changed, 3 insertions(+), 15 deletions(-)
+ chat/protocols/irc/ircCTCP.jsm | 22 ++++++----------------
+ 1 file changed, 6 insertions(+), 16 deletions(-)
 
-diff --git a/chat/protocols/irc/irc.js b/chat/protocols/irc/irc.js
-index 4f056274bd..d7d5db4a99 100644
---- a/chat/protocols/irc/irc.js
-+++ b/chat/protocols/irc/irc.js
-@@ -1953,7 +1953,7 @@ ircProtocol.prototype = {
- 
-   usernameSplits: [
-     {get label() { return _("options.server"); }, separator: "@",
--     defaultValue: "chat.freenode.net", reverse: true}
-+     defaultValue: "", reverse: true}
-   ],
- 
-   options: {
 diff --git a/chat/protocols/irc/ircCTCP.jsm b/chat/protocols/irc/ircCTCP.jsm
-index 43ed2ced4b..c2f16bee84 100644
+index 43ed2ced4b..dd9c92f2bb 100644
 --- a/chat/protocols/irc/ircCTCP.jsm
 +++ b/chat/protocols/irc/ircCTCP.jsm
 @@ -167,19 +167,7 @@ var ctcpBase = {
@@ -51,15 +36,22 @@ index 43ed2ced4b..c2f16bee84 100644
  
      // These are commented out since CLIENTINFO automatically returns the
      // supported CTCP parameters and this is not supported.
-@@ -195,7 +183,7 @@ var ctcpBase = {
+@@ -195,10 +183,12 @@ var ctcpBase = {
        if (aMessage.command == "PRIVMSG") {
          // TIME
          // Received a TIME request, send a human readable response.
 -        let now = (new Date()).toString();
-+        let now = (new Date()).toUTCString();
++        let now = new Date();
++        // Strip the seconds.
++        now.setSeconds(0);
          this.LOG("Received TIME request from " + aMessage.origin +
-                  ". Sending TIME response: \"" + now + "\".");
-         this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now);
+-                 ". Sending TIME response: \"" + now + "\".");
+-        this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now);
++                 ". Sending TIME response: \"" + now.toUTCString() + "\".");
++        this.sendCTCPMessage(aMessage.origin, true, "TIME", ":" + now.toUTCString());
+       }
+       else {
+         // TIME :<human-readable-time-string>
 -- 
 2.14.1
 

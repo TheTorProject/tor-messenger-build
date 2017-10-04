@@ -1,7 +1,7 @@
-From 1f7835fa96fb79e580ff76508bdebe6fe294f101 Mon Sep 17 00:00:00 2001
+From 69329d669c7009637dd65800dd3b66e9e09f761e Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Sun, 2 Apr 2017 13:07:09 -0400
-Subject: [PATCH 19/22] Trac 21736 - Hide account/timestamp from message
+Subject: [PATCH 19/23] Trac 21736 - Hide account/timestamp from message
 
 ---
  chat/modules/imThemes.jsm         | 9 ++++-----
