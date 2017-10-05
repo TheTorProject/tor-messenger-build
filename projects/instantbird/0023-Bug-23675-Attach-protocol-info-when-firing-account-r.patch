@@ -1,0 +1,31 @@
+From 8831b24b1503e1011d8f0e76e80bdc1929890f0b Mon Sep 17 00:00:00 2001
+From: Vu Quoc Huy <huyvq.c633@gmail.com>
+Date: Fri, 6 Oct 2017 00:29:16 +0200
+Subject: [PATCH 23/23] Bug 23675 - Attach protocol info when firing
+ account-removed event
+
+Used in ctypes-otr to find the removed account
+---
+ chat/components/src/imAccounts.js | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/chat/components/src/imAccounts.js b/chat/components/src/imAccounts.js
+index 7b5a3ab040..110fa303fa 100644
+--- a/chat/components/src/imAccounts.js
++++ b/chat/components/src/imAccounts.js
+@@ -1078,10 +1078,11 @@ AccountsService.prototype = {
+       throw Cr.NS_ERROR_UNEXPECTED;
+ 
+     let id = account.numericId;
++    let prplId = account.protocol.id;
+     account.remove();
+     this._accounts.splice(index, 1);
+     delete this._accountsById[id];
+-    Services.obs.notifyObservers(account, "account-removed", null);
++    Services.obs.notifyObservers(account, "account-removed", prplId);
+ 
+     /* Update the account list pref. */
+     let list = this._accountList;
+-- 
+2.14.2
+

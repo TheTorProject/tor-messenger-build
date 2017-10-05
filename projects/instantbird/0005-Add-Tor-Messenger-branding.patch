@@ -1,7 +1,7 @@
-From 38fa4bd0401bc9dbcba80a7fb1d51456dae0e3b1 Mon Sep 17 00:00:00 2001
+From 7b7666b7479b26c9ddb14b495e32c1a9c8d197ed Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 15:46:51 -0400
-Subject: [PATCH 05/22] Add Tor Messenger branding
+Subject: [PATCH 05/23] Add Tor Messenger branding
 
 ---
  im/app/macbuild/Contents/Info.plist.in             |   2 +-
@@ -5121,5 +5121,5 @@ index 15ec569c11..4a2d35d8a1 100644
 -Info=Instantbird is installing your updates and will start in a few moments…
 +Info=Tor Messenger is installing your updates and will start in a few moments…
 -- 
-2.14.1
+2.14.2
 
