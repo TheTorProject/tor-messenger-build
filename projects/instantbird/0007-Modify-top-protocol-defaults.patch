@@ -1,7 +1,7 @@
-From 293de6a98f59314906fb493931e4da08c145edb9 Mon Sep 17 00:00:00 2001
+From 1979501a78c991b5d9ca6a69b31b060a736a41fc Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 16:16:09 -0400
-Subject: [PATCH 07/22] Modify top protocol defaults
+Subject: [PATCH 07/23] Modify top protocol defaults
 
 ---
  im/content/accountWizard.xul | 2 +-
@@ -21,5 +21,5 @@ index 135b68386c..356321dbcc 100644
      </hbox>
    </wizardpage>
 -- 
-2.14.1
+2.14.2
 

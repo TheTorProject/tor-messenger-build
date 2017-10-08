@@ -1,7 +1,7 @@
-From 1f7835fa96fb79e580ff76508bdebe6fe294f101 Mon Sep 17 00:00:00 2001
+From 2ee58d3cdaf07280ece4a0745deca5284ca0f408 Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Sun, 2 Apr 2017 13:07:09 -0400
-Subject: [PATCH 19/22] Trac 21736 - Hide account/timestamp from message
+Subject: [PATCH 19/23] Trac 21736 - Hide account/timestamp from message
 
 ---
  chat/modules/imThemes.jsm         | 9 ++++-----
@@ -60,5 +60,5 @@ index 31b3744c63..98e1a7b929 100644
  /* This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
 -- 
-2.14.1
+2.14.2
 

@@ -1,7 +1,7 @@
-From 3aef7c8034e706afa8f0b3e31ecd03c8f9017ab4 Mon Sep 17 00:00:00 2001
+From 41aaed3bb12c9c6afae0bab3c796f115d4b87494 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 14:30:41 -0400
-Subject: [PATCH 01/22] Set Tor Messenger preferences
+Subject: [PATCH 01/23] Set Tor Messenger preferences
 
 ---
  im/app/profile/all-instantbird.js | 458 ++++++++++++++++++++++++++++++++++++--
@@ -565,5 +565,5 @@ index 127c86a662..31b3744c63 100644
 +#expand pref("torbrowser.version", __TOR_BROWSER_VERSION__);
 +#endif
 -- 
-2.14.1
+2.14.2
 
