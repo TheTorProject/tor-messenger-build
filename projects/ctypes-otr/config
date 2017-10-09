@@ -19,7 +19,3 @@ targets:
 input_files:
   - name: libotr
     project: libotr
-  - name: libgcrypt
-    project: libgcrypt
-  - name: libgpg-error
-    project: libgpg-error

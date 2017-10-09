@@ -7,11 +7,6 @@ mv libotr/[% c('var/lib_glob') %] [% project %]-[% c('version') %]/chrome/conten
 [% IF c('var/windows') -%]
 mv -f [% project %]-[% c('version') %]/chrome/content/libotr-*.dll \
       [% project %]-[% c('version') %]/chrome/content/otr.dll
-[% ELSIF c('var/linux') -%]
-tar xf [% c('input_files_by_name/libgcrypt') %]
-mv libgcrypt/[% c('var/lib_glob') %] [% project %]-[% c('version') %]/chrome/content/
-tar xf [% c('input_files_by_name/libgpg-error') %]
-mv libgpg-error/[% c('var/lib_glob') %] [% project %]-[% c('version') %]/chrome/content/
 [% END -%]
 [% SET src_dir=project _ '-' _ c('version');
    c('tar', {

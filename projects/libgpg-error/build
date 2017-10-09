@@ -12,7 +12,7 @@ cp $rootdir/lock-obj-pub.x86_64-apple-darwin14.0.0.h src/syscfg/lock-obj-pub.dar
 echo 'int main() {}' > src/gen-posix-lock-obj.c
 [% END -%]
 export SOURCE_DATE_EPOCH=$(stat -c %Y ChangeLog)
-./configure --prefix="$distdir" [% c("var/configure_opt") %][% IF c('var/windows') or c('var/osx') %] --enable-static --disable-shared[% END %]
+./configure --prefix="$distdir" [% c("var/configure_opt") %] --enable-static --disable-shared
 [% IF c("var/osx") -%]
   export LD_PRELOAD=[% c("var/faketime_path") %]
   export FAKETIME="[% USE date; GET date.format(c('timestamp'), format = '%Y-%m-%d %H:%M:%S') %]"
