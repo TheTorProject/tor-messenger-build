@@ -7,7 +7,7 @@ input_files:
     name: torbrowser
     file_gpg_id: 1
     sig_ext: asc
-    gpg_keyring: tor-browser.gpg
+    gpg_keyring: torbrowser.gpg
     var:
       base_url: "https://dist.torproject.org/torbrowser/[% c('version') %]"
     targets:

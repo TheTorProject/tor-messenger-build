@@ -3,7 +3,7 @@ version: tor-browser-52.4.0esr-7.0-1-build1
 filename: 'mozilla-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 git_url: https://git.torproject.org/tor-browser.git
 git_hash: '[% c("version") %]'
-gpg_keyring: gk.gpg
+gpg_keyring: torbutton.gpg
 tag_gpg_id: 1
 input_files:
   - filename: 0001-Trac-19910-Prevents-STARTTLS-in-XMPP.patch
