@@ -1,4 +1,4 @@
-From c0d3a7d4edcba39a098e5025271f7b7d59344304 Mon Sep 17 00:00:00 2001
+From 7c299eae2a3d81b1c48a3028ed2f16303f9c5e71 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Fri, 1 Sep 2017 17:39:04 -0400
 Subject: [PATCH 1/5] Trac 19910: Prevents STARTTLS in XMPP
@@ -115,5 +115,5 @@ index a21dfa4a5a11..5429637c1c3a 100644
      void SetNamedPipeFD(PRFileDesc *fd) { mFD = fd; }
  
 -- 
-2.14.1
+2.14.2
 

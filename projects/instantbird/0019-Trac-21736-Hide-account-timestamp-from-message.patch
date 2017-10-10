@@ -1,4 +1,4 @@
-From 1f7835fa96fb79e580ff76508bdebe6fe294f101 Mon Sep 17 00:00:00 2001
+From ba99bf085d2243a42b3254ef6a72b0124fec89f6 Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Sun, 2 Apr 2017 13:07:09 -0400
 Subject: [PATCH 19/22] Trac 21736 - Hide account/timestamp from message
@@ -44,7 +44,7 @@ index a723d742bf..95d917f0d7 100644
      }
  
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index 31b3744c63..98e1a7b929 100644
+index 3a5f63909e..7d7c97aa07 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -50,6 +50,11 @@ pref("extensions.systemAddon.update.url", "");
@@ -60,5 +60,5 @@ index 31b3744c63..98e1a7b929 100644
  /* This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
 -- 
-2.14.1
+2.14.2
 

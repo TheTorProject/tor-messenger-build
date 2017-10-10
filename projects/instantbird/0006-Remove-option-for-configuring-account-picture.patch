@@ -1,4 +1,4 @@
-From ca63ac2fee5d1cd4c07385c27951336ca044e0f1 Mon Sep 17 00:00:00 2001
+From 9ee2a5b30901e57d10faeb23a7fbea9ffc6ddbf1 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:24:09 -0700
 Subject: [PATCH 06/22] Remove option for configuring account picture
@@ -22,5 +22,5 @@ index 843f1eef57..71ee2c9ef8 100644
          <panel id="changeUserIconPanel"
                 type="arrow" align="center"
 -- 
-2.14.1
+2.14.2
 
