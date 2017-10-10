@@ -1,17 +1,13 @@
-#!/bin/sh
-set -e
-rootdir=$(pwd)
+#!/bin/bash
+[% c("var/set_default_env") -%]
 
 tar xf [% project %]-[% c('version') %].tar.gz
 cd [% project %]-[% c('version') %]
 
-if ls -1 $rootdir/*.patch > /dev/null 2>&1
-then
-    for patch in $(ls -1 $rootdir/*.patch | sort)
-    do
-        git apply -p1 < $patch
-    done
-fi
+for patch in $(ls -1 $rootdir/*.patch | sort)
+do
+  git apply -p1 < $patch
+done
 
 cd ..
 
