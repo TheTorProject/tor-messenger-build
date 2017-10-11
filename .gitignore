@@ -1,5 +1,7 @@
-git_clones
-hg_clones
-out
-release
-rbm.local.conf
+/git_clones
+/hg_clones
+/out
+/release
+/rbm.local.conf
+/logs
+/tmp
