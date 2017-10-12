@@ -91,10 +91,14 @@ fi
   export WIDL_TIME_OVERRIDE="0"
 [% END %]
 
+# Initialize a git repo here so that the patches aren't attempting to apply
+# against basedir, since our temporary working dir is a subdir of it.
+git init
 for patch in $(ls -1 $rootdir/*.patch | sort)
 do
   git apply -p1 < $patch
 done
+rm -rf .git
 
 cp $rootdir/mozconfig-common .mozconfig
 cat $rootdir/[% c('input_files_by_name/mozconfig') %] >> .mozconfig
