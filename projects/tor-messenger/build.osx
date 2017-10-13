@@ -27,8 +27,8 @@ sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' TorBrows
 sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' TorBrowser.app/Contents/Resources/TorBrowser/Tor/torrc-defaults
 
 # trac 17476
-rm -Rf TorBrowser.app/Contents/Resources/TorBrowser/Tor/PluggableTransports/TorBrowser.app.meek-http-helper/
-rm -f  TorBrowser.app/Contents/Resources/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser
+rm -Rf TorBrowser.app/Contents/Resources/TorBrowser/Tor/PluggableTransports/template-profile.meek-http-helper/
+rm -f  TorBrowser.app/Contents/MacOS/Tor/PluggableTransports/meek-client-torbrowser
 
 mkdir -p $rootdir/TorMessenger.app/Contents/Resources/distribution/extensions/
 mv tor-launcher@torproject.org $rootdir/TorMessenger.app/Contents/Resources/distribution/extensions/
