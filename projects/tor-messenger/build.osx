@@ -11,39 +11,43 @@ tar xf [% c('input_files_by_name/bundle-data') %]
 
 mkdir torbrowser
 cd torbrowser
-mkdir tor-launcher@torproject.org
-7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
-
-# FTE is disabled on OS X. See #13252.
-sed -i '/default_bridge\.fte/d' $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js
-
-cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
-        tor-launcher@torproject.org/defaults/preferences/prefs.js
 7z x $rootdir/[% c('input_files_by_name/tor-browser') %]
 bsdtar xf '0.unknown partition'
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' TorBrowser.app/Contents/Resources/TorBrowser/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' TorBrowser.app/Contents/Resources/TorBrowser/Tor/torrc-defaults
+cd ..
+
+# meek
 # use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
-sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' TorBrowser.app/Contents/Resources/TorBrowser/Tor/torrc-defaults
-
-# trac 17476
-rm -Rf TorBrowser.app/Contents/Resources/TorBrowser/Tor/PluggableTransports/template-profile.meek-http-helper/
-rm -f  TorBrowser.app/Contents/MacOS/Tor/PluggableTransports/meek-client-torbrowser
-
-mkdir -p $rootdir/TorMessenger.app/Contents/Resources/distribution/extensions/
-mv tor-launcher@torproject.org $rootdir/TorMessenger.app/Contents/Resources/distribution/extensions/
-cd ..
-
-mkdir ctypes-otr
-cd ctypes-otr
-tar xf $rootdir/[% c('input_files_by_name/ctypes-otr') %]
-mv ctypes-otr* $rootdir/TorMessenger.app/Contents/Resources/distribution/extensions/ctypes-otr@tormessenger
-cd ..
+sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' torbrowser/TorBrowser.app/Contents/Resources/TorBrowser/Tor/torrc-defaults
+# Trac 17476: These files aren't being used because we're running meek in
+# standalone mode above.  Remove the bloat.
+rm -Rf torbrowser/TorBrowser.app/Contents/Resources/TorBrowser/Tor/PluggableTransports/template-profile.meek-http-helper/
+rm -f  torbrowser/TorBrowser.app/Contents/MacOS/Tor/PluggableTransports/meek-client-torbrowser
 
 mkdir TorMessenger.app/TorBrowser/
 mv torbrowser/TorBrowser.app/Contents/Resources/TorBrowser/ $rootdir/TorMessenger.app/Contents/Resources/
-
 mv torbrowser/TorBrowser.app/Contents/MacOS/Tor/ $rootdir/TorMessenger.app/Contents/MacOS/
+
+# extensions
+extdir=$rootdir/TorMessenger.app/Contents/Resources/distribution/extensions
+mkdir -p $extdir
+
+# tor-launcher
+mkdir tor-launcher@torproject.org
+7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
+# FTE is disabled on OS X. See #13252.
+sed -i '/default_bridge\.fte/d' $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js
+cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
+        tor-launcher@torproject.org/defaults/preferences/prefs.js
+mv tor-launcher@torproject.org $extdir
+
+# ctypes-otr
+mkdir ctypes-otr
+cd ctypes-otr
+tar xf $rootdir/[% c('input_files_by_name/ctypes-otr') %]
+mv ctypes-otr* $extdir/ctypes-otr@tormessenger
+cd ..
 
 # Adjust the Info.plist file
 INFO_PLIST=$rootdir/TorMessenger.app/Contents/Info.plist

@@ -40,6 +40,8 @@ mv Bundle-Data/linux/* bundle/Browser/TorBrowser/
 mv Bundle-Data/windows/* bundle/Browser/TorBrowser/
 [% END -%]
 
+cp cert_override.txt bundle/Browser/TorBrowser/Data/Browser/profile.default/
+
 [% IF c("var/linux") %]
 tar xf [% c('input_files_by_name/gcc') %]
 chmod 755 start-tor-messenger start-tor-messenger.desktop execdesktop
@@ -53,33 +55,19 @@ mkdir -p bundle/Browser/lib
 cp -L gcc/lib[% c('arch') == 'x86_64' ? '64' : '' %]/libstdc++.so.6 bundle/Browser/lib/
 [% END %]
 
-cp cert_override.txt bundle/Browser/TorBrowser/Data/Browser/profile.default/
-
-cd bundle/Browser/TorBrowser/Data/Browser/profile.default/
-mkdir extensions
-cd extensions/
-tar xf ../../../../../../../[% c('input_files_by_name/ctypes-otr') %]
-mv ctypes-otr* 'ctypes-otr@tormessenger'
-
-mkdir tor-launcher@torproject.org
-7z x -y -otor-launcher@torproject.org ../../../../../../../[% c('input_files_by_name/tor-launcher') %]
-cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
-        tor-launcher@torproject.org/defaults/preferences/prefs.js
-
 [% IF c("var/windows") -%]
-7z x ../../../../../../../[% c('input_files_by_name/tor-browser') %]
+7z x [% c('input_files_by_name/tor-browser') %]
 # The version of 7z (9.02) we are using for the builds creates redundant $PLUGINSDIR which we remove.
 rm -rf \$PLUGINSDIR Browser/\$PLUGINSDIR
 mv \$_OUTDIR tor-browser_en-US
 cp -pf tor-browser_en-US/Browser/libssp-0.dll tor-browser_en-US/Browser/TorBrowser/Tor/
-
 [% ELSE -%]
-tar xf ../../../../../../../[% c('input_files_by_name/tor-browser') %]
-
+tar xf [% c('input_files_by_name/tor-browser') %]
 [% END -%]
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 
+# meek
 [% IF c("var/windows") -%]
 # use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
 sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
@@ -90,20 +78,32 @@ sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' tor-browser_en-US
 rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser
 [% END -%]
 
-cd ../../../../../../
+mv tor-browser_en-US/Browser/TorBrowser/Tor bundle/Browser/TorBrowser/
+cp tor-browser_en-US/Browser/TorBrowser/Data/Tor/* bundle/Browser/TorBrowser/Data/Tor/
 
-mv Browser/TorBrowser/Data/Browser/profile.default/extensions/tor-browser_en-US/Browser/TorBrowser/Tor Browser/TorBrowser/
-cp Browser/TorBrowser/Data/Browser/profile.default/extensions/tor-browser_en-US/Browser/TorBrowser/Data/Tor/* Browser/TorBrowser/Data/Tor/
+# extensions
+extdir=$rootdir/bundle/Browser/TorBrowser/Data/Browser/profile.default/extensions
+mkdir -p $extdir
 
-rm -Rf Browser/TorBrowser/Data/Browser/profile.default/extensions/tor-browser_en-US
+# tor-launcher
+mkdir tor-launcher@torproject.org
+7z x -y -otor-launcher@torproject.org [% c('input_files_by_name/tor-launcher') %]
+cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
+        tor-launcher@torproject.org/defaults/preferences/prefs.js
+mv tor-launcher@torproject.org $extdir
+
+# ctypes-otr
+mkdir ctypes-otr
+cd ctypes-otr
+tar xf ../[% c('input_files_by_name/ctypes-otr') %]
+mv ctypes-otr* $extdir/ctypes-otr@tormessenger
+cd ..
 
 # Recreate precomplete file (needs to be accurate for full MAR updates).
-cd Browser
+cd tor-browser_en-US/Browser
 rm -f precomplete
 python $MARTOOLS/createprecomplete.py
-cd ..
-
-cd ..
+cd ../..
 
 mv bundle tor-messenger
 OUTDIR='[% dest_dir _ "/" _ c("filename") %]'
