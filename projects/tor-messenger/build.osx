@@ -25,6 +25,19 @@ sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' torbrowser/TorBro
 rm -Rf torbrowser/TorBrowser.app/Contents/Resources/TorBrowser/Tor/PluggableTransports/template-profile.meek-http-helper/
 rm -f  torbrowser/TorBrowser.app/Contents/MacOS/Tor/PluggableTransports/meek-client-torbrowser
 
+# snowflake
+mkdir snowflake
+cd snowflake
+7z x $rootdir/[% c('input_files_by_name/tor-browser-alpha') %]
+bsdtar xf '0.unknown partition'
+cp TorBrowser.app/Contents/MacOS/Tor/PluggableTransports/snowflake-client ../torbrowser/TorBrowser.app/Contents/MacOS/Tor/PluggableTransports/snowflake-client
+echo 'ClientTransportPlugin snowflake exec PluggableTransports/snowflake-client -url https://snowflake-reg.appspot.com/ -front www.google.com -ice stun:stun.l.google.com:19302' >> \
+        ../torbrowser/TorBrowser.app/Contents/Resources/TorBrowser/Tor/torrc-defaults
+# This needs to happen before "tor-launcher" below
+echo 'pref("extensions.torlauncher.default_bridge.snowflake.1", "snowflake 0.0.3.0:1 2B280B23E1107BB62ABFC40DDCC8824814F80A72");' >> \
+        $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js
+cd ..
+
 mkdir TorMessenger.app/TorBrowser/
 mv torbrowser/TorBrowser.app/Contents/Resources/TorBrowser/ $rootdir/TorMessenger.app/Contents/Resources/
 mv torbrowser/TorBrowser.app/Contents/MacOS/Tor/ $rootdir/TorMessenger.app/Contents/MacOS/

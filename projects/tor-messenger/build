@@ -78,6 +78,20 @@ sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' tor-browser_en-US
 rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser
 [% END -%]
 
+# snowflake
+[% IF c("var/linux") -%]
+mkdir snowflake
+cd snowflake
+tar xf ../[% c('input_files_by_name/tor-browser-alpha') %]
+cp tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/snowflake-client ../tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/snowflake-client
+echo 'ClientTransportPlugin snowflake exec ./TorBrowser/Tor/PluggableTransports/snowflake-client -url https://snowflake-reg.appspot.com/ -front www.google.com -ice stun:stun.l.google.com:19302' >> \
+        ../tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+# This needs to happen before "tor-launcher" below
+echo 'pref("extensions.torlauncher.default_bridge.snowflake.1", "snowflake 0.0.3.0:1 2B280B23E1107BB62ABFC40DDCC8824814F80A72");' >> \
+        $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js
+cd ..
+[% END -%]
+
 mv tor-browser_en-US/Browser/TorBrowser/Tor bundle/Browser/TorBrowser/
 cp tor-browser_en-US/Browser/TorBrowser/Data/Tor/* bundle/Browser/TorBrowser/Data/Tor/
 

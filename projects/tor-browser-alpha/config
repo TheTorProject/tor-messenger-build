@@ -1,0 +1,34 @@
+# vim: filetype=yaml sw=2
+version: 7.5a5
+filename: 'tor-browser-alpha-[% c("version") %]-[% c("var/osname") %].[% c("var/extension") %]'
+
+input_files:
+  - URL: "[% c('var/base_url') %]/tor-browser-[% c('var/tb_osname') %]-[% c('version') %]_en-US.tar.xz"
+    name: torbrowser-alpha
+    file_gpg_id: 1
+    sig_ext: asc
+    gpg_keyring: torbrowser.gpg
+    var:
+      base_url: "https://dist.torproject.org/torbrowser/[% c('version') %]"
+    targets:
+      windows-i686:
+        URL: "[% c('var/base_url') %]/torbrowser-install-[% c('version') %]_en-US.exe"
+      osx-x86_64:
+        URL: "[% c('var/base_url') %]/TorBrowser-[% c('version') %]-osx64_en-US.dmg"
+
+var:
+  extension: 'tar.xz'
+
+targets:
+  linux-x86_64:
+    var:
+      tb_osname: linux64
+  linux-i686:
+    var:
+      tb_osname: linux32
+  windows-i686:
+    var:
+      extension: 'exe'
+  osx-x86_64:
+    var:
+      extension: 'dmg'
