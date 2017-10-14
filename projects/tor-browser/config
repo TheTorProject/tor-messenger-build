@@ -19,6 +19,11 @@ input_files:
 var:
   extension: 'tar.xz'
 
+steps:
+  tor-browser-alpha:
+    tor-browser-alpha: '[% INCLUDE build %]'
+    version: 7.5a5
+
 targets:
   linux-x86_64:
     var:

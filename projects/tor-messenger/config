@@ -10,8 +10,9 @@ input_files:
     name: tor-launcher
   - project: tor-browser
     name: tor-browser
-  - project: tor-browser-alpha
+  - project: tor-browser
     name: tor-browser-alpha
+    pkg_type: tor-browser-alpha
   - project: bundle-data
     name: bundle-data
   - project: gcc
