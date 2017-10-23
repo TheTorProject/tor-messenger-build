@@ -1,14 +1,14 @@
-From 1a419b902c5fc2d07e880fa13666fddf70100093 Mon Sep 17 00:00:00 2001
+From 530e8521e6172972a3e9c4d69865dd97e521ed34 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 14:30:41 -0400
 Subject: [PATCH 01/22] Set Tor Messenger preferences
 
 ---
- im/app/profile/all-instantbird.js | 468 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 444 insertions(+), 24 deletions(-)
+ im/app/profile/all-instantbird.js | 467 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 443 insertions(+), 24 deletions(-)
 
 diff --git a/im/app/profile/all-instantbird.js b/im/app/profile/all-instantbird.js
-index 127c86a662..3a5f63909e 100644
+index 127c86a662..68da4aaf28 100644
 --- a/im/app/profile/all-instantbird.js
 +++ b/im/app/profile/all-instantbird.js
 @@ -1,3 +1,56 @@
@@ -198,7 +198,7 @@ index 127c86a662..3a5f63909e 100644
  
  pref("chat.twitter.consumerKey", "TSuyS1ieRAkB3qWv8yyEw");
  pref("chat.twitter.consumerSecret", "DKtKaSf5a7pBNhdBsSZHTnI5Y03hRlPFYWmb4xXBlkU");
-@@ -337,4 +387,374 @@ pref("chat.twitter.consumerSecret", "DKtKaSf5a7pBNhdBsSZHTnI5Y03hRlPFYWmb4xXBlkU
+@@ -337,4 +387,373 @@ pref("chat.twitter.consumerSecret", "DKtKaSf5a7pBNhdBsSZHTnI5Y03hRlPFYWmb4xXBlkU
  pref("chat.prpls.forcePurple", "");
  
  // Whether to parse log files for conversation statistics.
@@ -255,7 +255,6 @@ index 127c86a662..3a5f63909e 100644
 +pref("browser.privatebrowsing.autostart", true);
 +pref("browser.cache.disk.enable", false);
 +pref("browser.cache.offline.enable", false);
-+pref("dom.indexedDB.enabled", false);
 +pref("permissions.memory_only", true);
 +pref("network.cookie.lifetimePolicy", 2);
 +pref("browser.download.manager.retention", 1);
@@ -575,5 +574,5 @@ index 127c86a662..3a5f63909e 100644
 +#expand pref("torbrowser.version", __TOR_BROWSER_VERSION__);
 +#endif
 -- 
-2.14.2
+2.14.3
 

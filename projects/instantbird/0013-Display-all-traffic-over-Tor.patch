@@ -1,4 +1,4 @@
-From 7efeac31a408d2aa0b80597d2609897406469103 Mon Sep 17 00:00:00 2001
+From cb56ac3066fb156f05e689325de8efd01a7bca98 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:58:31 -0700
 Subject: [PATCH 13/22] Display all traffic over Tor
@@ -34,5 +34,5 @@ index c46fb2f956..6b49c84fad 100644
  <!ENTITY accountProtocolShowMore.label  "Show all protocols">
  <!ENTITY accountProtocolShowMore.description  "Choose from the full list of protocols">
 -- 
-2.14.2
+2.14.3
 

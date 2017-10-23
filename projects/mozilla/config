@@ -1,5 +1,5 @@
 # vim: filetype=yaml sw=2
-version: tor-browser-52.4.0esr-7.0-1-build1
+version: tor-browser-52.4.1esr-7.0-1-build1
 filename: 'mozilla-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.gz'
 git_url: https://git.torproject.org/tor-browser.git
 git_hash: '[% c("version") %]'

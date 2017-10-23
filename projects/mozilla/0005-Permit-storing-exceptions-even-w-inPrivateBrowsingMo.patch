@@ -1,4 +1,4 @@
-From 603166eaf0c7de988b52f5db9cdaa53bd6b60e0f Mon Sep 17 00:00:00 2001
+From 2545c1febc9aa88af07323732fb92186897026a5 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Sat, 3 Dec 2016 10:01:52 -0800
 Subject: [PATCH 5/5] Permit storing exceptions even w/ inPrivateBrowsingMode
@@ -20,5 +20,5 @@ index 0ca24a614dca..df50701729ce 100644
 +  return false;  // PrivateBrowsingUtils.isWindowPrivate(window);
  }
 -- 
-2.14.2
+2.14.3
 

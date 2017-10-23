@@ -1,4 +1,4 @@
-From 249a20eedb778a0cd3917a6c414f5c1029d84051 Mon Sep 17 00:00:00 2001
+From 1e96ec6fad1e2b1b7d6699a0161936e2463ec9fc Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 15:09:40 -0400
 Subject: [PATCH 03/22] XMPP in-band registration
@@ -392,5 +392,5 @@ index 43d0f19e3f..c46fb2f956 100644
 +
 +<!ENTITY registerXMPP.label "Create this new account on the server">
 -- 
-2.14.2
+2.14.3
 
