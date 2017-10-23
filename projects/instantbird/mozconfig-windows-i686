@@ -7,7 +7,3 @@ ac_add_options --with-toolchain-prefix=i686-w64-mingw32-
 
 ac_add_options --enable-default-toolkit=cairo-windows
 ac_add_options --enable-strip
-
-# We can't build the sandbox code with mingw-w64:
-# https://bugzilla.mozilla.org/show_bug.cgi?id=1042426
-ac_add_options --disable-sandbox

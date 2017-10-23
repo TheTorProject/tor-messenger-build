@@ -9,6 +9,8 @@ Tor Messenger 0.5.0b2 --
    * Trac 23542: Add snowflake pt
  * Mac
    * Trac 23542: Add snowflake pt
+ * Windows
+   * Trac 16010: Enable the content process sandbox on Windows
 
 Tor Messenger 0.5.0b1 -- September 28, 2017
  * All Platforms
