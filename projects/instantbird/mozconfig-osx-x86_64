@@ -5,7 +5,8 @@ TOOLCHAIN_DIR=/var/tmp/dist/macosx-toolchain
 CROSS_CCTOOLS_PATH=$TOOLCHAIN_DIR/cctools
 CROSS_SYSROOT=$TOOLCHAIN_DIR/SDK
 CROSS_PRIVATE_FRAMEWORKS=$CROSS_SYSROOT/System/Library/PrivateFrameworks
-FLAGS="-target x86_64-apple-darwin10 -mlinker-version=136 -B $CROSS_CCTOOLS_PATH/bin -isysroot $CROSS_SYSROOT"
+HARDENING_FLAGS="-Werror=format -Werror=format-security -fstack-protector-strong -D_FORTIFY_SOURCE=2"
+FLAGS="-target x86_64-apple-darwin10 -mlinker-version=136 -B $CROSS_CCTOOLS_PATH/bin -isysroot $CROSS_SYSROOT $HARDENING_FLAGS"
 
 export CC="$TOOLCHAIN_DIR/clang/bin/clang $FLAGS"
 export CXX="$TOOLCHAIN_DIR/clang/bin/clang++ $FLAGS"
