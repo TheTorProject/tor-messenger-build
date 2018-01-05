@@ -1,4 +1,4 @@
-From 390d4ce4ae7970d76f295ae25a9f04919a0efe01 Mon Sep 17 00:00:00 2001
+From 1562db21593cc47a639da5b55ddf54557d948a5b Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 19:50:48 -0700
 Subject: [PATCH 11/22] Remove logging UI
@@ -39,5 +39,5 @@ index 7c9db1cdd8..2d7b2701ea 100644
      <groupbox id="passwordsGroup" orient="vertical">
        <caption label="&passwords.label;"/>
 -- 
-2.14.3
+2.15.1
 

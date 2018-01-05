@@ -1,4 +1,4 @@
-From 91be0bc3c7093ad8823f0de71926a84057357a5f Mon Sep 17 00:00:00 2001
+From 04c1e1a846f69ff9cb58bfb28091ba4e5ed5ee92 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 10 Oct 2016 18:47:48 -0700
 Subject: [PATCH 04/22] Remove search from UI
@@ -60,5 +60,5 @@ index fad67c190b..cfe2405ea3 100644
            <groupbox>
              <caption label="&configEditDesc.label;"/>
 -- 
-2.14.3
+2.15.1
 

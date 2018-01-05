@@ -1,4 +1,4 @@
-From 2bd322d66d462514bc4e3187e5faccd45f76f7aa Mon Sep 17 00:00:00 2001
+From 929040712ccff38035bd0467dd88bade4df9d968 Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Tue, 15 Aug 2017 16:40:33 -0400
 Subject: [PATCH 21/22] Bug 13855: Use known onions for XMPP servers
@@ -138,5 +138,5 @@ index efb0b77aee..05a4deb462 100644
 +
 +onionAddress.label=%S is %S's onion address.
 -- 
-2.14.3
+2.15.1
 

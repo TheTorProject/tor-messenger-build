@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 version: '[% c("abbrev") %]'
 hg_url: https://hg.mozilla.org/releases/comm-esr52/
-hg_hash: THUNDERBIRD_52_4_0_RELEASE
+hg_hash: THUNDERBIRD_52_5_2_RELEASE
 filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %]"
 
 var:

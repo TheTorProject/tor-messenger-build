@@ -1,4 +1,4 @@
-From 4fcd867d487ba1afa85bc77abd5558e71b16d3cf Mon Sep 17 00:00:00 2001
+From fe815268d93c2811701fd75ab22af59224fdf742 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Thu, 6 Oct 2016 20:13:35 -0700
 Subject: [PATCH 2/5] Trac 16475: Block flash too
@@ -29,5 +29,5 @@ index cd1707beaf5f..d014832e0595 100644
  }
  
 -- 
-2.14.3
+2.15.1
 

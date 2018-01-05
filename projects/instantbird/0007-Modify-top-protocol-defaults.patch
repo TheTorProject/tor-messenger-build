@@ -1,4 +1,4 @@
-From 75f578f9833babab49cccdd5d6496754c8d0c94c Mon Sep 17 00:00:00 2001
+From 7b7403932473c5c039e24a425e9526e5895e195b Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 16:16:09 -0400
 Subject: [PATCH 07/22] Modify top protocol defaults
@@ -21,5 +21,5 @@ index 135b68386c..356321dbcc 100644
      </hbox>
    </wizardpage>
 -- 
-2.14.3
+2.15.1
 
