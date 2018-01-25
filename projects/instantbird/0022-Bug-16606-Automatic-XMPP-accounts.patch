@@ -1,4 +1,4 @@
-From 9047105e20c92a5d19a530767fabc589e42c0243 Mon Sep 17 00:00:00 2001
+From 27b4c11fd2587708dde1a4034044e2358a18a2ba Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Mon, 21 Aug 2017 23:00:07 -0400
 Subject: [PATCH 22/22] Bug 16606: Automatic XMPP accounts
@@ -166,5 +166,5 @@ index 6b49c84fad..de7fe8ed11 100644
  <!ENTITY registerXMPP.label "Create this new account on the server">
 +<!ENTITY tempXMPP.label "Create a temporary account automatically">
 -- 
-2.15.1
+2.16.1
 

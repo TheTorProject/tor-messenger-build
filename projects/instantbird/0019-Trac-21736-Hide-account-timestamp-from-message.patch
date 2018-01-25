@@ -1,4 +1,4 @@
-From c25dc351a7505de41b738deeef91a3108151ccaf Mon Sep 17 00:00:00 2001
+From 96c94a4c3cca3caf7b326254c4ff2745dc430913 Mon Sep 17 00:00:00 2001
 From: Vu Quoc Huy <huyvq.c633@gmail.com>
 Date: Sun, 2 Apr 2017 13:07:09 -0400
 Subject: [PATCH 19/22] Trac 21736 - Hide account/timestamp from message
@@ -60,5 +60,5 @@ index 68da4aaf28..19334b382a 100644
  /* This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
 -- 
-2.15.1
+2.16.1
 

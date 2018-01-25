@@ -1,9 +1,10 @@
-Tor Messenger 0.5.0b2 --
+Tor Messenger 0.6.0b1 --
  * All Platforms
-   * Use the tor-browser-52.5.2esr-7.0-2-build1 tag on tor-browser
-   * Use the THUNDERBIRD_52_5_2_RELEASE tag on comm-esr52
-   * Update tor-browser to 7.0.11
-   * Update tor-browser-build to 9b4ba82
+   * Use the tor-browser-52.6.0esr-7.5-2-build1 tag on tor-browser
+   * Use the THUNDERBIRD_52_6_0_RELEASE tag on comm-esr52
+   * Update tor-browser to 7.5
+   * Update tor-browser-build to d2dee35
+   * Update rbm to 5c89374
  * Linux
    * Trac 23806: libotr.so and libgcrypt.so are using RPATH
    * Trac 23542: Add snowflake pt

@@ -1,4 +1,4 @@
-From 8d33984c9d0158fb22e341de66d831a92d3e73cc Mon Sep 17 00:00:00 2001
+From 257faaee085297d838d3451857ab5b65c7ad854a Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 26 Jul 2017 16:35:33 -0400
 Subject: [PATCH 17/22] Bug 1321420 - Add a pref to disable JavaScript in
@@ -48,5 +48,5 @@ index c52c8c637d..0069219fa6 100644
                                Components.interfaces.nsIWebProgress.NOTIFY_ALL);
    let url = request.url;
 -- 
-2.15.1
+2.16.1
 

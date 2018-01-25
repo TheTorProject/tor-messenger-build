@@ -1,4 +1,4 @@
-From 9f237446ec634b48068b3e6ae3b1158fb7c3dd31 Mon Sep 17 00:00:00 2001
+From 34c6563cd7b3e482a17517b3dd9fab9e8f06b92a Mon Sep 17 00:00:00 2001
 From: Sukhbir Singh <sukhbir@torproject.org>
 Date: Wed, 26 Jul 2017 14:30:41 -0400
 Subject: [PATCH 01/22] Set Tor Messenger preferences
@@ -574,5 +574,5 @@ index 127c86a662..68da4aaf28 100644
 +#expand pref("torbrowser.version", __TOR_BROWSER_VERSION__);
 +#endif
 -- 
-2.15.1
+2.16.1
 

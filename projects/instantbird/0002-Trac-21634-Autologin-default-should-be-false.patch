@@ -1,4 +1,4 @@
-From 382b2ccb519d650b8522f6fdc660e752b30bd396 Mon Sep 17 00:00:00 2001
+From 824fe80284ebc88d8e4eb3a6796073958bbffff6 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Mon, 16 Nov 2015 20:37:53 -0800
 Subject: [PATCH 02/22] Trac 21634: Autologin default should be false
@@ -35,5 +35,5 @@ index d51df3225c..904d22ba57 100644
  
  </wizard>
 -- 
-2.15.1
+2.16.1
 

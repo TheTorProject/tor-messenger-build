@@ -1,4 +1,4 @@
-From ae52907f0690ad6bd2e1b1a1cf873988b75db227 Mon Sep 17 00:00:00 2001
+From 26c0c11d82d4192f68cdb87ea4dd2d5f6f6d52e3 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Fri, 1 Sep 2017 17:45:40 -0400
 Subject: [PATCH 4/5] Updater fixups for TM
@@ -804,5 +804,5 @@ index c45961ac54e7..23d6fbe2929a 100644
    nsresult rv = GetAppRootDir(aExeFile, getter_AddRefs(appRootDir));
    NS_ENSURE_SUCCESS(rv, rv);
 -- 
-2.15.1
+2.16.1
 

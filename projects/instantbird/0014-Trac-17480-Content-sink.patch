@@ -1,4 +1,4 @@
-From 72f5121499c3e56e7d4f46ba61733ce9fe963e6a Mon Sep 17 00:00:00 2001
+From db2e3298866a97da24b404346afdfa45b4950434 Mon Sep 17 00:00:00 2001
 From: Arlo Breault <arlolra@gmail.com>
 Date: Wed, 5 Oct 2016 11:09:25 -0700
 Subject: [PATCH 14/22] Trac 17480: Content sink
@@ -107,5 +107,5 @@ index 3b8ccfa2b3..ba41da76aa 100644
            <menuitem value="0" label="&filterLevelNone;"/>
          </menupopup>
 -- 
-2.15.1
+2.16.1
 
