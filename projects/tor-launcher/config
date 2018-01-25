@@ -2,7 +2,7 @@
 version: 0.2.14.3
 git_url: https://git.torproject.org/tor-launcher.git
 git_hash: '[% c("version") %]'
-gpg_keyring: gk.gpg
+gpg_keyring: torbutton.gpg
 tag_gpg_id: 1
 filename: "[% project %]-[% c('version') %]-[% c('var/build_id') %].xpi"
 input_files:
