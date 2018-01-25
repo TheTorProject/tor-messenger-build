@@ -3,6 +3,7 @@ Tor Messenger 0.6.0b1 --
    * Use the tor-browser-52.6.0esr-7.5-2-build1 tag on tor-browser
    * Use the THUNDERBIRD_52_6_0_RELEASE tag on comm-esr52
    * Update tor-browser to 7.5
+   * Update tor-launcher to 0.2.14.3
    * Update tor-browser-build to d2dee35
    * Update rbm to 5c89374
  * Linux
