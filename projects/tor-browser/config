@@ -11,7 +11,7 @@ input_files:
     var:
       base_url: "https://dist.torproject.org/torbrowser/[% c('version') %]"
     targets:
-      windows-i686:
+      windows:
         URL: "[% c('var/base_url') %]/torbrowser-install-[% c('version') %]_en-US.exe"
       osx-x86_64:
         URL: "[% c('var/base_url') %]/TorBrowser-[% c('version') %]-osx64_en-US.dmg"

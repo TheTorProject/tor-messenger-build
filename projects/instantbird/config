@@ -21,6 +21,10 @@ targets:
     var:
       martools_filename: mar-tools-win32.zip
       archive_suffix: zip
+  windows-x86_64:
+    var:
+      martools_filename: mar-tools-win64.zip
+      archive_suffix: zip
   linux:
     var:
       arch_deps:

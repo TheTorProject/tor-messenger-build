@@ -41,6 +41,8 @@ input_files:
     enable: '[% c("var/osx") %]'
   - project: nsis
     name: nsis
+    target:
+      - tormessenger-windows-i686
     enable: '[% c("var/windows") %]'
   - URL: https://people.torproject.org/~mikeperry/mirrors/sources/msvcr100.dll
     sha256sum: 1221a09484964a6f38af5e34ee292b9afefccb3dc6e55435fd3aaf7c235d9067
@@ -55,16 +57,20 @@ var:
   container:
     use_container: 1
 targets:
+  windows:
+    var:
+      arch_deps:
+        - python-pefile
   windows-i686:
     var:
       bundle_filename: 'tormessenger-install-[% c("version") %]_en-US.exe'
       mar_osname: win32
-      arch_deps:
-        - nsis
-        - python
-        - python-dev
-        - build-essential
-        - python-pefile
+  windows-x86_64:
+    var:
+      bundle_filename: 'tormessenger-install-[% c("version") %]_en-US.exe'
+      mar_osname: win64
+      container:
+        arch: i386
   osx-x86_64:
     var:
       bundle_filename: 'TorMessenger-[% c("version") %]-osx64_en-US.dmg'

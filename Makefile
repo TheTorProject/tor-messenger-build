@@ -2,7 +2,7 @@ rbm=./rbm/rbm
 
 all: tor-messenger
 
-tor-messenger: tor-messenger-linux-x86_64 tor-messenger-linux-i686 tor-messenger-windows-i686 tor-messenger-osx-x86_64
+tor-messenger: tor-messenger-linux-x86_64 tor-messenger-linux-i686 tor-messenger-windows-i686 tor-messenger-windows-x86_64 tor-messenger-osx-x86_64
 
 tor-messenger-release: submodule-update
 	$(rbm) build tor-messenger-release --target tormessenger-all
@@ -17,6 +17,9 @@ tor-messenger-linux-i686: submodule-update
 
 tor-messenger-windows-i686: submodule-update
 	$(rbm) build tor-messenger --target tor-messenger --target tormessenger-windows-i686
+
+tor-messenger-windows-x86_64: submodule-update
+	$(rbm) build tor-messenger --target tor-messenger --target tormessenger-windows-x86_64
 
 tor-messenger-osx-x86_64: submodule-update
 	$(rbm) build tor-messenger --target tor-messenger --target tormessenger-osx-x86_64

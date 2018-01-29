@@ -10,7 +10,7 @@ filename: 'ctypes-otr-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_i
 var:
   lib_glob: 'lib/*.so*'
 targets:
-  windows-i686:
+  windows:
     var:
       lib_glob: 'bin/*.dll'
   osx-x86_64:

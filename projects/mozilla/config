@@ -11,3 +11,5 @@ input_files:
   - filename: 0003-OSX-package-as-tar.bz2.patch
   - filename: 0004-Updater-fixups-for-TM.patch
   - filename: 0005-Permit-storing-exceptions-even-w-inPrivateBrowsingMo.patch
+  - filename: STL_win64.patch
+    enable: '[% c("var/windows-x86_64") %]'

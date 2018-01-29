@@ -9,7 +9,7 @@ var:
   container:
       use_container: 1
 targets:
-  windows-i686:
+  windows:
     var:
       arch_deps:
         - gettext
