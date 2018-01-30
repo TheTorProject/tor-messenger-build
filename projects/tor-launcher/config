@@ -10,3 +10,4 @@ input_files:
     content: '[% INCLUDE controlport.patch.tmpl -%]'
     refresh_input: 1
     enable: '[% c("var/tor_control_port") %]'
+  - filename: tm-logo.svg
