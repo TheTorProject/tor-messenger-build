@@ -5,9 +5,13 @@ git_hash: '[% c("version") %]'
 gpg_keyring: torbutton.gpg
 tag_gpg_id: 1
 filename: "[% project %]-[% c('version') %]-[% c('var/build_id') %].xpi"
+var:
+  container:
+    use_container: 1
 input_files:
   - filename: controlport.patch
     content: '[% INCLUDE controlport.patch.tmpl -%]'
     refresh_input: 1
     enable: '[% c("var/tor_control_port") %]'
   - filename: tm-logo.svg
+  - project: container-image

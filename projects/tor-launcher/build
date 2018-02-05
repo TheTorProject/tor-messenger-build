@@ -1,5 +1,5 @@
-#!/bin/sh
-set -e
+#!/bin/bash
+[% c("var/set_default_env") -%]
 tar xvf [% project %]-[% c('version') %].tar.gz
 cd [% project %]-[% c('version') %]
 [% IF c("var/tor_control_port") -%]
