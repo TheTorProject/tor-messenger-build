@@ -1,18 +1,74 @@
 # vim: filetype=yaml sw=2
-version: 31.5.0
-filename: 'thunderbird-[% c("version") %]-[% c("var/osname") %].[% c("var/extension") %]'
+version: '[% c("abbrev") %]'
+hg_url: https://hg.mozilla.org/releases/comm-esr52/
+hg_hash: THUNDERBIRD_52_6_0_RELEASE
+filename: "[% project %]-[% c('version') %]-[% c('var/osname') %]-[% c('var/build_id') %]"
 
 var:
-  moz_osname: '[% c("var/osname") %]'
-  extension: tar.bz2
-  src_filename: 'thunderbird-[% c("version") %].[% c("var/extension") %]'
-
+  archive_suffix: tar.bz2
+  deps:
+    - build-essential
+    - unzip
+    - zip
+    - autoconf2.13
+    - yasm
+    - python
+    - git
+  container:
+    use_container: 1
+targets:
+  windows-i686:
+    var:
+      martools_filename: mar-tools-win32.zip
+      archive_suffix: zip
+  windows-x86_64:
+    var:
+      martools_filename: mar-tools-win64.zip
+      archive_suffix: zip
+  linux:
+    var:
+      arch_deps:
+        - libgconf2-dev
+        - libgtk2.0-dev
+        - libxml2-dev
+        - mesa-common-dev
+        - libdbus-1-dev
+        - libdbus-glib-1-dev
+        - libasound2-dev
+        - libgstreamer-plugins-base0.10-dev
+        - hardening-wrapper
+        - libpulse-dev
+        - libxt-dev
+        - libx11-xcb-dev
+  linux-x86_64:
+    var:
+      martools_filename: mar-tools-linux64.zip
+  linux-i686:
+    var:
+      martools_filename: mar-tools-linux32.zip
+  osx-x86_64:
+    var:
+      martools_filename: mar-tools-mac64.zip
+      arch_deps:
+        - rsync
+        - sqlite3
 input_files:
-  - filename: 'mozilla-thunderbird-[% c("version") %]-[% c("var/moz_osname") %].[% c("var/extension") %]'
-    URL: 'https://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/[% c("version") %]/[% c("var/moz_osname") %]/en-US/[% c("var/src_filename") %]'
-    name: thunderbird
-  - filename: 'sha512sums-[% c("version") %]'
-    URL: 'https://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/[% c("version") %]/SHA512SUMS'
-    file_gpg_id: 1
-    sig_ext: asc
-    gpg_keyring: thunderbird.gpg
+  - filename: 'mozconfig-[% c("var/osname") %]'
+    name: mozconfig
+  - project: container-image
+  - name: '[% c("var/compiler") %]'
+    project: '[% c("var/compiler") %]'
+  - name: mozilla
+    project: mozilla
+  - name: binutils
+    project: binutils
+    enable: '[% c("var/linux") %]'
+  - project: selfrando
+    name: selfrando
+    enable: '[% c("var/linux") %]'
+  - project: gcc
+    name: gcc
+    enable: '[% c("var/windows") %]'
+  - project: yasm
+    name: yasm
+    enable: '[% c("var/windows") %]'
