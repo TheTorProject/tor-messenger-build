@@ -2,6 +2,7 @@
 [% c("var/set_default_env") -%]
 tar xvf [% project %]-[% c('version') %].tar.gz
 cd [% project %]-[% c('version') %]
+patch -p1 < ../0001-Workaround-for-chrome-uri-skin-path.patch
 [% IF c("var/tor_control_port") -%]
 patch -p1 < ../controlport.patch
 [% END -%]
