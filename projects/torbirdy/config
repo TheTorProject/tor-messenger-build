@@ -1,7 +1,7 @@
 # vim: filetype=yaml sw=2
 filename: 'torbirdy-[% c("version") %].xpi'
-version: 0.1.4
-git_hash: 4cdded42ca5c6f900c893a8b3d27c50ce6854eac
+version: 0.2.3
+git_hash: 497532f0dea7b51a8456ade132ae48b1843070c7
 git_url: https://git.torproject.org/torbirdy.git
 input_files:
-  - filename: tormailbundle.patch
+  - filename: 0001-Update-settings-for-Tor-Mail-builds.patch

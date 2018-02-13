@@ -1,5 +1,17 @@
+From 8f36defe18dd2569398efb888d0b3edf34a612bb Mon Sep 17 00:00:00 2001
+From: Sukhbir Singh <sukhbir@torproject.org>
+Date: Tue, 13 Feb 2018 12:41:56 -0500
+Subject: [PATCH 1/1] Update settings for Tor Mail builds
+
+- Set SOCKS port to 9154 instead of 9150
+- Remove the dump() console messages
+---
+ chrome/content/preferences.js | 6 +++---
+ components/torbirdy.js        | 7 +------
+ 2 files changed, 4 insertions(+), 9 deletions(-)
+
 diff --git a/chrome/content/preferences.js b/chrome/content/preferences.js
-index 1359f63..d163e2f 100644
+index 8acd6ba..42f39c9 100644
 --- a/chrome/content/preferences.js
 +++ b/chrome/content/preferences.js
 @@ -25,7 +25,7 @@ if (!org.torbirdy.prefs) org.torbirdy.prefs = new function() {
@@ -11,7 +23,16 @@ index 1359f63..d163e2f 100644
      pub.prefs.clearUserPref("network.proxy.http");
      pub.prefs.clearUserPref("network.proxy.http_port");
      pub.prefs.clearUserPref("network.proxy.ssl");
-@@ -494,7 +494,7 @@ if (!org.torbirdy.prefs) org.torbirdy.prefs = new function() {
+@@ -42,7 +42,7 @@ if (!org.torbirdy.prefs) org.torbirdy.prefs = new function() {
+       opts += "--throw-keyids ";
+     }
+     if (! pub.prefs.getBoolPref("extensions.torbirdy.gpg_already_torified")) {
+-      var proxy = "socks5h://127.0.0.1:9150";
++      var proxy = "socks5h://127.0.0.1:9154";
+       if (anonService === "jondo") {
+         proxy = "http://127.0.0.1:4001";
+       }
+@@ -440,7 +440,7 @@ if (!org.torbirdy.prefs) org.torbirdy.prefs = new function() {
      // Tor.
      if (anonService === 0) {
        pub.socksHost.value = '127.0.0.1';
@@ -21,10 +42,10 @@ index 1359f63..d163e2f 100644
  
      // JonDo/Whonix.
 diff --git a/components/torbirdy.js b/components/torbirdy.js
-index 5867f98..bc3ddf3 100644
+index 4dafef9..b4519cf 100644
 --- a/components/torbirdy.js
 +++ b/components/torbirdy.js
-@@ -43,7 +43,7 @@ const TorBirdyPrefs = {
+@@ -44,7 +44,7 @@ var TorBirdyPrefs = {
  
    // Configure Thunderbird to use the SOCKS5 proxy.
    "network.proxy.socks": "127.0.0.1",
@@ -33,42 +54,45 @@ index 5867f98..bc3ddf3 100644
    "network.proxy.socks_version": 5,
  
    // Set DNS proxying through SOCKS5.
-@@ -340,7 +340,6 @@ function TorBirdy() {
-   this.setAccountPrefs();
+@@ -439,7 +439,6 @@ function TorBirdy() {
    this.setPrefs();
+   sanitizeDateHeaders();
  
 -  dump("TorBirdy registered!\n");
  }
  
  TorBirdy.prototype = {
-@@ -357,7 +356,6 @@ TorBirdy.prototype = {
- 
+@@ -471,7 +470,6 @@ TorBirdy.prototype = {
    onUninstalling: function(addon, needsRestart) {
+     this.onStateChange();
      if (addon.id == TB_ID) {
--      dump("Nooo! TorBirdy uninstall requested\n");
+-      dump("TorBirdy uninstall requested\n");
        this._uninstall = true;
        this.resetUserPrefs();
      }
-@@ -365,7 +363,6 @@ TorBirdy.prototype = {
- 
+@@ -480,7 +478,6 @@ TorBirdy.prototype = {
    onOperationCancelled: function(addon) {
+     this.onStateChange();
      if (addon.id == TB_ID) {
--      dump("Uninstall requested cancelled. Yayay!\n");
+-      dump("Uninstall requested cancelled\n");
        this._uninstall = false;
        this.setPrefs();
      }
-@@ -376,14 +373,12 @@ TorBirdy.prototype = {
+@@ -491,14 +488,12 @@ TorBirdy.prototype = {
    },
  
    resetUserPrefs: function() {
 -    dump("Resetting user preferences to default\n");
      // Clear the Thunderbird preferences we changed.
-     for (var each in TorBirdyPrefs) {
+     for (let each in TorBirdyPrefs) {
        this.prefs.clearUserPref(each);
      }
  
      // Restore the older proxy preferences that were set prior to TorBirdy's install.
 -    dump("Restoring proxy settings\n");
-     for (var i = 0; i < TorBirdyOldPrefs.length; i++) {
+     for (let i = 0; i < TorBirdyOldPrefs.length; i++) {
        var oldPref = TorBirdyOldPrefs[i];
        var setValue = kRestoreBranch + oldPref;
+-- 
+2.16.1
+
