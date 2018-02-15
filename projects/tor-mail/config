@@ -1,22 +1,89 @@
 # vim: filetype=yaml sw=2
-version: 0.0.1
-filename: 'tor-mail-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %].tar.xz'
+version: '[% c("var/tormail_version") %]'
+filename: 'tor-mail-[% c("version") %]-[% c("var/osname") %]-[% c("var/build_id") %]'
 input_files:
-  - project: thunderbird
-    name: thunderbird
-  - project: torbirdy
-    name: torbirdy
+  - name: thunderbird
+    project: thunderbird
   - project: tor-launcher
     name: tor-launcher
   - project: tor-browser
     name: tor-browser
+  - project: tor-browser
+    name: tor-browser-alpha
+    pkg_type: tor-browser-alpha
+  - project: bundle-data
+    name: bundle-data
+  - project: gcc
+    name: gcc
+    enable: '[% c("var/linux") %]'
   - filename: start-tor-mail
+  - filename: start-tor-mail.desktop
+  - filename: execdesktop
+  - filename: background.png
+    enable: '[% c("var/osx") %]'
+  - filename: DS_Store
+    enable: '[% c("var/osx") %]'
+  - filename: VolumeIcon.icns
+    enable: '[% c("var/osx") %]'
+  - filename: tor-mail.nsi
+    enable: '[% c("var/windows") %]'
+  - filename: pe_checksum_fix.py
+    enable: '[% c("var/windows") %]'
+  - filename: fix-info-plist.py
+    enable: '[% c("var/osx") %]'
+  - filename: tor-mail.ico
+    enable: '[% c("var/windows") %]'
+  - project: libdmg-hfsplus
+    name: libdmg
+    enable: '[% c("var/osx") %]'
+  - project: nsis
+    name: nsis
+    target:
+      - tormail-windows-i686
+    enable: '[% c("var/windows") %]'
+  - URL: https://people.torproject.org/~mikeperry/mirrors/sources/msvcr100.dll
+    sha256sum: 1221a09484964a6f38af5e34ee292b9afefccb3dc6e55435fd3aaf7c235d9067
+    enable: '[% c("var/windows") %]'
+  - project: container-image
+  - project: torbirdy
+    name: torbirdy
   - filename: user.js
-  - project: docker-image
 
-remote_docker: 1
-distribution: Ubuntu-12.04
 var:
   deps:
-    - bzip2
     - p7zip-full
+    - bzip2
+    - python
+  container:
+    use_container: 1
+targets:
+  windows:
+    var:
+      arch_deps:
+        - python-pefile
+  windows-i686:
+    var:
+      bundle_filename: 'tormail-install-[% c("version") %]_en-US.exe'
+      mar_osname: win32
+  windows-x86_64:
+    var:
+      bundle_filename: 'tormail-install-[% c("version") %]_en-US.exe'
+      mar_osname: win64
+      container:
+        arch: i386
+  osx-x86_64:
+    var:
+      bundle_filename: 'TorMail-[% c("version") %]-osx64_en-US.dmg'
+      mar_osname: osx64
+      arch_deps:
+        - genisoimage
+        - faketime
+        - bsdtar
+  linux-i686:
+    var:
+      bundle_filename: 'tor-mail-linux32-[% c("version") %]_en-US.tar.xz'
+      mar_osname: linux32
+  linux-x86_64:
+    var:
+      bundle_filename: 'tor-mail-linux64-[% c("version") %]_en-US.tar.xz'
+      mar_osname: linux64

@@ -1,44 +1,147 @@
-#!/bin/sh
-set -e
+#!/bin/bash
+[% c("var/set_default_env") -%]
+distdir=/var/tmp/dist/[% project %]
+
+mkdir -p $distdir
+
+7z x -o/var/tmp/dist [% c('input_files_by_name/thunderbird') %]/mar-tools-*.zip
+MARTOOLS=/var/tmp/dist/mar-tools
+
+[% IF c("var/osx");
+     INCLUDE build.osx;
+     STOP;
+   END -%]
+
 rootdir=$(pwd)
+
 mkdir bundle
-
 [% IF c("var/windows") -%]
-7z x -y -obundle [% c('input_files_by_name/thunderbird') %]
-mv bundle/thunderbird bundle/Mail
+7z x -y -obundle [% c('input_files_by_name/thunderbird') %]/thunderbird.zip
+mv bundle/thunderbird bundle/Browser
+
+cp -a $rootdir/msvcr100.dll bundle/Browser
+cp -a [% c('input_files_by_name/thunderbird') %]/libssp-0.dll bundle/Browser
+
 [% ELSE -%]
-mkdir bundle/Mail
-tar xf [% c('input_files_by_name/thunderbird') %] -C bundle/Mail --strip 1
+mkdir bundle/Browser
+tar xf [% c('input_files_by_name/thunderbird') %]/thunderbird.tar.bz2 -C bundle/Browser --strip 1
+[% END -%]
+find bundle/Browser -exec touch -m -t $(date -d @[% c('timestamp') %] +%Y%m%d%H%M) {} \;
+
+[% IF c("var/linux") -%]
+# remove non reproducible files (FIPS-140)
+# Tor Browser removes them too
+rm -f bundle/Browser/*.chk
 [% END -%]
 
-chmod 755 start-tor-mail
-mv start-tor-mail bundle/
+mkdir bundle/Browser/TorBrowser
+tar xf [% c('input_files_by_name/bundle-data') %]
+[% IF c("var/linux") -%]
+mv Bundle-Data/linux/* bundle/Browser/TorBrowser/
+[% ELSE -%]
+mv Bundle-Data/windows/* bundle/Browser/TorBrowser/
+[% END -%]
 
-mkdir bundle/Mail/defaults/profile/
-mv user.js bundle/Mail/defaults/profile/
+[% IF c("var/linux") %]
+tar xf [% c('input_files_by_name/gcc') %]
+chmod 755 start-tor-mail start-tor-mail.desktop execdesktop
 
-cd bundle/Mail/extensions
-mkdir castironthunderbirdclub@torproject.org
-7z x -y -ocastironthunderbirdclub@torproject.org $rootdir/[% c('input_files_by_name/torbirdy') %]
-mkdir tor-launcher@torproject.org
-7z x -y -otor-launcher@torproject.org $rootdir/[% c('input_files_by_name/tor-launcher') %]
-mkdir -p tor-launcher@torproject.org/TorBrowser/Data
+cp start-tor-mail.desktop bundle/
+mv start-tor-mail.desktop bundle/Browser/
+mv start-tor-mail bundle/Browser/
+mv execdesktop bundle/Browser/
+
+mkdir -p bundle/Browser/lib
+cp -L gcc/lib[% c('arch') == 'x86_64' ? '64' : '' %]/libstdc++.so.6 bundle/Browser/lib/
+[% END %]
 
 [% IF c("var/windows") -%]
-7z x ../../../[% c('input_files_by_name/tor-browser') %]
+7z x [% c('input_files_by_name/tor-browser') %]
+# The version of 7z (9.02) we are using for the builds creates redundant $PLUGINSDIR which we remove.
+rm -rf \$PLUGINSDIR Browser/\$PLUGINSDIR
 mv \$_OUTDIR tor-browser_en-US
+cp -pf tor-browser_en-US/Browser/libssp-0.dll tor-browser_en-US/Browser/TorBrowser/Tor/
 [% ELSE -%]
-tar xf ../../../[% c('input_files_by_name/tor-browser') %]
+tar xf [% c('input_files_by_name/tor-browser') %]
 [% END -%]
-
 sed -i 's/^SocksPort .*/SocksPort [% c("var/tor_socks_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
 sed -i 's/^ControlPort .*/ControlPort [% c("var/tor_control_port") %]/' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
-mv tor-browser_en-US/Browser/TorBrowser/Tor tor-launcher@torproject.org/TorBrowser/Tor
-mv tor-browser_en-US/Browser/TorBrowser/Data/Tor tor-launcher@torproject.org/TorBrowser/Data/Tor
-rm -Rf tor-browser_en-US
-cd $rootdir
+
+# meek
+[% IF c("var/windows") -%]
+# use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
+sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser.exe
+[% ELSE -%]
+# use meek in standalone mode: https://lists.torproject.org/pipermail/tor-dev/2015-November/009887.html
+sed -i 's/\(ClientTransportPlugin meek exec\) [^ ]\+ -- /\1 /' tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+rm -f  tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/meek-client-torbrowser
+[% END -%]
+
+# snowflake
+[% IF c("var/linux") -%]
+mkdir snowflake
+cd snowflake
+tar xf ../[% c('input_files_by_name/tor-browser-alpha') %]
+cp tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/snowflake-client ../tor-browser_en-US/Browser/TorBrowser/Tor/PluggableTransports/snowflake-client
+echo 'ClientTransportPlugin snowflake exec ./TorBrowser/Tor/PluggableTransports/snowflake-client -url https://snowflake-reg.appspot.com/ -front www.google.com -ice stun:stun.l.google.com:19302' >> \
+        ../tor-browser_en-US/Browser/TorBrowser/Data/Tor/torrc-defaults
+# This needs to happen before "tor-launcher" below
+echo 'pref("extensions.torlauncher.default_bridge.snowflake.1", "snowflake 0.0.3.0:1 2B280B23E1107BB62ABFC40DDCC8824814F80A72");' >> \
+        $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js
+cd ..
+[% END -%]
+
+mv tor-browser_en-US/Browser/TorBrowser/Tor bundle/Browser/TorBrowser/
+cp tor-browser_en-US/Browser/TorBrowser/Data/Tor/* bundle/Browser/TorBrowser/Data/Tor/
+
+# extensions
+extdir=$rootdir/bundle/Browser/TorBrowser/Data/Browser/profile.default/extensions
+mkdir -p $extdir
+
+# tor-launcher
+mkdir tor-launcher@torproject.org
+7z x -y -otor-launcher@torproject.org [% c('input_files_by_name/tor-launcher') %]
+cat $rootdir/Bundle-Data/PTConfigs/bridge_prefs.js >> \
+        tor-launcher@torproject.org/defaults/preferences/prefs.js
+mv tor-launcher@torproject.org $extdir
+mkdir castironthunderbirdclub@torproject.org
+7z x -y -ocastironthunderbirdclub@torproject.org [% c('input_files_by_name/torbirdy') %]
+mv castironthunderbirdclub@torproject.org $extdir
+
+# Recreate precomplete file (needs to be accurate for full MAR updates).
+cd tor-browser_en-US/Browser
+rm -f precomplete
+python $MARTOOLS/createprecomplete.py
+cd ../..
+
 mv bundle tor-mail
+OUTDIR='[% dest_dir _ "/" _ c("filename") %]'
+mkdir -p $OUTDIR
+MAR_FILE=tor-mail-[% c("var/mar_osname") %]-[% c("version") %]_en-US.mar
+MAR=$MARTOOLS/mar MBSDIFF=$MARTOOLS/mbsdiff[% IF c("var/windows") %].exe[% END %] \
+    $MARTOOLS/make_full_update.sh \
+    -q $OUTDIR/$MAR_FILE tor-mail/Browser
+
+[% IF c("var/windows") %]
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/nsis') %]
+  export PATH="/var/tmp/dist/nsis/bin:$PATH"
+[% END %]
+
+[% IF c('var/windows') -%]
+find tor-mail -exec [% c("var/touch") %] {} \;
+makensis tor-mail.nsi
+
+mv tor-mail-install.exe tor-mail-install-tmp.exe
+python pe_checksum_fix.py
+mv tor-mail-install-tmp2.exe tor-mail-install.exe
+rm tor-mail-install-tmp.exe
+mv tor-mail-install.exe $OUTDIR/[% c('var/bundle_filename') %]
+
+[% ELSE -%]
 [% c('tar', {
         tar_src => [ 'tor-mail' ],
-        tar_args => '-cJf ' _ dest_dir _ '/' _ c('filename'),
+        tar_args => '-cJf $OUTDIR/' _ c('var/bundle_filename'),
         }) %]
+[% END -%]
+mv -f [% c('input_files_by_name/thunderbird') %]/mar-tools-*.zip $OUTDIR/
