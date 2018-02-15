@@ -1,7 +1,136 @@
-#!/bin/sh
-set -e
-mv [% c('input_files_by_name/thunderbird') %] [% c('var/src_filename') %]
-grep [% c('var/moz_osname') %]/en-US/[% c('var/src_filename') %] sha512sums-[% c("version") %] | \
-    perl -pe 's/[% c('var/moz_osname') %]\/en-US\/[% c('var/src_filename') %]$/[% c('var/src_filename') %]/' | \
-    sha512sum -c
-cp -p [% c('var/src_filename') %] [% dest_dir %]/[% c('filename') %]
+#!/bin/bash
+[% c("var/setarch") -%]
+[% c("var/set_default_env") -%]
+
+[% IF c("var/windows") -%]
+  mkdir -p /var/tmp/dist
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/gcc') %]
+  hgccdir=/var/tmp/dist/gcc
+  # We need a link to our GCC, otherwise the system cc gets used which points to
+  # /usr/bin/gcc.
+  ln -s gcc $hgccdir/bin/cc
+  # Make sure our GCC (as host compiler) get used. We do that before
+  # compiler setup so that mingw is first in the PATH.
+  export LD_LIBRARY_PATH=$hgccdir/lib64
+  export PATH=$hgccdir/bin:$PATH
+
+[% END -%]
+[% pc(c('var/compiler'), 'var/setup', { compiler_tarfile => c('input_files_by_name/' _ c('var/compiler')) }) %]
+distdir=/var/tmp/dist/[% project %]
+mkdir -p /var/tmp/build
+
+[% IF c("var/linux") %]
+  mkdir -p /var/tmp/dist
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/binutils') %]
+  export PATH="/var/tmp/dist/binutils/bin:$PATH"
+[% END -%]
+
+[% IF c("var/linux") -%]
+  tar -C /var/tmp/dist -xf $rootdir/[% c('input_files_by_name/selfrando') %]
+  # Selfrando wrapper
+  export PATH="/var/tmp/dist/selfrando/Tools/TorBrowser/tc-wrapper/:$PATH"
+  # We need to avoid the shuffling while building as this breaks compilation
+  export SELFRANDO_skip_shuffle=
+[% END -%]
+
+tar -C /var/tmp/build -xf [% project %]-[% c('version') %].tar.gz
+
+[% IF c("var/osx") %]
+  mkdir -p $distdir/TorBrowser.app/Contents/MacOS
+[% ELSE %]
+  mkdir -p $distdir/Browser
+[% END %]
+
+[% IF c("var/linux") %]
+  mkdir -p $distdir/Debug/Browser/
+[% END %]
+
+[% IF c("var/osname") == "linux-i686" -%]
+export LDFLAGS=-m32
+export CFLAGS=-m32
+export CC='gcc -m32'
+[% END -%]
+
+mkdir moz
+cd moz
+tar xf $rootdir/[% c('input_files_by_name/mozilla') %]
+mv mozilla-* /var/tmp/build/[% project %]-[% c('version') %]/mozilla
+
+cd /var/tmp/build/[% project %]-[% c('version') %]
+
+eval $(perl $rootdir/get-moz-build-date [% c("var/copyright_year") %] $(cat mail/config/version.txt))
+if [ -z $MOZ_BUILD_DATE ]
+then
+    echo "MOZ_BUILD_DATE is not set"
+    exit 1
+fi
+
+[% IF c("var/windows") %]
+  # FIXME
+  # Ideally, using LDFLAGS (and e.g. DLLFLAGS for NSS) would be enough to get
+  # all Firefox libraries linked against msvcr100. Alas, this does not hold for
+  # NSPR. Without patching it we get a "missing entry points for _strcmpi in
+  # msvcr100.dll". Now, this should be fixed in rev>=6179 as the def file there
+  # contains a proper patch according to the mingw-w64 developers.
+  # However, even with this patch the _strcmpi issue is still popping up,
+  # probably due to a bug in our current linking setup. The small patch below
+  # is therefore just a workaround which should get fixed but is at least
+  # justified as the signature of _strcmpi and _stricmp is the same, see:
+  # http://msdn.microsoft.com/en-us/library/k59z8dwe.aspx.
+  sed 's/strcmpi/stricmp/' -i mozilla/nsprpub/pr/src/linking/prlink.c
+  export HOST_LDFLAGS=" "
+  export LDFLAGS="-specs=/var/tmp/dist/mingw-w64/msvcr100.spec"
+  # Our flags don't get passed to NSS. We need to do that manually using an
+  # obscure one.
+  export DLLFLAGS="-specs=/var/tmp/dist/mingw-w64/msvcr100.spec"
+
+  # Make sure widl is not inserting random timestamps, see #21837.
+  export WIDL_TIME_OVERRIDE="0"
+[% END %]
+
+# Initialize a git repo here so that the patches aren't attempting to apply
+# against basedir, since our temporary working dir is a subdir of it.
+git init
+for patch in $(ls -1 $rootdir/*.patch | sort)
+do
+  git apply -p1 < $patch
+done
+rm -rf .git
+
+cp $rootdir/mozconfig-common .mozconfig
+cat $rootdir/[% c('input_files_by_name/mozconfig') %] >> .mozconfig
+echo ac_add_options --with-tor-browser-version='[% c("var/tormessenger_version") %]' >> .mozconfig
+
+./mozilla/mach build
+./mozilla/mach package
+
+mkdir -p [% dest_dir _ '/' _ c('filename') %]
+
+mv obj-*/dist/thunderbird-*.[% c('var/archive_suffix') %] [% dest_dir _ '/' _ c('filename') %]/thunderbird.[% c('var/archive_suffix') %]
+
+[% IF c("var/windows") %]
+  cp -a $gcclibs/libssp-0.dll [% dest_dir _ '/' _ c('filename') %]/
+[% END %]
+
+MARTOOLS=/var/tmp/dist/mar-tools
+mkdir -p $MARTOOLS
+cp -p mozilla/config/createprecomplete.py $MARTOOLS/
+cp -p mozilla/tools/update-packaging/*.sh $MARTOOLS/
+cp -p obj-*/dist/host/bin/mar $MARTOOLS/
+cp -p obj-*/dist/host/bin/mbsdiff $MARTOOLS/
+[% IF c("var/linux") -%]
+  cp -p obj-*/modules/libmar/tool/signmar $MARTOOLS/
+  cp -p obj-*/security/nss/cmd/certutil/certutil $MARTOOLS/
+  NSS_LIBS="libfreeblpriv3.so libmozsqlite3.so libnss3.so libnssdbm3.so libnssutil3.so libsmime3.so libsoftokn3.so libssl3.so"
+  NSPR_LIBS="libnspr4.so libplc4.so libplds4.so"
+  for LIB in $NSS_LIBS $NSPR_LIBS; do
+      cp -p obj-*/dist/bin/$LIB $MARTOOLS/
+  done
+[% END -%]
+
+cd /var/tmp/dist
+
+[% c('zip', {
+        zip_src => [ 'mar-tools' ],
+        zip_args => dest_dir _ '/' _ c('filename') _ '/' _ c('var/martools_filename'),
+    }) %]

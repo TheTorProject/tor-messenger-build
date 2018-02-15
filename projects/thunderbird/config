@@ -53,6 +53,8 @@ targets:
         - rsync
         - sqlite3
 input_files:
+  - filename: get-moz-build-date
+  - filename: mozconfig-common
   - filename: 'mozconfig-[% c("var/osname") %]'
     name: mozconfig
   - project: container-image
