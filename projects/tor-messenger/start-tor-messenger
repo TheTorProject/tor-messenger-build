@@ -6,6 +6,7 @@
 # However, we do want to have the same look and feel with similar features.
 #
 # Copyright 2015 The Tor Project.  See LICENSE for licensing information.
+# Must use tor@default service else this is void.
 
 complain_dialog_title="Tor Messenger"
 
